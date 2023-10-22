@@ -155,29 +155,28 @@
                                     </div>
 
                                         <div class="card-body">
-                                            <div class="col-12">
-                                                <div class="mb-1 row">
-                                                    <div class="col-sm-3">
-                                                        <label class="col-form-label" for="urun_kodu">Ürün / Hizmet</label>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <select class="select2 form-select" id="select2-basic" name="cari">
-                                                            <option value="">--Seçiniz--</option>
-                                                            @foreach($urunler as $urun)
-                                                            <option value="{{$urun->id}}">{{$urun->adi}}</option>
-                                                            @endforeach
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="mb-1 row">
+                                                        <div class="col-sm-12">
+                                                            <label class="col-form-label" for="urun_kodu">Ürün / Hizmet</label>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <select class="select2 form-select" id="select2-basic" name="cari">
+                                                                <option value="">--Seçiniz--</option>
+                                                                @foreach($urunler as $urun)
+                                                                <option value="{{$urun->id}}">{{$urun->adi}}</option>
+                                                                @endforeach
 
 
-                                                        </select>
+                                                            </select>
 
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="mb-1 row">
-                                                        <div class="col-sm-3">
+                                                        <div class="col-sm-12">
                                                             <label class="col-form-label" for="odeme_periyodu">Ödeme Periyodu</label>
                                                         </div>
                                                         <div class="col-sm-12">
@@ -194,10 +193,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="mb-1 row">
-                                                        <div class="col-sm-3">
+                                                        <div class="col-sm-12">
                                                             <label class="col-form-label" for="adet">Adet</label>
                                                         </div>
                                                         <div class="col-sm-12">
@@ -207,6 +205,19 @@
                                                     </div>
                                                 </div>
 
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-3">
+                                                        <label class="col-form-label" for="siparis_notu">Sipariş Notu</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" id="siparis_notu" name="siparis_notu" placeholder="Sipariş Notu">
+
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-6">
