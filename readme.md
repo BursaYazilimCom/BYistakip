@@ -4,26 +4,26 @@
 
 <h2>BURSA YAZILIM, İş Proje ve Gelir Gider Takip Yazılımı</h2>
 
-Şimdiye kadar yapılanlar
+Şimdiye kadar yapılanlar<br><br>
 
-Bursa Yazılım İş ve Gelir Gider takip Sistemi
-Ayarlar Bölümü Yapıldı
-Bölgesel Ayarlar Yapıldı
-Ödeme Yöntemleri Yapıldı
-Sipariş Durumları Yönetimi
-Para Birimleri
----- Otomatik kur güncelleme
-YEtki Alanları
-PErsoneller
-PErsonel Yetkilendirme
-Şehirler
-Müşteriler Yönetimi
-Ürünler ve Ürün Grupları Yönetimi
----Ürünlerin Ödeme Periyodu ayarları
-Muhasebe Yönetimi
----Gider (Masraf Yönetimi)
----Kasa Desteri
-Siparişler Sayfası
+Bursa Yazılım İş ve Gelir Gider takip Sistemi<br>
+Ayarlar Bölümü Yapıldı<br>
+Bölgesel Ayarlar Yapıldı<br>
+Ödeme Yöntemleri Yapıldı<br>
+Sipariş Durumları Yönetimi<br>
+Para Birimleri<br>
+---- Otomatik kur güncelleme<br>
+YEtki Alanları<br>
+PErsoneller<br>
+PErsonel Yetkilendirme<br>
+Şehirler<br>
+Müşteriler Yönetimi<br>
+Ürünler ve Ürün Grupları Yönetimi<br>
+---Ürünlerin Ödeme Periyodu ayarları<br>
+Muhasebe Yönetimi<br>
+---Gider (Masraf Yönetimi)<br>
+---Kasa Desteri<br>
+Siparişler Sayfası<br>
 
 <p>
 Bursa Yazılım tarafından geliştirilen bu proje Her detayı ile BURSA YAZILIM'a aittir</p>
