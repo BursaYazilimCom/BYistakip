@@ -1,0 +1,28 @@
+firmalar tablosu kaldırılanlar
+	firma_il
+	firme_ilce
+	firma_adres
+	firma_tel
+	firma_fax
+	calisan_sayisi
+	
+firmalar tablosu eklenenler
+	durum eklendi
+	il eklendi
+	ilce eklendi
+
+sirketler tablosu kaldırılanlar
+	yetki_belge_tarihi
+	yetki_belge_no
+	faks
+
+sirketler tablosu eklenenlers
+	il eklendi
+	ilce eklendi
+	durum eklendi
+
+firma_belgeleri tablosunda çalıştırılan sorgular
+UPDATE firma_belgeleri SET kim_odeyecek='k' WHERE kim_odeyecek='0'
+UPDATE firma_belgeleri SET kim_odeyecek='ko' WHERE kim_odeyecek='1'
+UPDATE firma_belgeleri SET kim_odeyecek='f' WHERE kim_odeyecek='3'
+UPDATE firma_belgeleri SET kim_odeyecek='fo' WHERE kim_odeyecek='4'

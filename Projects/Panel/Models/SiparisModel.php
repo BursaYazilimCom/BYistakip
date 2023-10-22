@@ -1,0 +1,460 @@
+<?php
+
+class InternalSiparisModel extends Model
+{
+    public function toplam(){
+        $veri = DB::siparisler()->totalRows(true);
+
+        return $veri;
+    }
+
+    public function liste($durum="",$sayfa=Null,$filtre=""){
+
+        if ($filtre!=""){
+
+            $filtreBol = explode("-",$filtre);
+
+            $yer        = $filtreBol[0];
+            $siralama   = $filtreBol[1];
+
+        }else{
+            $yer = "id";
+            $siralama ="DESC";
+
+        }
+
+            $liste = DB::where('siparisler.kayit_sekli','1')
+                ->orderby('siparisler.'.$yer,$siralama)
+                ->limit(25)
+                ->siparisler();
+
+            //echo DB::stringQuery();
+
+        $veri = ['liste'=>$liste->result(),'sayfalama'=>$liste->pagination()];
+
+        return $veri;
+
+    }
+
+    public function teklifler(){
+
+            $liste = DB::select(
+                'siparisler.id as siparisId',
+                'siparisler.belge_no as belge_no',
+                'siparisler.cari as cari',
+                'siparisler.siparis_notu as siparis_notu',
+                'siparisler.toplam_fiyat as toplam_fiyat',
+                'siparisler.durum as durum',
+                'siparisler.toplam_tutar as toplam_tutar',
+                'siparisler.indirim_tutar as indirim_tutar',
+                'siparisler.ara_toplam_tutar as ara_toplam_tutar',
+                'siparisler.kdv_tutari as kdv_tutari',
+                'siparisler.genel_toplam_tutari as genel_toplam_tutari',
+                'siparisler.kayit_sekli as kayit_sekli',
+                'siparisler.fatura as fatura',
+                'siparisler.tarih as tarih',
+                'siparisler.teslim_tarihi as teslim_tarihi',
+                'siparisler.olusturan as olusturan'
+            )
+                ->where('siparisler.kayit_sekli','0')
+                ->orderby('siparisler.id','DESC')
+                ->limit(NULL,25)
+                ->siparisler();
+
+        $veri = ['liste'=>$liste->result(),'sayfalama'=>$liste->pagination()];
+
+        return $veri;
+
+    }
+
+    public function uyeSiparisleri($id,$sayfa=""){
+
+            $liste = DB::select(
+                'siparisler.id as siparisId',
+                'siparisler.belge_no as belge_no',
+                'siparisler.cari as cari',
+                'siparisler.siparis_notu as siparis_notu',
+                'siparisler.toplam_fiyat as toplam_fiyat',
+                'siparisler.durum as durum',
+                'siparisler.toplam_tutar as toplam_tutar',
+                'siparisler.indirim_tutar as indirim_tutar',
+                'siparisler.ara_toplam_tutar as ara_toplam_tutar',
+                'siparisler.kdv_tutari as kdv_tutari',
+                'siparisler.genel_toplam_tutari as genel_toplam_tutari',
+                'siparisler.kayit_sekli as kayit_sekli',
+                'siparisler.fatura as fatura',
+                'siparisler.tarih as tarih',
+                'siparisler.teslim_tarihi as teslim_tarihi',
+                'siparisler.olusturan as olusturan')
+                ->where('siparisler.uye',$id)
+                ->orderby('siparisler.id','DESC')
+                ->limit($sayfa,25)
+                ->siparisler();
+
+           // AyarModel::sqlHataEkle(DB::stringQuery());
+
+        $veri = ['liste'=>$liste->result(),'sayfalama'=>$liste->pagination()];
+
+        return $veri;
+
+    }
+
+    public function uyeDurumSiparisleri($id,$durum){
+
+            $liste = DB::select(
+                'siparisler.id as siparisId',
+                'siparisler.uye as uye',
+                'siparisler.siparis_adi as siparis_adi',
+                'siparisler.siparis_notu as siparis_notu',
+                'siparisler.dosya as dosya',
+                'siparisler.toplam_fiyat as toplam_fiyat',
+                'siparisler.siparis_yeri as siparis_yeri',
+                'siparisler.grafik_hizmeti as grafik_hizmeti',
+                'siparisler.montaj_hizmeti as montaj_hizmeti',
+                'siparisler.toplam_tutar as toplam_tutar',
+                'siparisler.indirim_tutar as indirim_tutar',
+                'siparisler.ara_toplam_tutar as ara_toplam_tutar',
+                'siparisler.kdv_tutari as kdv_tutari',
+                'siparisler.genel_toplam_tutari as genel_toplam_tutari',
+                'siparisler.durum as durum',
+                'siparisler.olusturan as olusturan',
+                'siparisler.kayit_sekli as kayit_sekli',
+                'siparisler.tarih as tarih',
+                'siparisler.teslim_tarihi as teslim_tarihi',
+                'siparisler.periyodik_siparis as periyodik_siparis',
+                'siparisler.odeme_periyodu as odeme_periyodu',
+                'siparisler.fatura as fatura',
+                'uyeler.adi as uyeAdi')
+                ->innerjoin('uyeler.id','siparisler.uye')
+                ->where('siparisler.uye',$id)->where('siparisler.durum',$durum)
+                ->orderby('siparisler.id','DESC')
+                ->limit(NULL,AyarModel::sayfalama('siparisler'))
+                ->siparisler();
+
+            echo $liste->stringQuery();
+
+        $veri = ['liste'=>$liste->result(),'sayfalama'=>$liste->pagination(URI::segment(2))];
+
+        return $veri;
+
+    }
+
+    public function detay($id)
+    {
+        $veri = DB::select(
+                    'siparisler.id as siparisId',
+                    'siparisler.belge_no as belge_no',
+                    'siparisler.cari as cari',
+                    'siparisler.siparis_notu as siparis_notu',
+                    'siparisler.toplam_fiyat as toplam_fiyat',
+                    'siparisler.durum as durum',
+                    'siparisler.toplam_tutar as toplam_tutar',
+                    'siparisler.indirim_tutar as indirim_tutar',
+                    'siparisler.ara_toplam_tutar as ara_toplam_tutar',
+                    'siparisler.kdv_tutari as kdv_tutari',
+                    'siparisler.genel_toplam_tutari as genel_toplam_tutari',
+                    'siparisler.odeme_turu as odeme_turu',
+                    'siparisler.odeme_durumu as odeme_durumu',
+                    'siparisler.kayit_sekli as kayit_sekli',
+                    'siparisler.fatura as fatura',
+                    'siparisler.tarih as tarih',
+                    'siparisler.teslim_tarihi as teslim_tarihi',
+                    'siparisler.olusturan as olusturan'
+                    )
+                    ->where('siparisler.id',$id)
+                    ->siparisler()->row();
+
+        return $veri;
+    }
+
+    public function ekle($data){
+
+        $ekle = DB::insert('siparisler',[
+                    'belge_no'      =>$data['belge_no'],
+                    'cari'           =>$data['cari'],
+                    'siparis_notu'  =>$data['siparis_notu'],
+                    'toplam_fiyat'  =>$data['toplam_fiyat'],
+                    'toplam_tutar'  =>$data['toplam_tutar'],
+                    'indirim_tutar'  =>$data['indirim_tutar'],
+                    'ara_toplam_tutar'  =>$data['ara_toplam_tutar'],
+                    'kdv_tutari'  =>$data['kdv_tutari'],
+                    'genel_toplam_tutari'  =>$data['genel_toplam_tutari'],
+                    'odeme_turu'  =>$data['odeme_turu'],
+                    'odeme_durumu'  =>$data['odeme_durumu'],
+                    'olusturan'  =>$data['olusturan'],
+                    'kayit_sekli'  =>$data['kayit_sekli'],
+                    'fatura'  =>$data['fatura'],
+                    'teslim_tarihi' =>$data['teslim_tarihi'],
+                    'durum'         =>$data['durum']
+                ]);
+
+        return DB::insertID();
+    }
+
+    public function guncelle($data){
+
+        $guncelle = DB::where('id',$data['id'])->update('siparisler',[
+            'belge_no'      =>$data['belge_no'],
+            'cari'           =>$data['cari'],
+            'siparis_notu'  =>$data['siparis_notu'],
+            'toplam_fiyat'  =>$data['toplam_fiyat'],
+            'toplam_tutar'  =>$data['toplam_tutar'],
+            'indirim_tutar'  =>$data['indirim_tutar'],
+            'ara_toplam_tutar'  =>$data['ara_toplam_tutar'],
+            'kdv_tutari'  =>$data['kdv_tutari'],
+            'genel_toplam_tutari'  =>$data['genel_toplam_tutari'],
+            'odeme_turu'  =>$data['odeme_turu'],
+            'odeme_durumu'  =>$data['odeme_durumu'],
+            'kayit_sekli'  =>$data['kayit_sekli'],
+            'fatura'  =>$data['fatura'],
+            'teslim_tarihi' =>$data['teslim_tarihi'],
+            'durum'         =>$data['durum']
+        ]);
+
+        return $guncelle;
+    }
+
+    public function toplamSiparisSayisi(){
+        $veri = DB::siparisler()->totalRows(true);
+
+        return $veri;
+    }
+
+    public function aramaFiltresi($search){
+
+        $veri = DB::query('SELECT * FROM siparisler '.$search);
+
+        $data = ['liste'=>$veri->result(),'kayitSAyisi'=>$veri->totalRows()];
+
+        return $data;
+
+    }
+
+    public function siparisUrunBilgi($id){
+
+        $veri = DB::where('id',$id)->siparis_urunleri()->row();
+
+        return $veri;
+
+    }
+
+    public function siparisUrunEkle($data){
+
+        $detay = $this->detay($data['siparis']);
+
+        $ekle = DB::insert('siparis_urunleri',[
+            'siparis'       =>$data['siparis'],
+            'urun'          =>$data['urun'],
+            'urun_adi'      =>$data['urun_adi'],
+            'urun_kodu'     =>$data['urun_kodu'],
+            'uye'           =>$data['uye'],
+            'en'            =>$data['en'],
+            'boy'           =>$data['boy'],
+            'adet'          =>$data['adet'],
+            'notu'          =>$data['notu'],
+            'resim'         =>$data['resim'],
+            'birim_fiyat'   =>$data['birim_fiyat'],
+            'kdv'           =>$data['kdv'],
+            'toplam_fiyat'  =>$data['toplam_fiyat'],
+            'durum'         =>$detay->durum
+        ]);
+
+        //echo DB::stringQuery();
+
+        return $ekle;
+
+    }
+
+    public function siparisUrunGuncelle($data){
+
+        $guncelle = DB::where('id',$data['id'])->update('siparis_urunleri',[
+            'en'            =>$data['en'],
+            'boy'           =>$data['boy'],
+            'adet'          =>$data['adet'],
+            'notu'          =>$data['notu'],
+            'birim_fiyat'   =>$data['birim_fiyat'],
+            'kdv'           =>$data['kdv'],
+            'toplam_fiyat'  =>$data['toplam_fiyat']
+        ]);
+
+        return $guncelle;
+
+    }
+
+    public function siparisUrunSil($id){
+
+        $sil = DB::whereId($id)->delete('siparis_urunleri');
+
+        $client = new Client(new Version2X(AyarModel::defaultAyarlar('nodeIp').':'.AyarModel::defaultAyarlar('nodePort')));
+
+        $client->initialize();
+        $client->emit('siparisUrunSil', [
+            'id'            =>$id
+        ]);
+        $client->close();
+
+        return $sil;
+
+
+    }
+
+    public function siparisUrunleri($id){
+
+        $veri = DB::select(
+            'siparis_urunleri.id as id',
+            'siparis_urunleri.siparis as siparis',
+            'siparis_urunleri.urun as urun',
+            'siparis_urunleri.urun_adi as urun_adi',
+            'siparis_urunleri.urun_kodu as urun_kodu',
+            'siparis_urunleri.uye as uye',
+            'siparis_urunleri.en as en',
+            'siparis_urunleri.boy as boy',
+            'siparis_urunleri.adet as adet',
+            'siparis_urunleri.notu as notu',
+            'siparis_urunleri.resim as resim',
+            'siparis_urunleri.aciliyet as aciliyet',
+            'siparis_urunleri.birim_fiyat as birim_fiyat',
+            'siparis_urunleri.indirim as indirim',
+            'siparis_urunleri.kdv as kdv',
+            'siparis_urunleri.toplam_fiyat as toplam_fiyat',
+            'siparis_urunleri.durum as durum',
+            'siparis_durumlari.adi as durum_adi',
+            'siparis_durumlari.uyari as durum_uyari'
+        )
+            ->innerjoin('siparis_durumlari.id','siparis_urunleri.durum')
+            ->where('siparis_urunleri.siparis',$id)->siparis_urunleri()->result();
+
+        return $veri;
+
+    }
+
+    public function siparisUrunDetay($id){
+
+        $veri = DB::where('id',$id)->siparis_urunleri()->row();
+
+        return $veri;
+
+    }
+
+    public function siparisFaturalandi($id,$belgeNo=""){
+
+        if($belgeNo!=""){
+            $belgeNoGuncelle = DB::where('id',$id)->update('siparisler',
+                ['belge_no'=>$belgeNo]
+            );
+        }
+
+        $guncelle = DB::where('id',$id)->update('siparisler',
+            ['fatura'=>'1']
+        );
+        return $guncelle;
+    }
+
+    public function siparisToplamTutarGuncelle($data){
+
+        $guncelle = DB::where('id',$data['id'])->update('siparisler',[
+            'toplam_tutar'          =>$data['toplam_tutar'],
+            'indirim_tutar'         =>$data['indirim_tutar'],
+            'ara_toplam_tutar'      =>$data['ara_toplam_tutar'],
+            'kdv_tutari'            =>$data['kdv_tutari'],
+            'genel_toplam_tutari'   =>$data['genel_toplam_tutari']
+        ]);
+
+        // AyarModel::sqlHataEkle(DB::stringQuery());
+
+        return $guncelle;
+
+    }
+
+    public function durumDegistir($id,$durum){
+
+        $guncelle = DB::where('id',$id)
+            ->update('siparisler',[
+                'durum'      =>$durum
+            ]);
+
+        return $guncelle;
+    }
+
+    public function urunDurumDegistir($id,$durum){
+
+        $guncelle = DB::where('id',$id)
+            ->update('siparis_urunleri',[
+                'durum'      =>$durum
+            ]);
+
+            $personel = User::data();
+
+
+            $client = new Client(new Version2X(AyarModel::defaultAyarlar('nodeIp').':'.AyarModel::defaultAyarlar('nodePort')));
+
+            $urunDetay      = $this->siparisUrunBilgi($id);
+
+            if($urunDetay->uretime_alan=="0" and $durum==AyarModel::defaultAyarlar("uretimdekiSiparisDurumu")){
+
+                $olusturan = PersonelModel::isim($personel->id);
+
+            }elseif($urunDetay->uretime_alan=="0" and $durum!=AyarModel::defaultAyarlar("uretimdekiSiparisDurumu")){
+                $olusturan = "<a href='siparisler/detay/".$urunDetay->siparis."'>Detay</a>";
+            }else{
+                $olusturan = PersonelModel::isim($urunDetay->uretime_alan);
+            }
+
+            $siparisDetay   = $this->detay($urunDetay->siparis);
+            $personel       = PersonelModel::detay($siparisDetay->olusturan);
+            $uye            = UyeModel::detay($siparisDetay->uye);
+            $durumDetay     = $this->siparisDurumDetay($urunDetay->durum);
+
+        return $guncelle;
+    }
+
+    public function siparisGecmisi($id){
+
+        $veri = DB::select(
+                'siparis_gecmisi.id as id',
+                'siparis_gecmisi.uye as uye',
+                'siparis_gecmisi.aciklama as aciklama',
+                'siparis_gecmisi.tarih as tarih',
+                'siparis_gecmisi.durum as durum',
+                'siparis_durumlari.adi as durumAdi',
+                'yonetim.isim as guncelleyen')
+                ->innerjoin('siparis_durumlari.id','siparis_gecmisi.durum')
+                ->innerjoin('yonetim.id','siparis_gecmisi.guncelleyen')
+                ->where('siparis_gecmisi.siparis_id',$id)
+                ->orderby('siparis_gecmisi.id','DESC')
+                ->siparis_gecmisi()->result();
+
+        return $veri;
+
+    }
+
+    public function siparisGesmisEkle($data){
+
+        $ekle = DB::insert('siparis_gecmisi',[
+                    'uye'       =>$data['uye'],
+                    'siparis_id'=>$data['siparis_id'],
+                    'aciklama'  =>$data['aciklama'],
+                    'guncelleyen'=>$data['guncelleyen'],
+                    'durum'     =>$data['durum']
+                ]);
+
+        return $ekle;
+    }
+
+    public function uyeSiparisDurumlari($uye){
+
+        $liste = DB::select('siparisler.durum as durum','siparis_durumlari.adi as adi')
+                ->where('siparisler.uye',$uye)
+                ->innerjoin('siparis_durumlari.id','siparisler.durum')
+                ->orderby('siparis_durumlari.id','ASC')
+                ->groupby('siparis_durumlari.id')
+                ->siparisler()->result();
+
+        return $liste;
+
+    }
+
+    /*****************************************************/
+
+
+}

@@ -1,0 +1,871 @@
+<?php namespace Project\Controllers;
+
+use c0b41\Hepsiburada\Hepsiburada;
+Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation;
+Use AjaxModel,KasaModel,UrunModel,AyarModel;
+Use PersonelModel;
+
+
+
+
+class Ajax extends Controller
+{
+
+    public function main(){
+
+        if(!Http::isajax()){
+            redirect("Login");
+            exit;
+        }
+
+    }
+
+
+    public function modal(){
+
+        $user = User::data();
+
+        if(Post::action()=="kasaHesapBilgi"){
+
+            $hesap = KasaModel::bilgi(Post::rowid());
+
+            ?>
+
+                <form action="<?=URL::site('kasa/kasaHesapGuncelle/'.$hesap->id)?>" method="POST">
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <td><strong>Hesap Adı:</strong></td>
+                            <td><input type="text" class="form-control" name="adi" required id="adi" placeholder="Adı" value="<?=$hesap->adi?>"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hesap No:</strong></td>
+                            <td>
+                                <input type="text" class="form-control" name="hesapNo" required id="hesapNo" placeholder="Adı" value="<?=$hesap->hesap_no?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hesap Türü:</strong></td>
+                            <td>
+                                <select class="form-control" name="tur" required >
+                                    <option value="" <?=($hesap->tur=="")?"selected":""?>>--Seçiniz--</option>
+                                    <option value="1" <?=($hesap->tur=="1")?"selected":""?>>Kasa Hesabı</option>
+                                    <option value="2" <?=($hesap->tur=="2")?"selected":""?>>Banka Hesabı</option>
+                                    <option value="3" <?=($hesap->tur=="3")?"selected":""?>>Pos Hesabı</option>
+                                    <option value="4" <?=($hesap->tur=="4")?"selected":""?>>Kredi Kartı Hesabı</option>
+                                    <option value="5" <?=($hesap->tur=="5")?"selected":""?>>Veresiye Hesabı</option>
+                                    <option value="6" <?=($hesap->tur=="6")?"selected":""?>>Diğer Hesaplar</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Açıklama:</strong></td>
+                            <td>
+                                <textarea name="aciklama" class="form-control" placeholder="Açıklama"><?=$hesap->aciklama?></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Güncel Tutar:</strong></td>
+                            <td><input type="text" class="form-control" name="tutar" required id="tutar" value="<?=$hesap->tutar?>"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Durum:</strong></td>
+                            <td>
+
+                                <select name="durum" class="form-control">
+                                    <option value="1" <?=($hesap->durum=="1")?"selected":""?>>Aktif</option>
+                                    <option value="0" <?=($hesap->durum=="0")?"selected":""?>>Pasif</option>
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" class="btn btn-primary" value="Güncelle"></td>
+                        </tr>
+                    </table>
+                </form>
+
+            <?php
+
+        }
+        if(Post::action()=="odemeYontemiDuzenle"){
+
+            $odemeYontemi = AyarModel::odemeYontemiDetay(Post::rowid());
+            $kasaHesaplari = KasaModel::kasaHesaplari();
+
+
+
+            echo Form::csrf()->action('ayarlar/odemeYontemleriGuncelle/'.$odemeYontemi->id)->open('oyForm',['class'=>'row gy-1 gx-2 mt-75']); ?>
+            <div class="col-12">
+                <label class="form-label" for="modalAddCardNumber">Başlık</label>
+                <div class="input-group input-group-merge">
+                    <?php echo Form::vRequired()->id('baslik')->placeholder('Başlık Giriniz')->text('baslik',$odemeYontemi->baslik,['class'=>'form-control']); ?>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label" for="modalAddCardName">Kasa Hesabı</label>
+                <select name="kasa_hesabi" required id="kasa_hesabi" class="form-control">
+                    <option value="">--Seçiniz--</option>
+                    <?php
+                    foreach($kasaHesaplari as $kasa){ ?>
+                    <option value="<?=$kasa->id?>" <?=$odemeYontemi->kasa_hesabi==$kasa->id?"selected":""?>><?=$kasa->adi?></option>
+                     <?php } ?>
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label" for="durum">Durum</label>
+                <select name="durum" id="durum" class="form-control">
+                    <option value="1" <?=$odemeYontemi->durum==1?"selected":""?>>Aktif</option>
+                    <option value="0" <?=$odemeYontemi->durum==0?"selected":""?>>Pasif</option>
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label" for="modalAddCardName"><strong>Entegrasyon Bilgileri</strong></label><br>
+                <small>Giriş yaparken ilk kutusa anahtar ikinci kotuya Değer giriniz</small>
+                <br>
+                <button type="button" class="btn btn-success" value="Satır Ekle" onclick="satirEkle()">+</button>
+                <table id="satirEklemeTablosu">
+                    <?php
+
+                    $data = Json::decode($odemeYontemi->entegrasyon_bilgileri);
+
+                    if (!empty($data) && is_array($data)) {
+                        foreach ($data as $item) {
+                            ?>
+                            <tr>
+                                <td><input type="text" name="key[]" class="form-control" placeholder="key" value="<?= $item->key ?>"></td>
+                                <td><input type="text" name="value[]" class="form-control" placeholder="value" value="<?= $item->value ?>"></td>
+                                <td><button type="button" class="btn btn-danger" value="Sil" onclick="silSatir(this)">x</button></td>
+                            </tr>
+                    <?php
+                        }
+                    }else{
+                        ?>
+                        <tr>
+                            <td><input type="text" name="key[]" class="form-control" placeholder="key"></td>
+                            <td><input type="text" name="value[]" class="form-control" placeholder="value"></td>
+                            <td><button type="button" class="btn btn-danger" value="Sil" onclick="silSatir(this)">x</button></td>
+                        </tr>
+                    <?php
+
+                    }
+
+                    ?>
+
+                </table>
+            </div>
+
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary me-1 mt-1">Kaydet</button>
+                <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-dismiss="modal" aria-label="Close">
+                    Vazgeç
+                </button>
+            </div>
+            <?php echo Form::close(); ?>
+
+            <script>
+                function satirEkle() {
+                    var tablo = document.getElementById("satirEklemeTablosu");
+                    var yeniSatir = tablo.insertRow(tablo.rows.length);
+                    var hucre1 = yeniSatir.insertCell(0);
+                    var hucre2 = yeniSatir.insertCell(1);
+                    var hucre3 = yeniSatir.insertCell(2);
+
+                    hucre1.innerHTML = '<input type="text" name="key[]" class="form-control" placeholder="Key">';
+                    hucre2.innerHTML = '<input type="text" name="value[]" class="form-control" placeholder="value">';
+                    hucre3.innerHTML = '<button type="button" class="btn btn-danger" value="Sil" onclick="silSatir(this)">x</button>';
+                }
+
+                function silSatir(button) {
+                    var satir = button.parentNode.parentNode;
+                    satir.parentNode.removeChild(satir);
+                }
+            </script>
+
+                <?php
+
+        }
+
+        if(Post::action()=="siparisDurumDuzenle"){
+
+            $siparisDurum = AyarModel::siparisDurumDetay(Post::rowid());
+
+            echo Form::csrf()->action('ayarlar/siparisDurumGuncelle/'.$siparisDurum->id)->open('oyForm',['class'=>'row gy-1 gx-2 mt-75']); ?>
+            <div class="col-12">
+                <label class="form-label" for="modalAddCardNumber">Başlık</label>
+                <div class="input-group input-group-merge">
+                    <?php echo Form::vRequired()->id('adi')->placeholder('Başlık Giriniz')->text('adi',$siparisDurum->adi,['class'=>'form-control']); ?>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" for="sira">Sıra</label>
+                <div class="input-group input-group-merge">
+                    <?php echo Form::vRequired()->id('sira')->placeholder('Sıra')->text('sira',$siparisDurum->sira,['class'=>'form-control']); ?>
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+                <label class="form-label" for="uyari">Durum</label>
+                <select name="uyari" id="uyari" class="form-control">
+                    <option value="info" >--Seçiniz--</option>
+                    <option value="primary" <?=$siparisDurum->uyari=="primary"?"selected":""?>>Sarı</option>
+                    <option value="warning" <?=$siparisDurum->uyari=="warning"?"selected":""?>>Sarı</option>
+                    <option value="success" <?=$siparisDurum->uyari=="success"?"selected":""?>>Yeşil</option>
+                    <option value="info" <?=$siparisDurum->uyari=="info"?"selected":""?>>Mavi</option>
+                    <option value="secondary" <?=$siparisDurum->uyari=="secondary"?"selected":""?>>Gri</option>
+                    <option value="danger" <?=$siparisDurum->uyari=="danger"?"selected":""?>>Kırmızı</option>
+                    <option value="dark" <?=$siparisDurum->uyari=="dark"?"selected":""?>>Siyah</option>
+                </select>
+            </div>
+
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary me-1 mt-1">Kaydet</button>
+                <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-dismiss="modal" aria-label="Close">
+                    Vazgeç
+                </button>
+            </div>
+            <?php echo Form::close(); ?>
+
+            <?php
+
+        }
+
+        if(Post::action()=="sipariseUrunGetir"){
+
+            sleep(1);
+            $urun = UrunModel::detay(Post::rowid());
+            $paraBirimleri = AyarModel::paraBirimleri();
+
+            ?>
+                <div class="form-group">
+                    <label class="col-md-11 text-left text-primary text-bold"><h4><?=$urun->adi?></h4></label>
+                    <input type="hidden" name="urun" value="<?=$urun->id?>">
+                    <input type="hidden" name="uye" value="<?=$uyeBilgi->adi?>">
+                </div>
+
+                <div class="form-group">
+                    <?php
+                    if($user->fiyat_yetkisi=="1"){
+                    ?>
+                    <label for="adi" class="col-md-2 control-label">Fiyat:</label>
+                    <div class="col-md-4">
+                        <style>
+                            .my-group .form-control{
+                                width:50%;
+                            }
+                        </style>
+
+                        <div class="input-group my-group">
+                            <input type="text" class="form-control"  onkeyup="hesapla(); $(this).val($(this).val().replace(/,/g, '.'));"  name="fiyat" id="fiyat" value="<?=$urun->fiyat?>">
+                            <select name="paraBirimi" id="siparisUrunuParaBirimi" class="form-control">
+                                <?php
+                                foreach($paraBirimleri as $pb){ ?>
+                                    <option <?=$urun->fiyat_birim==$pb->kod?"selected":""?> value="<?=$pb->kod?>"><?=$pb->kod?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                    </div>
+                    <?php }?>
+
+                    <label for="adi" class="col-md-2 control-label">Adet:</label>
+                    <div class="col-md-4">
+                        <input name="adet" id="adet" type="number" onchange="hesapla()" onkeypress="return isNumberKey(event)" class="form-control" value="1">
+                    </div>
+                </div>
+
+                <?php
+                if($urun->birim=="m2"){
+                    ?>
+                <div class="form-group">
+                    <label for="adi" class="col-md-2 control-label">En:</label>
+                    <div class="col-md-4">
+                        <input name="en" id="en" type="text" onkeyup="hesapla(); $(this).val($(this).val().replace(/,/g, '.'));" placeholder="En"  class="form-control" value="">
+                    </div>
+
+                    <label for="adi" class="col-md-2 control-label">Boy:</label>
+                    <div class="col-md-4">
+                        <input name="boy" id="boy" type="text" onkeyup="hesapla(); $(this).val($(this).val().replace(/,/g, '.'));" placeholder="Boy" class="form-control" value="">
+                    </div>
+                </div>
+
+                    <?php
+                }
+                ?>
+                <div class="form-group">
+                    <label for="adi" class="col-md-2 control-label">KDV:</label>
+                    <div class="col-md-2">
+                        <input name="kdv" id="kdv" type="number" readonly class="form-control" value="<?=$urun->kdv?>">
+                    </div>
+
+                    <label for="adi" class="col-md-2 control-label">İskonto:</label>
+                    <div class="col-md-2">
+                        <input name="iskonto" id="iskonto" type="text" readonly class="form-control" value="0">
+                    </div>
+                    <?php
+                    if($user->fiyat_yetkisi=="1"){
+                    ?>
+                    <label for="adi" class="col-md-2 control-label">Toplam:</label>
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control" readonly name="toplam" id="toplam" value="<?=$urun->fiyat?>">
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+                <div class="form-group">
+                    <label for="adi" class="col-md-2 control-label">Ek  Not:</label>
+                    <div class="col-md-10">
+                        <textarea class="form-control" name="eknot" placeholder="İsteğe bağlı ek not"></textarea>
+                    </div>
+                </div>
+
+            <script type="text/javascript">
+
+                hesapla = function(i){
+                    <?php
+                    if($urun->birim=="m2"){
+                    ?>
+                    var en      = document.getElementById('en').value;
+                    var boy     = document.getElementById('boy').value;
+                    <?php } ?>
+                    var adet    = document.getElementById('adet').value;
+                    var fiyati  = document.getElementById('fiyat').value;
+                    var kdvsi   = document.getElementById('kdv').value;
+
+                    var musteriIskonto = document.getElementById('musteriIskonto').value;
+
+                    <?php
+                    if($urun->birim=="m2"){
+                    ?>
+                        var m2          = (en*boy)/10000;
+                        var guncelFiyat = (m2*fiyati)*adet;
+
+                    <?php
+                    }else{ ?>
+
+                        var guncelFiyat = fiyati*adet;
+
+                    <?php } ?>
+
+
+                    if (musteriIskonto>0){
+
+                        var indirimTutari   = (guncelFiyat/100)*musteriIskonto;
+                        var yeniGuncelFiyat = guncelFiyat-indirimTutari;
+
+                        guncelFiyat = yeniGuncelFiyat;
+
+                        document.getElementById('iskonto').value = musteriIskonto;
+
+                    }
+
+                    var kdvFiyat    = (guncelFiyat/100)*kdvsi;
+                    var kdvsizToplamFiyat = guncelFiyat.toFixed(2);
+                    var kdvliFiyat  = kdvFiyat+guncelFiyat;
+                    var toplamFiyat = kdvliFiyat.toFixed(2);
+
+                    $('#altToplamlar').fadeIn('slow');
+
+                    document.getElementById('toplam').value = kdvsizToplamFiyat;
+
+                }
+
+            </script>
+
+            <?php
+
+        }
+
+        if(Post::action()=="siparisUrunleri") {
+
+            $urunler = SiparisModel::siparisUrunleri(Post::rowid());
+
+            $yetkiler               = \Json::decode($user->yetkiler);
+
+            if(in_array('Siparisler/duzenle',$yetkiler)){
+
+                $duzenlemeYetkisi = "1";
+
+            }
+
+                ?>
+
+                <table class="table table-bordered table-responsive">
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th colspan="2">Ölçüler</th>
+                        <th>Adet</th>
+                        <th>Not</th>
+                        <th>Acil</th>
+                        <?php
+                        if($user->fiyat_yetkisi=="1"){
+                        ?>
+                        <th>Birim Fiyat</th>
+                        <th>Toplam Fiyat</th>
+                        <?php } ?>
+                        <th>Durum</th>
+                        <th>#</th>
+                    </tr>
+                    <?php
+            foreach ($urunler as $urun) {
+                $urunDetay = UrunModel::detay($urun->urun);
+                    ?>
+                <tr>
+                    <td><?=$urun->urun_adi?></td>
+                    <?php
+                    if($urunDetay->birim=="m2"){
+                    ?>
+                    <td>En: <?=$urun->en?></td>
+                    <td>Boy: <?=$urun->boy?></td>
+                    <?php }else{ ?>
+                        <td colspan="2"></td>
+                    <?php } ?>
+                    <td><?=$urun->adet?></td>
+                    <td><?=$urun->notu?></td>
+                    <td><?=$urun->aciliyet=="0"?"<a class='btn btn-default btn-xs degistir' id='degistir-".$urun->id."' data-id='".$urun->id."' data-name='siparisUrunuAciliyet' ><i class='glyphicon glyphicon-warning-sign'></i> </a>":"<a class='btn btn-danger btn-xs degistir' id='degistir-".$urun->id."' data-id='".$urun->id."' data-name='siparisUrunuAciliyet' ><i class='glyphicon glyphicon-warning-sign'></i> </a>"?></td>
+                    <?php
+                    if($user->fiyat_yetkisi=="1"){
+                        ?>
+                    <td><?=$urun->birim_fiyat?></td>
+                    <td><?=$urun->toplam_fiyat?></td>
+                    <?php } ?>
+                    <td><span class="label label-<?=$urun->durum_uyari?>"><?=$urun->durum_adi?></span> </td>
+                    <td>
+                        <?php
+                        if($duzenlemeYetkisi=="1"){
+                            ?>
+                            <a href="<?=URL::site('siparisler/siparisUrunKaldir/')?><?=$urun->id?>/<?=$urun->siparis?>" class="btn btn-danger btn-xs confirm"><i class="fa fa-times"></i></a>
+                        <?php
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <?php
+
+            }
+            ?>
+            </table>
+            <?php
+
+        }
+
+        if(Post::action()=="siparisUrunBilgileri"){
+
+            $user = User::data();
+
+            $yetkiler               = \Json::decode($user->yetkiler);
+
+            $urunId = Post::rowid();
+
+            $siparisUrunBilgileri   = SiparisModel::siparisUrunDetay($urunId);
+            $urun                   = UrunModel::detay($siparisUrunBilgileri->urun);
+            $siparisBilgileri       = SiparisModel::detay($siparisUrunBilgileri->siparis);
+            $uyeBilgi               = UyeModel::detay($siparisBilgileri->uye);
+
+            ?>
+
+            <div class="form-group">
+                <label class="col-md-11 text-left text-primary text-bold"><h4><?=$urun->adi?> (<?=$urun->fiyat?> <?=$urun->fiyat_birim?>)</h4></label>
+                <input type="hidden" name="urun" value="<?=$urun->id?>">
+                <input type="hidden" name="id" value="<?=$urunId?>">
+                <input type="hidden" name="uye" value="<?=$uyeBilgi->adi?>">
+            </div>
+
+            <div class="form-group">
+                <?php
+                if($user->fiyat_yetkisi=="1"){
+                    ?>
+                    <label for="adi" class="col-md-2 control-label">Fiyat:</label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+
+                            <input type="text" data-toggle="tooltip" class="form-control" <?php if(!in_array("Siparisler/fiyatDegisim",$yetkiler)){ echo "readonly title='Fiyat değiştirmeye yetkili değilsiniz!'"; } else{ } ?>  name="fiyat" id="fiyat" value="<?=AyarModel::dovizeCevir($siparisUrunBilgileri->birim_fiyat,$urun->fiyat_birim)?>">
+                            <span class="input-group-addon"><?=$urun->fiyat_birim?></span>
+                        </div>
+                    </div>
+                <?php }?>
+
+                <label for="adi" class="col-md-2 control-label">Adet:</label>
+                <div class="col-md-4">
+                    <input name="adet" id="adet" type="number" onchange="hesapla()" onkeypress="return isNumberKey(event)" class="form-control" value="<?=$siparisUrunBilgileri->adet?>">
+                </div>
+            </div>
+
+            <?php
+            if($urun->birim=="m2"){
+                ?>
+                <div class="form-group">
+                    <label for="adi" class="col-md-2 control-label">En:</label>
+                    <div class="col-md-4">
+                        <input name="en" id="en" type="text" onkeypress="return isNumberKey(event)" onkeyup="hesapla()" placeholder="En"  class="form-control" value="<?=$siparisUrunBilgileri->en?>">
+                    </div>
+
+                    <label for="adi" class="col-md-2 control-label">Boy:</label>
+                    <div class="col-md-4">
+                        <input name="boy" id="boy" type="text" onkeypress="return isNumberKey(event)" onkeyup="hesapla()" placeholder="Boy" class="form-control" value="<?=$siparisUrunBilgileri->boy?>">
+                    </div>
+                </div>
+
+                <?php
+            }
+            ?>
+            <div class="form-group">
+                <label for="adi" class="col-md-2 control-label">KDV:</label>
+                <div class="col-md-2">
+                    <input name="kdv" id="kdv" type="number" readonly class="form-control" value="<?=$urun->kdv?>">
+                </div>
+
+                <label for="adi" class="col-md-2 control-label">İskonto:</label>
+                <div class="col-md-2">
+                    <input name="iskonto" id="iskonto" type="text" readonly class="form-control" value="<?=$uyeBilgi->iskonto?>">
+                </div>
+                <?php
+                if($user->fiyat_yetkisi=="1"){
+                    ?>
+                    <label for="adi" class="col-md-2 control-label">Toplam:</label>
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control" readonly name="toplam" id="toplam" value="<?=AyarModel::dovizeCevir($siparisUrunBilgileri->toplam_fiyat,$urun->fiyat_birim)?>">
+                            <span class="input-group-addon"><?=$urun->fiyat_birim?></span>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+            <div class="form-group">
+                <label for="adi" class="col-md-2 control-label">Ek  Not:</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" name="eknot" placeholder="İsteğe bağlı ek not"></textarea>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+
+                hesapla = function(i){
+                    <?php
+                    if($urun->birim=="m2"){
+                    ?>
+                    var en      = document.getElementById('en').value;
+                    var boy     = document.getElementById('boy').value;
+                    <?php } ?>
+                    var adet    = document.getElementById('adet').value;
+                    var fiyati  = document.getElementById('fiyat').value;
+                    var kdvsi   = document.getElementById('kdv').value;
+
+                    var musteriIskonto = document.getElementById('musteriIskonto').value;
+
+                    <?php
+                    if($urun->birim=="m2"){
+                    ?>
+                    var m2          = (en*boy)/10000;
+                    var guncelFiyat = (m2*fiyati)*adet;
+
+                    <?php
+                    }else{ ?>
+
+                    var guncelFiyat = fiyati*adet;
+
+                    <?php } ?>
+
+
+                    if (musteriIskonto>0){
+
+                        var indirimTutari   = (guncelFiyat/100)*musteriIskonto;
+                        var yeniGuncelFiyat = guncelFiyat-indirimTutari;
+
+                        guncelFiyat = yeniGuncelFiyat;
+
+                        document.getElementById('iskonto').value = musteriIskonto;
+
+                    }
+
+                    var kdvFiyat    = (guncelFiyat/100)*kdvsi;
+                    var kdvsizToplamFiyat = guncelFiyat.toFixed(2);
+                    var kdvliFiyat  = kdvFiyat+guncelFiyat;
+                    var toplamFiyat = kdvliFiyat.toFixed(2);
+
+                    $('#altToplamlar').fadeIn('slow');
+
+                    document.getElementById('toplam').value = kdvsizToplamFiyat;
+
+                }
+
+            </script>
+
+            <?php
+
+        }
+
+        if(Post::action()=="siparisUrunDurumlari"){
+
+            $urun               = Post::rowid();
+            $siparisUrunDetay   = SiparisModel::siparisUrunDetay($urun);
+
+            $durumlar = SiparisModel::siparisDurumlari();
+            $siparisDurumUyarilari = UyariModel::siparisUyarilari($siparisUrunDetay->durum);
+
+            ?>
+                <input type="hidden" name="pk" value="<?=$urun?>">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="adi" class="col-sm-2 control-label">Sipariş Durumu</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="durumlar" name="value">
+                                    <?php
+                                    foreach ($durumlar as $durum) {
+                                        ?>
+                                        <option value="<?=$durum->id?>" <?php if ($siparisUrunDetay->durum==$durum->id){ echo"selected='selected'"; } ?>><?=$durum->adi?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adi" class="col-sm-2 control-label">Uyarılar</label>
+                            <div class="col-sm-10">
+
+                                <?php
+                                foreach ($siparisDurumUyarilari as $sdu) {
+                                    ?>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input value="<?=$sdu->uyari?>" name="uyarilar[]" required type="checkbox"><?=$sdu->uyari?>
+                                            <span class="label label-<?=$sdu->onem?>">
+                                                <?php
+                                                if($sdu->onem=="danger"){ echo "Çok Önemli" ;}
+                                                if($sdu->onem=="warning"){ echo "Önemli" ;}
+                                                if($sdu->onem=="info"){ echo "Dikkat gerektirir"; ;}
+                                                ?>
+                                            </span>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            <?php
+
+        }
+
+        if(Post::action()=="siparisFisi"){
+
+            $siparisId      =   Post::rowid();
+            $siparisDetay   =   SiparisModel::detay($siparisId);
+            $uyeBlgileri    =   UyeModel::detay($siparisDetay->uye);
+            $siparisurunleri=   SiparisModel::siparisUrunleri($siparisDetay->siparisId);
+
+            ?>
+
+            <table class="table table-bordered yazdirilacak" style="border: solid 2px #4e4e4e">
+                <tr style="border-bottom: solid 2px #4e4e4e">
+                    <td>
+                        <img src="<?=URL::site()?>../Uploads/site/logo.png" class="img-responsive" style="max-height: 50px">
+                    </td>
+                    <td class="text-center">
+                        <p><strong>SİPARİŞ FİŞİ</strong></p>
+                    </td>
+                </tr>
+                <?php
+                if($uyeBlgileri->fatura_adresi=="" or $uyeBlgileri->fatura_adresi=="null"){
+                ?>
+                <tr>
+                    <td colspan="2"><h1>MÜŞTERİNİ FATURA BİLGİLERİ YOK <br>
+                        LÜTFEN FATURA BİLGİLERİNİ GİRİNİZ</h1><br>
+                        <a href="<?=URL::site('uye/form/').$siparisDetay->uye?>" target="_blank" class="btn btn-danger">FATURA BİLGİLERİNİ DÜZENLE</a>
+                    </td>
+                </tr>
+                <?php
+                exit();
+                }?>
+                <tr style="border-bottom: solid 2px #403f3f">
+                    <td colspan="2">
+                        <strong>Firma Bilgileri</strong><br>
+                        <?=AyarModel::defaultAyarlar('firmaAdi')?><br>
+                        <?=AyarModel::defaultAyarlar('faturaAdresi')?><br>
+                    </td>
+                </tr>
+                <tr style="border-bottom: solid 2px #403f3f">
+                    <td colspan="2">
+                        <strong>Müşteri Bilgileri</strong><br>
+                        <?=$uyeBlgileri->firma_adi?><br>
+                        <?=$uyeBlgileri->fatura_adresi?><br>
+                    </td>
+                </tr>
+                <tr style="border-bottom: solid 2px #403f3f">
+                    <td colspan="2">
+                        <strong>Sipariş Bilgileri</strong><br>
+                        Sipariş no: <?=$siparisDetay->siparis_kodu==""?"TRM20".$siparisId:$siparisDetay->siparis_kodu?><br>
+                        <table class="table table-condensed">
+                            <tr>
+                                <td>
+                                    <?php
+                                    foreach ($siparisurunleri as $su) {
+                                        echo $su->adet." x ".$su->urun_adi."<br>";
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="border-bottom: solid 2px #403f3f">
+                    <td colspan="2">
+                        Not: Faturanız firmamız tarafından kayıtlı E-posta adresinize elektronik fatura olarak iletilecektir.<br>
+                        Faturanız tarafınıza ulaşmazsa lütfen muhasebe@termofom.com adresine mail gönderiniz.
+                    </td>
+
+                </tr>
+            </table>
+
+            <?php
+
+        }
+
+        if(Post::action()=="faturaUrunleri") {
+
+            $urunler = InternalFaturaModel::faturaUrunleri(Post::rowid());
+
+            ?>
+
+            <table class="table table-bordered table-responsive">
+                <tr>
+                    <th>Stok Adı</th>
+                    <th>F. Ürün Adı</th>
+                    <th>Birim Fiyat</th>
+                    <th>Adet</th>
+                    <th>KDV</th>
+                    <th>Toplam</th>
+                </tr>
+                <?php
+                foreach ($urunler as $urun) {
+                    $urunDetay = MalzemeModel::detay($urun->urun);
+                    ?>
+                    <tr>
+                        <td><?=$urunDetay->adi?></td>
+                        <td><?=$urun->urun_adi?></td>
+                        <td><?=$urun->fiyat?></td>
+                        <td><?=$urun->miktar?></td>
+                        <td><?=$urun->kdv?></td>
+                        <td><?=$urun->tutar+(($urun->tutar/100)*$urun->kdv)?></td>
+                        <td>
+                            <a href="<?=URL::site('tedarikci/alimSil/')?><?=$urun->id?>" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></a>
+
+                        </td>
+                    </tr>
+                    <?php
+
+                }
+                ?>
+            </table>
+            <?php
+
+        }
+
+        if(Post::action()=="faturaUrunDuzenle") {
+
+            $id = Post::rowid();
+
+            $urunDetay = InternalFaturaModel::faturaUrunDetay($id);
+
+            $faturaDetay = InternalFaturaModel::detay($urunDetay->fatura);
+
+            ?>
+
+            <div class="container-fluid">
+                <form class="form-horizontal" action="<?=URL::site('fatura/urunGuncelle/')?><?=$id?>" method="post">
+                    <input type="hidden" name="gorevId" value="<?=$id?>">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box">
+                                        <div class="box-header"><h3>Fatura Ürün Detayları</h3></div>
+                                        <div class="box-body">
+                                            <table class="table table-hover">
+                                                <tbody>
+
+                                                    <tr>
+                                                        <th scope="row">Ürün</th><td><?=MalzemeModel::malzemeBilgi($urunDetay->urun)['adi']?></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">Fatura Adı</th>
+                                                        <td><input type="text" name="urunAdi" class="form-control" value="<?=$urunDetay->urun_adi?>"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">Miktar</th><td><input type="text" id="miktar-1" name="miktar" onkeyup="hesapla(1)" class="form-control" value="<?=$urunDetay->miktar?>"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">Fiyat</th><td><input type="text" id="fiyat-1" name="fiyat" class="form-control" value="<?=$urunDetay->fiyat?>"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">KDV</th>
+                                                        <td>
+                                                            <select class="form-control"  id="kdv-1" name="kdv"  onchange="hesapla(1)">
+                                                                <option value="18" <?=$urunDetay->fiyat==18?'selected':''?> >18</option>
+                                                                <option value="8" <?=$urunDetay->fiyat==8?'selected':''?>>8</option>
+                                                                <option value="0" <?=$urunDetay->fiyat==0?'selected':''?>>0</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">Tutar</th><td><input type="text" id="tutar-1" placeholder="tutar" readonly class="form-control" name="tutar" value="<?=$urunDetay->tutar?>"></td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+
+                                            <script type="text/javascript">
+                                                hesapla = function(i){
+                                                    var miktar = document.getElementById('miktar-'+i).value;
+                                                    var fiyat = document.getElementById('fiyat-'+i).value;
+                                                    var kdv = document.getElementById('kdv-'+i).value;
+                                                    document.getElementById('tutar-'+i).value = ((((miktar*fiyat)/100)*kdv)+(miktar*fiyat)).toFixed(2);
+                                                }
+                                            </script>
+
+                                        </div>
+                                        <div class="box-footer">
+                                            <button type="submit" class="btn btn-success pull-right">Kaydet</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <?php
+
+        }
+
+
+
+    }
+
+
+    public function s404(){
+
+    }
+}
