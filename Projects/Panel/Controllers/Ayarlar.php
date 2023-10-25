@@ -274,6 +274,7 @@ class Ayarlar extends Controller
 
     }
 
+
     public function odemeYontemleri(){
 
         $kasaHesaplar = KasaModel::kasaHesaplari();

@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 Use User,Validation,Post,Json,Encode,Upload,URL;
-Use PersonelModel,AyarModel;
+Use PersonelModel,AyarModel,UrunModel;
 
 class By extends Controller
 {
@@ -76,6 +76,37 @@ class By extends Controller
             echo '<option value="'.$mahalle->mahalle_key.'">'.$mahalle->mahalle_adi.'</option>';
         }
 
+        echo '</select>';
+
+    }
+
+    public function urunOdemePeriodlari($id):void{
+        $urunDetay = UrunModel::detay($id);
+
+        echo '<select class="select2 form-select" required id="odeme_periyodu" name="odeme_periyodu">';
+
+
+
+            if ($urunDetay->fiyat >0) {
+                echo '<option value="T">Tek Seferlik</option>';
+            }
+
+            if ($urunDetay->aylik_fiyat >0) {
+                echo '<option value="A">Aylık</option>';
+            }
+
+            if ($urunDetay->uc_aylik_fiyat >0) {
+                echo '<option value="3A">3 Aylık</option>';
+            }
+
+            if ($urunDetay->alti_aylik_fiyat >0) {
+                echo '<option value="6A">6 Aylık</option>';
+            }
+
+            if ($urunDetay->yillik_fiyat >0) {
+                echo '<option value="Y">Yıllık</option>';
+            }
+        echo '<option value="0">Ücretsiz</option>';
         echo '</select>';
 
     }

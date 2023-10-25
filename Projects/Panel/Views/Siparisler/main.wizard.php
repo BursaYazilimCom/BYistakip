@@ -31,7 +31,7 @@
                                     <h4 class="card-title">Siparişler</h4>
                                 </div>
                                 <div class="dt-action-buttons text-end">
-                                    <a href="{{URL::site('siparişler/form')}}" class="dt-button create-new btn btn-primary" tabindex="0" ><span><i data-feather="plus"></i>EKLE</span></a>
+                                    <a href="{{URL::site('siparisler/form')}}" class="dt-button create-new btn btn-primary" tabindex="0" ><span><i data-feather="plus"></i>EKLE</span></a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -41,41 +41,38 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Belge No</th>
-                                            <th>Cari</th>
-                                            <th>Ödeme Türü</th>
-                                            <th>Toplam</th>
+                                            <th>Müşteri</th>
+                                            <th>Ödeme Yöntemi</th>
                                             <th>Ödeme Durumu</th>
+                                            <th>Toplam Tutar</th>
+                                            <th>Sipariş Tarihi</th>
+                                            <th>Fatura</th>
                                             <th>Durum</th>
                                             <th></th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        @foreach($siparisler['liste'] as $s)
+                                        <tbody id="addDataTable">
+                                        @foreach($listele['liste'] as $s)
                                         <tr id="row-{{$s->id}}">
                                             <td>{{$s->id}}</td>
-                                            <td>{{$s->belge_no}}</td>
-                                            <td>{{$s->odeme_turu}}</td>
+                                            <td>{{$s->cari}}</td>
+                                            <td>{{AyarModel::odemeYontemiAdi($s->odeme_yontemi)}}</td>
+                                            <td>{{$s->odeme_durumu=="1"?"Ödendi":"Ödeme Bekliyor"}}</td>
                                             <td>{{$s->genel_toplam_tutari}}</td>
-                                            <td>{{$s->odeme_durumu}}</td>
-                                            <td>
-                                                @if($s->durum=="1")
-                                                <span class="badge bg-success">Aktif</span>
-                                                @else
-                                                <span class="badge bg-danger">Pasif</span>
-                                                @endif
-                                            </td>
+                                            <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
+                                            <td>{{$s->fatura=="0"?"Faturalanmadı":"Faturalandı"}}</td>
+                                            <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
                                                         <i data-feather="more-vertical"></i>
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-end">
-                                                        <a href="{{URL::site('siparisler/form')}}/{{$s->id}}" class="dropdown-item">
+                                                        <a href="{{URL::site('siparisler/duzenle')}}/{{$s->id}}" class="dropdown-item">
                                                             <i data-feather="edit-2" class="me-50"></i>
                                                             <span>Düzenle</span>
                                                         </a>
-                                                        <a class="dropdown-item" onclick="deleteAction('{{$s->id}}','{{URL::site('urun/ajax')}}','siparisSil')">
+                                                        <a class="dropdown-item" onclick="deleteAction('{{$s->id}}','{{URL::site('siparisler/ajax')}}','siparisSil')">
                                                             <i data-feather="trash" class="me-50"></i>
                                                             <span>Sil</span>
                                                         </a>
@@ -89,7 +86,7 @@
                                     </table>
                                 </div>
                                 <hr>
-                                {{$siparisler['sayfalama']}}
+                                {{$listele['sayfalama']}}
                             </div>
                         </div>
                     </div>

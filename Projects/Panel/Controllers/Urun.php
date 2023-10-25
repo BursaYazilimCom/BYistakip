@@ -287,6 +287,12 @@ class Urun extends Controller
 
                 break;
 
+            case "urunOdemePeriodlari":
+
+
+
+                break;
+
             /*********************************************************/
 
 

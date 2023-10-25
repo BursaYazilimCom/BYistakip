@@ -170,21 +170,14 @@ class InternalSiparisModel extends Model
     public function ekle($data){
 
         $ekle = DB::insert('siparisler',[
-                    'belge_no'      =>$data['belge_no'],
+
                     'cari'           =>$data['cari'],
-                    'siparis_notu'  =>$data['siparis_notu'],
-                    'toplam_fiyat'  =>$data['toplam_fiyat'],
-                    'toplam_tutar'  =>$data['toplam_tutar'],
-                    'indirim_tutar'  =>$data['indirim_tutar'],
-                    'ara_toplam_tutar'  =>$data['ara_toplam_tutar'],
-                    'kdv_tutari'  =>$data['kdv_tutari'],
-                    'genel_toplam_tutari'  =>$data['genel_toplam_tutari'],
-                    'odeme_turu'  =>$data['odeme_turu'],
+                    'odeme_yontemi'  =>$data['odeme_yontemi'],
                     'odeme_durumu'  =>$data['odeme_durumu'],
                     'olusturan'  =>$data['olusturan'],
                     'kayit_sekli'  =>$data['kayit_sekli'],
                     'fatura'  =>$data['fatura'],
-                    'teslim_tarihi' =>$data['teslim_tarihi'],
+                    'siparis_notu'  =>$data['siparis_notu'],
                     'durum'         =>$data['durum']
                 ]);
 
@@ -243,23 +236,27 @@ class InternalSiparisModel extends Model
         $detay = $this->detay($data['siparis']);
 
         $ekle = DB::insert('siparis_urunleri',[
-            'siparis'       =>$data['siparis'],
-            'urun'          =>$data['urun'],
-            'urun_adi'      =>$data['urun_adi'],
-            'urun_kodu'     =>$data['urun_kodu'],
-            'uye'           =>$data['uye'],
-            'en'            =>$data['en'],
-            'boy'           =>$data['boy'],
-            'adet'          =>$data['adet'],
-            'notu'          =>$data['notu'],
-            'resim'         =>$data['resim'],
-            'birim_fiyat'   =>$data['birim_fiyat'],
-            'kdv'           =>$data['kdv'],
-            'toplam_fiyat'  =>$data['toplam_fiyat'],
-            'durum'         =>$detay->durum
+            'siparis'           =>$data['siparis'],
+            'urun'              =>$data['urun'],
+            'urun_adi'          =>$data['urun_adi'],
+            'cari'              =>$data['cari'],
+            'adet'              =>$data['adet'],
+            'notu'              =>$data['notu'],
+            'odeme_periyodu'    =>$data['odeme_periyodu'],
+            'para_birimi'       =>$data['para_birimi'],
+            'gecerli_kur'       =>$data['gecerli_kur'],
+            'fiyat_sabitle'     =>$data['fiyat_sabitle'],
+            'birim_fiyat'       =>$data['birim_fiyat'],
+            'kdv'               =>$data['kdv'],
+            'kdv_tutari'        =>$data['kdv_tutari'],
+            'toplam_fiyat'      =>$data['toplam_fiyat'],
+            'siparis_tarihi'    =>$data['siparis_tarihi'],
+            'baslangic_tarihi'  =>$data['baslangic_tarihi'],
+            'bitis_tarihi'      =>$data['bitis_tarihi'],
+            'durum'             =>$data['durum'],
         ]);
 
-        //echo DB::stringQuery();
+        echo DB::stringQuery();
 
         return $ekle;
 
@@ -354,8 +351,6 @@ class InternalSiparisModel extends Model
 
         $guncelle = DB::where('id',$data['id'])->update('siparisler',[
             'toplam_tutar'          =>$data['toplam_tutar'],
-            'indirim_tutar'         =>$data['indirim_tutar'],
-            'ara_toplam_tutar'      =>$data['ara_toplam_tutar'],
             'kdv_tutari'            =>$data['kdv_tutari'],
             'genel_toplam_tutari'   =>$data['genel_toplam_tutari']
         ]);
@@ -431,11 +426,10 @@ class InternalSiparisModel extends Model
     public function siparisGesmisEkle($data){
 
         $ekle = DB::insert('siparis_gecmisi',[
-                    'uye'       =>$data['uye'],
-                    'siparis_id'=>$data['siparis_id'],
-                    'aciklama'  =>$data['aciklama'],
-                    'guncelleyen'=>$data['guncelleyen'],
-                    'durum'     =>$data['durum']
+                    'cari'          =>$data['cari'],
+                    'siparis'       =>$data['siparis'],
+                    'aciklama'      =>$data['aciklama'],
+                    'guncelleyen'   =>$data['guncelleyen']
                 ]);
 
         return $ekle;

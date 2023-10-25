@@ -59,7 +59,7 @@
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-3">
-                                                    <label class="col-form-label" for="urun_kodu">Müşteri</label>
+                                                    <label class="col-form-label" for="cari">Müşteri</label>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <select class="select2 form-select" id="select2-basic" name="cari">
@@ -78,10 +78,10 @@
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-3">
-                                                    <label class="col-form-label" for="email">Ödeme Yöntemi</label>
+                                                    <label class="col-form-label" for="odeme_yontemi">Ödeme Yöntemi</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <select class="select2 form-select" name="grup" id="grup">
+                                                    <select class="select2 form-select" name="odeme_yontemi" id="odeme_yontemi">
 
                                                         <option value="">--Seçiniz--</option>
                                                         @foreach($odemeYontemleri as $oy)
@@ -115,178 +115,119 @@
                                             <div class="mb-1 row">
                                                 <div class="col-sm-12">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" name="kayit_sekli" id="kayit_sekli" value="0" />
+                                                        <input class="form-check-input" type="checkbox" name="kayit_sekli" id="kayit_sekli" value="1" />
                                                         <label class="form-check-label" for="kayit_sekli">Teklif olarak kaydet</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" name="odeme_durumu" id="odeme_durumu" value="1" />
+                                                        <input class="form-check-input" type="checkbox" name="odeme_durumu" id="odeme_durumu"  onclick="odemeAlindi()" value="1" />
                                                         <label class="form-check-label" for="odeme_durumu">Ödeme Yapıldı</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" name="fatura" id="fatura" value="1" />
+                                                        <input class="form-check-input" type="checkbox" name="fatura" id="fatura" value="1" onclick="faturaOlustur()" />
                                                         <label class="form-check-label" for="fatura">Fatura Oluştur</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-12" id="kasaHesabiDiv" style="display: none">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="kasa_hesabı">Kasa Hesabı <span class="text-danger">*(Ödemenin Kasaya İşlenmesi için gereklidir)</span></label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <select class="select2 form-select" name="kasa_hesabı" id="kasa_hesabı">
 
-                                        <div class="col-12">
-                                            <label class="form-label" for="teslim_tarihi">Teslim tarihi</label>
-                                            <div class="input-group input-group-merge">
-                                                @Form::vRequired()->id('teslim_tarihi')->placeholder('Teslim tarihi')->text('teslim_tarihi','',['class'=>'form-control'])
+                                                        <option value="">--Seçiniz--</option>
+                                                        @foreach($kasaHesaplari as $kh)
+                                                        <option value="{{$kh->id}}">{{$kh->adi}}</option>
+                                                        @endforeach
+
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-
+                                        <div class="col-12" id="faturaNoDiv" style="display: none">
+                                            <label class="form-label" for="fatura_no">Fatura No  <span class="text-danger">*(Oluşturulan faturaya doğru numara verilmesi için gereklidir. Not:E-fatura kullanıyorsanız gerekyoktur.)</span></label>
+                                            <div class="input-group input-group-merge">
+                                                @Form::id('fatura_no')->placeholder('Fatura No')->text('fatura_no','',['class'=>'form-control'])
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <label class="form-label" for="siparis_notu">Sipairş Notu</label>
                                             <div class="input-group input-group-merge">
-                                                @Form::id('siparis_notu')->placeholder('Teslim tarihi')->textarea('siparis_notu','',['class'=>'form-control'])
+                                                @Form::id('siparis_notu')->placeholder('Sipariş Notu')->textarea('siparis_notu','',['class'=>'form-control'])
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="col-md-8 col-12">
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Ürünleri</h4>
+                                        <a class="dt-button create-new btn btn-primary" tabindex="0" data-bs-toggle="modal" data-bs-target="#modals-add"><span><i data-feather="plus"></i>ÜRÜN EKLE</span></a>
                                     </div>
-
                                         <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <div class="mb-1 row">
-                                                        <div class="col-sm-12">
-                                                            <label class="col-form-label" for="urun_kodu">Ürün / Hizmet</label>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <select class="select2 form-select" id="select2-basic" name="cari">
-                                                                <option value="">--Seçiniz--</option>
-                                                                @foreach($urunler as $urun)
-                                                                <option value="{{$urun->id}}">{{$urun->adi}}</option>
-                                                                @endforeach
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Kod</th>
+                                                        <th>Ürün/Hizmet</th>
+                                                        <th>Ödeme Periyodu</th>
+                                                        <th>Adet</th>
+                                                        <th>Sipariş Notu</th>
+                                                        <th>Baş. Tar.</th>
+                                                        <th>Geçerli Fiyat</th>
+                                                        <th>Kdv</th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="addDataTable">
+                                                    @foreach(Cart::selectAll() as $sUrun)
 
-
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="mb-1 row">
-                                                        <div class="col-sm-12">
-                                                            <label class="col-form-label" for="odeme_periyodu">Ödeme Periyodu</label>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <select class="select2 form-select" id="odeme_periyodu" name="odeme_periyodu">
-                                                                <option value="">--Seçiniz--</option>
-                                                                <option value="0">Ücretsiz</option>
-                                                                <option value="T">Tek Seferlik</option>
-                                                                <option value="A">Aylık</option>
-                                                                <option value="3A">3 Aylık</option>
-                                                                <option value="6A">6 Aylık</option>
-                                                                <option value="Y">Yıllık</option>
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="mb-1 row">
-                                                        <div class="col-sm-12">
-                                                            <label class="col-form-label" for="adet">Adet</label>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <input type="number" class="form-control" id="adet" name="adet" placeholder="Adet">
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-
-                                            <div class="col-12">
-                                                <div class="mb-1 row">
-                                                    <div class="col-sm-3">
-                                                        <label class="col-form-label" for="siparis_notu">Sipariş Notu</label>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <input type="text" class="form-control" id="siparis_notu" name="siparis_notu" placeholder="Sipariş Notu">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="mb-1 row">
-                                                        <div class="col-sm-12">
-                                                            <label class="col-form-label" for="farkli_fiyat">Farklı Fiyat</label>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <input type="text" class="form-control" id="farkli_fiyat" name="farkli_fiyat" placeholder="Farklı Fiyat">
-
-                                                        </div>
-                                                        <div class="col-sm-9">
-                                                            Eğer farklı fiyat vermek istiyorsanız buradan geçerli fiyatı giriniz
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-2">
-                                                    <div class="mb-1 row">
-                                                        <div class="col-sm-12">
-                                                            <label class="col-form-label" for="kdv">Ürün KDV</label>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <select class="select2 form-select" id="kdv" name="kdv">
-                                                                <option value="0">--Seçiniz--</option>
-                                                                <option value="0">KDV (%0)</option>
-                                                                <option value="10">KDV (%10)</option>
-                                                                <option value="20">KDV (%20)</option>
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-4">
-                                                    <div class="mb-1 row">
-                                                        <div class="col-sm-12">
-                                                            <label class="col-form-label" for="gelecek_fiyat_secimi">Sonraki Faturalarda</label>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="checkbox" name="gelecek_fiyat_secimi" id="gelecek_fiyat_secimi" value="0" />
-                                                                <label class="form-check-label" for="gelecek_fiyat_secimi">Güncel ürün fiyatını önemseme</label>
+                                                    <tr>
+                                                        <td>{{$sUrun["serial"]}}</td>
+                                                        <td>{{$sUrun["urun_adi"]}}</td>
+                                                        <td>{{$sUrun["odemePeriyoduTanim"]}}</td>
+                                                        <td>{{$sUrun["adet"]}}</td>
+                                                        <td>{{$sUrun["siparis_notu"]}}</td>
+                                                        <td>{{$sUrun["baslangic_tarihi"]}}</td>
+                                                        <td>{{$sUrun["fiyat"]}}{{$sUrun["fiyat_birim"]}}</td>
+                                                        <td>{{$sUrun["urunKdv"]}}</td>
+                                                        <td>
+                                                            <div class="dropdown">
+                                                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                                    <i data-feather="more-vertical"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" onclick="deleteAction('{{$sUrun['serial']}}','{{URL::site('siparisler/ajax')}}','sepetUrunSil')">
+                                                                        <i data-feather="trash" class="me-50"></i>
+                                                                        <span>Sil</span>
+                                                                    </a>
+                                                                </div>
                                                             </div>
+                                                        </td>
+                                                    </tr>
 
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    @endforeach
 
-
-
+                                                    </tbody>
+                                                </table>
                                             </div>
 
 
-
-
-
+                                            <hr>
                                         </div>
 
-
-
-
                                         <div class="card-body">
                                             <div class="row">
 
-
                                                 <div class="col-sm-12">
-                                                    <button type="submit" style="width: 100%" class="btn btn-primary me-1">Kaydet</button>
+                                                    <button type="submit" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> KAYDET</span></button>
                                                 </div>
 
                                             </div>
@@ -302,9 +243,195 @@
 
                 </div>
             </section>
-            <!-- Basic Horizontal form layout section end -->
+
+            <div class="modal fade" id="modals-add" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-transparent">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h1 class="text-center mb-1" id="modalTitle">Ürün EKle</h1>
+
+                            <!-- form -->
+                            @Form::csrf()->prevent()->action('Siparisler/ajax')->open('submitForm',['id'=>'submitForm','class'=>'row gy-1 gx-2 mt-75'])
+                            <input type="hidden" name="dataAction" id="dataAction" value="sepeteUrunEkle">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-1 row">
+                                        <div class="col-sm-12">
+                                            <label class="col-form-label" for="urun">Ürün / Hizmet</label>
+                                        </div>
+                                        <script type="text/javascript">
+                                            function odemePeriodlari(urunId)
+                                            {
+                                                $("#odeme_periyodu").load("{{URL::site('By/urunOdemePeriodlari')}}/"+urunId);
+                                            }
+
+                                        </script>
+                                        <div class="col-sm-12">
+                                            <select class="select2 form-select" required id="urun" name="urun" onchange="odemePeriodlari(this.value)">
+                                                <option value="">--Seçiniz--</option>
+                                                @foreach($urunler as $urun)
+                                                    <option value="{{$urun->id}}">{{$urun->adi}} (
+                                                        @if($urun->fiyat>0)
+                                                        Tek Seferlik:{{$urun->fiyat}},
+                                                        @endif
+                                                        @if($urun->aylik_fiyat>0)
+                                                        Aylık:{{$urun->aylik_fiyat}},
+                                                        @endif
+                                                        @if($urun->uc_aylik_fiyat>0)
+                                                        3 Aylık:{{$urun->uc_aylik_fiyat}},
+                                                        @endif
+                                                        @if($urun->alti_aylik_fiyat>0)
+                                                        6 Aylık:{{$urun->alti_aylik_fiyat}},
+                                                        @endif
+                                                        @if($urun->yillik_fiyat>0)
+                                                        Yıllık:{{$urun->yillik_fiyat}}
+                                                        @endif )
+                                                        ({{$urun->fiyat_birim}})
+                                                        </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-1 row">
+                                        <div class="col-sm-12">
+                                            <label class="col-form-label" for="odeme_periyodu">Ödeme Periyodu</label>
+                                        </div>
+                                        <div class="col-sm-12">
+
+                                            <select class="select2 form-select" id="odeme_periyodu" name="odeme_periyodu">
+                                                <option value="">--Önce Ürün Seçiniz--</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-1 row">
+                                        <div class="col-sm-12">
+                                            <label class="col-form-label" for="adet">Adet</label>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            @Form::vNumeric()->id('adet')->placeholder('Adet')->number('adet','1',['class'=>'form-control'])
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-1 row">
+                                        <div class="col-sm-12">
+                                            <label class="col-form-label" for="kdv">Ürün KDV</label>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <select class="select2 form-select" id="kdv" name="kdv">
+                                                <option value="0">--Seçiniz--</option>
+                                                <option value="0">KDV (%0)</option>
+                                                <option value="10">KDV (%10)</option>
+                                                <option value="20" selected>KDV (%20)</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="siparis_notu">Ürün Sipariş Notu</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        @Form::id('siparis_notu')->placeholder('Sipariş Notu')->textarea('siparis_notu','',['class'=>'form-control'])
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="form-label" for="baslangic_tarihi">Ürün/Hizmet Başlangıç Tarihi <span class="text-danger">(Boş bırakırsanız bugünün tarihini alır)</span></label>
+                                    <div class="input-group input-group-merge">
+                                        @Form::id('baslangic_tarihi')->placeholder(Date::current())->text('baslangic_tarihi','',['class'=>'form-control'])
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-1 row">
+                                        <div class="col-sm-12">
+                                            <label class="col-form-label" for="fiyat_sabitle">Sonraki Faturalarda</label>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" name="fiyat_sabitle" id="fiyat_sabitle" value="1" />
+                                                <label class="form-check-label" for="fiyat_sabitle">Sonraki faturalarda güncel ürün fiyatını önemseme</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-1 row">
+                                        <div class="col-sm-12">
+                                            <label class="col-form-label" for="fiyat">Fiyat</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            @Form::id('fiyat')->number('fiyat','0',['class'=>'form-control'])
+                                        </div>
+                                        <div class="col-sm-9">
+                                            Eğer farklı fiyat vermek istiyorsanız buradan geçerli fiyatı giriniz. Eğer boş bırakırsanız ürünün geçerli fiyatı alınır.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary me-1 mt-1">Kaydet</button>
+                                <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-dismiss="modal" aria-label="Close">
+                                    Vazgeç
+                                </button>
+                            </div>
+                            @Form::close()
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
 </div>
 <!-- END: Content-->
+<script type="text/javascript">
+    function odemeAlindi() {
+        // Get the checkbox
+        var checkBox = document.getElementById("odeme_durumu");
+        // Get the output text
+        var text = document.getElementById("kasaHesabiDiv");
+
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true){
+            text.style.display = "block";
+            $("#kasa_hesabı").attr('required',true);
+        } else {
+            text.style.display = "none";
+            $("#kasa_hesabı").attr('required',false);
+        }
+    }
+    function faturaOlustur() {
+        // Get the checkbox
+        var checkBox = document.getElementById("fatura");
+        // Get the output text
+        var text = document.getElementById("faturaNoDiv");
+
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true){
+            text.style.display = "block";
+            $("#fatura_no").attr('required',true);
+        } else {
+            text.style.display = "none";
+            $("#fatura_no").attr('required',false);
+        }
+    }
+</script>

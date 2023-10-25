@@ -31,6 +31,33 @@ class InternalAyarModel extends Model
 
     }
 
+    public function odemePeriyodu($id){
+        $periyodlar = [
+            '0' => 'Ücretsiz',
+            'T' => 'Tek Seferlik',
+            'A' => 'Aylık',
+            '3A' => '3 Aylık',
+            '6A' => '6 Aylık',
+            'Y' => 'Yıllık'
+        ];
+
+        return $periyodlar[$id];
+
+    }
+
+    public function odemePeriyoduEklenecekGun($id){
+        $periyodlar = [
+            '0' => 0,
+            'T' => 0,
+            'A' => 30,
+            '3A' => 91,
+            '6A' => 183,
+            'Y' => 365
+        ];
+
+        return $periyodlar[$id];
+    }
+
     public function tarihDuzelt($tarih){
 
         $t = explode(".",$tarih);
@@ -314,6 +341,12 @@ class InternalAyarModel extends Model
         return $veri;
     }
 
+    public function paraBirimDetay($kod){
+        $veri = DB::where('kod',$kod)->para_birimleri()->row();
+
+        return $veri;
+    }
+
     public function paraBirimiSembol($key){
 
         $veri = DB::where('id',$key)->para_birimleri()->row();
@@ -369,6 +402,15 @@ class InternalAyarModel extends Model
         return $guncelle;
 
     }
+    public function tlCevir($para,$birim){
+
+        $kur = DB::where('kod',$birim)->para_birimleri()->row();
+
+        $guncelKur = $para*$kur->guncel_kur;
+
+        return $guncelKur;
+
+    }
 
     /********************/
 
@@ -390,7 +432,7 @@ class InternalAyarModel extends Model
 
         $veri = DB::where('id',$id)->siparis_durumlari()->row();
 
-        return $veri->baslik;
+        return $veri->adi;
     }
 
     static function siparisDurumGuncelle($data){

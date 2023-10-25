@@ -285,22 +285,32 @@
 </div>
 <!-- END: Content-->
 
-<div class="modal fade" id="openModal" role="dialog">
-    <div class="modal-dialog" role="document">
+
+
+<div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Kasa Hesap Bilgi</h4>
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <h1 class="text-center mb-1" id="modalTitle">Kasa Hesap Bilgi</h1>
+
                 <div class="fetched-data"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+
+
+                <div class="col-12 text-center">
+                    <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-dismiss="modal" aria-label="Close">
+                        Kapat
+                    </button>
+                </div>
+                @Form::close()
             </div>
         </div>
     </div>
 </div>
+
+
 
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>

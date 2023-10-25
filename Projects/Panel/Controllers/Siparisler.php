@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
-use User,Method,Post,Redirect,Upload,Pagination,Date,File,Email,URL,Security;
-use AyarModel,UyeModel,CariModel,SiparisModel,UrunModel;
+use User,Method,Post,Redirect,Upload,Pagination,Date,Time,File,Email,URL,Security,Cart,Validation,Json;
+use AyarModel,UyeModel,CariModel,SiparisModel,UrunModel,KasaModel;
 
 class Siparisler extends Controller
 {
@@ -41,7 +41,7 @@ class Siparisler extends Controller
         $siparisler     = SiparisModel::liste($durum,$sayfa,$filtre);
         $durumlar       = AyarModel::siparisDurumlari();
 
-        View::siparisler($siparisler);
+        View::listele($siparisler);
         View::siparisDurumlari($durumlar);
 
         View::durumum($durum);
@@ -85,6 +85,8 @@ class Siparisler extends Controller
 
     public function form($id=""){
 
+        //Cart::deleteAll();
+
         $user = User::data();
 
         if (!empty($id)){
@@ -97,12 +99,14 @@ class Siparisler extends Controller
             ];
         }
 
+        $kasaHesaplari = KasaModel::kasaHesaplari();
         $siparisDurumlari = AyarModel::siparisDurumlari();
         $musteriler = CariModel::liste();
         $odemeYontemleri = AyarModel::odemeYontemleri();
         $urunler = UrunModel::tumListe();
 
 
+        View::kasaHesaplari($kasaHesaplari);
         View::uyeBilgi($uyeBilgi);
         View::musteriler($musteriler);
         View::siparisDurumlari($siparisDurumlari);
@@ -113,241 +117,116 @@ class Siparisler extends Controller
 
     }
 
-    public function kaydet($uye,$taslak){
+    public function kaydet(){
 
         $user = User::data();
 
-        $musteri            = $uye;
-        $musteriBilgi       = UyeModel::detay($musteri);
-        $belge_no           = Post::belge_no();
-        $siparisDurumu      = Post::durum();
-        $siparis_adi        = Post::siparis_adi();
+        $musteri            = Post::cari();
+        $odeme_yontemi      = Post::odeme_yontemi();
+        $odeme_durumu       = Post::odeme_durumu()=="1"?"1":"0";
+        $durum              = Post::durum();
+        $kayit_sekli        = Post::kayit_sekli()=="1"?"0":"1";
+        $fatura             = Post::fatura();
         $siparis_notu       = Post::siparis_notu();
-        $siparis_yeri       = Post::siparis_yeri();
-        $grafik_hizmeti     = Post::grafik_hizmeti();
-        $montaj_hizmeti     = Post::montaj_hizmeti();
-        $kayit_sekli        = Post::kayit_sekli();
-        $teslim_tarihi      = AyarModel::tarihDuzelt(Post::teslim_tarihi());
-        $periyodik_siparis  = Post::periyodik_siparis();
-        $odeme_periyodu     = Post::odeme_periyodu();
-        $kargo_kodu         = Post::kargo_kodu();
-        $siparis_kodu       = Post::siparis_kodu();
-        $toplamFiyat        = SiparisModel::taslakToplamTutar($taslak);
-        $taslakDetay        = SiparisModel::taslakDetay($taslak);
+
+        $musteriBilgi       = CariModel::detay($musteri);
 
         $siparisData = [
-            'belge_no'              => $belge_no,
-            'uye'                   => $musteri,
-            'siparis_adi'           => $siparis_adi,
-            'siparis_notu'          => $siparis_notu,
-            'siparis_kodu'          => $siparis_kodu,
-            'dosya'                 => '',
-            'durum'                 => $siparisDurumu,
-            'siparis_yeri'          => $siparis_yeri,
-            'grafik_hizmeti'        => $grafik_hizmeti,
-            'montaj_hizmeti'        => $montaj_hizmeti,
-            'toplam_fiyat'          => $taslakDetay->genel_toplam_tutari,
-            'toplam_tutar'          => $taslakDetay->toplam_tutar,
-            'indirim_tutar'         => $taslakDetay->indirim_tutar,
-            'ara_toplam_tutar'      => $taslakDetay->ara_toplam_tutar,
-            'kdv_tutari'            => $taslakDetay->kdv_tutari,
-            'genel_toplam_tutari'   => $taslakDetay->genel_toplam_tutari,
+            'cari'                  => $musteri,
+            'odeme_yontemi'         => $odeme_yontemi,
+            'odeme_durumu'          => $odeme_durumu,
             'olusturan'             => $user->id,
-            'teslim_tarihi'         => $teslim_tarihi,
-            'periyodik_siparis'     => $periyodik_siparis,
-            'odeme_periyodu'        => $odeme_periyodu,
-            'kargo_kodu'            => $kargo_kodu,
-            'kayit_sekli'           => $kayit_sekli
+            'kayit_sekli'           => $kayit_sekli,
+            'fatura'                => $fatura,
+            'siparis_notu'          => $siparis_notu,
+            'durum'                 => $durum
         ];
 
-        $siparisOlustur = SiparisModel::siparisOlustur($siparisData);
+        $siparisOlustur = SiparisModel::ekle($siparisData);
 
         if($siparisOlustur){
 
-            $siparisUrunleri= SiparisModel::taslakSiparisUrunleri($taslak);
+            $siparisUrunleri = Cart::selectAll();
 
-            $urunBilgi = "";
+            echo "<pre>";
+            print_r($siparisUrunleri);
+            echo "</pre>";
+
             $urunSAyi = 1;
+
+            $toplamTutar = 0;
+            $kdvToplami = 0;
 
 
             foreach ($siparisUrunleri as $su) {
 
+                $urunBilgi          = UrunModel::detay($su["urun"]);
+                $paraBirimDetay     = AyarModel::paraBirimDetay($urunBilgi->fiyat_birim);
+
+                $birimFiyat         = AyarModel::tlCevir($su["fiyat"],$urunBilgi->fiyat_birim);
+                $tarihKaydet        = AyarModel::tarihDuzelt($su["baslangic_tarihi"]);
+
+                $kdvTutari          = (($su["adet"]*$birimFiyat)/100)*$su["urunKdv"];
+                $toplamFiyat        = $kdvTutari+($birimFiyat*$su["adet"]);
+
+                $siparis_tarihi     = Date::set('{year}-{monthInYear}-{dayInMonth}');
+                $bitis_tarihi       = Date::calculate($tarihKaydet, AyarModel::odemePeriyoduEklenecekGun($su["odemePeriyodu"]).' day');
+
                 $urunData =[
                     'siparis'       =>$siparisOlustur,
-                    'urun'          =>$su->urun,
-                    'urun_adi'      =>$su->urun_adi,
-                    'uye'           =>$su->uye,
-                    'en'            =>$su->en,
-                    'boy'           =>$su->boy,
-                    'adet'          =>$su->adet,
-                    'notu'          =>$su->notu,
-                    'birim_fiyat'   =>$su->birim_fiyat,
-                    'kdv'           =>$su->kdv,
-                    'toplam_fiyat'  =>$su->toplam_fiyat,
-                    'durum'         =>$siparisDurumu
+                    'urun'          =>$su["urun"],
+                    'urun_adi'      =>$su["urun_adi"],
+                    'cari'          =>$musteri,
+                    'adet'          =>$su["adet"],
+                    'notu'          =>$su["siparis_notu"],
+                    'odeme_periyodu'=>$su["odemePeriyodu"],
+                    'para_birimi'   =>$urunBilgi->fiyat_birim,
+                    'gecerli_kur'   =>$paraBirimDetay->guncel_kur,
+                    'fiyat_sabitle' =>$su["fiyat_sabitle"],
+                    'birim_fiyat'   =>$birimFiyat,
+                    'kdv'           =>$su["urunKdv"],
+                    'kdv_tutari'    =>$kdvTutari,
+                    'toplam_fiyat'  =>$toplamFiyat,
+                    'siparis_tarihi'  =>$siparis_tarihi,
+                    'baslangic_tarihi'=>$tarihKaydet,
+                    'bitis_tarihi'    =>$bitis_tarihi,
+                    'durum'         =>$durum
                 ];
-
-                $urunBilgi = $urunBilgi.$urunSAyi.")".$su->en."x".$su->boy." ".$su->adet." adet ".$su->urun_adi." (".$su->notu.")<br>";
 
                 SiparisModel::siparisUrunEkle($urunData);
 
-                /**********Hammadde stok Düşümü*********/
-
-                if($kayit_sekli=="1"){
-
-                    $urunDetay = UrunModel::detay($su->urun);
-
-                    if($urunDetay->stoklu_urun=='1'){
-
-                        $urunGuncelStok = $urunDetay->guncel_stok-$su->adet;
-
-                        $urunStokDus = UrunModel::stokluUrunStokGuncelle($su->urun,$urunGuncelStok);
-
-                    }else{
-
-                        $urunMalzemeleri = UrunModel::urunMalzemeleri($su->urun);
-
-                        foreach ($urunMalzemeleri as $um) {
-
-                            $malzemeDetay           = MalzemeModel::detay($um->malzeme);
-
-                            if($urunDetay->birim=="adet") {
-
-                                if($malzemeDetay->stok_birim=="m2"){
-
-                                    if($urunDetay->max_genislik=="0" and $urunDetay->max_yukseklik=="0"){
-
-                                        $dusulecekStokMiktari   = $su->adet*$um->miktar;
-
-                                    }else{
-
-                                        $dusulecekStokMiktari   = ((($urunDetay->max_genislik*$urunDetay->max_yukseklik)/10000)*$su->adet)*$um->miktar;
-
-                                    }
-
-                                }else{
-                                    $dusulecekStokMiktari   = $su->adet*$um->miktar;
-                                }
-
-                            }else{
-
-                                $dusulecekStokMiktari   = ((($su->en*$su->boy)/10000)*$su->adet)*$um->miktar;
-
-                            }
-
-                            $GuncelStok = $malzemeDetay->stok-$dusulecekStokMiktari;
-
-                            $stokData = [
-                                'id'   => $um->malzeme,
-                                'stok'    => $GuncelStok
-                            ];
-
-                            $stokGuncelle = MalzemeModel::stokGuncelle($stokData);
-
-                            $stokHareketData = [
-                                'malzeme'   => $um->malzeme,
-                                'miktar'    => $dusulecekStokMiktari,
-                                'hareket'   => "-",
-                                'sebebi'    => $siparisOlustur." Numaralı Sipariş için düşülmüştür"
-                            ];
-
-                            MalzemeModel::hareketEkle($stokHareketData);
-
-                            $malzemeDusulenStokBilgi = $malzemeDusulenStokBilgi." ".$malzemeDetay->adi." hammaddesinden ".$dusulecekStokMiktari." ".$malzemeDetay->stok_birim." stok düşüldü<br>";
-
-                        }
-
-                    }
-
-
-
-                }
-
-                /**********Hammadde stok Düşümü*********/
-
-                $stokNotu = $stokNotu."<br>".$su->urun_adi." Ürünü Eklenirken ".$malzemeDusulenStokBilgi;
+                $toplamTutar = $toplamTutar+($birimFiyat*$su["adet"]);
+                $kdvToplami = $kdvToplami+$kdvTutari;
 
                 $urunSAyi++;
 
             }
 
-            $siparisDosyalari = SiparisModel::taslakDosyalari($taslak);
-
-            foreach ($siparisDosyalari as $sd) {
-
-                $dosyaData =[
-                    'siparis'       =>$siparisOlustur,
-                    'kayit_yili'    =>$sd->kayit_yili,
-                    'dosya'         =>$sd->dosya
-                ];
-
-                SiparisModel::siparisDosyaEkle($dosyaData);
-
-            }
-
-            $taslakSil = SiparisModel::taslakSil($taslak);
-
             $gecmisData = [
-                'uye'           =>$musteri,
-                'siparis_id'    =>$siparisOlustur,
+                'cari'          =>$musteri,
+                'siparis'       =>$siparisOlustur,
                 'aciklama'      =>$user->isim.' tarafından sipariş oluşturuldu. ',
                 'guncelleyen'   =>$user->id,
-                'durum'         =>$siparisDurumu
             ];
 
             $siparisGecmisEkle  = SiparisModel::siparisGesmisEkle($gecmisData);
 
-            if($kayit_sekli=="1"){
+            $tutarData = [
+                'id'                    =>$siparisOlustur,
+                'toplam_tutar'          =>$toplamTutar,
+                'kdv_tutari'            =>$kdvToplami,
+                'genel_toplam_tutari'   =>$kdvToplami+$toplamTutar
+            ];
 
-                $guncelBakiye       = $musteriBilgi->bakiye+$taslakDetay->genel_toplam_tutari;
+            $siparisToplamTutarGuncelle = SiparisModel::siparisToplamTutarGuncelle($tutarData);
 
-                $uyeBakiyeGuncelle  = UyeModel::bakiyeGuncelle($musteri,$guncelBakiye);
+            /* Ödeme durumuna göre müşteri cari işlemleri ve kasa defteri işlemleri yapılacak*/
 
-
-
-                /***************Montaj Ekleme*****************/
-
-                if ($montaj_hizmeti=="1"){
-
-                    // 'yapilacak_is'      =>  $urunBilgi,
-
-                    $data = [
-                        'tur'               =>  '1',
-                        'baslik'            =>  $siparis_adi,
-                        'aciklama'          =>  str_replace(PHP_EOL,"<br>",$siparis_notu),
-                        'organizator'       =>  $musteriBilgi->adi,
-                        'yer'               =>  Post::yer(),
-                        'mekan'             =>  '',
-                        'salon'             =>  '',
-                        'etkinlik_tarihi'   =>  AyarModel::tarihDuzelt(Post::teslim_tarihi()),
-                        'baslangic_tarihi'  => AyarModel::tarihDuzelt(Post::teslim_tarihi()),
-                        'etkinlik_saati'    =>  '',
-                        'ikon'              =>  'fa-chevron-right',
-                        'durum'             =>  '1',
-                        'renk'              =>  'default',
-                        'ekleyen'           =>  $user->id
-                    ];
-
-                    $etkinlikId = EtkinlikModel::ekle($data);
-
-                    $montajNotu = "Sipariş Montaj yapılacak olarak işaretlendiği için montaj planına da eklendi";
-
-
-                }
-
-
-
-                /***************Montaj Ekleme*****************/
-
-            }
-
-            AyarModel::nelerOluyor($user->isim,'siparisler','Yeni sipariş kaydedildi');
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Sipariş Oluşlturuldu ! <br> '.$stokNotu.'<br>'.$montajNotu.'</div>'])->action('siparisler');
+            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Sipariş Oluşlturuldu !</div>'])->action('siparisler');
 
         }else{
 
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Sipariş Oluşlturma hatası lütfen tekrar deneyin hata devam ederse sistem yöneticinize bildirin !</div>'])->action('siparisler/olustur/'.$musteri.'/'.$taslak);
+            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Sipariş Oluşlturma hatası lütfen tekrar deneyin hata devam ederse sistem yöneticinize bildirin !</div>'])->action('siparisler/form');
 
         }
 
@@ -869,33 +748,6 @@ class Siparisler extends Controller
 
     }
 
-    public function siparisResimKaydet(){
-
-        $urunId = Post::siparisId();
-        $resim = Post::base64_file();
-
-        $siparisUrunDetay = SiparisModel::siparisUrunBilgi($urunId);
-
-        $data = [
-            'id' => $urunId,
-            'resim' => $resim
-        ];
-        if($resim!=""){
-
-            $guncelle = SiparisModel::siparisUrunResimEkle($data);
-
-        }
-
-        if ($guncelle){
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Ürün Resim Ekleme işlemi gerçekleştirildi</div>'])->action('uretim');
-        }else{
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Ürün Resim Ekleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('uretim');
-        }
-
-
-
-    }
 
     public function durumGuncelle($id){
 
@@ -955,472 +807,6 @@ class Siparisler extends Controller
         }
     }
 
-    public function konusmaBaslat($id){
-
-        $user           = User::data();
-        $siparisDetay   = SiparisModel::detay($id);
-        $uye            = UyeModel::detay($siparisDetay->uye);
-
-        $konusma = [
-            'siparis'           =>$id,
-            'alici'             =>$siparisDetay->uye,
-            'alici_detay'       =>$uye->adi.":".$uye->logo,
-            'gonderici'         =>$user->id,
-            'gonderici_detay'   =>$user->isim,
-            'mesaj'             =>Post::mesaj()
-        ];
-        $konusmaBaslat = MesajModel::konusmaBaslat($konusma);
-
-        if($konusmaBaslat){
-
-            if(Post::bildirim()=="1"){
-
-                $bildirimEkle = UyeModel::bildirimEkle(Post::uye(), $id.' Numaralı siparişiniz ile alakalı temsilcimiz size mesaj gödnerdi.');
-
-                Email::receiver($uye->email)
-                    ->subject('Termofom; Sipariş Görüşmesi')
-                    ->message($id.' Numaralı siparişiniz hakkında temsilcilerimiz size bir mesaj gönderdi. Mesaja cevap vermek için lütfen panelinize giriş yapın.<br> <b>Temsilci Mesajı</b>: '.Post::mesaj())
-                    ->send();
-
-            }
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Konuşma balatıldı, Mesaj üyeye gönderildi</div>'])->action('siparisler/detay/'.$id);
-        }else{
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Konuşma başlatılamadı!</div>'])->action('siparisler/detay/'.$id);
-        }
-
-    }
-
-    public function mesajGonder($id){
-
-        $user           = User::data();
-        $siparisDetay   = SiparisModel::detay($id);
-        $uye            = UyeModel::detay($siparisDetay->uye);
-
-        $mesajData = [
-            'siparis'           =>$id,
-            'alici'             =>$siparisDetay->uye,
-            'alici_detay'       =>$uye->adi.":".$uye->logo,
-            'gonderici'         =>$user->id,
-            'gonderici_detay'   =>$user->isim,
-            'mesaj'             =>Post::mesaj()
-        ];
-
-        $mesajEkle = MesajModel::konusmaMesajEkle($mesajData);
-
-        if($mesajEkle){
-            Redirect::action('siparisler/detay/'.$id);
-        }else{
-            Redirect::insert(['gecmisBilgi'=>'<div class="callout callout-danger">MEsaj Gönderilemedi !</div>'])->action('siparisler/detay/'.$id);
-        }
-
-    }
-
-    /*****************KURUMSAL SİPARİŞLER*********************/
-
-    public function kurumsal(){
-
-        $user = User::data();
-
-        $yetkiler               = \Json::decode($user->yetkiler);
-
-        $siparisler     = SiparisModel::kurumsalSiparisler();
-
-
-        View::siparisler($siparisler);
-
-
-    }
-
-    public function kurumsalSiparisEkle(){
-
-        $user   = User::data();
-
-        $data = [
-            'firma_adi'         =>Post::firma_adi(),
-            'siparis_tarihi'    =>AyarModel::tarihDuzelt(Post::siparis_tarihi()),
-            'siparis_no'        =>Post::siparis_no(),
-            'urun_kodu'         =>Post::urun_kodu(),
-            'turu'              =>Post::turu(),
-            'adet'              =>Post::adet(),
-            'termin_tarihi'     =>AyarModel::tarihDuzelt(Post::termin_tarihi()),
-            'aciklama'          =>Post::aciklama(),
-            'not'               =>Post::not(),
-            'durum'             =>Post::durum(),
-            'ekleyen'           =>$user->id
-        ];
-
-        $ekle = SiparisModel::kurumsalSiparisEkle($data);
-
-        if ($ekle){
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Sipariş Ekleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/kurumsal');
-        }else{
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Sipariş Ekleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/kurumsal');
-        }
-
-    }
-
-    public function kurumsalSiparisGuncelle(){
-
-        $user   = User::data();
-
-        $data = [
-            'id'                =>Post::id(),
-            'firma_adi'         =>Post::firma_adi(),
-            'siparis_tarihi'    =>AyarModel::tarihDuzelt(Post::siparis_tarihi()),
-            'siparis_no'        =>Post::siparis_no(),
-            'urun_kodu'         =>Post::urun_kodu(),
-            'turu'              =>Post::turu(),
-            'adet'              =>Post::adet(),
-            'termin_tarihi'     =>AyarModel::tarihDuzelt(Post::termin_tarihi()),
-            'aciklama'          =>Post::aciklama(),
-            'not'               =>Post::not(),
-            'durum'             =>Post::durum(),
-            'duzenleyen'        =>$user->id
-        ];
-
-        $ekle = SiparisModel::kurumsalSiparisGuncelle($data);
-
-        if ($ekle){
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Sipariş Ekleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/kurumsal');
-        }else{
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Sipariş Ekleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/kurumsal');
-        }
-
-    }
-
-    public function kurumsalSiparisSil($id){
-
-        $sil = SiparisModel::kurumsalSiparisSil($id);
-
-        if ($sil){
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Sipariş kaldırıldı</div>'])->action('siparisler/kurumsal');
-        }
-
-    }
-
-
-    /*****************KURUMSAL SİPARİŞLER*********************/
-    /*****************TASLAKLAR*********************/
-
-    public function taslakUrunEkle($id){
-
-        $taslakDetay    = SiparisModel::taslakDetay($id);
-        $urunDetay      = UrunModel::detay(Post::urun());
-        $uyeBilgi       = UyeModel::detay($taslakDetay->uye);
-
-        $urunBirimFiyat     = Post::fiyat();
-        $urunKdv            = $urunDetay->kdv;
-        $siparisAdedi       = Post::adet();
-
-        if($urunDetay->birim=="m2"){
-            $en     = Post::en();
-            $boy    = Post::boy();
-
-            $boyut  = ($en*$boy)/10000;
-
-            $birimfiyat = $urunBirimFiyat*$boyut;
-
-        }else{
-            $birimfiyat = $urunBirimFiyat;
-        }
-
-        /***************TL ÇEVİR****************/
-
-        if($urunDetay->fiyat_birim!="TL"){
-            $tlTutar = AyarModel::tlCevir($birimfiyat,$urunDetay->fiyat_birim);
-
-            $birimfiyat = $tlTutar;
-
-        }
-
-        /***************TL ÇEVİR****************/
-
-        $toplamFiyat    = $birimfiyat*$siparisAdedi;
-
-        $taslakurunData = [
-            'siparis'       =>$id,
-            'urun'          =>$urunDetay->id,
-            'urun_adi'      =>$urunDetay->adi,
-            'uye'           =>$taslakDetay->uye,
-            'en'            =>Post::en(),
-            'boy'           =>Post::boy(),
-            'adet'          =>Post::adet(),
-            'notu'          =>Post::eknot(),
-            'birim_fiyat'   =>$birimfiyat,
-            'kdv'           =>$urunKdv,
-            'toplam_fiyat'  =>$toplamFiyat
-        ];
-
-        $ekle = SiparisModel::taslakUrunEkle($taslakurunData);
-
-        if ($ekle){
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Ürün Ekleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/olustur/'.$taslakDetay->uye.'/'.$id);
-        }else{
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Ürün Ekleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/olustur/'.$taslakDetay->uye.'/'.$id);
-        }
-
-    }
-
-    public function taslakUrunKaldir($id,$taslak){
-
-        $taslakDetay = SiparisModel::taslakDetay($taslak);
-
-        $sil = SiparisModel::taslakSiparisUrunSil($id);
-
-        if ($sil){
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Ürün kaldırıldı</div>'])->action('siparisler/olustur/'.$taslakDetay->uye.'/'.$taslak);
-        }
-
-    }
-
-    public function taslakDosyaYukle($id){
-
-        if(Upload::isFile('file')){
-
-            Upload::source('file')
-                ->target(REAL_BASE_DIR . 'Uploads/siparisDosyalari/'.Date::set('{Y}').'/')
-                ->start();
-
-            $dosyaBilgi = Upload::info();
-
-            $dosya = $dosyaBilgi->encodeName;
-
-            $data = [
-                    'siparis'   =>$id,
-                    'kayit_yili'=>Date::set('{Y}'),
-                    'dosya'     =>$dosya,
-                    ];
-            SiparisModel::taslakDosyaEkle($data);
-
-        }else{
-
-        }
-
-    }
-
-    public function taslakDosyaSil($dosya,$yil,$taslak){
-
-        $taslakDetay = SiparisModel::taslakDetay($taslak);
-
-        File::delete(REAL_BASE_DIR . 'Uploads/siparisDosyalari/'.$yil.'/'.$dosya);
-
-        $DBdosyaSil = SiparisModel::taslakDosyaSil($dosya);
-
-        if ($DBdosyaSil){
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Dosya kaldırıldı</div>'])->action('siparisler/olustur/'.$taslakDetay->uye.'/'.$taslak);
-
-        }
-
-    }
-
-    /*****************TASLAKLAR********************/
-
-    /*****************FİYAT TEKLİFLERİ********************/
-    public function fiyatTeklifleri(){
-
-        $user = User::data();
-
-        AyarModel::yetkiKontrol(\Json::decode($user->yetkiler),CURRENT_CONTROLLER,CURRENT_CFUNCTION);
-
-        $fiyatTeklifleri     = SiparisModel::fiyatTeklifleri();
-
-        View::fiyatTeklifleri($fiyatTeklifleri);
-
-    }
-
-    public function fiyatTeklifForm($id=""){
-
-        $user = User::data();
-
-        if($id==""){
-
-            $detay      = [];
-            $urunler    = [];
-            $action     = "siparisler/fiyatTeklifKaydet";
-
-        }else{
-
-            $detay      = SiparisModel::fiyatTeklifDetay($id);
-            $urunleri   = SiparisModel::fiyatTeklifUrunleri($id);
-            $action     = "siparisler/fiyatTeklifGuncelle";
-
-        }
-
-        $yetkiler               = \Json::decode($user->yetkiler);
-
-        if(!in_array('Siparisler/fiyatTeklifFiyatlandirma',$yetkiler)){
-
-            $fiyatlandirmaYetkisi = "0";
-
-        }else{
-
-            $fiyatlandirmaYetkisi = "1";
-
-        }
-
-        if(!in_array('Siparisler/fiyatTeklifOnay',$yetkiler)){
-
-            $onayYetkisi = "0";
-
-        }else{
-
-            $onayYetkisi = "1";
-
-        }
-
-        View::fiyatlandirmaYetkisi($fiyatlandirmaYetkisi);
-        View::onayYetkisi($onayYetkisi);
-        View::detay($detay);
-        View::urunleri($urunleri);
-        View::action($action);
-
-    }
-
-    public function fiyatTeklifGuncelle(){
-
-        $user = User::data();
-
-        for ($i=0;$i<count($_POST["id"]);$i++){
-
-            $urundata = [
-                'id'     =>$_POST["id"][$i],
-                'fiyat'  =>$_POST['fiyat'][$i]
-            ];
-
-            $urunGuncelle = SiparisModel::fiyatTeklifUrunFiyatGuncelle($urundata);
-
-        }
-
-        $teklifDetay = SiparisModel::fiyatTeklifDetay(Post::teklifid());
-
-        if (Post::durum()==""){
-            $durum = $teklifDetay->durum;
-        }else{
-            $durum = Post::durum();
-        }
-
-        $teklifdata = [
-            'id'            =>Post::teklifid(),
-            'durum'         =>$durum,
-            'onaylayan'     =>$user->id
-        ];
-
-        $fiyatTeklifVerildi = SiparisModel::fiyatTeklifVerildiYap($teklifdata);
-
-        if($fiyatTeklifVerildi){
-
-            AyarModel::nelerOluyor($user->isim,'siparisler/fiyatTeklifleri',Post::teklifid().' Numaralı teklif güncellendi');
-
-
-        Redirect::insert(['bilgi'=>'<div class="callout callout-success">Teklif isteğiniz kaydedildi</div>'])->action('siparisler/fiyatTeklifleri');
-
-            }else{
-
-        Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Teklif isteği kayıt işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/fiyatTeklifleri');
-
-        }
-
-    }
-
-    public function fiyatTeklifKaydet(){
-
-        $user   = User::data();
-
-        $data = [
-            'personel'      =>$user->id,
-            'firma_adi'     =>Post::firma_adi(),
-            'musteri_adi'   =>Post::musteri_adi(),
-            'tel'           =>Post::tel(),
-            'mail_adresi'   =>Post::mail_adresi(),
-            'ek_not'        =>Post::ek_not()
-        ];
-
-        $ekle = SiparisModel::fiyatTeklifEkle($data);
-
-        if($ekle){
-
-            $eklenen = 0;
-
-            for ($i=0;$i<count($_POST["istenen_is"]);$i++){
-
-                $urundata = [
-                    'teklif_id'     =>$ekle,
-                    'istenen_is'    =>$_POST['istenen_is'][$i],
-                    'adet'          =>$_POST['adet'][$i],
-                    'olcu'          =>$_POST['olcu'][$i],
-                    'aciklama'      =>$_POST['aciklama'][$i],
-                    'fiyat'         =>$_POST['fiyat'][$i]
-                ];
-
-                $urunEkle = SiparisModel::fiyatTeklifUrunEkle($urundata);
-
-                if($urunEkle){
-                    $eklenen = $eklenen+1;
-                }
-
-            }
-
-            AyarModel::nelerOluyor($user->isim,'siparisler/fiyatTeklifleri','Yeni bir fiyat teklifi kaydetti');
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Teklif isteğiniz kaydedildi</div>'])->action('siparisler/fiyatTeklifleri');
-
-        }else{
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Teklif isteği kayıt işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/fiyatTeklifleri');
-
-        }
-
-    }
-
-    public function fiyatTeklifYazdir($id){
-
-        $detay = SiparisModel::fiyatTeklifDetay($id);
-        $urunler = SiparisModel::fiyatTeklifUrunleri($id);
-
-        View::detay($detay);
-        View::urunler($urunler);
-
-    }
-
-    public function fiyatTeklifSil($id){
-
-        $user = User::data();
-
-        $sil = SiparisModel::fiyatTeklifSil($id);
-
-        if($sil){
-
-            AyarModel::nelerOluyor($user->isim,'siparisler/fiyatTeklifleri','Bir fiyat teklifni sildi');
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Teklif Silindi</div>'])->action('siparisler/fiyatTeklifleri');
-
-        }else{
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Teklif silme isteğiniz gerçekleştirilemedi lütfen tekrar deneyin !</div>'])->action('siparisler/fiyatTeklifleri');
-
-        }
-
-    }
-
-    public function fiyatTeklifUrunSil($id,$urun){
-
-        $sil = SiparisModel::fiyatTeklifUrunSil($urun);
-
-        if($sil){
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Teklif Silindi</div>'])->action('siparisler/fiyatTeklifForm/'.$id);
-
-        }else{
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Teklif silme isteğiniz gerçekleştirilemedi lütfen tekrar deneyin !</div>'])->action('siparisler/fiyatTeklifForm/'.$id);
-
-        }
-
-    }
-
-    /*****************FİYAT TEKLİFLERİ********************/
 
     /*****************SİPARİŞ DURUMLARI********************/
 
@@ -1448,32 +834,123 @@ class Siparisler extends Controller
 
     }
 
-    public function siparisDurumBilgiGuncelle($id){
+    /*****************SİPARİŞ DURUMLARI********************/
 
-        $id     = Post::id();
-        $adi    = Post::adi();
-        $uyari  = Post::uyari();
-        $sira   = Post::sira();
+    public function ajax():void
+    {
+        $user       = User::data();
+        $dataAction = Post::dataAction();
+        $dataId     = Post::dataId();
+        $data       = [];
 
-        $data   = [
-            'id'    => $id,
-            'adi'   => $adi,
-            'uyari' => $uyari,
-            'sira'  => $sira
-        ];
+        switch ($dataAction){
 
-        $guncelle = SiparisModel::siparisDurumBilgiGuncelle($data);
+            case "sepetUrunSil":
 
-        if($guncelle){
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Siparis Durum Bilgileri Güncellendi</div>'])->action('siparisler/siparisDurumlari/'.$id);
-        }else{
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Sipariş Durum güncelleme işllemi yapılamadı !</div>'])->action('siparisler/siparisDurumlari/'.$id);
+                $sil = Cart::delete($dataId);
+
+                $data['title'] = "Ürün Silme İşlemi";
+
+                if($sil){
+
+                    $data['success'] = 'Ürün işlemi başarı ile yapıldı!';
+                    $data['redirect'] = 'siparisler/form';
+
+                }else{
+
+                    $data['error'] = "Ürün silme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
+
+            case "sepeteUrunEkle":
+
+                $data['title'] = "Siparişe Ürün Ekleme İşlemi";
+
+                if(!Validation::check()){
+
+                    $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
+
+                }else{
+                    $urunDetay = UrunModel::detay(Post::urun());
+
+                    if (empty(Post::fiyat()) or Post::fiyat() == 0) {
+
+                        if (Post::odeme_periyodu() == "0") {
+                            $fiyat = "0.00";
+                        } elseif (Post::odeme_periyodu() == "T") {
+                            $fiyat = $urunDetay->fiyat;
+                        }elseif (Post::odeme_periyodu() == "A") {
+                            $fiyat = $urunDetay->aylik_fiyat;
+                        }elseif (Post::odeme_periyodu() == "3A") {
+                            $fiyat = $urunDetay->uc_aylik_fiyat;
+                        }elseif (Post::odeme_periyodu() == "6A") {
+                            $fiyat = $urunDetay->alti_aylik_fiyat;
+                        }elseif (Post::odeme_periyodu() == "Y") {
+                            $fiyat = $urunDetay->yillik_fiyat;
+                        }else{
+                            $fiyat = $urunDetay->fiyat;
+                        }
+
+                    }else{
+                        $fiyat = Post::fiyat();
+                    }
+
+                    $serial = Date::set('{year}{monthInYear}{dayInMonth}{hour}{minute}{second}');
+
+                    $ekleData = [
+                        'serial'                    =>$serial,
+                        'urun'                      =>Post::urun(),
+                        'urun_adi'                  =>$urunDetay->adi,
+                        'odemePeriyodu'             =>Post::odeme_periyodu(),
+                        'odemePeriyoduTanim'        =>AyarModel::odemePeriyodu(Post::odeme_periyodu()),
+                        'adet'                      =>Post::adet(),
+                        'urunKdv'                   =>Post::kdv(),
+                        'siparis_notu'              =>Post::siparis_notu(),
+                        'fiyat_sabitle'             =>Post::fiyat_sabitle()==""?"0":Post::fiyat_sabitle(),
+                        'baslangic_tarihi'          =>Post::baslangic_tarihi()==""?Date::current():Post::baslangic_tarihi(),
+                        'fiyat'                     =>$fiyat,
+                        'fiyat_birim'               =>$urunDetay->fiyat_birim
+                    ];
+
+                    $sepeteEkle = Cart::insert($ekleData);
+
+                    if($sepeteEkle){
+
+                        $data['success'] = 'Sipariş Ürün ekleme işlemi başarı ile yapıldı!';
+                        $data['redirect'] = '';
+                        $data['addData'] = '<tr id="row-'.$serial.'">
+                                                <td>'.$serial.'</td>
+                                                <td>'.$urunDetay->adi.'</td>
+                                                <td>'.AyarModel::odemePeriyodu(Post::odeme_periyodu()).'</td>
+                                                <td>'.Post::adet().'</td>
+                                                <td>'.Post::siparis_notu().'</td>
+                                                <td>'.$fiyat." ".$urunDetay->fiyat_birim.'</td>
+                                                <td>'.Post::kdv().'</td>
+                                                <td>
+                                                    <a href="javascript:;" onclick="deleteAction(\''.$serial.'\',\''.URL::site('Siparisler/ajax').'\',\'sepetUrunSil\')" class="btn btn-sm btn-danger py-0">Sil</a>
+                                                </td>
+                                            </tr>';
+                        $data['modalClose'] = "modals-add";
+
+                    }else{
+
+                        $data['error'] = "Sipariş Ürün işlemi yapılamadı!";
+
+                    }
+
+                }
+
+                echo Json::encode($data);
+
+                break;
+
         }
 
-
     }
-
-    /*****************SİPARİŞ DURUMLARI********************/
 
     public function s404(){}
 }
