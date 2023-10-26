@@ -3,7 +3,7 @@
 class InternalKasaModel extends Model
 {
 
-    public function bilgi($id){
+    public function hesapBilgi($id){
 
         $veri = DB::where('id',$id)->kasa_hesaplari()->row();
 
@@ -65,7 +65,7 @@ class InternalKasaModel extends Model
         return $guncelle;
     }
 
-    public function tutarGuncelle($tutar,$id){
+    public function kasaHesabiTutarGuncelle($tutar,$id){
 
         $guncelle = DB::where('id',$id)
             ->update('kasa_hesaplari',[
@@ -84,27 +84,25 @@ class InternalKasaModel extends Model
         return DB::whereId($id)->delete('kasa_hesaplari');
     }
 
-    /****KASA DEFTERİ********************KASA DEFTERİ*********************KASA DEFTERİ**********************KASA DEFTERİ***********************/
+    /****KASA DEFTERİ****/
 
 
     public function deftereKaydet($data){
 
         $ekle = DB::insert('kasa_defteri',[
 
-            'kasa'          =>$data['kasa'],
-            'islem'         =>$data['islem'],
-            'hesap'         =>$data['hesap'],
-            'islem_turu'    =>$data['islem_turu'],
-            'islem_tur_id'  =>$data['islem_tur_id'],
-            'aciklama'      =>$data['aciklama'],
-            'gelir'         =>$data['gelir'],
-            'gider'         =>$data['gider'],
-            'mevcut_kasa_tutari' =>$data['mevcut_kasa_tutari'],
-            'mevcut_kasa_toplami'=>$data['mevcut_kasa_toplami'],
-            'belge'         =>$data['belge'],
-            'yil'           =>$data['yil'],
-            'tarih'         =>$data['tarih'],
-            'islem_yapan'   =>$data['islem_yapan']
+            'kasa'                  =>$data['kasa'],
+            'islem'                 =>$data['islem'],
+            'hesap'                 =>$data['hesap'],
+            'islem_turu'            =>$data['islem_turu'],
+            'islem_tur_id'          =>$data['islem_tur_id'],
+            'aciklama'              =>$data['aciklama'],
+            'gelir'                 =>$data['gelir'],
+            'gider'                 =>$data['gider'],
+            'mevcut_kasa_toplami'   =>$data['mevcut_kasa_toplami'],
+            'yil'                   =>$data['yil'],
+            'tarih'                 =>$data['tarih'],
+            'islem_yapan'           =>$data['islem_yapan']
 
         ]);
 
@@ -160,9 +158,7 @@ class InternalKasaModel extends Model
             'kasa_defteri.aciklama as aciklama',
             'kasa_defteri.gelir as gelir',
             'kasa_defteri.gider as gider',
-            'kasa_defteri.mevcut_kasa_tutari as mevcut_kasa_tutari',
             'kasa_defteri.mevcut_kasa_toplami as mevcut_kasa_toplami',
-            'kasa_defteri.belge as belge',
             'kasa_defteri.yil as yil',
             'kasa_defteri.tarih as tarih',
             'kasa_defteri.islem_yapan as islemYapan',

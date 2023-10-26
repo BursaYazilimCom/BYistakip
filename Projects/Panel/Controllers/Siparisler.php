@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 use User,Method,Post,Redirect,Upload,Pagination,Date,Time,File,Email,URL,Security,Cart,Validation,Json;
-use AyarModel,UyeModel,CariModel,SiparisModel,UrunModel,KasaModel;
+use AyarModel,UyeModel,CariModel,SiparisModel,UrunModel,KasaModel,FaturaModel;
 
 class Siparisler extends Controller
 {
@@ -126,8 +126,10 @@ class Siparisler extends Controller
         $odeme_durumu       = Post::odeme_durumu()=="1"?"1":"0";
         $durum              = Post::durum();
         $kayit_sekli        = Post::kayit_sekli()=="1"?"0":"1";
-        $fatura             = Post::fatura();
+        $fatura             = Post::fatura()=="1"?"1":"0";
         $siparis_notu       = Post::siparis_notu();
+        $fatura_no          = Post::fatura_no();
+        $kasa_hesabı          = Post::kasa_hesabı();
 
         $musteriBilgi       = CariModel::detay($musteri);
 
@@ -156,6 +158,7 @@ class Siparisler extends Controller
 
             $toplamTutar = 0;
             $kdvToplami = 0;
+            $siparis_tarihi     = Date::set('{year}-{monthInYear}-{dayInMonth}');
 
 
             foreach ($siparisUrunleri as $su) {
@@ -169,7 +172,6 @@ class Siparisler extends Controller
                 $kdvTutari          = (($su["adet"]*$birimFiyat)/100)*$su["urunKdv"];
                 $toplamFiyat        = $kdvTutari+($birimFiyat*$su["adet"]);
 
-                $siparis_tarihi     = Date::set('{year}-{monthInYear}-{dayInMonth}');
                 $bitis_tarihi       = Date::calculate($tarihKaydet, AyarModel::odemePeriyoduEklenecekGun($su["odemePeriyodu"]).' day');
 
                 $urunData =[
@@ -220,7 +222,93 @@ class Siparisler extends Controller
 
             $siparisToplamTutarGuncelle = SiparisModel::siparisToplamTutarGuncelle($tutarData);
 
+            /**FATURA OLUŞTUR**/
+
+            $faturaData = [
+                'tur'               =>"2",
+                'belge_no'          =>$fatura_no,
+                'fatura_adi'        =>$musteriBilgi->firma_adi,
+                'fatura_adresi'     =>$musteriBilgi->fatura_adresi,
+                'vergi_dairesi'     =>$musteriBilgi->vergi_dairesi,
+                'vergi_no'          =>$musteriBilgi->vergi_no,
+                'tedarikci'         =>"",
+                'musteri'           =>$musteriBilgi->id,
+                'siparis_id'        =>$siparisOlustur,
+                'toplam_tutar'      =>$toplamTutar,
+                'kdv_toplami'       =>$kdvToplami,
+                'genel_toplam'      =>$kdvToplami+$toplamTutar,
+                'belge_tarihi'      =>$siparis_tarihi,
+                'sevk_tarihi'       =>"",
+                'durum'             =>$fatura=="1"?"2":"1",
+                'odeme'             =>$odeme_durumu,
+                'aciklama'          =>""
+            ];
+
+            $faturaOlustur = FaturaModel::ekle($faturaData);
+
+            if ($faturaOlustur){
+
+                $siparisUrunleriDB = SiparisModel::siparisUrunleri($siparisOlustur);
+
+                foreach ($siparisUrunleriDB as $suDb){
+
+                    $fUrun = [
+                        'fatura'        =>$faturaOlustur,
+                        'urun'          =>$suDb->urun,
+                        'urun_adi'      =>$suDb->urun_adi,
+                        'aciklama'      =>$suDb->notu,
+                        'miktar'        =>$suDb->adet,
+                        'fiyat'         =>$suDb->birim_fiyat,
+                        'kdv'           =>$suDb->kdv,
+                        'kdv_tutari'    =>$suDb->kdv_tutari,
+                        'tutar'         =>$suDb->toplam_fiyat,
+                    ];
+
+                    $faturaUrunEkle = FaturaModel::urunEkle($fUrun);
+
+                }
+
+            }
+
+            /**FATURA OLUŞTUR**/
+
             /* Ödeme durumuna göre müşteri cari işlemleri ve kasa defteri işlemleri yapılacak*/
+
+            /* İlgili siparişi carinin hesabına kaydet*/
+            /* İlgili siparişi carinin hesabına kaydet*/
+            /*Ödeme alınmışsa kasa defterine kaydet*/
+            if($odeme_durumu=="1"){
+
+                $defterData = [
+                    'kasa'          =>$kasa_hesabı,
+                    'islem'         =>"t",
+                    'hesap'         =>"Müşteri Tahsilat: ".$musteriBilgi->adi,
+                    'islem_turu'    =>"siparis",
+                    'islem_tur_id'  =>$siparisOlustur,
+                    'aciklama'      =>$siparisOlustur." Numaralı Siparişin Ödemesi alındı",
+                    'gelir'         =>$kdvToplami+$toplamTutar,
+                    'gider'         =>"",
+                    'mevcut_kasa_toplami'=>KasaModel::kasaToplami()+$kdvToplami+$toplamTutar,
+                    'yil'           =>Date::set('{year}'),
+                    'tarih'         =>Date::set('{year}-{monthInYear}-{dayInMonth}'),
+                    'islem_yapan'   =>$user->id
+                ];
+
+                $kasayaKaydet = KasaModel::deftereKaydet($defterData);
+
+                $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabı);
+
+                if ($kasayaKaydet) {
+
+                    $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($kdvToplami+$toplamTutar+$kasaHesapBilgi->tutar,$kasa_hesabı);
+
+                }
+
+
+            }
+
+
+            /*Ödeme alınmışsa kasa defterine kaydet*/
 
             Redirect::insert(['bilgi'=>'<div class="callout callout-success">Sipariş Oluşlturuldu !</div>'])->action('siparisler');
 

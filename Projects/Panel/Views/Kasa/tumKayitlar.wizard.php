@@ -27,7 +27,7 @@
                             <i data-feather="grid"  data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="İşlemler"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="{{URL::site('kasa')}}"><i class="me-1" data-feather="plus"></i><span class="align-middle"><Kayıt></Kayıt> Ekle</span></a>
+                            <a class="dropdown-item" href="{{URL::site('kasa')}}"><i class="me-1" data-feather="plus"></i><span class="align-middle">Kayıt Ekle</span></a>
                         </div>
                     </div>
                 </div>
@@ -58,21 +58,12 @@
                                     <th>Açıklama</th>
                                     <th>Gelir</th>
                                     <th>Gider</th>
-                                    <th>Belge</th>
                                     <th>Bakiye</th>
                                     <th>#</th>
                                 </tr>
 
                                 @foreach($kayitlar['liste'] as $kayit)
 
-                                {[
-                                if($kayit->gelir!="0.0000"){
-                                $guncelTutar = $kayit->mevcut_kasa_toplami+$kayit->gelir;
-                                }else{
-                                $guncelTutar = $kayit->mevcut_kasa_toplami-$kayit->gider;
-                                }
-
-                                ]}
                                 <tr>
                                     <td>{{Date::convert($kayit->tarih, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td class="text-{{$kayit->islem=='o'?'danger':'success'}}">{{$kayit->islem=="o"?"Ödeme":"Tahsilat"}}</td>
@@ -82,8 +73,7 @@
                                     <td>{{$kayit->aciklama}}</td>
                                     <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format($kayit->gelir,2)}}</td>
                                     <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format($kayit->gider,2)}} </td>
-                                    <td>{{$kayit->belge}}</td>
-                                    <td>{{$guncelTutar}}</td>
+                                    <td>{{number_format($kayit->mevcut_kasa_toplami,2)}}</td>
                                     <td>
                                         <a href="" data-toggle="tooltip" title="Kayıt Sil" class="btn btn-danger btn-xs"><i data-feather="trash"></i></a>
                                     </td>

@@ -76,3 +76,5 @@ $classMap['classes']['internalsiparismodel'] = 'Projects/Panel/Models/SiparisMod
 $classMap['classes']['siparismodel'] = 'Projects/Panel/Resources/Statics/Projects/Panel/Models/InternalSiparisModel.php';
 $classMap['classes']['project\controllers\siparisler'] = 'Projects/Panel/Controllers/Siparisler.php';
 $classMap['namespaces']['project\controllers\siparisler'] = 'siparisler';
+$classMap['classes']['internalfaturamodel'] = 'Projects/Panel/Models/FaturaModel.php';
+$classMap['classes']['faturamodel'] = 'Projects/Panel/Resources/Statics/Projects/Panel/Models/InternalFaturaModel.php';

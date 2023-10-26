@@ -297,29 +297,7 @@ class InternalSiparisModel extends Model
 
     public function siparisUrunleri($id){
 
-        $veri = DB::select(
-            'siparis_urunleri.id as id',
-            'siparis_urunleri.siparis as siparis',
-            'siparis_urunleri.urun as urun',
-            'siparis_urunleri.urun_adi as urun_adi',
-            'siparis_urunleri.urun_kodu as urun_kodu',
-            'siparis_urunleri.uye as uye',
-            'siparis_urunleri.en as en',
-            'siparis_urunleri.boy as boy',
-            'siparis_urunleri.adet as adet',
-            'siparis_urunleri.notu as notu',
-            'siparis_urunleri.resim as resim',
-            'siparis_urunleri.aciliyet as aciliyet',
-            'siparis_urunleri.birim_fiyat as birim_fiyat',
-            'siparis_urunleri.indirim as indirim',
-            'siparis_urunleri.kdv as kdv',
-            'siparis_urunleri.toplam_fiyat as toplam_fiyat',
-            'siparis_urunleri.durum as durum',
-            'siparis_durumlari.adi as durum_adi',
-            'siparis_durumlari.uyari as durum_uyari'
-        )
-            ->innerjoin('siparis_durumlari.id','siparis_urunleri.durum')
-            ->where('siparis_urunleri.siparis',$id)->siparis_urunleri()->result();
+        $veri = DB::where('siparis',$id)->siparis_urunleri()->result();
 
         return $veri;
 

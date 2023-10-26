@@ -46,7 +46,6 @@
                                             <th>Ödeme Durumu</th>
                                             <th>Toplam Tutar</th>
                                             <th>Sipariş Tarihi</th>
-                                            <th>Fatura</th>
                                             <th>Durum</th>
                                             <th></th>
                                         </tr>
@@ -60,7 +59,6 @@
                                             <td>{{$s->odeme_durumu=="1"?"Ödendi":"Ödeme Bekliyor"}}</td>
                                             <td>{{$s->genel_toplam_tutari}}</td>
                                             <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
-                                            <td>{{$s->fatura=="0"?"Faturalanmadı":"Faturalandı"}}</td>
                                             <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>
                                             <td>
                                                 <div class="dropdown">

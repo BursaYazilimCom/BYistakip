@@ -59,7 +59,7 @@ class Kasa extends Controller
 
             if($hesapEkle){
 
-                AyarModel::nelerOluyor($user->isim,'kasa','Yeni bir kasa hesabı ekledi');
+                //AyarModel::nelerOluyor($user->isim,'kasa','Yeni bir kasa hesabı ekledi');
 
                 Redirect::insert(['bilgi'=>'<div class="callout callout-success">Kasa Hesabı başarı ile eklendi!</div>'])->action('kasa');
             }else{

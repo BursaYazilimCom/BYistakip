@@ -124,7 +124,7 @@
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="checkbox" name="fatura" id="fatura" value="1" onclick="faturaOlustur()" />
-                                                        <label class="form-check-label" for="fatura">Fatura Oluştur</label>
+                                                        <label class="form-check-label" for="fatura">Resmi Fatura Oluştur</label>
                                                     </div>
                                                 </div>
                                             </div>
