@@ -118,40 +118,10 @@
                                                         <input class="form-check-input" type="checkbox" name="kayit_sekli" id="kayit_sekli" value="1" />
                                                         <label class="form-check-label" for="kayit_sekli">Teklif olarak kaydet</label>
                                                     </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" name="odeme_durumu" id="odeme_durumu"  onclick="odemeAlindi()" value="1" />
-                                                        <label class="form-check-label" for="odeme_durumu">Ödeme Yapıldı</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" name="fatura" id="fatura" value="1" onclick="faturaOlustur()" />
-                                                        <label class="form-check-label" for="fatura">Resmi Fatura Oluştur</label>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12" id="kasaHesabiDiv" style="display: none">
-                                            <div class="mb-1 row">
-                                                <div class="col-sm-12">
-                                                    <label class="col-form-label" for="kasa_hesabı">Kasa Hesabı <span class="text-danger">*(Ödemenin Kasaya İşlenmesi için gereklidir)</span></label>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <select class="select2 form-select" name="kasa_hesabı" id="kasa_hesabı">
 
-                                                        <option value="">--Seçiniz--</option>
-                                                        @foreach($kasaHesaplari as $kh)
-                                                        <option value="{{$kh->id}}">{{$kh->adi}}</option>
-                                                        @endforeach
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12" id="faturaNoDiv" style="display: none">
-                                            <label class="form-label" for="fatura_no">Fatura No  <span class="text-danger">*(Oluşturulan faturaya doğru numara verilmesi için gereklidir. Not:E-fatura kullanıyorsanız gerekyoktur.)</span></label>
-                                            <div class="input-group input-group-merge">
-                                                @Form::id('fatura_no')->placeholder('Fatura No')->text('fatura_no','',['class'=>'form-control'])
-                                            </div>
-                                        </div>
                                         <div class="col-12">
                                             <label class="form-label" for="siparis_notu">Sipairş Notu</label>
                                             <div class="input-group input-group-merge">
@@ -404,21 +374,6 @@
 </div>
 <!-- END: Content-->
 <script type="text/javascript">
-    function odemeAlindi() {
-        // Get the checkbox
-        var checkBox = document.getElementById("odeme_durumu");
-        // Get the output text
-        var text = document.getElementById("kasaHesabiDiv");
-
-        // If the checkbox is checked, display the output text
-        if (checkBox.checked == true){
-            text.style.display = "block";
-            $("#kasa_hesabı").attr('required',true);
-        } else {
-            text.style.display = "none";
-            $("#kasa_hesabı").attr('required',false);
-        }
-    }
     function faturaOlustur() {
         // Get the checkbox
         var checkBox = document.getElementById("fatura");

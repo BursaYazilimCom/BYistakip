@@ -1,11 +1,3 @@
-/*=========================================================================================
-    File Name: ui-feather.js
-    Description: Feather Icons
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 
 $(function () {
   'use strict';

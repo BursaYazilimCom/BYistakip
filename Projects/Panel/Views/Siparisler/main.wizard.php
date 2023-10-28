@@ -66,6 +66,14 @@
                                                         <i data-feather="more-vertical"></i>
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="{{URL::site('siparisler/urunler')}}/{{$s->id}}" class="dropdown-item">
+                                                            <i data-feather="shopping-bag" class="me-50"></i>
+                                                            <span>Sipariş Ürünleri</span>
+                                                        </a>
+                                                        <a href="{{URL::site('siparisler/hatirlatmaGonder')}}/{{$s->id}}" class="dropdown-item">
+                                                            <i data-feather="send" class="me-50"></i>
+                                                            <span>Ödeme Hatırlat</span>
+                                                        </a>
                                                         <a href="{{URL::site('siparisler/duzenle')}}/{{$s->id}}" class="dropdown-item">
                                                             <i data-feather="edit-2" class="me-50"></i>
                                                             <span>Düzenle</span>

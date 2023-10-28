@@ -1,11 +1,3 @@
-/*=========================================================================================
-	File Name: form-number-input.js
-	Description: Number Input
-	----------------------------------------------------------------------------------------
-	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-	Author: PIXINVENT
-	Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 
 (function (window, document, $) {
   'use strict';

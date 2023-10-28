@@ -123,12 +123,10 @@ class Siparisler extends Controller
 
         $musteri            = Post::cari();
         $odeme_yontemi      = Post::odeme_yontemi();
-        $odeme_durumu       = Post::odeme_durumu()=="1"?"1":"0";
+        $odeme_durumu       = "0";
         $durum              = Post::durum();
         $kayit_sekli        = Post::kayit_sekli()=="1"?"0":"1";
-        $fatura             = Post::fatura()=="1"?"1":"0";
         $siparis_notu       = Post::siparis_notu();
-        $fatura_no          = Post::fatura_no();
         $kasa_hesabı          = Post::kasa_hesabı();
 
         $musteriBilgi       = CariModel::detay($musteri);
@@ -139,7 +137,6 @@ class Siparisler extends Controller
             'odeme_durumu'          => $odeme_durumu,
             'olusturan'             => $user->id,
             'kayit_sekli'           => $kayit_sekli,
-            'fatura'                => $fatura,
             'siparis_notu'          => $siparis_notu,
             'durum'                 => $durum
         ];
@@ -149,10 +146,6 @@ class Siparisler extends Controller
         if($siparisOlustur){
 
             $siparisUrunleri = Cart::selectAll();
-
-            echo "<pre>";
-            print_r($siparisUrunleri);
-            echo "</pre>";
 
             $urunSAyi = 1;
 
@@ -239,7 +232,7 @@ class Siparisler extends Controller
                 'genel_toplam'      =>$kdvToplami+$toplamTutar,
                 'belge_tarihi'      =>$siparis_tarihi,
                 'sevk_tarihi'       =>"",
-                'durum'             =>$fatura=="1"?"2":"1",
+                'durum'             =>"1",
                 'odeme'             =>$odeme_durumu,
                 'aciklama'          =>""
             ];
@@ -273,10 +266,10 @@ class Siparisler extends Controller
             /**FATURA OLUŞTUR**/
 
             /* Ödeme durumuna göre müşteri cari işlemleri ve kasa defteri işlemleri yapılacak*/
-
             /* İlgili siparişi carinin hesabına kaydet*/
             /* İlgili siparişi carinin hesabına kaydet*/
             /*Ödeme alınmışsa kasa defterine kaydet*/
+
             if($odeme_durumu=="1"){
 
                 $defterData = [
@@ -304,7 +297,6 @@ class Siparisler extends Controller
 
                 }
 
-
             }
 
 
@@ -322,67 +314,23 @@ class Siparisler extends Controller
 
     public function duzenle($id){
 
-        $user = User::data();
-
-        $user                   = User::data();
-
-        AyarModel::yetkiKontrol(\Json::decode($user->yetkiler),CURRENT_CONTROLLER,CURRENT_CFUNCTION);
-
+        $urunler = UrunModel::tumListe();
+        $kasaHesaplari = KasaModel::kasaHesaplari();
         $detay      = SiparisModel::detay($id);
         $urunleri   = SiparisModel::siparisUrunleri($id);
-        $dosyalari  = SiparisModel::siparisDosyalari($id);
-        $uyeBilgi   = UyeModel::detay($detay->uye);
-        $siparisYerleri = AyarModel::siparisYerileri();
+        $cariBilgi   = CariModel::detay($detay->cari);
+        $cariler   = CariModel::tumListe();
+        $siparisDurumlari = AyarModel::siparisDurumlari();
+        $odemeYontemleri = AyarModel::odemeYontemleri();
 
-        $siparisDurumlari = SiparisModel::siparisDurumlari();
-
-        $araToplam          = "";
-        $iskontoToplam      = "";
-        $toplamKdvTutari    = "";
-        $genelToplam        = "";
-
-        foreach ($urunleri as $su) {
-
-            $birimFiyat     = $su->birim_fiyat;
-            $adet           = $su->adet;
-            $kdv            = $su->kdv;
-            $toplamFiyat    = $birimFiyat*$adet;
-
-            if($uyeBilgi->iskonto>0){
-                $uyeIskontosu   = ($toplamFiyat/100)*$uyeBilgi->iskonto;
-                $toplamFiyat    = $toplamFiyat-$uyeIskontosu;
-                $iskontoToplam  = $iskontoToplam+$uyeIskontosu;
-            }else{
-                $iskontoToplam  = "0.0000";
-            }
-
-            $kdvTutari      = ($toplamFiyat/100)*$kdv;
-            $araToplam      = $araToplam+$toplamFiyat;
-            $toplamKdvTutari= $toplamKdvTutari+$kdvTutari;
-
-        }
-
-        $toplamlar = [
-            'id'                    => $id,
-            'toplam_tutar'          => $araToplam+$iskontoToplam,
-            'ara_toplam_tutar'      => $araToplam,
-            'indirim_tutar'         => $iskontoToplam,
-            'kdv_tutari'            => $toplamKdvTutari,
-            'genel_toplam_tutari'   => $araToplam+$toplamKdvTutari
-        ];
-
-        $siparisTutarGuncelle = SiparisModel::siparisToplamTutarGuncelle($toplamlar);
-
-
+        View::kasaHesaplari($kasaHesaplari);
+        View::musteriler($cariler);
+        View::odemeYontemleri($odemeYontemleri);
         View::detay($detay);
-        View::dosyalari($dosyalari);
-        View::siparisUrunleri($urunleri);
-        View::toplamlar($toplamlar);
-        View::uyeBilgi($uyeBilgi);
+        View::cariBilgi($cariBilgi);
         View::siparisDurumlari($siparisDurumlari);
-        View::siparisYerleri($siparisYerleri);
+        View::urunler($urunleri);
 
-        AyarModel::nelerOluyor($user->isim,'siparisler/detay/'.$id,$id.' Numaralı Sipariş düzenleniyor');
     }
 
     public function guncelle($siparis){
@@ -784,58 +732,6 @@ class Siparisler extends Controller
         }
 
     }
-
-    public function siparisDosyaYukle($id){
-
-        if(Upload::isFile('file')){
-
-            Upload::source('file')
-                //->target('http://192.168.1.101/TERMOFOM/program/')
-                ->target(REAL_BASE_DIR . 'Uploads/siparisDosyalari/'.Date::set('{Y}').'/')
-                ->start();
-
-            $dosyaBilgi = Upload::info();
-
-            $dosya = $dosyaBilgi->encodeName;
-
-            $data = [
-                'siparis'   =>$id,
-                'kayit_yili'=>Date::set('{Y}'),
-                'dosya'     =>$dosya,
-            ];
-            SiparisModel::siparisDosyaEkle($data);
-
-        }else{
-
-        }
-
-    }
-
-    public function siparisDosyaSil($dosya,$yil,$siparis){
-
-        $user   = User::data();
-
-        $detay = SiparisModel::detay($siparis);
-
-        if(File::exists(REAL_BASE_DIR . 'Uploads/siparisDosyalari/'.$yil.'/'.$dosya)){
-
-            File::delete(REAL_BASE_DIR . 'Uploads/siparisDosyalari/'.$yil.'/'.$dosya);
-
-        }
-
-        $DBdosyaSil = SiparisModel::siparisDosyaSil($dosya);
-
-        if ($DBdosyaSil){
-
-            AyarModel::nelerOluyor($user->isim,'siparisler/detay/'.$siparis,$siparis.' Numaralı siparişten '.$dosya.' isimli dosyayı sildi');
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Dosya kaldırıldı</div>'])->action('siparisler/duzenle/'.$siparis);
-        }else{
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Dosya kaldırma işlemi yapılamadı</div>'])->action('siparisler/duzenle/'.$siparis);
-        }
-
-    }
-
 
     public function durumGuncelle($id){
 

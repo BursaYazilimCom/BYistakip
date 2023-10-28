@@ -141,28 +141,7 @@ class InternalSiparisModel extends Model
 
     public function detay($id)
     {
-        $veri = DB::select(
-                    'siparisler.id as siparisId',
-                    'siparisler.belge_no as belge_no',
-                    'siparisler.cari as cari',
-                    'siparisler.siparis_notu as siparis_notu',
-                    'siparisler.toplam_fiyat as toplam_fiyat',
-                    'siparisler.durum as durum',
-                    'siparisler.toplam_tutar as toplam_tutar',
-                    'siparisler.indirim_tutar as indirim_tutar',
-                    'siparisler.ara_toplam_tutar as ara_toplam_tutar',
-                    'siparisler.kdv_tutari as kdv_tutari',
-                    'siparisler.genel_toplam_tutari as genel_toplam_tutari',
-                    'siparisler.odeme_turu as odeme_turu',
-                    'siparisler.odeme_durumu as odeme_durumu',
-                    'siparisler.kayit_sekli as kayit_sekli',
-                    'siparisler.fatura as fatura',
-                    'siparisler.tarih as tarih',
-                    'siparisler.teslim_tarihi as teslim_tarihi',
-                    'siparisler.olusturan as olusturan'
-                    )
-                    ->where('siparisler.id',$id)
-                    ->siparisler()->row();
+        $veri = DB::where('siparisler.id',$id)->siparisler()->row();
 
         return $veri;
     }
