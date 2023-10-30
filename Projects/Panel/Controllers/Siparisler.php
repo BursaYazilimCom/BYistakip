@@ -302,6 +302,8 @@ class Siparisler extends Controller
 
             /*Ödeme alınmışsa kasa defterine kaydet*/
 
+            Cart::deleteAll();
+
             Redirect::insert(['bilgi'=>'<div class="callout callout-success">Sipariş Oluşlturuldu !</div>'])->action('siparisler');
 
         }else{
@@ -322,7 +324,9 @@ class Siparisler extends Controller
         $cariler   = CariModel::tumListe();
         $siparisDurumlari = AyarModel::siparisDurumlari();
         $odemeYontemleri = AyarModel::odemeYontemleri();
+        $siparisGecmisi = SiparisModel::siparisGecmisi($id);
 
+        View::siparisGecmisi($siparisGecmisi);
         View::kasaHesaplari($kasaHesaplari);
         View::musteriler($cariler);
         View::odemeYontemleri($odemeYontemleri);
@@ -339,60 +343,56 @@ class Siparisler extends Controller
 
         $user = User::data();
 
-        $musteriBilgi   = UyeModel::detay($siparisDetay->uye);
-        $siparisDurumu  = Post::durum();
-        $siparis_adi    = Post::siparis_adi();
-        $siparis_notu   = Post::siparis_notu();
-        $siparis_kodu   = Post::siparis_kodu();
-        $grafik_hizmeti = Post::grafik_hizmeti();
-        $siparis_yeri   = Post::siparis_yeri();
-        $montaj_hizmeti = Post::montaj_hizmeti();
-        $kayit_sekli    = Post::kayit_sekli();
-        $teslim_tarihi      = AyarModel::tarihDuzelt(Post::teslim_tarihi());
-        $odeme_periyodu  = Post::odeme_periyodu();
-        $periyodik_siparis  = Post::periyodik_siparis();
-        $kargo_kodu     = Post::kargo_kodu();
+        $musteriBilgi       = CariModel::detay($siparisDetay->cari);
+        $yeniSiparisDurumu  = Post::durum();
+        $urunDurumDegistir  = Post::urunDurumDegistir();
+        $siparis_notu       = Post::siparis_notu();
 
         $siparisData = [
             'id'                    => $siparis,
-            'siparis_adi'           => $siparis_adi,
             'siparis_notu'          => $siparis_notu,
-            'siparis_kodu'          => $siparis_kodu,
-            'durum'                 => $siparisDurumu,
-            'siparis_yeri'          => $siparis_yeri,
-            'grafik_hizmeti'        => $grafik_hizmeti,
-            'montaj_hizmeti'        => $montaj_hizmeti,
-            'teslim_tarihi'         => $teslim_tarihi,
-            'odeme_periyodu'         => $odeme_periyodu,
-            'periyodik_siparis'         => $periyodik_siparis,
-            'kargo_kodu'            => $kargo_kodu
+            'durum'                 => $yeniSiparisDurumu
         ];
 
         $siparisGuncelle = SiparisModel::guncelle($siparisData);
+        $ekUyari ="";
 
-        if($siparisDetay->durum!=$siparisDurumu){
+        if($urunDurumDegistir=="1"){
+
+            $siparisUrunleri = SiparisModel::siparisUrunleri($siparis);
+
+            foreach ($siparisUrunleri as $surun) {
+
+                $urunGuncelle = SiparisModel::urunDurumDegistir($surun->id,$yeniSiparisDurumu);
+
+            }
+
+            $ekUyari = "Bunun yanında talep doğrultusunda siparişe bağlı ürünlerinde durumu değiştirildi. ";
+
+        }
+
+        if($siparisDetay->durum!=$yeniSiparisDurumu){
 
             $gecmisData = [
-                'uye'           =>$siparisDetay->uye,
-                'siparis_id'    =>$siparis,
-                'aciklama'      =>'Sipariş güncellenirken aynı zamanda durumuda değiştirildi.<br><small>Güncelleyen: '.$user->isim.'</small>',
-                'guncelleyen'   =>$user->id,
-                'durum'         =>Post::durum()
+                'cari'              =>$siparisDetay->cari,
+                'siparis'           =>$siparis,
+                'aciklama'          =>'Sipariş güncellenirken aynı zamanda durumuda değiştirildi.'.$ekUyari.'<br> Yeni Sipariş Durumu:  '.AyarModel::siparisDurumAdi($yeniSiparisDurumu).'<br><small>Güncelleyen: '.$user->isim.'</small>',
+                'guncelleyen'       =>$user->id
             ];
 
             $siparisGecmisEkle = SiparisModel::siparisGesmisEkle($gecmisData);
 
         }
 
+
+
         if($siparisGuncelle){
 
-            AyarModel::nelerOluyor($user->isim,'siparisler/detay/'.$siparis,$siparis.' Numaralı sipariş güncellendi');
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Sipariş Güncelleme işlemi gerçekleştirildi !</div>'])->action('siparisler/duzenle/'.$siparis);
+            Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><div class="alert-body">Sipariş Güncelleme işlemi gerçekleştirildi !</div></div>'])->action('siparisler/duzenle/'.$siparis);
 
         }else{
 
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Sipariş Güncelleme hatası lütfen tekrar deneyin hata devam ederse sistem yöneticinize bildirin !</div>'])->action('siparisler/duzenle/'.$siparis);
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><div class="alert-body">Sipariş Güncelleme hatası lütfen tekrar deneyin hata devam ederse sistem yöneticinize bildirin !</div></div>'])->action('siparisler/duzenle/'.$siparis);
 
         }
 
@@ -479,9 +479,9 @@ class Siparisler extends Controller
 
             AyarModel::nelerOluyor($user->isim,'siparisler/detay/'.$siparisUrunDetay->siparis,$siparisUrunDetay->siparis.' Numaralı siparişin '.$siparisUrunDetay->urun_adi.' ürünü güncellendi');
 
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Ürün Güncelleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/duzenle/'.$siparisUrunDetay->siparis);
+            Redirect::insert(['bilgi'=>'<div class="alert alert-success">Ürün Güncelleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/duzenle/'.$siparisUrunDetay->siparis);
         }else{
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Ürün Güncelleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/duzenle/'.$siparisUrunDetay->siparis);
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger">Ürün Güncelleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/duzenle/'.$siparisUrunDetay->siparis);
         }
 
     }
@@ -604,10 +604,25 @@ class Siparisler extends Controller
 
             AyarModel::nelerOluyor($user->isim,'siparisler/detay/'.$id,$id.' Numaralı siparişe '.$urunDetay->adi.' ürünü eklendi<br>'.$malzemeDusulenStokBilgi);
 
-            Redirect::insert(['bilgi'=>'<div class="callout callout-success">Ürün Ekleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/duzenle/'.$id);
+            Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert">Ürün Ekleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/duzenle/'.$id);
         }else{
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Ürün Ekleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/duzenle/'.$id);
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert">Ürün Ekleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/duzenle/'.$id);
         }
+
+    }
+
+    public function urunDuzenle($id){
+
+        $siparisUrunDetay = SiparisModel::siparisUrunBilgi($id);
+        $siparisDetay = SiparisModel::detay($siparisUrunDetay->siparis);
+        $cariBilgi   = CariModel::detay($siparisDetay->cari);
+        $siparisDurumlari = AyarModel::siparisDurumlari();
+
+
+        View::urunDetay($siparisUrunDetay);
+        View::siparisDurumlari($siparisDurumlari);
+        View::siparisDetay($siparisDetay);
+        View::cariBilgi($cariBilgi);
 
     }
 
@@ -792,7 +807,7 @@ class Siparisler extends Controller
     }
 
 
-    /*****************SİPARİŞ DURUMLARI********************/
+    /*****************SİPARİŞ DURUMLARI*******************
 
     public function siparisDurumlari($id=""){
         $user = User::data();
@@ -818,7 +833,7 @@ class Siparisler extends Controller
 
     }
 
-    /*****************SİPARİŞ DURUMLARI********************/
+    ***********SİPARİŞ DURUMLARI********************/
 
     public function ajax():void
     {

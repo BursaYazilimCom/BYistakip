@@ -423,7 +423,7 @@ class InternalAyarModel extends Model
 
     static function siparisDurumlari(){
 
-        $veri = DB::siparis_durumlari()->result();
+        $veri = DB::orderby('sira','ASC')->siparis_durumlari()->result();
 
         return $veri;
     }

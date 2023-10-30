@@ -1,6 +1,7 @@
 <?php namespace Project\Controllers;
 
-use Method, Post, Redirect,Date,Pagination,User, TedarikciModel, FaturaModel,AyarModel,MalzemeModel,KasaModel;
+use Method, Post,URL, Redirect,Date,Pagination,User,Email,DB;
+use TedarikciModel, FaturaModel,AyarModel,MalzemeModel,KasaModel,SiparisModel,CariModel;
 
 class Kasa extends Controller
 {
@@ -38,6 +39,102 @@ class Kasa extends Controller
         View::digerHesaplar($digerHesaplar);
 
        // AyarModel::nelerOluyor($user->isim,'kasa','Kasa yönetimine bakıyor');
+
+    }
+
+    public function odemeEkle($yer,$id){
+
+        $user = User::data();
+        $kasa_hesabı = Post::kasa();
+        $aciklama = Post::aciklama();
+        $tutar = Post::tutar();
+        $odeme_tarihi = Post::odeme_tarihi();
+        $bildirim = Post::bildirim();
+
+        if ($yer=="siparis"){
+
+            $siparisDetay = SiparisModel::detay($id);
+            $cariDetay = CariModel::detay($siparisDetay->cari);
+
+            $defterData = [
+                'kasa'          =>$kasa_hesabı,
+                'islem'         =>"t",
+                'hesap'         =>"Sipariş Ödemesi Tahsilatı: ".$cariDetay->adi,
+                'islem_turu'    =>"siparis",
+                'islem_tur_id'  =>$id,
+                'aciklama'      =>$id." Numaralı Siparişin Ödemesi",
+                'gelir'         =>$tutar,
+                'gider'         =>"",
+                'mevcut_kasa_toplami'=>KasaModel::kasaToplami()+$tutar,
+                'yil'           =>Date::set('{year}'),
+                'tarih'         =>$odeme_tarihi,
+                'islem_yapan'   =>$user->id
+            ];
+
+            $kasayaKaydet = KasaModel::deftereKaydet($defterData);
+
+            $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabı);
+
+            if ($kasayaKaydet) {
+                $odemData = [
+                    'id'  =>$id,
+                    'alinan_odeme'        =>$tutar+$siparisDetay->alinan_odeme,
+                ];
+
+                $siparisOdemeEkle = SiparisModel::odemeEkle($odemData);
+
+                $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabı);
+
+                $toplamSiparisOdemesi = $tutar+$siparisDetay->alinan_odeme;
+
+                if ($toplamSiparisOdemesi>=$siparisDetay->genel_toplam_tutari){
+
+                    DB::siparislerUpdateId(['odeme_durumu'=>'1'],$id);
+
+                }
+
+                /*BİLDİRİM*/
+                $ekMailBilgi = "";
+
+                if($bildirim=="1"){
+
+                    $mailgonder = Email::subject('Ödeme Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
+
+                        'konu' => 'Ödeme Bildirimi',
+                        'mesaj' => $siparisDetay->id.' numaralı sipariniz için '.Date::convert($odeme_tarihi, '{dayInMonth}.{monthInYear-}.{year}').' tarihinde '.$tutar.' TL Tutarında ödemeniz alınmış ve kayıtlarımıza işlenmiştir.<br> Ödemeniz için teşekkür ederiz.<br><hr>'.$aciklama,
+                        'link' => URL::site(),
+                        'link_baslik' => 'Tıklayınız',
+                        'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                        'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                        'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                        'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+                    ])->send();
+
+                    if ($mailgonder) {
+                        $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderildi !";
+                    }else{
+                        $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderilemedi !".Email::error();
+                    }
+
+                }
+
+                /*BİLDİRİM*/
+
+                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Ödeme Başarı İle Eklendi !.<br>'.$ekMailBilgi.'</div></div>'])->action('siparisler/duzenle/'.$id);
+
+
+
+
+
+            }else{
+                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">İşlem sırasında hata oluştu !.</div></div>'])->action(URL::prev());
+            }
+
+        }else{
+
+        }
+
+
 
     }
 

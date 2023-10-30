@@ -11,7 +11,7 @@ class InternalCariModel extends Model
     {
         $data = DB::where('id',$id)->cari()->row();
 
-        return $data->isim_soyisim;
+        return $data->adi;
     }
 
     static function liste(){

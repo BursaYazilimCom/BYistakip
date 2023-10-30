@@ -1,0 +1,223 @@
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">Siparişler</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="{{URL::site('siparisler')}}">Siparişler</a>
+                                <li class="breadcrumb-item"><a href="{{URL::site('siparisler/duzenle/')}}{{$siparisDetay->id}}">#{{$siparisDetay->id}}</a>
+                                <li class="breadcrumb-item active">Sipariş Ürün Düzenle
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <!-- Basic Horizontal form layout section start -->
+            <section id="basic-horizontal-layouts">
+
+                <div class="row">
+                    <div class="col-md-12 col-12">
+
+                        @Form::csrf()->action("siparisler/urunGuncelle")->open('submitForm',['class'=>'form form-horizontal'])
+
+                        <div class="row">
+                            {{ Redirect::select('bilgi',true) }}
+                            <div class="col-md-6 col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Sipariş Ürün Detayları (#{{$urunDetay->id}})</h4>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="cari">Müşteri</label>
+                                                </div>
+                                                <div class="col-sm-12">
+
+                                                    <strong><a href="{{URL::site()}}cari/detay/{{$cariBilgi->id}}"> {{$cariBilgi->adi}}</a></strong><br> {{$cariBilgi->gsm}} - {{$cariBilgi->email}}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-form-label" for="odeme_yontemi">Ödeme Priyodu</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {{AyarModel::odemePeriyodu($urunDetay->odeme_periyodu)}}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-form-label" for="odeme_yontemi">Sipariş Tarihi</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {{Date::convert($urunDetay->siparis_tarihi, '{dayInMonth}.{monthInYear-}.{year}')}}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-form-label" for="odeme_yontemi">Baslangıç Tarihi</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <input type="date" class="form-control" name="baslangic_tarihi" value="{{$urunDetay->baslangic_tarihi}}">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-form-label" for="odeme_yontemi">Bitiş Tarihi</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <input type="date" class="form-control" name="bitis_tarihibitis_tarihi" value="{{$urunDetay->bitis_tarihi}}">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-form-label" for="odeme_yontemi">Sipariş Para Birimi</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {{$urunDetay->para_birimi}}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-form-label" for="odeme_yontemi">Sipariş Zamanı Döviz Kuru</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {{number_format($urunDetay->gecerli_kur,4)}} ₺
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="odeme_yontemi">Fiyat Bilgisi</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Birim Fiyat</td>
+                                                                <td style="text-align: right">{{number_format($urunDetay->birim_fiyat,2)}} ₺</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Toplam KDV (% {{$urunDetay->kdv}})</td>
+                                                                <td style="text-align: right">{{number_format($urunDetay->kdv_tutari,2)}} ₺</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Genel Toplam</td>
+                                                                <td style="text-align: right">{{number_format($urunDetay->toplam_fiyat,2)}} ₺</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">{{$urunDetay->urun_adi}}</h4>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="durum">Sipariş Durumları</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <select class="select2 form-select" name="durum" id="durum">
+
+                                                        <option value="">--Seçiniz--</option>
+                                                        @foreach($siparisDurumlari as $sd)
+                                                        <option  value="{{$sd->id}}" {{$sd->id==$urunDetay->durum?'selected':''}}>{{$sd->adi}}</option>
+                                                        @endforeach
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label class="form-label" for="siparis_notu">Sipairş Notu</label>
+                                            <div class="input-group input-group-merge">
+                                                @Form::id('siparis_notu')->placeholder('Sipariş Notu')->textarea('siparis_notu','',['class'=>'form-control'])
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-sm-12">
+                                                <button type="submit" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> KAYDET</span></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        @Form::close()
+
+                    </div>
+
+                </div>
+            </section>
+
+
+
+        </div>
+    </div>
+</div>

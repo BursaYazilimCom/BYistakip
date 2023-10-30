@@ -166,21 +166,17 @@ class InternalSiparisModel extends Model
     public function guncelle($data){
 
         $guncelle = DB::where('id',$data['id'])->update('siparisler',[
-            'belge_no'      =>$data['belge_no'],
-            'cari'           =>$data['cari'],
-            'siparis_notu'  =>$data['siparis_notu'],
-            'toplam_fiyat'  =>$data['toplam_fiyat'],
-            'toplam_tutar'  =>$data['toplam_tutar'],
-            'indirim_tutar'  =>$data['indirim_tutar'],
-            'ara_toplam_tutar'  =>$data['ara_toplam_tutar'],
-            'kdv_tutari'  =>$data['kdv_tutari'],
-            'genel_toplam_tutari'  =>$data['genel_toplam_tutari'],
-            'odeme_turu'  =>$data['odeme_turu'],
-            'odeme_durumu'  =>$data['odeme_durumu'],
-            'kayit_sekli'  =>$data['kayit_sekli'],
-            'fatura'  =>$data['fatura'],
-            'teslim_tarihi' =>$data['teslim_tarihi'],
-            'durum'         =>$data['durum']
+            'siparis_notu'          =>$data['siparis_notu'],
+            'durum'                 =>$data['durum']
+        ]);
+
+        return $guncelle;
+    }
+
+    public function odemeEkle($data){
+
+        $guncelle = DB::where('id',$data['id'])->update('siparisler',[
+            'alinan_odeme'          =>$data['alinan_odeme']
         ]);
 
         return $guncelle;
@@ -335,44 +331,12 @@ class InternalSiparisModel extends Model
                 'durum'      =>$durum
             ]);
 
-            $personel = User::data();
-
-
-            $client = new Client(new Version2X(AyarModel::defaultAyarlar('nodeIp').':'.AyarModel::defaultAyarlar('nodePort')));
-
-            $urunDetay      = $this->siparisUrunBilgi($id);
-
-            if($urunDetay->uretime_alan=="0" and $durum==AyarModel::defaultAyarlar("uretimdekiSiparisDurumu")){
-
-                $olusturan = PersonelModel::isim($personel->id);
-
-            }elseif($urunDetay->uretime_alan=="0" and $durum!=AyarModel::defaultAyarlar("uretimdekiSiparisDurumu")){
-                $olusturan = "<a href='siparisler/detay/".$urunDetay->siparis."'>Detay</a>";
-            }else{
-                $olusturan = PersonelModel::isim($urunDetay->uretime_alan);
-            }
-
-            $siparisDetay   = $this->detay($urunDetay->siparis);
-            $personel       = PersonelModel::detay($siparisDetay->olusturan);
-            $uye            = UyeModel::detay($siparisDetay->uye);
-            $durumDetay     = $this->siparisDurumDetay($urunDetay->durum);
-
         return $guncelle;
     }
 
     public function siparisGecmisi($id){
 
-        $veri = DB::select(
-                'siparis_gecmisi.id as id',
-                'siparis_gecmisi.uye as uye',
-                'siparis_gecmisi.aciklama as aciklama',
-                'siparis_gecmisi.tarih as tarih',
-                'siparis_gecmisi.durum as durum',
-                'siparis_durumlari.adi as durumAdi',
-                'yonetim.isim as guncelleyen')
-                ->innerjoin('siparis_durumlari.id','siparis_gecmisi.durum')
-                ->innerjoin('yonetim.id','siparis_gecmisi.guncelleyen')
-                ->where('siparis_gecmisi.siparis_id',$id)
+        $veri = DB::where('siparis_gecmisi.siparis',$id)
                 ->orderby('siparis_gecmisi.id','DESC')
                 ->siparis_gecmisi()->result();
 

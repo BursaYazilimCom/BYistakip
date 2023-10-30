@@ -53,11 +53,11 @@
                                         <tbody id="addDataTable">
                                         @foreach($listele['liste'] as $s)
                                         <tr id="row-{{$s->id}}">
-                                            <td>{{$s->id}}</td>
-                                            <td>{{$s->cari}}</td>
+                                            <td><a href="{{URL::site('siparisler/duzenle')}}/{{$s->id}}">{{$s->id}}</a></td>
+                                            <td>{{CariModel::cariAdi($s->cari)}}</td>
                                             <td>{{AyarModel::odemeYontemiAdi($s->odeme_yontemi)}}</td>
                                             <td>{{$s->odeme_durumu=="1"?"Ödendi":"Ödeme Bekliyor"}}</td>
-                                            <td>{{$s->genel_toplam_tutari}}</td>
+                                            <td>{{number_format($s->genel_toplam_tutari,2)}} ₺</td>
                                             <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
                                             <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>
                                             <td>
