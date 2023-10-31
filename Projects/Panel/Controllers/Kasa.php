@@ -169,13 +169,14 @@ class Kasa extends Controller
 
     }
 
-    public function kayitlar($id,$sayfa=Null){
+    public function kayitlar($id,$sayfa=0){
 
         $user   = User::data();
 
         Pagination::url('kasa/kayitlar/'.$id.'/')->create();
 
         $kasa = KasaModel::hesapBilgi($id);
+
         $kayitlar = KasaModel::kayitlar($id,$sayfa);
 
         //AyarModel::nelerOluyor($user->isim,'kasa/kayitlar/'.$id,$kasa->adi.'İsimli kasa hesabını inceliyor.');

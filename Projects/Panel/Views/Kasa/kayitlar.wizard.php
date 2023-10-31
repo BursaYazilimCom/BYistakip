@@ -57,7 +57,6 @@
                                     <th>Açıklama</th>
                                     <th>Gelir</th>
                                     <th>Gider</th>
-                                    <th>Belge</th>
                                     <th>Tutar</th>
                                     <th>#</th>
                                 </tr>
@@ -74,7 +73,6 @@
                                     <td>{{$kayit->aciklama}}</td>
                                     <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format($kayit->gelir,2)}}</td>
                                     <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format($kayit->gider,2)}} </td>
-                                    <td>{{$kayit->belge}}</td>
                                     <td>{{number_format($guncelTutar,2)}}</td>
                                     <td>
                                         <a href="" data-toggle="tooltip" title="Kayıt Sil" class="btn btn-danger btn-xs"><i data-feather="trash"></i></a>
