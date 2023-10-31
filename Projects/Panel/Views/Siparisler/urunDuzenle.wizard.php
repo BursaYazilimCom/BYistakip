@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-12 col-12">
 
-                        @Form::csrf()->action("siparisler/urunGuncelle")->open('submitForm',['class'=>'form form-horizontal'])
+                        @Form::csrf()->action("siparisler/urunGuncelle/".$urunDetay->id)->open('submitForm',['class'=>'form form-horizontal'])
 
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
@@ -56,7 +56,7 @@
                                             <div class="col-6">
                                                 <div class="mb-1 row">
                                                     <div class="col-sm-12">
-                                                        <label class="col-form-label" for="odeme_yontemi">Ödeme Priyodu</label>
+                                                        <label class="col-form-label" for="odeme_periyodu">Ödeme Priyodu</label>
                                                     </div>
                                                     <div class="col-sm-12">
                                                         {{AyarModel::odemePeriyodu($urunDetay->odeme_periyodu)}}
@@ -81,7 +81,7 @@
                                             <div class="col-6">
                                                 <div class="mb-1 row">
                                                     <div class="col-sm-12">
-                                                        <label class="col-form-label" for="odeme_yontemi">Baslangıç Tarihi</label>
+                                                        <label class="col-form-label" for="baslangic_tarihi">Baslangıç Tarihi</label>
                                                     </div>
                                                     <div class="col-sm-12">
                                                         <input type="date" class="form-control" name="baslangic_tarihi" value="{{$urunDetay->baslangic_tarihi}}">
@@ -95,7 +95,7 @@
                                                         <label class="col-form-label" for="odeme_yontemi">Bitiş Tarihi</label>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        <input type="date" class="form-control" name="bitis_tarihibitis_tarihi" value="{{$urunDetay->bitis_tarihi}}">
+                                                        <input type="date" class="form-control" name="bitis_tarihi" value="{{$urunDetay->bitis_tarihi}}">
 
                                                     </div>
                                                 </div>
@@ -107,7 +107,7 @@
                                             <div class="col-6">
                                                 <div class="mb-1 row">
                                                     <div class="col-sm-12">
-                                                        <label class="col-form-label" for="odeme_yontemi">Sipariş Para Birimi</label>
+                                                        <label class="col-form-label" for="para_birimi">Sipariş Para Birimi</label>
                                                     </div>
                                                     <div class="col-sm-12">
                                                         {{$urunDetay->para_birimi}}
@@ -118,10 +118,20 @@
                                             <div class="col-6">
                                                 <div class="mb-1 row">
                                                     <div class="col-sm-12">
-                                                        <label class="col-form-label" for="odeme_yontemi">Sipariş Zamanı Döviz Kuru</label>
+                                                        <label class="col-form-label" for="gecerli_kur">Sipariş Zamanı Döviz Kuru</label>
                                                     </div>
                                                     <div class="col-sm-12">
                                                         {{number_format($urunDetay->gecerli_kur,4)}} ₺
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="fiyat_sabitle" id="fiyat_sabitle" value="1" {{$urunDetay->fiyat_sabitle=="1"?"checked":""}} />
+                                                            <label class="form-check-label" for="fiyat_sabitle">Sonraki faturalarda bu fiyatı değiştirme <br><small>Abonelikli ürünlerde ileride kesilecek faturalarda güncel ürün fiyatını değil bu faturada geçerli olan {{number_format($urunDetay->birim_fiyat,2)}} ₺ fiyatını baz alır.</small></label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,7 +141,7 @@
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-3">
-                                                    <label class="col-form-label" for="odeme_yontemi">Fiyat Bilgisi</label>
+                                                    <label class="col-form-label" for="birim_fiyat">Fiyat Bilgisi</label>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <table class="table table-bordered">
@@ -188,7 +198,7 @@
                                         <div class="col-12">
                                             <label class="form-label" for="siparis_notu">Sipairş Notu</label>
                                             <div class="input-group input-group-merge">
-                                                @Form::id('siparis_notu')->placeholder('Sipariş Notu')->textarea('siparis_notu','',['class'=>'form-control'])
+                                                @Form::id('siparis_notu')->placeholder('Sipariş Notu')->textarea('siparis_notu',$urunDetay->notu,['class'=>'form-control'])
                                             </div>
                                         </div>
 

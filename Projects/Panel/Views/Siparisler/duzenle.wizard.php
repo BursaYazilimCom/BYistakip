@@ -119,7 +119,12 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>Kalan Ödeme</td>
-                                                                <td style="text-align: right;font-weight: bold">{{number_format($detay->genel_toplam_tutari-$detay->alinan_odeme,2)}} ₺</td>
+
+                                                                <td style="text-align: right;font-weight: bold">
+
+                                                                    <span class='text text-{{$detay->genel_toplam_tutari-$detay->alinan_odeme<=0?"success":"danger"}}'>{{number_format($detay->genel_toplam_tutari-$detay->alinan_odeme,2)}} ₺</span>
+
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -165,6 +170,15 @@
                                         </div>
 
                                     </div>
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-sm-12">
+                                                <button type="submit" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> KAYDET</span></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -173,7 +187,12 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Ürünleri</h4>
-                                        <a class="dt-button create-new btn btn-primary" tabindex="0"   data-bs-toggle="modal" data-bs-target="#odemeEkle"><span><i data-feather="plus"></i>Ödeme Ekle</span></a>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="{{URL::site()}}siparisler/iptal/{{$detay->id}}" class="btn btn-danger waves-effect waves-float waves-light">İptal Et</a>
+                                            <a href="{{URL::site()}}faturalar/hatirlat/{{$detay->id}}" class="btn btn-info waves-effect waves-float waves-light">Ödeme Hatırlat</a>
+                                            <a href="{{URL::site()}}faturalar/siparis/{{$detay->id}}" class="btn btn-warning waves-effect waves-float waves-light">Faturası</a>
+                                            <a type="button"   data-bs-toggle="modal" data-bs-target="#odemeEkle"  class="btn btn-primary waves-effect waves-float waves-light"><i data-feather="plus"></i>Ödeme Ekle</a>
+                                        </div>
                                     </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -230,15 +249,7 @@
                                             <hr>
                                         </div>
 
-                                        <div class="card-body">
-                                            <div class="row">
 
-                                                <div class="col-sm-12">
-                                                    <button type="submit" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> KAYDET</span></button>
-                                                </div>
-
-                                            </div>
-                                        </div>
 
                                 </div>
 

@@ -26,7 +26,7 @@ class Ajax extends Controller
 
         if(Post::action()=="kasaHesapBilgi"){
 
-            $hesap = KasaModel::bilgi(Post::rowid());
+            $hesap = KasaModel::hesapBilgi(Post::rowid());
 
             ?>
 

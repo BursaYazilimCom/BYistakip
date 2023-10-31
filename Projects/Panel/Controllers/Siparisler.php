@@ -426,62 +426,33 @@ class Siparisler extends Controller
 
     }
 
-    public function siparisUrunGuncelle(){
+    public function urunGuncelle($urun){
 
         $user = User::data();
 
-        $yetkiler               = \Json::decode($user->yetkiler);
+        $baslangic_tarihi       = Post::baslangic_tarihi();
+        $bitis_tarihi           = Post::bitis_tarihi();
+        $durum                  = Post::durum();
+        $siparis_notu           = Post::siparis_notu();
+        $fiyat_sabitle           = Post::fiyat_sabitle();
 
-        $urun   = Post::urun();
-        $siparisUrunId   = Post::id();
-        $fiyat  = Post::fiyat();
-        $adet   = Post::adet();
-        $en     = Post::en();
-        $boy    = Post::boy();
-        $eknot  = Post::eknot();
-
-        $urunDetay      = UrunModel::detay($urun);
-        $siparisUrunDetay   = SiparisModel::siparisUrunDetay(Post::id());
-
-        if($urunDetay->birim=="m2"){
-
-            $boyut  = ($en*$boy)/10000;
-
-            $birimfiyat = $fiyat*$boyut;
-
-        }else{
-            $birimfiyat = $fiyat;
-        }
-
-        if($urunDetay->fiyat_birim!="TL"){
-            $tlTutar = AyarModel::tlCevir($birimfiyat,$urunDetay->fiyat_birim);
-
-            $birimfiyat = $tlTutar;
-
-        }
-
-        $toplamFiyat    = $birimfiyat*$adet;
 
         $siparisUrunData = [
-            'id'            =>$siparisUrunId,
-            'en'            =>$en,
-            'boy'           =>$boy,
-            'adet'          =>$adet,
-            'notu'          =>$eknot,
-            'birim_fiyat'   =>$birimfiyat,
-            'kdv'           =>$urunDetay->kdv,
-            'toplam_fiyat'  =>$toplamFiyat
+            'id'                =>$urun,
+            'baslangic_tarihi'  =>$baslangic_tarihi,
+            'bitis_tarihi'      =>$bitis_tarihi,
+            'fiyat_sabitle'     =>$fiyat_sabitle,
+            'durum'             =>$durum,
+            'siparis_notu'      =>$siparis_notu
         ];
 
         $guncelle = SiparisModel::siparisUrunGuncelle($siparisUrunData);
 
         if ($guncelle){
 
-            AyarModel::nelerOluyor($user->isim,'siparisler/detay/'.$siparisUrunDetay->siparis,$siparisUrunDetay->siparis.' Numaralı siparişin '.$siparisUrunDetay->urun_adi.' ürünü güncellendi');
-
-            Redirect::insert(['bilgi'=>'<div class="alert alert-success">Ürün Güncelleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/duzenle/'.$siparisUrunDetay->siparis);
+            Redirect::insert(['bilgi'=>'<div class="alert alert-success">Ürün Güncelleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/urunDuzenle/'.$urun);
         }else{
-            Redirect::insert(['bilgi'=>'<div class="alert alert-danger">Ürün Güncelleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/duzenle/'.$siparisUrunDetay->siparis);
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger">Ürün Güncelleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/urunDuzenle/'.$urun);
         }
 
     }

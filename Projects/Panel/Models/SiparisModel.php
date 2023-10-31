@@ -240,13 +240,11 @@ class InternalSiparisModel extends Model
     public function siparisUrunGuncelle($data){
 
         $guncelle = DB::where('id',$data['id'])->update('siparis_urunleri',[
-            'en'            =>$data['en'],
-            'boy'           =>$data['boy'],
-            'adet'          =>$data['adet'],
-            'notu'          =>$data['notu'],
-            'birim_fiyat'   =>$data['birim_fiyat'],
-            'kdv'           =>$data['kdv'],
-            'toplam_fiyat'  =>$data['toplam_fiyat']
+            'notu'                  => $data['siparis_notu'],
+            'fiyat_sabitle'         => $data['fiyat_sabitle'],
+            'baslangic_tarihi'      => $data['baslangic_tarihi'],
+            'bitis_tarihi'          => $data['bitis_tarihi'],
+            'durum'                 => $data['durum']
         ]);
 
         return $guncelle;
