@@ -1,0 +1,157 @@
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper ">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">Fatura Yönetimi</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Faturalar</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="content-body">
+            <section class="form-control-repeater">
+                <div class="row">
+                    <!-- Invoice repeater -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="head-label">
+                                    <h4 class="card-title">Faturalar</h4>
+                                </div>
+                                <div class="dt-action-buttons text-end">
+                                    <a href="{{URL::site('siparisler/form')}}"
+                                       class="dt-button create-new btn btn-primary" tabindex="0"><span><i
+                                                    data-feather="plus"></i>EKLE</span></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <section class="invoice-list-wrapper">
+                                    <div class="card">
+                                        <div class="card-datatable table-responsive">
+                                            <div id="DataTables_Table_0_wrapper"
+                                                 class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                                                <table class="invoice-list-table table dataTable no-footer dtr-column"
+                                                       id="DataTables_Table_0" role="grid"
+                                                       aria-describedby="DataTables_Table_0_info">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>İlgili</th>
+                                                        <th>Tür</th>
+                                                        <th>Cari</th>
+                                                        <th>Tutar</th>
+                                                        <th>Fatura Tarihi</th>
+                                                        <th>Durum</th>
+                                                        <th>Ödeme</th>
+                                                        <th class="cell-fit"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($faturalar['liste'] as $fatura)
+                                                    <tr class="odd">
+                                                        <td class=""><a class="fw-bold" href="app-invoice-preview.html">#{{$fatura->id}}</a></td>
+                                                        <td class=""><a class="fw-bold" href="app-invoice-preview.html">#{{$fatura->siparis_id}}</a></td>
+                                                        <td>
+                                                            @if($fatura->tur=="1")
+                                                            <span class="badge rounded-pill badge-light-info"> Alış </span>
+                                                            @elseif($fatura->tur=="2")
+                                                            <span class="badge rounded-pill badge-light-success"> Satış </span>
+                                                            @elseif($fatura->tur=="3")
+                                                            <span class="badge rounded-pill badge-light-danger"> İade </span>
+                                                            @else
+                                                            <span class="badge rounded-pill badge-light-primary"> Tanımsız </span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex justify-content-left align-items-center">
+                                                                <div class="d-flex flex-column"><h6 class="user-name text-truncate mb-0">({{$fatura->musteri!=""?"Cari":"Tedarikçi"}}) {{$fatura->musteri!=""?CariModel::cariAdi($fatura->musteri):$fatura->tedarikci}}</h6>
+                                                                    <small>Firma: {{$fatura->fatura_adi}}</small>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
+                                                        <td>{{Date::convert($fatura->belge_tarihi,'d.m.Y')}}</td>
+                                                        <td>
+                                                            @if($fatura->durum=="0")
+                                                            <span class="badge rounded-pill badge-light-danger"> İptal </span>
+                                                            @elseif($fatura->durum=="1")
+                                                            <span class="badge rounded-pill badge-light-warning"> Resmileşmemiş </span>
+                                                            @elseif($fatura->durum=="2")
+                                                            <span class="badge rounded-pill badge-light-success"> Resmi Fatura </span>
+                                                            @else
+                                                            <span class="badge rounded-pill badge-light-primary"> Tanımsız </span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($fatura->odeme=="0")
+                                                            <span class="badge rounded-pill badge-light-success"> Ödendi </span>
+                                                            @else
+                                                            <span class="badge rounded-pill badge-light-danger"> Ödenmedi </span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center col-actions">
+                                                                <div class="dropdown">
+                                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
+                                                                        <i data-feather="more-vertical"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                        <a href="{{URL::site('siparisler/urunler')}}/{{$fatura->id}}" class="dropdown-item">
+                                                                            <i data-feather="send" class="me-50"></i>
+                                                                            <span>Bildirim Gönder</span>
+                                                                        </a>
+                                                                        <a href="{{URL::site('siparisler/hatirlatmaGonder')}}/{{$fatura->id}}" class="dropdown-item">
+                                                                            <i data-feather="eye" class="me-50"></i>
+                                                                            <span>Fatura Görüntüle</span>
+                                                                        </a>
+                                                                        <a href="{{URL::site('siparisler/duzenle')}}/{{$fatura->id}}" class="dropdown-item">
+                                                                            <i data-feather="edit-2" class="me-50"></i>
+                                                                            <span>Düzenle</span>
+                                                                        </a>
+                                                                        <a class="dropdown-item" onclick="deleteAction('{{$fatura->id}}','{{URL::site('siparisler/ajax')}}','siparisSil')">
+                                                                            <i data-feather="trash" class="me-50"></i>
+                                                                            <span>Sil</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <hr>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Invoice repeater -->
+                </div>
+            </section>
+
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+

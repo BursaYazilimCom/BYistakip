@@ -12,7 +12,7 @@ class Login extends Controller
 
         Masterpage::headPage("head");
         Masterpage::footerPage("footer");
-
+/*
         $ekleData = [
             'username'      =>"admin",
             'password'      =>Encode::super("6447889"),
@@ -26,7 +26,7 @@ class Login extends Controller
             'panel_rengi'   =>'light'
         ];
 
-        $ekle = PersonelModel::ekle($ekleData);
+        $ekle = PersonelModel::ekle($ekleData);*/
 
 	}
 
