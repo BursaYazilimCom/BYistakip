@@ -40,7 +40,6 @@ class Initialize extends Controller
         Theme::active('Default');
         
         Masterpage::headPage('head')
-                  ->bodyPage('body')
-                  ->browserIcon(FILES_DIR . 'favicon.ico');
+                  ->bodyPage('body');
     }
 }

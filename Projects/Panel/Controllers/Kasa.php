@@ -44,12 +44,12 @@ class Kasa extends Controller
 
     public function odemeEkle($yer,$id){
 
-        $user = User::data();
-        $kasa_hesabı = Post::kasa();
-        $aciklama = Post::aciklama();
-        $tutar = Post::tutar();
-        $odeme_tarihi = Post::odeme_tarihi();
-        $bildirim = Post::bildirim();
+        $user           = User::data();
+        $kasa_hesabı    = Post::kasa();
+        $aciklama       = Post::aciklama();
+        $tutar          = Post::tutar();
+        $odeme_tarihi   = Post::odeme_tarihi();
+        $bildirim       = Post::bildirim();
 
         if ($yer=="siparis"){
 
@@ -130,12 +130,172 @@ class Kasa extends Controller
                 Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">İşlem sırasında hata oluştu !.</div></div>'])->action(URL::prev());
             }
 
-        }else{
+        }
+        elseif ($yer=="fatura"){
+
+            $faturaDetay = FaturaModel::detay($id);
+
+            $cariDetay = CariModel::detay($faturaDetay->musteri);
+
+            $defterData = [
+                'kasa'          =>$kasa_hesabı,
+                'islem'         =>"t",
+                'hesap'         =>"Fatura Tahsilatı: ".$cariDetay->adi,
+                'islem_turu'    =>"fatura",
+                'islem_tur_id'  =>$id,
+                'aciklama'      =>$id." Numaralı Fatura Ödemesi",
+                'gelir'         =>$tutar,
+                'gider'         =>"",
+                'mevcut_kasa_toplami'=>KasaModel::kasaToplami()+$tutar,
+                'yil'           =>Date::set('{year}'),
+                'tarih'         =>$odeme_tarihi,
+                'islem_yapan'   =>$user->id
+            ];
+
+            $kasayaKaydet = KasaModel::deftereKaydet($defterData);
+
+            $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabı);
+
+            if ($kasayaKaydet) {
+                $odemData = [
+                    'id'  =>$id,
+                    'alinan_odeme'        =>$tutar+$faturaDetay->alinan_odeme,
+                ];
+
+                $faturaOdemeEkle = FaturaModel::odemeEkle($odemData);
+
+                $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabı);
+
+                $toplamFaturaOdemesi = $tutar+$faturaDetay->alinan_odeme;
+
+                if ($toplamFaturaOdemesi>=$faturaDetay->genel_toplam){
+
+                    DB::siparislerUpdateId(['odeme_durumu'=>'1'],$faturaDetay->siparis_id);
+
+                }
+
+                $faturaOdemeDurumDegistir = FaturaModel::odemeDurumDegistir($faturaDetay->id,"1");
+
+                /*BİLDİRİM*/
+                $ekMailBilgi = "";
+
+                if($bildirim=="1"){
+
+                    $mailgonder = Email::subject('Ödeme Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
+
+                        'konu' => 'Ödeme Bildirimi',
+                        'mesaj' => $faturaDetay->id.' numaralı faturanız için '.Date::convert($odeme_tarihi, '{dayInMonth}.{monthInYear-}.{year}').' tarihinde '.$tutar.' TL Tutarında ödemeniz alınmış ve kayıtlarımıza işlenmiştir.<br> Ödemeniz için teşekkür ederiz.<br><hr>'.$aciklama,
+                        //'link' => URL::site(),
+                        //'link_baslik' => 'Tıklayınız',
+                        'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                        'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                        'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                        'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+                    ])->send();
+
+                    if ($mailgonder) {
+                        $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderildi !";
+                    }else{
+                        $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderilemedi !".Email::error();
+                    }
+
+                }
+
+                /*BİLDİRİM*/
+
+                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Ödeme Başarı İle Eklendi !.<br>'.$ekMailBilgi.'</div></div>'])->action('siparisler/duzenle/'.$id);
+
+            }else{
+                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">İşlem sırasında hata oluştu !.</div></div>'])->action(URL::prev());
+            }
+
+
+
+        }
+        else{
 
         }
 
 
 
+    }
+
+    public function odemeKaldir($yer,$id){
+        if ($yer=="fatura"){
+
+            $odenmediYap            = Post::odenmediYap();
+            $kasaDefterindenKaldir  = Post::kasaDefterindenKaldir();
+            $siparisOdenmediYap     = Post::siparisOdenmediYap();
+            $bildirim               = Post::bildirim();
+
+            $faturaDetay = FaturaModel::detay($id);
+            $cariDetay = CariModel::detay($faturaDetay->musteri);
+
+            $ekMailBilgi = "";
+
+            if ($odenmediYap=="1"){
+
+                $odenmediYap = FaturaModel::odemeDurumDegistir($id,"0");
+
+                if ($odenmediYap){
+
+                    if ($kasaDefterindenKaldir=="1"){
+                        $kasaDefterindenKaldir = KasaModel::odemeKaldir('fatura',$id);
+
+
+                        /******************/
+
+                        // Kasa defteri güncellenecek ve fatura alınan ödeme kısmı güncellenecek
+
+                        /******************/
+                    }
+
+                    if($siparisOdenmediYap=="1"){
+
+                        $siparisOdenmediYap = SiparisModel::odemeDurumDegistir($faturaDetay->siparis_id,"0");
+
+                    }
+
+                    if($bildirim=="1"){
+
+                        $mailgonder = Email::subject('Fatura Ödeme İptal Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
+
+                            'konu' => 'Ödeme Bildirimi',
+                            'mesaj' => $faturaDetay->id.' numaralı faturanız için daha önceden kaydedilen ödemeleriniz kayıtlarımızdan kaldırıldı. Bu işlemin yanlışlıkla olduğunu düşünüyorsanız lütfen bizimle iletişime geçiniz.<br> <hr>',
+                            //'link' => URL::site(),
+                            //'link_baslik' => 'Tıklayınız',
+                            'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                            'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                            'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                            'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+                        ])->send();
+
+                        if ($mailgonder) {
+                            $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderildi !";
+                        }else{
+                            $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderilemedi !".Email::error();
+                        }
+
+                    }
+
+                    Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Fatura Ödeme Durumu Değişikliği gerçekleştirildi !.<br>'.$ekMailBilgi.'</div></div>'])->action('faturalar');
+
+                }else{
+
+                    Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Fatura Ödeme Durumu Değişikliği sırasında hata oluştu !.</div></div>'])->action(URL::prev());
+
+                }
+
+
+
+            }else{
+
+
+
+            }
+
+
+        }
     }
 
     public function hesapEkle(){

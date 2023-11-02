@@ -190,8 +190,7 @@
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href="{{URL::site()}}siparisler/iptal/{{$detay->id}}" class="btn btn-danger waves-effect waves-float waves-light">İptal Et</a>
                                             <a href="{{URL::site()}}faturalar/hatirlat/{{$detay->id}}" class="btn btn-info waves-effect waves-float waves-light">Ödeme Hatırlat</a>
-                                            <a href="{{URL::site()}}faturalar/siparis/{{$detay->id}}" class="btn btn-warning waves-effect waves-float waves-light">Faturası</a>
-                                            <a type="button"   data-bs-toggle="modal" data-bs-target="#odemeEkle"  class="btn btn-primary waves-effect waves-float waves-light"><i data-feather="plus"></i>Ödeme Ekle</a>
+                                            <a href="{{URL::site()}}faturalar/siparis/{{$detay->id}}" class="btn btn-warning waves-effect waves-float waves-light">Faturaları</a>
                                         </div>
                                     </div>
                                         <div class="card-body">
@@ -285,113 +284,4 @@
 
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="odemeEkle" tabindex="-1" aria-labelledby="myModalLabel17" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <form action="{{URL::site('kasa/odemeEkle/siparis/')}}{{$detay->id}}" method="post">
-                <div class="modal-header">
-                    <h4 class="modal-title">Ödeme Ekle</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-
-                        <div class="col-12">
-                            <div class="col-12">
-                                <label class="form-label" for="modalAddCardNumber">Ödenmesi Gereken Tutar:</label>
-                                <div class="input-group input-group-merge">
-                                    {{$detay->genel_toplam_tutari-$detay->alinan_odeme}} ₺
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label" for="modalAddCardNumber">Ödeme Hesabı:</label>
-                                <div class="input-group input-group-merge">
-                                    <select name="kasa" required class="form-control">
-                                        <option value="0">--Seçiniz--</option>
-                                        <optgroup label="Kasa Hesapları">
-                                            @foreach($kasaHesaplari as $kh)
-                                            <option value="{{$kh->id}}">{{$kh->adi}}</option>
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Banka Hesapları">
-                                            @foreach($bankaHesaplari as $bh)
-                                            <option value="{{$bh->id}}">{{$bh->adi}}</option>
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="POS Hesapları">
-                                            @foreach($posHesaplari as $ph)
-                                            <option value="{{$ph->id}}">{{$ph->adi}}</option>
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Kredi Kartı Hesapları">
-                                            @foreach($kkartiHesaplari as $kkh)
-                                            <option value="{{$kkh->id}}">{{$kkh->adi}}</option>
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Veresiye Hesapları">
-                                            @foreach($veresiyeHesaplari as $vh)
-                                            <option value="{{$vh->id}}">{{$vh->adi}}</option>
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Diğer Hesaplar">
-                                            @foreach($digerHesaplar as $dh)
-                                            <option value="{{$dh->id}}">{{$dh->adi}}</option>
-                                            @endforeach
-                                        </optgroup>
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label" for="odeme_tarihi">Ödeme Tarihi:</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="date" name="odeme_tarihi" id="odeme_tarihi" class="form-control" placeholder="24.10.2023" maxlength="10" value="{{Date::current()}}">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label" for="modalAddCardNumber">Tutar (TL):</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="text" class="form-control" onkeyup="$(this).val($(this).val().replace(/,/g, '.'));" name="tutar" id="belge_no" placeholder="Ödenen tutar" value="">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label" for="modalAddCardNumber">Açıklama:</label>
-                                <div class="input-group input-group-merge">
-                                    <textarea class="form-control" name="aciklama" placeholder="Açıklama"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="mb-1 row">
-                                    <div class="col-sm-12">
-                                        <label class="col-form-label" for="bildirim">Bildirim</label>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="bildirim" id="bildirim" value="1" />
-                                            <label class="form-check-label" for="bildirim">Müşteriye E-Posta ile bildir</label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
-                    <button type="submit" class="btn btn-primary">Kaydet</button>
-                </div>
-            </form>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
 </div>

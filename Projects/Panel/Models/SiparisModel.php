@@ -182,6 +182,16 @@ class InternalSiparisModel extends Model
         return $guncelle;
     }
 
+    public function odemeDurumDegistir($id,$durum){
+
+        $guncelle = DB::where('id',$id)
+            ->update('siparisler',[
+                'odeme_durumu'      =>$durum
+            ]);
+
+        return $guncelle;
+    }
+
     public function toplamSiparisSayisi(){
         $veri = DB::siparisler()->totalRows(true);
 

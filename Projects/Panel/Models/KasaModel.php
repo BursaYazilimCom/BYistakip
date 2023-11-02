@@ -173,10 +173,6 @@ class InternalKasaModel extends Model
 
     }
 
-
-    /****KASA DEFTERİ********************KASA DEFTERİ*********************KASA DEFTERİ**********************KASA DEFTERİ***********************/
-    /****ÖDEME İŞLEMLERİ********************ÖDEME İŞLEMLERİ*********************ÖDEME İŞLEMLERİ**********************ÖDEME İŞLEMLERİ***********************/
-
     public function odemeKaydet($data){
 
         $ekle = DB::insert('odemeler',[
@@ -193,6 +189,13 @@ class InternalKasaModel extends Model
         //echo  DB::stringQuery();
 
         return $ekle;
+
+    }
+
+    public function odemeKaldir($tur,$id){
+
+        $kaldır = DB::where('islem_turu',$tur)->where('islem_tur_id',$id)->delete('kasa_defteri');
+
 
     }
 

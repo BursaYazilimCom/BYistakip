@@ -54,6 +54,7 @@
                                                         <th>Tür</th>
                                                         <th>Cari</th>
                                                         <th>Tutar</th>
+                                                        <th>Ödenen</th>
                                                         <th>Fatura Tarihi</th>
                                                         <th>Durum</th>
                                                         <th>Ödeme</th>
@@ -63,8 +64,8 @@
                                                     <tbody>
                                                     @foreach($faturalar['liste'] as $fatura)
                                                     <tr class="odd">
-                                                        <td class=""><a class="fw-bold" href="app-invoice-preview.html">#{{$fatura->id}}</a></td>
-                                                        <td class=""><a class="fw-bold" href="app-invoice-preview.html">#{{$fatura->siparis_id}}</a></td>
+                                                        <td class=""><a class="fw-bold" href="app-invoice-preview.html">#Fatura-{{$fatura->id}}</a></td>
+                                                        <td class=""><a class="fw-bold" href="{{URL::site('siparisler/duzenle/'.$fatura->siparis_id)}}">#{{$fatura->siparis_id}}</a></td>
                                                         <td>
                                                             @if($fatura->tur=="1")
                                                             <span class="badge rounded-pill badge-light-info"> Alış </span>
@@ -84,20 +85,21 @@
                                                             </div>
                                                         </td>
                                                         <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
+                                                        <td>{{number_format($fatura->alinan_odeme,2)}} ₺</td>
                                                         <td>{{Date::convert($fatura->belge_tarihi,'d.m.Y')}}</td>
                                                         <td>
                                                             @if($fatura->durum=="0")
-                                                            <span class="badge rounded-pill badge-light-danger"> İptal </span>
+                                                                <span class="badge rounded-pill badge-light-danger"> İptal </span>
                                                             @elseif($fatura->durum=="1")
-                                                            <span class="badge rounded-pill badge-light-warning"> Resmileşmemiş </span>
+                                                                <span class="badge rounded-pill badge-light-warning"> Resmileşmemiş </span>
                                                             @elseif($fatura->durum=="2")
-                                                            <span class="badge rounded-pill badge-light-success"> Resmi Fatura </span>
+                                                                <span class="badge rounded-pill badge-light-success"> Resmi Fatura </span>
                                                             @else
-                                                            <span class="badge rounded-pill badge-light-primary"> Tanımsız </span>
+                                                                <span class="badge rounded-pill badge-light-primary"> Tanımsız </span>
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if($fatura->odeme=="0")
+                                                            @if($fatura->odeme=="1")
                                                             <span class="badge rounded-pill badge-light-success"> Ödendi </span>
                                                             @else
                                                             <span class="badge rounded-pill badge-light-danger"> Ödenmedi </span>
@@ -122,6 +124,20 @@
                                                                             <i data-feather="edit-2" class="me-50"></i>
                                                                             <span>Düzenle</span>
                                                                         </a>
+                                                                        @if($fatura->odeme=="0")
+                                                                            <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaOdendiYap" class="dropdown-item">
+                                                                                <i data-feather="edit-2" class="me-50"></i>
+                                                                                <span class="text-success">Ödendi Yap</span>
+                                                                            </a>
+                                                                        @else
+
+                                                                            <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaOdenmediYap" class="dropdown-item">
+                                                                                <i data-feather="edit-2" class="me-50"></i>
+                                                                                <span class="text-danger">ÖdenMEdi Yap</span>
+                                                                            </a>
+
+                                                                        @endif
+
                                                                         <a class="dropdown-item" onclick="deleteAction('{{$fatura->id}}','{{URL::site('siparisler/ajax')}}','siparisSil')">
                                                                             <i data-feather="trash" class="me-50"></i>
                                                                             <span>Sil</span>
@@ -154,4 +170,20 @@
     </div>
 </div>
 <!-- END: Content-->
+
+<div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1 class="text-center mb-1" id="modalTitle">Fatura İşlemleri</h1>
+
+                <div class="fetched-data"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
 

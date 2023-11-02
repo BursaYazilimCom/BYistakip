@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
-Use AjaxModel,KasaModel,UrunModel,AyarModel;
+Use AjaxModel,KasaModel,UrunModel,AyarModel, InternalFaturaModel as FaturaModel;
 Use PersonelModel;
 
 
@@ -21,6 +21,13 @@ class Ajax extends Controller
 
 
     public function modal(){
+
+        $kasaHesaplari      = KasaModel::turHesaplari(1);
+        $bankaHesaplari     = KasaModel::turHesaplari(2);
+        $posHesaplari       = KasaModel::turHesaplari(3);
+        $kkartiHesaplari    = KasaModel::turHesaplari(4);
+        $veresiyeHesaplari  = KasaModel::turHesaplari(5);
+        $digerHesaplar      = KasaModel::turHesaplari(6);
 
         $user = User::data();
 
@@ -88,6 +95,7 @@ class Ajax extends Controller
             <?php
 
         }
+
         if(Post::action()=="odemeYontemiDuzenle"){
 
             $odemeYontemi = AyarModel::odemeYontemiDetay(Post::rowid());
@@ -233,7 +241,7 @@ class Ajax extends Controller
 
         }
 
-        if(Post::action()=="siparisUrunleri") {
+        if(Post::action()=="siparisUrunleri"){
 
             $urunler = SiparisModel::siparisUrunleri(Post::rowid());
 
@@ -586,7 +594,7 @@ class Ajax extends Controller
 
         }
 
-        if(Post::action()=="faturaUrunleri") {
+        if(Post::action()=="faturaUrunleri"){
 
             $urunler = InternalFaturaModel::faturaUrunleri(Post::rowid());
 
@@ -626,7 +634,7 @@ class Ajax extends Controller
 
         }
 
-        if(Post::action()=="faturaUrunDuzenle") {
+        if(Post::action()=="faturaUrunDuzenle"){
 
             $id = Post::rowid();
 
@@ -709,6 +717,221 @@ class Ajax extends Controller
 
 
             <?php
+
+        }
+
+        if (Post::action()=="faturaOdendiYap") {
+
+            $id = Post::rowid();
+            $faturaDetay = FaturaModel::detay($id);
+
+            ?>
+
+            <form action="<?=URL::site('kasa/odemeEkle/fatura/')?><?=$id?>" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Fatura Ödeme Ekle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <label class="form-label" for="modalAddCardNumber">Ödenmesi Gereken Tutar:</label>
+                                <div class="input-group input-group-merge">
+                                    <?=$faturaDetay->genel_toplam?> ₺
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="modalAddCardNumber">Ödeme Hesabı:</label>
+                                <div class="input-group input-group-merge">
+                                    <select name="kasa" required class="form-control">
+                                        <option value="0">--Seçiniz--</option>
+                                        <optgroup label="Kasa Hesapları">
+                                            <?php foreach($kasaHesaplari as $kh){?>
+                                            <option value="<?=$kh->id?>"><?=$kh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="Banka Hesapları">
+                                            <?php foreach($bankaHesaplari as $bh){?>
+                                            <option value="<?=$bh->id?>"><?=$bh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="POS Hesapları">
+                                            <?php foreach($posHesaplari as $ph){?>
+                                            <option value="<?=$ph->id?>"><?=$ph->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="Kredi Kartı Hesapları">
+                                            <?php foreach($kkartiHesaplari as $kkh){?>
+                                            <option value="<?=$kkh->id?>"><?=$kkh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="Veresiye Hesapları">
+                                            <?php foreach($veresiyeHesaplari as $vh){?>
+                                            <option value="<?=$vh->id?>"><?=$vh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="Diğer Hesaplar">
+                                            <?php foreach($digerHesaplar as $dh){?>
+                                            <option value="<?=$dh->id?>"><?=$dh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="odeme_tarihi">Ödeme Tarihi:</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="date" name="odeme_tarihi" id="odeme_tarihi" class="form-control" placeholder="24.10.2023" maxlength="10" value="{{Date::current()}}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="tutar">Tutar (TL):</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" class="form-control" onkeyup="$(this).val($(this).val().replace(/,/g, '.'));" name="tutar" id="tutar" placeholder="Ödenen tutar" value="">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="modalAddCardNumber">Açıklama:</label>
+                                <div class="input-group input-group-merge">
+                                    <textarea class="form-control" name="aciklama" placeholder="Açıklama"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="bildirim">Bildirim</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="bildirim" id="bildirim" value="1" />
+                                            <label class="form-check-label" for="bildirim">Müşteriye E-Posta ile bildir</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+
+<?php
+
+
+
+        }
+
+        if (Post::action()=="faturaOdenmediYap") {
+
+            $id = Post::rowid();
+            $faturaDetay = FaturaModel::detay($id);
+
+            ?>
+
+            <form action="<?=URL::site('kasa/odemeKaldir/fatura/')?><?=$id?>" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Fatura Ödeme Kaldır</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="odenmediYap">Fatura</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="odenmediYap" id="odenmediYap" value="1" checked />
+                                            <label class="form-check-label" for="odenmediYap">Faturayı Ödenmemiş Olarak İşaretle !</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="siparisOdenmediYap">Sipariş</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="siparisOdenmediYap" id="siparisOdenmediYap" value="1" checked />
+                                            <label class="form-check-label" for="siparisOdenmediYap">Faturaya bağlı siparişin ödeme durumunu da Ödenmemiş Olarak İşaretle !</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="kasaDefterindenKaldir">Kasa Defteri</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="kasaDefterindenKaldir" id="kasaDefterindenKaldir" value="1" checked />
+                                            <label class="form-check-label" for="kasaDefterindenKaldir">Faturaya ait tüm ödemeleri Kasa defterinden de kaldır !</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="bildirim">Bildirim</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="bildirim" id="bildirim" value="1" />
+                                            <label class="form-check-label" for="bildirim">Müşteriye E-Posta ile bildir !</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+
+            <?php
+
+
 
         }
 

@@ -37,8 +37,6 @@ class Faturalar extends Controller
 
         if ($id!=""){
 
-            AyarModel::nelerOluyor($user->isim,'fatura','Girilmiş bir faturayı düzenliyor');
-
             $faturaDetay = FaturaModel::detay($id);
             $faturaUrunleri = FaturaModel::faturaUrunleri(($id));
 
@@ -54,8 +52,6 @@ class Faturalar extends Controller
         $user = User::data();
 
         if ($id!=""){
-
-            AyarModel::nelerOluyor($user->isim,'fatura','Girilmiş bir faturayı düzenliyor');
 
             $faturaDetay = FaturaModel::detay($id);
             $faturaUrunleri = FaturaModel::faturaUrunleri(($id));

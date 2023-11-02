@@ -88,6 +88,34 @@ class InternalFaturaModel extends Model
         return DB::insertID();
     }
 
+    static function odemeDurumDegistir($id, $durum,$odeme_tarihi=""){
+
+        if ($odeme_tarihi != ""){
+            $guncelle = DB::where('id',$id)
+                ->update('faturalar',[
+                    'odeme'  => $durum,
+                    'odeme_tarihi'  => $odeme_tarihi
+                ]);
+        }else{
+            $guncelle = DB::where('id',$id)
+                ->update('faturalar',[
+                    'odeme'  => $durum
+                ]);
+        }
+
+
+        return $guncelle;
+    }
+
+    public function odemeEkle($data){
+
+        $guncelle = DB::where('id',$data['id'])->update('faturalar',[
+            'alinan_odeme'          =>$data['alinan_odeme']
+        ]);
+
+        return $guncelle;
+    }
+
     /**
      * @param integer $id Fatura ID verisi, Faturalar veri tabanında ki fatura id'si ile fatura_urunleri tablosundan verileri çekmek için
      */
