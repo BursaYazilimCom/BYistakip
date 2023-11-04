@@ -36,6 +36,7 @@
     <link rel="stylesheet" type="text/css" href="css/plugins/charts/chart-apex.css">
     <link rel="stylesheet" type="text/css" href="css/plugins/extensions/ext-component-toastr.css">
         <link rel="stylesheet" type="text/css" href="css/pages/modal-create-app.css">
+        <link rel="stylesheet" type="text/css" href="vendors/css/pickers/flatpickr/flatpickr.min.css">
 
 
     <!-- END: Page CSS-->

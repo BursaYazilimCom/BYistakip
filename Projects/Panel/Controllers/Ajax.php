@@ -798,6 +798,22 @@ class Ajax extends Controller
                                     <textarea class="form-control" name="aciklama" placeholder="Açıklama"></textarea>
                                 </div>
                             </div>
+
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="odendi">Ödendi Yap</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="odendi" id="odendi" value="1" />
+                                            <label class="form-check-label" for="odendi">Faturayı Ödendi olaral işaretle</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-12">
                                 <div class="mb-1 row">
                                     <div class="col-sm-12">
@@ -928,6 +944,77 @@ class Ajax extends Controller
                     <button type="submit" class="btn btn-primary">Kaydet</button>
                 </div>
             </form>
+
+            <?php
+
+
+
+        }
+
+        if(Post::action()=="faturaResmilestir"){
+
+            $id = Post::rowid();
+            $faturaDetay = FaturaModel::detay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->enctype('multipart/form-data')->method('post')->action('faturalar/resmilestir/'.$id)->open('faturaResmilestir'); ?>
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Fatura Resmileştir</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="col-12">
+                                <label class="form-label" for="fatura_no">Resmi Fatura No:</label>
+                                <div class="input-group input-group-merge">
+                                    <?php echo Form::vRequired()->id('fatura_no')->placeholder('Fatura No')->text('fatura_no','',['class'=>'form-control']); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+
+                                    <div class="col-lg-12 col-md-12 mb-1 mb-sm-0">
+                                        <label for="formFile" class="form-label">Resmi Fatura Yükle</label>
+                                        <?php echo Form::id('fatura_dosya')->file('fatura_dosya', '',['accept' => 'application/pdf', 'class' => 'form-control']); ?>
+                                        <small>Sadece PDF Dosyası</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="bildirim">Bildirim</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="bildirim" id="bildirim" checked value="1" />
+                                            <label class="form-check-label" for="bildirim">Müşteriye E-Posta ile bildir !</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+
+            <?php echo Form::close(); ?>
 
             <?php
 

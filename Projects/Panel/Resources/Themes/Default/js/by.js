@@ -181,6 +181,13 @@ $(function(){
 
     });
 });
+$(".date-picker").flatpickr({
+    enableTime: false,
+    dateFormat: "d.m.Y",
+    "locale": "tr"
+});
+
+
 
 
 

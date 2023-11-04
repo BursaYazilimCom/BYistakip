@@ -38,6 +38,8 @@
                             </div>
                             <div class="card-body">
 
+                                {{ Redirect::select('bilgi',true) }}
+
                                 <section class="invoice-list-wrapper">
                                     <div class="card">
                                         <div class="card-datatable table-responsive">
@@ -64,7 +66,7 @@
                                                     <tbody>
                                                     @foreach($faturalar['liste'] as $fatura)
                                                     <tr class="odd">
-                                                        <td class=""><a class="fw-bold" href="app-invoice-preview.html">#Fatura-{{$fatura->id}}</a></td>
+                                                        <td class=""><a class="fw-bold" href="{{URL::site('faturalar/duzenle')}}/{{$fatura->id}}">#Fatura-{{$fatura->id}}</a></td>
                                                         <td class=""><a class="fw-bold" href="{{URL::site('siparisler/duzenle/'.$fatura->siparis_id)}}">#{{$fatura->siparis_id}}</a></td>
                                                         <td>
                                                             @if($fatura->tur=="1")
@@ -93,7 +95,7 @@
                                                             @elseif($fatura->durum=="1")
                                                                 <span class="badge rounded-pill badge-light-warning"> Resmileşmemiş </span>
                                                             @elseif($fatura->durum=="2")
-                                                                <span class="badge rounded-pill badge-light-success"> Resmi Fatura </span>
+                                                                <span class="badge rounded-pill badge-light-success"> Resmi Faturalı </span>
                                                             @else
                                                                 <span class="badge rounded-pill badge-light-primary"> Tanımsız </span>
                                                             @endif
@@ -120,16 +122,23 @@
                                                                             <i data-feather="eye" class="me-50"></i>
                                                                             <span>Fatura Görüntüle</span>
                                                                         </a>
-                                                                        <a href="{{URL::site('siparisler/duzenle')}}/{{$fatura->id}}" class="dropdown-item">
+                                                                        <a href="{{URL::site('faturalar/duzenle')}}/{{$fatura->id}}" class="dropdown-item">
                                                                             <i data-feather="edit-2" class="me-50"></i>
                                                                             <span>Düzenle</span>
                                                                         </a>
-                                                                        @if($fatura->odeme=="0")
-                                                                            <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaOdendiYap" class="dropdown-item">
+                                                                        @if($fatura->durum=="1")
+                                                                            <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaResmilestir" class="dropdown-item">
                                                                                 <i data-feather="edit-2" class="me-50"></i>
-                                                                                <span class="text-success">Ödendi Yap</span>
+                                                                                <span class="text-success">Faturayı Resmileştir</span>
                                                                             </a>
-                                                                        @else
+                                                                        @endif
+
+                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaOdendiYap" class="dropdown-item">
+                                                                            <i data-feather="edit-2" class="me-50"></i>
+                                                                            <span class="text-success">Ödenme EKle</span>
+                                                                        </a>
+
+                                                                        @if($fatura->odeme=="1")
 
                                                                             <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaOdenmediYap" class="dropdown-item">
                                                                                 <i data-feather="edit-2" class="me-50"></i>

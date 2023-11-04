@@ -36,6 +36,8 @@
 <script src="js/scripts/forms/form-select2.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDizM76Gj0ty8oFWl96MWJ_5y4b9FLvWyw&libraries=places"></script>
 <script type='text/javascript' src='js/scripts/gmap.js'></script>
+<script type='text/javascript' src='vendors/js/pickers/flatpickr/flatpickr.min.js'></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
 
 
 <script src="js/by.js"></script>

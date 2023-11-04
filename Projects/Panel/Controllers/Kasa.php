@@ -174,7 +174,12 @@ class Kasa extends Controller
 
                 }
 
-                $faturaOdemeDurumDegistir = FaturaModel::odemeDurumDegistir($faturaDetay->id,"1");
+                if(Post::odendi()=="1"){
+
+                    $faturaOdemeDurumDegistir = FaturaModel::odemeDurumDegistir($faturaDetay->id,"1");
+
+                }
+
 
                 /*BİLDİRİM*/
                 $ekMailBilgi = "";
@@ -242,10 +247,8 @@ class Kasa extends Controller
                     if ($kasaDefterindenKaldir=="1"){
                         $kasaDefterindenKaldir = KasaModel::odemeKaldir('fatura',$id);
 
-
                         /******************/
-
-                        // Kasa defteri güncellenecek ve fatura alınan ödeme kısmı güncellenecek
+                        $faturaAlinanOdemeGuncelle = FaturaModel::odemeEkle(['id'=>$id,'alinan_odeme'=>0]);
 
                         /******************/
                     }

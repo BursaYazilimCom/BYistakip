@@ -19,6 +19,13 @@ class InternalFaturaModel extends Model
         return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
     }
 
+    static function siparisFaturalari($id){
+
+        $veri = DB::where()->orderby('id','DESC')->limit(NULL,10)->faturalar();
+
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
+    }
+
     static function uyeFaturalari($uye){
 
         $veri = DB::where('musteri',$uye)->faturalar()->result();
@@ -107,7 +114,7 @@ class InternalFaturaModel extends Model
         return $guncelle;
     }
 
-    public function odemeEkle($data){
+    static function odemeEkle($data){
 
         $guncelle = DB::where('id',$data['id'])->update('faturalar',[
             'alinan_odeme'          =>$data['alinan_odeme']
@@ -119,6 +126,17 @@ class InternalFaturaModel extends Model
     /**
      * @param integer $id Fatura ID verisi, Faturalar veri tabanında ki fatura id'si ile fatura_urunleri tablosundan verileri çekmek için
      */
+
+    static function faturaResmilestir($data){
+        $guncelle = DB::where('id',$data['id'])->update('faturalar',[
+            'belge_no'  => $data['belge_no'],
+            'resmi_fatura_dosyasi'  => $data['fatura_dosya'],
+            'durum'  => $data['durum']
+        ]);
+
+        return $guncelle;
+
+    }
 
     static function faturaUrunleri($id){
 

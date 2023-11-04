@@ -1,7 +1,20 @@
 <?php
 
+use Redirect;
+
 class InternalAyarModel extends Model
 {
+
+    function basarili($baslik,$aciklama,$url){
+
+       return Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">'.$baslik.'</h4><div class="alert-body">'.$aciklama.'</div></div>'])->action($url);
+    }
+
+    function basarisiz($baslik,$aciklama,$url){
+
+       return  Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">'.$baslik.'</h4><div class="alert-body">'.$aciklama.'</div></div>'])->action($url);
+
+    }
 
 
     static function defaultAyarlar($anahtar){
@@ -63,6 +76,16 @@ class InternalAyarModel extends Model
         $t = explode(".",$tarih);
 
         $tarih = $t[2]."-".$t[1]."-".$t[0];
+
+        return $tarih;
+
+    }
+
+    public function tarihGoster($tarih){
+
+        $t = explode("-",$tarih);
+
+        $tarih = $t[2].".".$t[1].".".$t[0];
 
         return $tarih;
 

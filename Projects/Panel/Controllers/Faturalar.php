@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
-use Method, Post,User, Redirect,Date,FPDF,URL;
-use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,UyeModel,InternalMalzemeModel as MalzemeModel, TedarikciModel;
+use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email;
+use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel,InternalMalzemeModel as MalzemeModel, TedarikciModel,CariModel;
 
 class Faturalar extends Controller
 {
@@ -31,6 +31,17 @@ class Faturalar extends Controller
 
     }
 
+    public function siparis($id)
+    {
+
+        $user = User::data();
+
+        $faturalar = FaturaModel::liste($id);
+
+        View::faturalar($faturalar);
+
+    }
+
     public function form($id=""){
 
         $user = User::data();
@@ -50,22 +61,47 @@ class Faturalar extends Controller
     public function duzenle($id=""){
 
         $user = User::data();
+        $musteriler = CariModel::tumListe();
+        $odemeYontemi = AyarModel::odemeYontemleri();
+        $urunler = UrunModel::tumListe();
 
         if ($id!=""){
 
             $faturaDetay = FaturaModel::detay($id);
-            $faturaUrunleri = FaturaModel::faturaUrunleri(($id));
-            $tedarikciDetay = TedarikciModel::detay($faturaDetay->tedarikci);
+            $faturaUrunleri = FaturaModel::faturaUrunleri($id);
+            $cariDetay = CariModel::detay($faturaDetay->musteri);
 
-            View::faturaDetay($faturaDetay);
+            $detay = (object)[
+                'musteri'    => $cariDetay->id,
+                'tur'    => $faturaDetay->tur,
+                'aciklama'    => $faturaDetay->aciklama,
+                'belge_no'    => $faturaDetay->belge_no,
+                'odeme'    => $faturaDetay->odeme,
+                'durum'    => $faturaDetay->durum,
+                'resmi_fatura_dosyasi'    => $faturaDetay->resmi_fatura_dosyasi,
+                'belge_tarihi'    => AyarModel::tarihGoster($faturaDetay->belge_tarihi),
+                'vade_tarihi'    => $faturaDetay->vade_tarihi=="0000-00-00" ? '': AyarModel::tarihGoster($faturaDetay->vade_tarihi),
+                'odeme_yontemi'    => $faturaDetay->odeme_yontemi,
+                'cariDetay' => $cariDetay
+            ];
+
+
+            View::detay($detay);
             View::faturaUrunleri($faturaUrunleri);
-            View::tedarikciDetay($tedarikciDetay);
 
         }else{
 
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Fatura detayı bulunamadı!</div>'])->action(URL::prev());
+           $faturaDetay = [
+               'belge_no'    => '',
+               'belge_tarihi'    => '',
+               'vade_tarihi'    => '',
+           ];
 
         }
+
+        View::urunler($urunler);
+        View::musteriler($musteriler);
+        View::odemeYontemleri($odemeYontemi);
 
     }
 
@@ -212,6 +248,80 @@ class Faturalar extends Controller
         }
 
 
+
+    }
+
+    public function resmilestir($id){
+
+        $faturaDetay = FaturaModel::detay($id);
+        $cariDetay   = CariModel::detay($faturaDetay->musteri);
+
+        if(!Validation::check()){
+
+            $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
+
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">'.$data['error'].'</div></div>'])->action('faturalar');
+
+        }else{
+
+            $faturaNo = Post::fatura_no();
+            $bildirim = Post::bildirim();
+
+            if(Upload::isFile('fatura_dosya')){
+
+                Upload::mimes('application/pdf')
+                    ->convertName($faturaNo.'-'.date('Y-m-d-H-i-s'))
+                    ->source('fatura_dosya')
+                    ->target(REAL_BASE_DIR . 'Uploads/faturalar/')
+                    ->start();
+                $dosyaBilgi = Upload::info();
+                $dosyaAdi   = $dosyaBilgi->encodeName;
+            }else{
+                $dosyaAdi   = "";
+            }
+
+            $resmiData = [
+                'id' => $id,
+                'belge_no' => $faturaNo,
+                'fatura_dosya'     => $dosyaAdi,
+                'durum'     => "2"
+            ];
+
+            $faturaResmilestir = FaturaModel::faturaResmilestir($resmiData);
+
+            $ekMailBilgi = "";
+
+            if ($faturaResmilestir) {
+
+                if($bildirim=="1"){
+
+                    $mailgonder = Email::subject('Resmi Fatura Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
+
+                        'konu' => 'Resmi Fatura Bildirimi',
+                        'mesaj' => $faturaDetay->id.' faturanız resmileştirilmiştir. '.$faturaDetay->genel_toplam.' TL Tutarında ki faturanızın; Resmi Fatura Numarası:'.$faturaNo.' Resmi faturanızı görüntülemek için aşağıdaki linke tıklayınız..<br> <hr>',
+                        'link' => AyarModel::defaultAyarlar('siteUrl')."/Uploads/faturalar/".$dosyaAdi,
+                        'link_baslik' => 'Resmi Faturanız',
+                        'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                        'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                        'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                        'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+                    ])->send();
+
+                    if ($mailgonder) {
+                        $ekMailBilgi = "<br>Müşteriye Bilgilendirme Maili Gönderildi !";
+                    }else{
+                        $ekMailBilgi = "<br><span class='text-danger'>Müşteriye Bilgilendirme Maili Gönderilemedi !</span>".Email::error();
+                    }
+
+                }
+
+                AyarModel::basarili("Başarılı işlem","Resmişleştirme işlemi başarı ile yapıldı!".$ekMailBilgi,URL::site("faturalar"));
+
+            }else{
+                AyarModel::basarili("Başarısız işlem","Resmişleştirme işlemi YAPILAMADI!".$ekMailBilgi,URL::site("faturalar"));
+            }
+
+        }
 
     }
 
