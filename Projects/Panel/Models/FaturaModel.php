@@ -138,6 +138,17 @@ class InternalFaturaModel extends Model
 
     }
 
+    static function faturaTutarGuncelle($data){
+        $guncelle = DB::where('id',$data['id'])->update('faturalar',[
+            'toplam_tutar'  => $data['toplam_tutar'],
+            'kdv_toplami'   => $data['kdv_toplami'],
+            'genel_toplam'  => $data['genel_toplam']
+        ]);
+
+        return $guncelle;
+
+    }
+
     static function faturaUrunleri($id){
 
         $data = DB::where('fatura',$id)->fatura_urunleri()->result();

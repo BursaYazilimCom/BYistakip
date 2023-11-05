@@ -12,7 +12,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">Faturalar</a>
+                                <li class="breadcrumb-item"><a href="{{URL::site('faturalar')}}">Faturalar</a>
                                 </li>
                             </ol>
                         </div>
@@ -30,7 +30,7 @@
 
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
-                            <div class="col-md-2 col-12">
+                            <div class="col-lg-2 col-md-12 col-12">
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Detayları</h4>
@@ -135,10 +135,16 @@
 
                             </div>
 
-                            <div class="col-md-10 col-12">
+                            <div class="col-lg-10 col-md-12 col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title">Fatura Detayları</h4>
+                                        <h4 class="card-title">Fatura Detayları
+                                            @if($detay->odeme=="0")
+                                            <span class="badge rounded-pill badge-light-warning">Ödeme Yapılmadı</span>
+                                            @elseif($detay->odeme=="1")
+                                            <span class="badge rounded-pill badge-light-success">Ödeme Yapıldı olarak işaretlendi</span>
+                                            @endif
+                                        </h4>
                                         @if($detay->durum=="2")
                                             <span class="badge rounded-pill badge-light-success">Resmi Fatura <a href="{{URL::site()}}../Uploads/faturalar/{{ $detay->resmi_fatura_dosyasi }}" target="_blank" class="badge rounded-pill badge-light-info">Yüklenmiş Faturayı İndir</a></span>
 
@@ -168,9 +174,8 @@
                                         </div>
                                     </div>
                                     <hr>
-
                                         <div class="table-responsive">
-                                            <table class="table table-hover">
+                                            <table class="table table-hover table-responsive">
                                                 <thead>
                                                 <tr>
                                                     <th>Ürün</th>
@@ -184,7 +189,32 @@
                                                 </thead>
                                                 <tbody id="addDataTable">
 
+                                                {[
+                                                $kdv10 = 0;
+                                                $kdv20 = 0;
+                                                $toplamTutar = 0;
+                                                $araToplamTutar = 0;
+                                                ]}
+
                                                 @foreach($faturaUrunleri as $furun)
+
+                                                    {[
+                                                        $araToplamTutar = $araToplamTutar+($furun->fiyat*$furun->miktar);
+                                                        $toplamTutar    = $toplamTutar+$furun->tutar;
+                                                    ]}
+
+                                                    @if($furun->kdv=="10")
+                                                    {[
+                                                        $kdv10 = $kdv10+$furun->kdv_tutari;
+                                                    ]}
+                                                    @endif
+
+                                                    @if($furun->kdv=="20")
+                                                    {[
+                                                        $kdv20 = $kdv20+$furun->kdv_tutari;
+                                                    ]}
+                                                    @endif
+
                                                 <tr>
                                                     <td>
                                                         <input type="hidden" name="id[]" id="id" value="{{$furun->id}}">
@@ -194,43 +224,96 @@
                                                         <input type="text" name="aciklama[]" id="aciklama" value="{{$furun->aciklama}}" class="form-control">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="miktar[]" id="miktar" value="{{$furun->miktar}}" class="form-control">
+                                                        @if($detay->durum=="2")
+                                                        {{$furun->miktar}}
+                                                        @else
+                                                        <input type="number" name="miktar[]" id="miktar" value="{{$furun->miktar}}" class="form-control">
+                                                        @endif
+
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="fiyat[]" id="fiyat" value="{{number_format($furun->fiyat,2)}}" class="form-control">
+                                                        @if($detay->durum=="2")
+                                                        {{number_format($furun->fiyat,2)}}
+                                                        @else
+                                                        <div class="input-group">
+                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{number_format($furun->fiyat,2)}}" class="form-control">
+                                                            <span class="input-group-text">₺</span>
+                                                        </div>
+
+                                                        @endif
+
+
                                                     </td>
                                                     <td>
+                                                        @if($detay->durum=="2")
+                                                        %{{$furun->kdv}}
+                                                        @else
                                                         <select name="kdv[]" id="kdv" class="form-control">
                                                             <option value="">--Seçiniz--</option>
                                                             <option value="0" {{$furun->kdv == "0" ? 'selected' : ''}}>%0</option>
                                                             <option value="10" {{$furun->kdv == "10" ? 'selected' : ''}}>%10</option>
                                                             <option value="20" {{$furun->kdv == "20" ? 'selected' : ''}}>%20</option>
                                                         </select>
+                                                        @endif
+
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="tutar[]" id="tutar" value="{{number_format($furun->tutar,2)}}" class="form-control">
+
+                                                        @if($detay->durum=="2")
+                                                        {{number_format($furun->tutar,2)}}
+                                                        @else
+                                                        <div class="input-group">
+                                                            <input type="text" name="tutar[]" id="tutar" value="{{number_format($furun->tutar,2)}}" class="form-control">
+                                                            <span class="input-group-text">₺</span>
+                                                        </div>
+                                                        @endif
+
                                                     </td>
 
                                                     <td>
-                                                        <div class="dropdown">
-                                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                                <i data-feather="more-vertical"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" onclick="deleteAction('{{$furun->id}}','{{URL::site('faturalar/ajax')}}','faturaUrunSil')">
-                                                                    <i data-feather="trash" class="me-50"></i>
-                                                                    <span>Sil</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
+                                                        <a class="text-danger" data-bs-toggle="tooltip" data-bs-title="Fatura Kalemini Sil" onclick="deleteAction('{{$furun->id}}','{{URL::site('faturalar/ajax')}}','faturaUrunSil')">
+                                                            <i data-feather="trash" class="me-50"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
 
                                                 @endforeach
 
-
-
                                                 </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th colspan="4"></th>
+
+                                                    <th>Tanımlama</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td>Ara Toplam</td>
+                                                    <td>{{$araToplamTutar}} ₺</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td>KDV %10</td>
+                                                    <td>{{$kdv10}} ₺</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td>KDV %20</td>
+                                                    <td>{{$kdv20}} ₺</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td>KDV Toplamı</td>
+                                                    <td>{{$kdv20+$kdv10}} ₺</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td>Genel Toplam</td>
+                                                    <td>{{$toplamTutar}} ₺</td>
+                                                </tr>
+                                                </tfoot>
                                             </table>
                                         </div>
 
@@ -245,9 +328,22 @@
                                             </div>
 
                                             <div class="col-sm-6">
-
+                                                @if($detay->durum!="2")
+                                                <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="faturayaUrunEkle" class="dt-button create-new btn btn-success">
+                                                    <i data-feather="shopping-cart" class="me-50"></i>
+                                                    Fatura Kalemi EKle
+                                                </a>
+                                                @else
+                                                <small>Resmileştirilmiş faturaya yeni bir ürün kalemi ekleyemezsiniz. Bunun için yeni bir şipariş oluşturmalısınız </small><br><br>
+                                                @endif
+                                                <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="faturaOdendiYap" class="dt-button create-new btn btn-info">
+                                                    <i data-feather="plus" class="me-50"></i>
+                                                    Ödeme EKle
+                                                </a>
                                                 @if($detay->durum=="1")
-                                                <a href="#" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> Faturayı Resmileştir</span></a>
+                                                <a  data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="faturaResmilestir"  href="#" class="dt-button create-new btn btn-warning"><span><i data-feather="airplay"></i> Faturayı Resmileştir</span></a>
+
+                                                </a>
                                                 @else
                                                 <a href="#" class="dt-button create-new btn btn-danger"><span><i data-feather="x-circle"></i> Faturayı İptal Et</span></a>
                                                 @endif
@@ -274,6 +370,22 @@
 
 
 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1 class="text-center mb-1" id="modalTitle">Fatura İşlemleri</h1>
+
+                <div class="fetched-data"></div>
+
+            </div>
         </div>
     </div>
 </div>

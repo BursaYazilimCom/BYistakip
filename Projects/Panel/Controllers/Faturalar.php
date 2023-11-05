@@ -72,6 +72,7 @@ class Faturalar extends Controller
             $cariDetay = CariModel::detay($faturaDetay->musteri);
 
             $detay = (object)[
+                'id'    => $id,
                 'musteri'    => $cariDetay->id,
                 'tur'    => $faturaDetay->tur,
                 'aciklama'    => $faturaDetay->aciklama,
@@ -322,6 +323,63 @@ class Faturalar extends Controller
             }
 
         }
+
+    }
+
+    public function kalemEkle($id){
+
+            $urunadi    = Post::urun_adi();
+            $aciklama   = Post::aciklama();
+            $miktar     = Post::miktar();
+            $kdv        = Post::kdv();
+            $fiyat      = Post::fiyat();
+            $kdvTutari  = ($miktar*$fiyat)*$kdv/100;
+            $toplam     = ($miktar*$fiyat)+$kdvTutari;
+
+            $data = [
+                'fatura'    => $id,
+                'urun'  => '0',
+                'urun_adi'  => $urunadi,
+                'aciklama'  => $aciklama,
+                'miktar'    => $miktar,
+                'kdv'       => $kdv,
+                'fiyat'     => $fiyat,
+                'kdv_tutari'=> $kdvTutari,
+                'tutar'     => $toplam
+            ];
+
+            $urunEkle = FaturaModel::urunEkle($data);
+
+            if ($urunEkle) {
+
+                $faturaUrunleri = FaturaModel::faturaUrunleri($id);
+
+                $toplamTutar = 0;
+                $geneltoplamTutar = 0;
+                $kdvToplami = 0;
+
+                foreach ($faturaUrunleri as $furun) {
+
+
+                        $toplamTutar        = $toplamTutar+($furun->fiyat*$furun->miktar);
+                        $kdvToplami         = $kdvToplami+$furun->kdv_tutari;
+                        $geneltoplamTutar   = $geneltoplamTutar+$furun->tutar;
+
+                }
+                $data = [
+                    'id'    => $id,
+                    'toplam_tutar' => $toplamTutar,
+                    'kdv_toplami'  => $kdvToplami,
+                    'genel_toplam' => $geneltoplamTutar
+                ];
+
+                $faturaTutarGuncelle = FaturaModel::faturaTutarGuncelle($data);
+
+                AyarModel::basarili("Başarılı işlem","Ürün Ekleme işlemi başarı ile yapıldı!",URL::site("faturalar/duzenle/").$id);
+            }else{
+                AyarModel::basarisiz("Başarısız işlem","Ürün Ekleme işlemi YAPILAMADI!",URL::site("faturalar/duzenle/").$id);
+            }
+
 
     }
 

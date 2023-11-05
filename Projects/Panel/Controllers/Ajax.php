@@ -807,7 +807,7 @@ class Ajax extends Controller
                                     <div class="col-sm-12">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="odendi" id="odendi" value="1" />
-                                            <label class="form-check-label" for="odendi">Faturayı Ödendi olaral işaretle</label>
+                                            <label class="form-check-label" for="odendi">Faturayı <strong>Ödendi</strong> olarak işaretle !</label>
                                         </div>
 
                                     </div>
@@ -1019,6 +1019,85 @@ class Ajax extends Controller
             <?php
 
 
+
+        }
+
+        if (Post::action() == "faturayaUrunEkle") {
+            $id = Post::rowid();
+            ?>
+
+            <?php echo Form::csrf()->method('post')->action('faturalar/kalemEkle/'.$id)->open('urunEkle'); ?>
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Fatura Kalemi Ekle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <div class="col-12">
+                                <label class="form-label" for="urun_adi">Fatura Kalem Adı:</label>
+                                <div class="input-group input-group-merge">
+                                    <?php echo Form::vRequired()->id('urun_adi')->placeholder('Ürün adı')->text('urun_adi','',['class'=>'form-control']); ?>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" for="aciklama">Açıklama:</label>
+                                <div class="input-group input-group-merge">
+                                    <?php echo Form::vRequired()->id('aciklama')->placeholder('Açıklama')->textarea('aciklama','',['class'=>'form-control']); ?>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6">
+                                    <label class="form-label" for="miktar">Adet:</label>
+                                    <div class="input-group input-group-merge">
+                                        <?php echo Form::vRequired()->id('miktar')->placeholder('Adet')->number('miktar',1,['class'=>'form-control']); ?>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label" for="kdv">Kdv:</label>
+                                    <div class="input-group input-group-merge">
+
+                                        <?php
+                                        $options = [ '' => '--Seçiniz--', '0' => '%0', '10' => '%10', '20' => '%20' ];
+                                        echo Form::vRequired()->select('kdv', $options, '',['class'=>'form-control']);
+
+                                        ?>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-12">
+                                <label class="form-label" for="fiyat">Birim Fiyat (TL):</label>
+                                <div class="input-group input-group-merge">
+                                    <?php echo Form::vRequired()->id('fiyat')->placeholder('Fiyat')->text('fiyat','',['class'=>'form-control']); ?>
+                                   <!-- <input type="text" class="form-control" required onkeyup="$(this).val($(this).val().replace(/,/g, '.'));" name="fiyat" id="fiyat" placeholder="Birim Fiyat" value="">-->
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+            <?php echo Form::close(); ?>
+
+
+        <?php
 
         }
 
