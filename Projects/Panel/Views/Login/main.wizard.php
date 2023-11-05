@@ -15,9 +15,11 @@
                                 <img src="images/logo/by_logo.png">
                             </a>
 
-                            <h4 class="card-title mb-1">E-Ticaret Sistemleri</h4>
+                            <h4 class="card-title mb-1">ERP Sistemleri</h4>
 
-                            @Form::csrf()->prevent()->action('by/ajax')->open('submitForm',['id'=>'submitForm','class'=>'auth-register-form mt-2'])
+                            {{ Redirect::select('bilgi',true) }}
+
+                            @Form::csrf()->action('By/login')->open('submitForm',['id'=>'submitForm','class'=>'auth-register-form mt-2'])
                                 <input type="hidden" name="action" value="login">
                                 <div class="mb-1">
                                     <label for="register-username" class="form-label">Kullanıcı Adı</label>

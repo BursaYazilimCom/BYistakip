@@ -11,6 +11,26 @@ class By extends Controller
      * Loads opening page.
      * Location: Views/Home/main.wizard.php
      */
+    public function login(){
+
+        if(!Validation::check()){
+
+            $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
+
+        }else{
+
+            $status = User::login(Post::username(),Post::password());
+
+            if( $status === true ) {
+                AyarModel::basarili('Giriş işleminiz başarılı', 'Hoşgeldiniz', URL::site('home'));
+
+            }else{
+               AyarModel::basarisiz('Başarısız Giriş','Giriş Sırasında bir hata oluştu:<br>'.User::error(), URL::site('login'));
+            }
+
+        }
+
+    }
     public function ajax() : void
     {
 
@@ -21,6 +41,8 @@ class By extends Controller
         switch ($islem){
 
             case "login":
+
+                echo "test";
 
                 $data['title'] = "Panel Girişi";
 
