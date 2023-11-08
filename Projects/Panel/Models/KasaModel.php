@@ -196,6 +196,14 @@ class InternalKasaModel extends Model
 
         $kaldır = DB::where('islem_turu',$tur)->where('islem_tur_id',$id)->delete('kasa_defteri');
 
+        return $kaldır;
+    }
+
+    public function maliSorgu($islemTuru,$islem_tur_id){
+
+        $veri = DB::where('islem_turu',$islemTuru)->where('islem_tur_id',$islem_tur_id)->kasa_defteri()->result();
+
+        return $veri;
 
     }
 

@@ -2,6 +2,7 @@
 
 class InternalFaturaModel extends Model
 {
+
     static function detay($id)
     {
         return DB::where('id',$id)->faturalar()->row();
@@ -62,6 +63,25 @@ class InternalFaturaModel extends Model
 
         return DB::insertID();
 
+    }
+
+    static function guncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('faturalar',[
+                'belge_no'          =>$data["belge_no"],
+                'fatura_adi'        =>$data["fatura_adi"],
+                'fatura_adresi'     =>$data["fatura_adresi"],
+                'vergi_dairesi'     =>$data["vergi_dairesi"],
+                'vergi_no'          =>$data["vergi_no"],
+                'tedarikci'         =>$data["tedarikci"],
+                'musteri'           =>$data["musteri"],
+                'belge_tarihi'      =>$data["belge_tarihi"],
+                'vade_tarihi'       =>$data["vade_tarihi"],
+                'odeme_yontemi'     =>$data["odeme_yontemi"],
+                'aciklama'          =>$data["aciklama"]
+        ]);
+        return $guncelle;
     }
 
     static function urunDuzenlemeSonrasiGuncelleme($data){
@@ -173,6 +193,7 @@ class InternalFaturaModel extends Model
         $guncelle = DB::where('id',$data["id"])
             ->update('fatura_urunleri',[
                 'urun_adi'  => $data["urun_adi"],
+                'aciklama' => $data["aciklama"],
                 'miktar'    => $data["miktar"],
                 'fiyat'     => $data["fiyat"],
                 'kdv'       => $data["kdv"],
@@ -182,6 +203,13 @@ class InternalFaturaModel extends Model
 
         return $guncelle;
 
+    }
+
+    static function faturaUrunSil($fatura,$urun){
+
+        $urunSil = DB::where('fatura',$fatura)->where('id',$urun)->delete('fatura_urunleri');
+
+        return $urunSil;
     }
 
     static function kdvHesapla($fiyat,$kdv){

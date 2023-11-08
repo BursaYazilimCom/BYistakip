@@ -154,6 +154,10 @@ function deleteAction(id,action,dataActions) {
 
                 }
 
+                if(data.redirect!=""){
+                    window.location = data.redirect;
+                }
+
             }
         });
 

@@ -26,7 +26,7 @@
 
                 <div class="row">
                     <div class="col-md-12 col-12">
-                        @Form::csrf()->action("faturalar/guncelle/".$detay->id)->open('submitForm',['class'=>'form form-horizontal'])
+                        @Form::csrf()->action("faturalar/guncelle")->open('submitForm',['class'=>'form form-horizontal'])
 
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
@@ -92,6 +92,24 @@
                                                         @foreach($odemeYontemleri as $oy)
                                                         <option value="{{$oy->id}}" {{$oy->id == $detay->odeme_yontemi ? 'selected' : ''}}>{{$oy->baslik}}</option>
                                                         @endforeach
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="tur">Fatura Türü Durumları</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <select class="select2 form-select" name="tur" id="tur">
+
+                                                        <option value="">--Seçiniz--</option>
+                                                        <option  value="1" {{$detay->tur == "1" ? 'selected' : ''}}>Alış Faturası</option>
+                                                        <option  value="2" {{$detay->tur == "2" ? 'selected' : ''}}>Satış Faturası</option>
+                                                        <option  value="3" {{$detay->tur == "3" ? 'selected' : ''}}>İade Faturası</option>
 
                                                     </select>
                                                 </div>
@@ -193,7 +211,6 @@
                                                 <tr id="row-{{$furun->id}}">
                                                     <td>
                                                         <input type="hidden" name="id[]" id="id" value="{{$furun->id}}">
-                                                        <input type="hidden" name="urun_adi[]" id="urun_adi" value="{{$furun->urun_adi}}">
                                                         {{$furun->urun_adi}}
                                                     </td>
                                                     <td style="min-width: 400px">
@@ -203,7 +220,7 @@
                                                         @if($detay->durum=="2")
                                                         {{$furun->miktar}}
                                                         @else
-                                                        <input type="number" name="miktar[]" id="miktar" value="{{$furun->miktar}}" class="miktar form-control">
+                                                        <input type="number" name="miktar[]" id="miktar" value="{{$furun->miktar}}" class="form-control">
                                                         @endif
 
                                                     </td>
@@ -212,7 +229,7 @@
                                                         {{number_format($furun->fiyat,2)}}
                                                         @else
                                                         <div class="input-group">
-                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{number_format($furun->fiyat,2)}}" class="fiyat form-control">
+                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{number_format($furun->fiyat,2)}}" class="form-control">
                                                             <span class="input-group-text">₺</span>
                                                         </div>
 
@@ -224,7 +241,7 @@
                                                         @if($detay->durum=="2")
                                                         %{{$furun->kdv}}
                                                         @else
-                                                        <select name="kdv[]" id="kdv" class="kdv form-control">
+                                                        <select name="kdv[]" id="kdv" class="form-control">
                                                             <option value="">--Seçiniz--</option>
                                                             <option value="0" {{$furun->kdv == "0" ? 'selected' : ''}}>%0</option>
                                                             <option value="10" {{$furun->kdv == "10" ? 'selected' : ''}}>%10</option>
@@ -239,7 +256,7 @@
                                                         {{number_format($furun->tutar,2)}}
                                                         @else
                                                         <div class="input-group">
-                                                            <input type="text" name="tutar" readonly id="tutar" value="{{number_format($furun->tutar,2)}}" class="tutar form-control">
+                                                            <input type="text" name="tutar[]" id="tutar" value="{{number_format($furun->tutar,2)}}" class="form-control">
                                                             <span class="input-group-text">₺</span>
                                                         </div>
                                                         @endif
@@ -267,95 +284,32 @@
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>Ara Toplam</td>
-                                                    <td class="kdvsizTutar">{{number_format($araToplamTutar,2)}} ₺</td>
+                                                    <td>{{$araToplamTutar}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>KDV %10</td>
-                                                    <td class="kdvTutar10">{{number_format($kdv10,2)}} ₺</td>
+                                                    <td>{{$kdv10}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>KDV %20</td>
-                                                    <td class="kdvTutar20">{{number_format($kdv20,2)}} ₺</td>
+                                                    <td>{{$kdv20}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>KDV Toplamı</td>
-                                                    <td class="kdvlerToplam">{{number_format($kdv20+$kdv10,2)}} ₺</td>
+                                                    <td>{{$kdv20+$kdv10}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>Genel Toplam</td>
-                                                    <td class="genel_toplam">{{number_format($toplamTutar,2)}} ₺</td>
+                                                    <td>{{$toplamTutar}} ₺</td>
                                                 </tr>
                                                 </tfoot>
                                             </table>
                                         </div>
-                                    <script type="text/javascript">
-                                        // Her satırdaki input alanlarını seç
-                                        const miktarInputs = document.querySelectorAll('.miktar');
-                                        const fiyatInputs = document.querySelectorAll('.fiyat');
-                                        const kdvSelects = document.querySelectorAll('.kdv');
-                                        const tutarInputs = document.querySelectorAll('.tutar');
-                                        const kdvsizTutar = document.querySelector('.kdvsizTutar');
-                                        const kdvTutar10 = document.querySelector('.kdvTutar10');
-                                        const kdvTutar20 = document.querySelector('.kdvTutar20');
-                                        const kdvlerToplam = document.querySelector('.kdvlerToplam');
-                                        const genelToplam = document.querySelector('.genel_toplam');
 
-                                        // Her input değiştiğinde hesaplama yap
-                                        miktarInputs.forEach((miktarInput, index) => {
-                                            miktarInput.addEventListener('input', function () {
-                                                hesapla();
-                                            });
-
-                                            fiyatInputs[index].addEventListener('input', function () {
-                                                hesapla();
-                                            });
-
-                                            kdvSelects[index].addEventListener('change', function () {
-                                                hesapla();
-                                            });
-                                        });
-
-                                        function hesapla() {
-                                            let toplamTutar = 0;
-                                            let kdvsizToplam = 0;
-                                            let kdvTutar10Toplam = 0;
-                                            let kdvTutar20Toplam = 0;
-
-                                            miktarInputs.forEach((miktarInput, index) => {
-                                                const miktar = parseFloat(miktarInput.value) || 0;
-                                                const fiyat = parseFloat(fiyatInputs[index].value) || 0;
-                                                const kdvOrani = parseFloat(kdvSelects[index].value) || 0;
-
-                                                const toplam = miktar * fiyat;
-                                                const kdvTutari = (toplam * kdvOrani) / 100;
-                                                const tutar = toplam + kdvTutari;
-
-                                                tutarInputs[index].value = tutar.toFixed(2);
-
-                                                kdvsizToplam += toplam;
-
-                                                if (kdvOrani === 10) {
-                                                    kdvTutar10Toplam += kdvTutari;
-                                                } else if (kdvOrani === 20) {
-                                                    kdvTutar20Toplam += kdvTutari;
-                                                }
-
-                                                toplamTutar += tutar;
-                                            });
-
-                                            const kdvToplam = kdvTutar10Toplam+kdvTutar20Toplam;
-
-                                            kdvsizTutar.textContent = kdvsizToplam.toFixed(2)+" ₺";
-                                            kdvTutar10.textContent = kdvTutar10Toplam.toFixed(2)+" ₺";
-                                            kdvTutar20.textContent = kdvTutar20Toplam.toFixed(2)+" ₺";
-                                            kdvlerToplam.textContent = kdvToplam.toFixed(2)+" ₺";
-                                            genelToplam.textContent = toplamTutar.toFixed(2)+" ₺";
-                                        }
-                                    </script>
 
                                         <hr>
 

@@ -1,7 +1,8 @@
 <?php namespace Project\Controllers;
 
-use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email;
-use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel,InternalMalzemeModel as MalzemeModel, TedarikciModel,CariModel;
+use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email,Json;
+use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel;
+use InternalMalzemeModel as MalzemeModel, TedarikciModel,InternalCariModel as CariModel;
 
 class Faturalar extends Controller
 {
@@ -15,6 +16,65 @@ class Faturalar extends Controller
         if(!in_array(CURRENT_CONTROLLER,$yetkiler)){
 
             Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Yetkiniz olmayan bir alana ulaşmaya çalışıyorsunuz!</div>'])->action('home');
+
+        }
+
+    }
+
+    public function ajax():void
+    {
+        $user       = User::data();
+        $dataAction = Post::dataAction();
+        $dataId     = Post::dataId();
+        $data       = [];
+
+        switch ($dataAction){
+
+            case "faturaUrunSil":
+
+                $data['title'] = "Ürün Silme İşlemi";
+
+                $faturaUrunDetay = FaturaModel::faturaUrunDetay($dataId);
+
+                $sil = FaturaModel::faturaUrunSil($faturaUrunDetay->fatura,$dataId);
+
+                $faturaUrunleri = FaturaModel::faturaUrunleri($faturaUrunDetay->fatura);
+
+                if($sil){
+
+                    $toplamTutar = 0;
+                    $geneltoplamTutar = 0;
+                    $kdvToplami = 0;
+
+                    foreach ($faturaUrunleri as $furun) {
+
+
+                        $toplamTutar        = $toplamTutar+($furun->fiyat*$furun->miktar);
+                        $kdvToplami         = $kdvToplami+$furun->kdv_tutari;
+                        $geneltoplamTutar   = $geneltoplamTutar+$furun->tutar;
+
+                    }
+                    $data = [
+                        'id'    => $faturaUrunDetay->fatura,
+                        'toplam_tutar' => $toplamTutar,
+                        'kdv_toplami'  => $kdvToplami,
+                        'genel_toplam' => $geneltoplamTutar
+                    ];
+
+                    $faturaTutarGuncelle = FaturaModel::faturaTutarGuncelle($data);
+
+                    $data['success'] = 'Ürün işlemi başarı ile yapıldı!';
+                    $data['redirect'] = URL::site().'faturalar/duzenle/'.$faturaUrunDetay->fatura;
+
+                }else{
+
+                    $data['error'] = "Ürün silme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
 
         }
 
@@ -58,6 +118,112 @@ class Faturalar extends Controller
 
     }
 
+    public function guncelle($id){
+
+        $faturaDetay    = FaturaModel::detay($id);
+        $cariDetay      = CariModel::detay($faturaDetay->musteri);
+        $belge_no       = Post::belge_no();
+        $belge_tarihi   = AyarModel::tarihDuzelt(Post::belge_tarihi());
+        $vade_tarihi    = AyarModel::tarihDuzelt(Post::vade_tarihi());
+        $odeme_yontemi  = Post::odeme_yontemi();
+        $siparis_notu   = Post::siparis_notu();
+
+        $data = [
+            'id'                => $id,
+            'belge_no'          => $belge_no,
+            'fatura_adi'        => $cariDetay->firma_adi,
+            'fatura_adresi'     => $cariDetay->fatura_adresi,
+            'vergi_dairesi'     => $cariDetay->vergi_dairesi,
+            'vergi_no'          => $cariDetay->vergi_no,
+            'tedarikci'         => '0',
+            'musteri'           => $cariDetay->id,
+            'belge_tarihi'      => $belge_tarihi,
+            'vade_tarihi'       => $vade_tarihi,
+            'durum'             => $vade_tarihi,
+            'odeme_yontemi'     => $odeme_yontemi,
+            'aciklama'          => $siparis_notu
+        ];
+
+        $faturaGuncelle = FaturaModel::guncelle($data);
+
+        if ($faturaGuncelle){
+
+            $say = count(Post::id());
+
+            $urunId     = Post::id();
+            $urun_adi   = Post::urun_adi();
+            $miktar     = Post::miktar();
+            $aciklama   = Post::aciklama();
+            $fiyat      = Post::fiyat();
+            $kdv        = Post::kdv();
+
+            for ($i=0; $i<$say; $i++) {
+
+                $fiyati = (float) $fiyat[$i];
+                $adet = (int) $miktar[$i];
+
+                $urunData = [
+                    'id'            => $urunId[$i],
+                    'urun_adi'      => $urun_adi[$i],
+                    'aciklama'      => $aciklama[$i],
+                    'miktar'        => $miktar[$i],
+                    'fiyat'         => $fiyati,
+                    'kdv'           => $kdv[$i],
+                    'kdv_tutari'    => (($fiyati*$adet)/100)*$kdv[$i],
+                    'tutar'         => ((($fiyati*$adet)/100)*$kdv[$i])+($fiyati*$adet)
+                ];
+
+                $faturaUrunGuncelle = FaturaModel::faturaUrunGuncelle($urunData);
+
+                if ($faturaUrunGuncelle){
+                    $urunGuncellemeUyariNotu = "<br>".$urun_adi[$i]." Ürünü güncellendi";
+                }else{
+                    $urunGuncellemeUyariNotu = "<br>".$urun_adi[$i]." Ürünü Malesef güncelleneMEdi";
+                }
+
+            }
+
+            $faturaUrunleri = FaturaModel::faturaUrunleri($id);
+
+
+            $toplamTutar = 0;
+            $geneltoplamTutar = 0;
+            $kdvToplami = 0;
+
+            foreach ($faturaUrunleri as $furun) {
+
+                $toplamTutar        = $toplamTutar+($furun->fiyat*$furun->miktar);
+                $kdvToplami         = $kdvToplami+$furun->kdv_tutari;
+                $geneltoplamTutar   = $geneltoplamTutar+$furun->tutar;
+
+            }
+
+            $data = [
+                'id'    => $id,
+                'toplam_tutar' => $toplamTutar,
+                'kdv_toplami'  => $kdvToplami,
+                'genel_toplam' => $geneltoplamTutar
+            ];
+
+            $faturaTutarGuncelle = FaturaModel::faturaTutarGuncelle($data);
+
+            if ($faturaTutarGuncelle){
+                $urunTutarGuncellemeUyariNotu = "<br>Fatura Tutarı güncellendi";
+            }else{
+                $urunTutarGuncellemeUyariNotu = "<br>Fatura Tutarı Malesef güncelleneMEdi";
+            }
+
+            AyarModel::basarili('Başarıli İşlem','Fatura Güncelleme İşlemi gerçekleştirildi'.$urunGuncellemeUyariNotu.$urunTutarGuncellemeUyariNotu,URL::site('faturalar/duzenle/'.$id));
+
+        }else{
+
+            AyarModel::basarisiz('Başarısız İşlem','Fatura Güncelleme İşlemi Başarısız Oldu',URL::site('faturalar/duzenle/'.$id));
+
+        }
+
+
+    }
+
     public function duzenle($id=""){
 
         $user = User::data();
@@ -65,7 +231,10 @@ class Faturalar extends Controller
         $odemeYontemi = AyarModel::odemeYontemleri();
         $urunler = UrunModel::tumListe();
 
+
         if ($id!=""){
+
+            $maliIslemler = KasaModel::maliSorgu('fatura',$id);
 
             $faturaDetay = FaturaModel::detay($id);
             $faturaUrunleri = FaturaModel::faturaUrunleri($id);
@@ -88,6 +257,7 @@ class Faturalar extends Controller
 
 
             View::detay($detay);
+            View::maliIslemler($maliIslemler);
             View::faturaUrunleri($faturaUrunleri);
 
         }else{

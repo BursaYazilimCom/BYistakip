@@ -331,49 +331,6 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
-
-
-        $('.editor').each(function(i, obj) {
-            new Jodit(obj, {
-                textIcons: false,
-                toolbarButtonSize: 'small',
-                iframe: false,
-                iframeStyle: '*,.jodit-wysiwyg {color:red;}',
-                height: 300,
-                defaultMode: Jodit.MODE_WYSIWYG,
-                observer: {
-                    timeout: 100
-                },
-                uploader: {
-                    url: '{{URL::site()}}By/editorUpload'
-                },
-                /*filebrowser: {
-                    // buttons: ['list', 'tiles', 'sort'],
-                    ajax: {
-                        url: '{{URL::site()}}Ajax/fileBrowser'
-                    }
-                },*/
-                commandToHotkeys: {
-                    'openreplacedialog': 'ctrl+p'
-                }
-                // buttons: ['symbol'],
-                // disablePlugins: 'hotkeys,mobile'
-            });
-        });
-
-        $('.summernote').each(function(i, obj) { $(obj).summernote({
-            fontNames: ['Panton W01 Regular','Panton Bold Regular','Panton Black','Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica Neue', 'Helvetica', 'Impact', 'Lucida Grande', 'Tahoma', 'Times New Roman', 'Verdana'],
-            onblur: function(e) {
-                var id = $(obj).data('id');
-                var sHTML = $(obj).code();
-            },
-            height: 250
-        });
-        });
-
-    });
-
     $(document).ready(function(){
 
         $('#openModal').on('show.bs.modal', function (e) {
