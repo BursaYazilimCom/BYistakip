@@ -113,19 +113,7 @@
                                                                 <td>Genel Toplam</td>
                                                                 <td style="text-align: right">{{number_format($detay->genel_toplam_tutari,2)}} ₺</td>
                                                             </tr>
-                                                            <tr>
-                                                                <td>Tahil Edilen</td>
-                                                                <td style="text-align: right">{{number_format($detay->alinan_odeme,2)}} ₺</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Kalan Ödeme</td>
 
-                                                                <td style="text-align: right;font-weight: bold">
-
-                                                                    <span class='text text-{{$detay->genel_toplam_tutari-$detay->alinan_odeme<=0?"success":"danger"}}'>{{number_format($detay->genel_toplam_tutari-$detay->alinan_odeme,2)}} ₺</span>
-
-                                                                </td>
-                                                            </tr>
                                                         </tbody>
                                                     </table>
 

@@ -22,9 +22,17 @@ class InternalFaturaModel extends Model
 
     static function siparisFaturalari($id){
 
-        $veri = DB::where()->orderby('id','DESC')->limit(NULL,10)->faturalar();
+        $veri = DB::whereGroup(
+            ['siparis_id',$id],
+            'and'
+        )->whereGroup(
+            ['tur','3','or'],
+            ['tur','2',]
+        )->orderby('id','DESC')->faturalar()->result();
 
-        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
+        return ['liste'=>$veri];
+
+
     }
 
     static function uyeFaturalari($uye){

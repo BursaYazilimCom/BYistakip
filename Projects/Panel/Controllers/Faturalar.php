@@ -76,6 +76,29 @@ class Faturalar extends Controller
 
                 break;
 
+            case "bildirimGonder":
+
+                $data['title'] = "Bildirim Gönderme İşlemi";
+
+                $faturaUrunDetay = FaturaModel::faturaUrunDetay($dataId);
+
+                $bildirimGOnder = "0";
+
+                if($bildirimGOnder){
+
+                    $data['success'] = 'Bildirim başarı ile gönderildi!';
+                    $data['redirect'] = '';
+
+                }else{
+
+                    $data['error'] = "Bildirim Gödnerme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
+
         }
 
     }
@@ -96,7 +119,7 @@ class Faturalar extends Controller
 
         $user = User::data();
 
-        $faturalar = FaturaModel::liste($id);
+        $faturalar = FaturaModel::siparisFaturalari($id);
 
         View::faturalar($faturalar);
 
@@ -702,6 +725,34 @@ class Faturalar extends Controller
 
         exit();
         */
+    }
+
+    public function bildirimGonder($id){
+
+        $faturaDetay = FaturaModel::detay($id);
+        $cariDetay = CariModel::detay($faturaDetay->musteri);
+        $ekNot = Post::ekNot();
+
+        $mailgonder = Email::subject('Fatura Hatırlatma')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
+
+            'konu' => 'Fatura Hatırlatma',
+            'mesaj' => $faturaDetay->id.' faturanızın ödemesini hatırlatmak için bu maili aldınız. '.AyarModel::tarihGoster($faturaDetay->vade_tarihi).' ödeme tarihli '.number_format($faturaDetay->genel_toplam,2).'TL Tutarında ki faturanızı ödemek için aşağıdaki sayfayı ziyaret edebilirsiniz.<br><br><br>Ek Not:<br>'.$ekNot.' <hr>',
+            'link' => AyarModel::defaultAyarlar('siteUrl')."/fatura/detay/".$id,
+            'link_baslik' => 'Fatura\'yı Ödemek İçin Tıklayınız',
+            'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+            'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+            'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+            'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+        ])->send();
+
+        if ($mailgonder) {
+            AyarModel::basarili('Başarılı İşlem','Fatura hatırlatma işlemi gerçekleştirildi.',URL::site('faturalar'));
+        }else{
+            AyarModel::basarisiz('Başarısız İşlem','Fatura hatırlatma işlemi gerçekleştirilemedi.',URL::site('faturalar'));
+
+        }
+
+
     }
 
 

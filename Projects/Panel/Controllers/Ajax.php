@@ -1101,6 +1101,47 @@ class Ajax extends Controller
 
         }
 
+        if(Post::action()=="bildirimGonder"){
+
+            $id = Post::rowid();
+            $faturaDetay = FaturaModel::detay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->action('Faturalar/bildirimGonder/'.$id)->open('submitForm',['id'=>'submitForm']); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Bildirim Gönder</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="ekNot">Ek Not:</label><br>
+                            <small>Ödeme hatırlatma bildirimine not eklemek isterseniz aşağıdaki alanı kullanabilirsiniz.</small>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::id('ekNot')->placeholder('Ek not')->textarea('ekNot','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Gönder</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+
 
 
     }

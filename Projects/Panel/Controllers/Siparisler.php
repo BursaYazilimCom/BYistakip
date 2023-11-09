@@ -128,6 +128,7 @@ class Siparisler extends Controller
         $kayit_sekli        = Post::kayit_sekli()=="1"?"0":"1";
         $siparis_notu       = Post::siparis_notu();
         $kasa_hesabı          = Post::kasa_hesabı();
+        $fatura_no          = "0";
 
         $musteriBilgi       = CariModel::detay($musteri);
 
@@ -231,9 +232,10 @@ class Siparisler extends Controller
                 'kdv_toplami'       =>$kdvToplami,
                 'genel_toplam'      =>$kdvToplami+$toplamTutar,
                 'belge_tarihi'      =>$siparis_tarihi,
-                'sevk_tarihi'       =>"",
+                'vade_tarihi'       =>Date::addDay($siparis_tarihi, 5),
                 'durum'             =>"1",
                 'odeme'             =>$odeme_durumu,
+                'odeme_yontemi'     =>$odeme_yontemi,
                 'aciklama'          =>""
             ];
 
@@ -298,7 +300,6 @@ class Siparisler extends Controller
                 }
 
             }
-
 
             /*Ödeme alınmışsa kasa defterine kaydet*/
 
@@ -824,7 +825,7 @@ class Siparisler extends Controller
                 if($sil){
 
                     $data['success'] = 'Ürün işlemi başarı ile yapıldı!';
-                    $data['redirect'] = 'siparisler/form';
+                    $data['redirect'] = URL::site('siparisler/form');
 
                 }else{
 

@@ -114,11 +114,10 @@
                                                                         <i data-feather="more-vertical"></i>
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-end">
-
-                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="bildirimGonder" class="dropdown-item text-warning">
-                                                                            <i data-feather="send" class="me-50"></i>Ödeme Hatırlat
+                                                                        <a href="{{URL::site('siparisler/urunler')}}/{{$fatura->id}}" class="dropdown-item">
+                                                                            <i data-feather="send" class="me-50"></i>
+                                                                            <span>Bildirim Gönder</span>
                                                                         </a>
-
                                                                         <a href="{{URL::site('siparisler/hatirlatmaGonder')}}/{{$fatura->id}}" class="dropdown-item">
                                                                             <i data-feather="eye" class="me-50"></i>
                                                                             <span>Fatura Görüntüle</span>
