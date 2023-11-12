@@ -1,5 +1,7 @@
 <?php namespace Project\Controllers;
 
+Use User,URL,AyarModel;
+
 class Home extends Controller
 {
     /**
@@ -9,10 +11,11 @@ class Home extends Controller
      * Location: Views/Home/main.wizard.php
      */
     public function main(string ...$parameters)
-    {  
-        # Sets masterpage title.
-        Masterpage::title('Welcome to The World of Simplicity');
-    } 
+    {
+
+        Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
+    }
+
 
     /**
      * Home::s404

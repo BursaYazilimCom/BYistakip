@@ -9,13 +9,9 @@ class Initialize extends Controller
      */
     public function main()
     {
-        # The theme is activated.
-        # Location: Resources/Themes/Default/
         Theme::active('Default');
-        
-        # The current settings are being configured.
-        Masterpage::headPage('Sections/head')
-                  ->bodyPage('Sections/body')
-                  ->browserIcon(FILES_DIR . 'favicon.ico');
+
+        Masterpage::headPage('head')
+            ->bodyPage('body');
     }
 }

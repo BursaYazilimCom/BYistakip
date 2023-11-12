@@ -55,7 +55,7 @@
     [
         'driver'      => 'mysqli',
         'host'        => 'localhost',
-        'database'    => 'test',
+        'database'    => 'istakip',
         'user'        => 'root',
         'password'    => '',
         'port'        => '',
