@@ -55,9 +55,9 @@
     [
         'driver'      => 'mysqli',
         'host'        => 'localhost',
-        'database'    => 'istakip',
-        'user'        => 'root',
-        'password'    => '',
+        'database'    => 'bursayazilim_client',
+        'user'        => 'bursayazilim_clientsr',
+        'password'    => 'Hmyk*963,*963,',
         'port'        => '',
         'dsn'         => '',
         'server'      => '',

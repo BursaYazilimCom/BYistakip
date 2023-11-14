@@ -1,7 +1,5 @@
 <?php
 
-use Redirect;
-
 class InternalAyarModel extends Model
 {
 

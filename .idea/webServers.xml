@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="19a00207-b53b-4227-8226-7479e412ba41" name="bursayazilim" url="http://ftp.bursayazilim.com">
+        <fileTransfer rootFolder="/public_html/client.bursayazilim.com" host="ftp.bursayazilim.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

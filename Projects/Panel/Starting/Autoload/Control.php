@@ -1,6 +1,4 @@
 <?php
-use User;
-
 if(User::isLogin()){
 
     $user = User::data();

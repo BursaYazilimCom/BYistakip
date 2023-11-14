@@ -13,7 +13,7 @@
                         <div class="d-flex flex-stack mb-10 mb-lg-15">
                             <!--begin::Logo-->
                             <a href="#">
-                                <img alt="Logo" class="h-40px" src="{{URl::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" />
+                                <img alt="Logo" class="h-40px" src="{{URL::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" />
                             </a>
                             <!--end::Logo-->
                             <!--begin::Actions-->
@@ -22,7 +22,7 @@
                                 <a href="{{URL::site()}}../Uploads/faturalar/{{ $detay->resmi_fatura_dosyasi }}" class="btn btn-sm btn-warning me-2">Resmi Fatura İndir</a>
                                 @endif
                                 <a href="#" class="btn btn-sm btn-success me-2" onclick="window.print()">Yazdır</a>
-                                <a href="#" class="btn btn-sm btn-primary">Pay Now</a>
+                                <a href="{{URL::site()}}faturalar/odemeYap/{{$detay->id}}" class="btn btn-sm btn-primary">Ödeme Yap</a>
                             </div>
                             <!--end::Actions-->
                         </div>

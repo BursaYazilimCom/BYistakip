@@ -10,9 +10,9 @@
         <option value="$PROJECT_DIR$/Internal/package-composer/doctrine/instantiator/tests" />
         <option value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-token-stream/tests" />
         <option value="$PROJECT_DIR$/Internal/package-composer/phpspec/prophecy/tests" />
+        <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/diff/tests" />
         <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/code-unit-reverse-lookup/tests" />
         <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/recursion-context/tests" />
-        <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/diff/tests" />
         <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/comparator/tests" />
         <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/global-state/tests" />
         <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/type/tests/unit" />
