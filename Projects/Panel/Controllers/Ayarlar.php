@@ -308,10 +308,10 @@ class Ayarlar extends Controller
 
 
             $ekleData = [
-                'baslik'             =>Post::baslik(),
+                'baslik'                    =>Post::baslik(),
                 'kasa_hesabi'               =>Post::kasa_hesabi(),
-                'entegrasyon_bilgileri'               =>$entegrasyon,
-                'durum'             =>Post::durum()
+                'entegrasyon_bilgileri'     =>$entegrasyon,
+                'durum'                     =>Post::durum()
             ];
 
             $ekle = AyarModel::odemeYontemiEkle($ekleData);

@@ -1,8 +1,8 @@
 <?php namespace Project\Controllers;
 
-use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email,Json;
-use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel;
-use InternalMalzemeModel as MalzemeModel, TedarikciModel,InternalCariModel as CariModel;
+use Method, Post,User, Redirect,Date,URL,Validation,Upload,Email,Json,Session;
+use InternalFaturaModel as FaturaModel,AyarModel,SiparisModel;
+use InternalCariModel as CariModel;
 
 class Faturalar extends Controller
 {
@@ -10,14 +10,7 @@ class Faturalar extends Controller
     public function __construct()
     {
 
-        $user                   = User::data();
-        $yetkiler               = \Json::decode($user->yetkiler);
 
-        if(!in_array(CURRENT_CONTROLLER,$yetkiler)){
-
-            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Yetkiniz olmayan bir alana ulaşmaya çalışıyorsunuz!</div>'])->action('home');
-
-        }
 
     }
 
@@ -30,51 +23,7 @@ class Faturalar extends Controller
 
         switch ($dataAction){
 
-            case "faturaUrunSil":
 
-                $data['title'] = "Ürün Silme İşlemi";
-
-                $faturaUrunDetay = FaturaModel::faturaUrunDetay($dataId);
-
-                $sil = FaturaModel::faturaUrunSil($faturaUrunDetay->fatura,$dataId);
-
-                $faturaUrunleri = FaturaModel::faturaUrunleri($faturaUrunDetay->fatura);
-
-                if($sil){
-
-                    $toplamTutar = 0;
-                    $geneltoplamTutar = 0;
-                    $kdvToplami = 0;
-
-                    foreach ($faturaUrunleri as $furun) {
-
-
-                        $toplamTutar        = $toplamTutar+($furun->fiyat*$furun->miktar);
-                        $kdvToplami         = $kdvToplami+$furun->kdv_tutari;
-                        $geneltoplamTutar   = $geneltoplamTutar+$furun->tutar;
-
-                    }
-                    $data = [
-                        'id'    => $faturaUrunDetay->fatura,
-                        'toplam_tutar' => $toplamTutar,
-                        'kdv_toplami'  => $kdvToplami,
-                        'genel_toplam' => $geneltoplamTutar
-                    ];
-
-                    $faturaTutarGuncelle = FaturaModel::faturaTutarGuncelle($data);
-
-                    $data['success'] = 'Ürün işlemi başarı ile yapıldı!';
-                    $data['redirect'] = URL::site().'faturalar/duzenle/'.$faturaUrunDetay->fatura;
-
-                }else{
-
-                    $data['error'] = "Ürün silme işlemi yapılamadı!";
-
-                }
-
-                echo Json::encode($data);
-
-                break;
 
             case "bildirimGonder":
 
@@ -141,502 +90,55 @@ class Faturalar extends Controller
 
     }
 
-    public function guncelle($id){
+    public function detay($id=""){
 
-        $faturaDetay    = FaturaModel::detay($id);
-        $cariDetay      = CariModel::detay($faturaDetay->musteri);
-        $belge_no       = Post::belge_no();
-        $belge_tarihi   = AyarModel::tarihDuzelt(Post::belge_tarihi());
-        $vade_tarihi    = AyarModel::tarihDuzelt(Post::vade_tarihi());
-        $odeme_yontemi  = Post::odeme_yontemi();
-        $siparis_notu   = Post::siparis_notu();
+        if ($id==""){
+            AyarModel::basarisiz('Hatalı İşlem','Tanımsız bir faturaya ulaşmaya çalışıyorsunuz.',URL::site());
+            exit();
+        }
 
-        $data = [
-            'id'                => $id,
-            'belge_no'          => $belge_no,
-            'fatura_adi'        => $cariDetay->firma_adi,
-            'fatura_adresi'     => $cariDetay->fatura_adresi,
-            'vergi_dairesi'     => $cariDetay->vergi_dairesi,
-            'vergi_no'          => $cariDetay->vergi_no,
-            'tedarikci'         => '0',
-            'musteri'           => $cariDetay->id,
-            'belge_tarihi'      => $belge_tarihi,
-            'vade_tarihi'       => $vade_tarihi,
-            'durum'             => $vade_tarihi,
-            'odeme_yontemi'     => $odeme_yontemi,
-            'aciklama'          => $siparis_notu
-        ];
+        $faturaDetay = FaturaModel::detay($id);
 
-        $faturaGuncelle = FaturaModel::guncelle($data);
+        if (Session::select('cariId')==""){
 
-        if ($faturaGuncelle){
-
-            $say = count(Post::id());
-
-            $urunId     = Post::id();
-            $urun_adi   = Post::urun_adi();
-            $miktar     = Post::miktar();
-            $aciklama   = Post::aciklama();
-            $fiyat      = Post::fiyat();
-            $kdv        = Post::kdv();
-
-            for ($i=0; $i<$say; $i++) {
-
-                $fiyati = (float) $fiyat[$i];
-                $adet = (int) $miktar[$i];
-
-                $urunData = [
-                    'id'            => $urunId[$i],
-                    'urun_adi'      => $urun_adi[$i],
-                    'aciklama'      => $aciklama[$i],
-                    'miktar'        => $miktar[$i],
-                    'fiyat'         => $fiyati,
-                    'kdv'           => $kdv[$i],
-                    'kdv_tutari'    => (($fiyati*$adet)/100)*$kdv[$i],
-                    'tutar'         => ((($fiyati*$adet)/100)*$kdv[$i])+($fiyati*$adet)
-                ];
-
-                $faturaUrunGuncelle = FaturaModel::faturaUrunGuncelle($urunData);
-
-                if ($faturaUrunGuncelle){
-                    $urunGuncellemeUyariNotu = "<br>".$urun_adi[$i]." Ürünü güncellendi";
-                }else{
-                    $urunGuncellemeUyariNotu = "<br>".$urun_adi[$i]." Ürünü Malesef güncelleneMEdi";
-                }
-
-            }
-
-            $faturaUrunleri = FaturaModel::faturaUrunleri($id);
-
-
-            $toplamTutar = 0;
-            $geneltoplamTutar = 0;
-            $kdvToplami = 0;
-
-            foreach ($faturaUrunleri as $furun) {
-
-                $toplamTutar        = $toplamTutar+($furun->fiyat*$furun->miktar);
-                $kdvToplami         = $kdvToplami+$furun->kdv_tutari;
-                $geneltoplamTutar   = $geneltoplamTutar+$furun->tutar;
-
-            }
-
-            $data = [
-                'id'    => $id,
-                'toplam_tutar' => $toplamTutar,
-                'kdv_toplami'  => $kdvToplami,
-                'genel_toplam' => $geneltoplamTutar
-            ];
-
-            $faturaTutarGuncelle = FaturaModel::faturaTutarGuncelle($data);
-
-            if ($faturaTutarGuncelle){
-                $urunTutarGuncellemeUyariNotu = "<br>Fatura Tutarı güncellendi";
-            }else{
-                $urunTutarGuncellemeUyariNotu = "<br>Fatura Tutarı Malesef güncelleneMEdi";
-            }
-
-            AyarModel::basarili('Başarıli İşlem','Fatura Güncelleme İşlemi gerçekleştirildi'.$urunGuncellemeUyariNotu.$urunTutarGuncellemeUyariNotu,URL::site('faturalar/duzenle/'.$id));
+            Session::insert('cariId', $faturaDetay->musteri);
 
         }else{
 
-            AyarModel::basarisiz('Başarısız İşlem','Fatura Güncelleme İşlemi Başarısız Oldu',URL::site('faturalar/duzenle/'.$id));
+            if(Session::select('cariId')!=$faturaDetay->musteri){
+
+                AyarModel::basarisiz('Hatalı İşlem','İlgili Fatura tarafınıza Ait Değildir.',URL::site());
+
+            }
 
         }
 
 
-    }
-
-    public function duzenle($id=""){
-
-        $user = User::data();
-        $musteriler = CariModel::tumListe();
         $odemeYontemi = AyarModel::odemeYontemleri();
-        $urunler = UrunModel::tumListe();
 
 
-        if ($id!=""){
+        $faturaUrunleri = FaturaModel::faturaUrunleri($id);
+        $cariDetay = CariModel::detay($faturaDetay->musteri);
 
-            $maliIslemler = KasaModel::maliSorgu('fatura',$id);
-
-            $faturaDetay = FaturaModel::detay($id);
-            $faturaUrunleri = FaturaModel::faturaUrunleri($id);
-            $cariDetay = CariModel::detay($faturaDetay->musteri);
-
-            $detay = (object)[
-                'id'    => $id,
-                'musteri'    => $cariDetay->id,
-                'tur'    => $faturaDetay->tur,
-                'aciklama'    => $faturaDetay->aciklama,
-                'belge_no'    => $faturaDetay->belge_no,
-                'odeme'    => $faturaDetay->odeme,
-                'durum'    => $faturaDetay->durum,
-                'resmi_fatura_dosyasi'    => $faturaDetay->resmi_fatura_dosyasi,
-                'belge_tarihi'    => AyarModel::tarihGoster($faturaDetay->belge_tarihi),
-                'vade_tarihi'    => $faturaDetay->vade_tarihi=="0000-00-00" ? '': AyarModel::tarihGoster($faturaDetay->vade_tarihi),
-                'odeme_yontemi'    => $faturaDetay->odeme_yontemi,
-                'cariDetay' => $cariDetay
-            ];
-
-
-            View::detay($detay);
-            View::maliIslemler($maliIslemler);
-            View::faturaUrunleri($faturaUrunleri);
-
-        }else{
-
-           $faturaDetay = [
-               'belge_no'    => '',
-               'belge_tarihi'    => '',
-               'vade_tarihi'    => '',
-           ];
-
-        }
-
-        View::urunler($urunler);
-        View::musteriler($musteriler);
-        View::odemeYontemleri($odemeYontemi);
-
-    }
-
-    public function urunGuncelle($urun){
-
-        $faturaUrunDetay = FaturaModel::faturaUrunDetay($urun);
-
-        $malzemeDetay = MalzemeModel::detay($faturaUrunDetay->urun);
-
-        $faturaDetay = FaturaModel::detay($faturaUrunDetay->fatura);
-
-
-        $urunAdi    = Post::urunAdi();
-        $miktar     = Post::miktar();
-        $fiyat      = Post::fiyat();
-        $kdv        = Post::kdv();
-
-        $data = [
-            'id'        => $urun,
-            'fatura'    => $faturaUrunDetay->fatura,
-            'urun'      => $faturaUrunDetay->urun,
-            'urun_adi'  => $urunAdi,
-            'miktar'    => $miktar,
-            'fiyat'     => $fiyat,
-            'kdv'       => $kdv,
-            'tutar'     => $fiyat*$miktar
+        $detay = (object)[
+            'id'    => $id,
+            'musteri'    => $cariDetay->id,
+            'tur'    => $faturaDetay->tur,
+            'aciklama'    => $faturaDetay->aciklama,
+            'belge_no'    => $faturaDetay->belge_no,
+            'odeme'    => $faturaDetay->odeme,
+            'durum'    => $faturaDetay->durum,
+            'resmi_fatura_dosyasi'    => $faturaDetay->resmi_fatura_dosyasi,
+            'belge_tarihi'    => AyarModel::tarihGoster($faturaDetay->belge_tarihi),
+            'vade_tarihi'    => $faturaDetay->vade_tarihi=="0000-00-00" ? '': AyarModel::tarihGoster($faturaDetay->vade_tarihi),
+            'gecen_gun' =>Date::diffDayUp($faturaDetay->vade_tarihi, date('d-m-Y')),
+            'odeme_yontemi'    => $faturaDetay->odeme_yontemi,
+            'cariDetay' => $cariDetay
         ];
 
-        $urunGuncelle = FaturaModel::faturaUrunGuncelle($data);
-
-        if($urunGuncelle) {
-
-            $araToplam = 0;
-            $kdvToplam = 0;
-            $toplam    = 0;
-
-            $faturaUrunleri = FaturaModel::faturaUrunleri($faturaUrunDetay->fatura);
-
-            foreach ($faturaUrunleri as $fu) {
-
-                $araToplam  = $araToplam+($fu->fiyat*$fu->miktar);
-                $malzemeKdvTutari = FaturaModel::kdvHesapla(($fu->fiyat*$fu->miktar),$fu->kdv);
-                $kdvToplam = $kdvToplam+$malzemeKdvTutari;
-                $toplam     = $araToplam+$kdvToplam;
-
-            }
-
-            $faturaData = [
-                'id'            =>$faturaDetay->id,
-                'tur'           =>$faturaDetay->tur,
-                'toplam_tutar'  =>$araToplam,
-                'ara_toplam'    =>$araToplam,
-                'kdv'           =>$kdvToplam,
-                'indirim'       =>'0',
-                'toplam'        =>$toplam,
-            ];
-
-            $faturaGuncelle = FaturaModel::urunDuzenlemeSonrasiGuncelleme($faturaData);
-
-            if ($faturaGuncelle) {
-
-                if($faturaDetay->tedarikci!=""){
-
-                    $eskiFaturaTutari = $faturaDetay->toplam;
-
-                    $guncelFatura = FaturaModel::detay($faturaDetay->id);
-
-                    $yeniFaturaTutari = $toplam;
-
-                    $tedarikciDetay = TedarikciModel::detay($faturaDetay->tedarikci);
-
-
-                    if ($eskiFaturaTutari > $toplam){
-
-                        $faturaFarki = $eskiFaturaTutari-$toplam;
-
-                        $guncelBakiye = $tedarikciDetay->guncel_bakiye+$faturaFarki;
-
-                        $bakiyeGuncelle = TedarikciModel::bakiyeGuncelle($tedarikciDetay->id,$guncelBakiye);
-
-                    }else{
-                        $faturaFarki = $toplam-$eskiFaturaTutari;
-
-                        $guncelBakiye = $tedarikciDetay->guncel_bakiye-$faturaFarki;
-
-                        $bakiyeGuncelle = TedarikciModel::bakiyeGuncelle($tedarikciDetay->id,$guncelBakiye);
-
-                    }
-
-                    //Redirect::insert(['bilgi'=>'<div class="callout callout-success">Fatura Urun Bilgileri Güncellendi!</div>'])->action(URL::site("fatura/duzenle/".$faturaDetay->id));
-
-                }else{}
-
-                /////////////////////// STOK İŞLEMLERİ //////////////////////
-
-                if($miktar<$faturaUrunDetay->miktar){
-
-                    $fark = $faturaUrunDetay->miktar-$miktar;
-
-                    $guncelStok = $malzemeDetay->stok-$fark;
-
-                    $stokGuncelle = MalzemeModel::stokGuncelle(['id'=>$malzemeDetay->id,'stok'=>$guncelStok]);
-
-                    $data = [
-                        'malzeme'   => $faturaUrunDetay->urun,
-                        'miktar'    => $fark,
-                        'hareket'   => "-",
-                        'sebebi'    => $faturaDetay->belge_no." Numaralı faturada stok düzenlemesi yapıldığı için aradaki fark stokdan düşülmüştür",
-                        'fatura_no' => $faturaDetay->belge_no==""?"-":$faturaDetay->belge_no
-                    ];
-
-                    $stokHareketEkle = MalzemeModel::hareketEkle($data);
-
-                }else{
-                    $fark = $miktar-$faturaUrunDetay->miktar;
-
-                    $guncelStok = $malzemeDetay->stok+$fark;
-
-                    $stokGuncelle = MalzemeModel::stokGuncelle(['id'=>$malzemeDetay->id,'stok'=>$guncelStok]);
-
-                    $data = [
-                        'malzeme'   => $faturaUrunDetay->urun,
-                        'miktar'    => $fark,
-                        'hareket'   => "+",
-                        'sebebi'    => $faturaDetay->belge_no." Numaralı faturada stok düzenlemesi yapıldığı için aradaki fark stoka eklenmiştir",
-                        'fatura_no' => $faturaDetay->belge_no==""?"-":$faturaDetay->belge_no
-                    ];
-
-                    $stokHareketEkle = MalzemeModel::hareketEkle($data);
-
-                }
-
-                /////////////////////// STOK İŞLEMLERİ //////////////////////
-
-
-                Redirect::insert(['bilgi'=>'<div class="callout callout-success">Fatura Urun Bilgileri Güncellendi!</div>'])->action(URL::site("fatura/duzenle/".$faturaDetay->id));
-
-            }else{
-
-                Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Fatura Urun Bilgileri Güncellenemedi!</div>'])->action(URL::site("fatura/duzenle/".$faturaDetay->id));
-
-            }
-
-        }
-
-
-
-    }
-
-    public function resmilestir($id){
-
-        $faturaDetay = FaturaModel::detay($id);
-        $cariDetay   = CariModel::detay($faturaDetay->musteri);
-
-        if(!Validation::check()){
-
-            $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
-
-            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">'.$data['error'].'</div></div>'])->action('faturalar');
-
-        }else{
-
-            $faturaNo = Post::fatura_no();
-            $bildirim = Post::bildirim();
-
-            if(Upload::isFile('fatura_dosya')){
-
-                Upload::mimes('application/pdf')
-                    ->convertName($faturaNo.'-'.date('Y-m-d-H-i-s'))
-                    ->source('fatura_dosya')
-                    ->target(REAL_BASE_DIR . 'Uploads/faturalar/')
-                    ->start();
-                $dosyaBilgi = Upload::info();
-                $dosyaAdi   = $dosyaBilgi->encodeName;
-            }else{
-                $dosyaAdi   = "";
-            }
-
-            $resmiData = [
-                'id' => $id,
-                'belge_no' => $faturaNo,
-                'fatura_dosya'     => $dosyaAdi,
-                'durum'     => "2"
-            ];
-
-            $faturaResmilestir = FaturaModel::faturaResmilestir($resmiData);
-
-            $ekMailBilgi = "";
-
-            if ($faturaResmilestir) {
-
-                if($bildirim=="1"){
-
-                    $mailgonder = Email::subject('Resmi Fatura Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
-
-                        'konu' => 'Resmi Fatura Bildirimi',
-                        'mesaj' => $faturaDetay->id.' faturanız resmileştirilmiştir. '.$faturaDetay->genel_toplam.' TL Tutarında ki faturanızın; Resmi Fatura Numarası:'.$faturaNo.' Resmi faturanızı görüntülemek için aşağıdaki linke tıklayınız..<br> <hr>',
-                        'link' => AyarModel::defaultAyarlar('siteUrl')."/Uploads/faturalar/".$dosyaAdi,
-                        'link_baslik' => 'Resmi Faturanız',
-                        'firma' => AyarModel::defaultAyarlar('firmaAdi'),
-                        'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
-                        'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
-                        'telefon' => AyarModel::defaultAyarlar('firmaTel'),
-                    ])->send();
-
-                    if ($mailgonder) {
-                        $ekMailBilgi = "<br>Müşteriye Bilgilendirme Maili Gönderildi !";
-                    }else{
-                        $ekMailBilgi = "<br><span class='text-danger'>Müşteriye Bilgilendirme Maili Gönderilemedi !</span>".Email::error();
-                    }
-
-                }
-
-                AyarModel::basarili("Başarılı işlem","Resmişleştirme işlemi başarı ile yapıldı!".$ekMailBilgi,URL::site("faturalar"));
-
-            }else{
-                AyarModel::basarili("Başarısız işlem","Resmişleştirme işlemi YAPILAMADI!".$ekMailBilgi,URL::site("faturalar"));
-            }
-
-        }
-
-    }
-
-    public function kalemEkle($id){
-
-            $urunadi    = Post::urun_adi();
-            $aciklama   = Post::aciklama();
-            $miktar     = Post::miktar();
-            $kdv        = Post::kdv();
-            $fiyat      = Post::fiyat();
-            $kdvTutari  = ($miktar*$fiyat)*$kdv/100;
-            $toplam     = ($miktar*$fiyat)+$kdvTutari;
-
-            $data = [
-                'fatura'    => $id,
-                'urun'  => '0',
-                'urun_adi'  => $urunadi,
-                'aciklama'  => $aciklama,
-                'miktar'    => $miktar,
-                'kdv'       => $kdv,
-                'fiyat'     => $fiyat,
-                'kdv_tutari'=> $kdvTutari,
-                'tutar'     => $toplam
-            ];
-
-            $urunEkle = FaturaModel::urunEkle($data);
-
-            if ($urunEkle) {
-
-                $faturaUrunleri = FaturaModel::faturaUrunleri($id);
-
-                $toplamTutar = 0;
-                $geneltoplamTutar = 0;
-                $kdvToplami = 0;
-
-                foreach ($faturaUrunleri as $furun) {
-
-
-                        $toplamTutar        = $toplamTutar+($furun->fiyat*$furun->miktar);
-                        $kdvToplami         = $kdvToplami+$furun->kdv_tutari;
-                        $geneltoplamTutar   = $geneltoplamTutar+$furun->tutar;
-
-                }
-                $data = [
-                    'id'    => $id,
-                    'toplam_tutar' => $toplamTutar,
-                    'kdv_toplami'  => $kdvToplami,
-                    'genel_toplam' => $geneltoplamTutar
-                ];
-
-                $faturaTutarGuncelle = FaturaModel::faturaTutarGuncelle($data);
-
-                AyarModel::basarili("Başarılı işlem","Ürün Ekleme işlemi başarı ile yapıldı!",URL::site("faturalar/duzenle/").$id);
-            }else{
-                AyarModel::basarisiz("Başarısız işlem","Ürün Ekleme işlemi YAPILAMADI!",URL::site("faturalar/duzenle/").$id);
-            }
-
-
-    }
-
-    public function sil($id,$stok="")
-    {
-
-        $user = User::data();
-
-        $faturaDetay = FaturaModel::detay($id);
-        $faturaUrunleri = FaturaModel::faturaUrunleri($id);
-
-        $tedarikci = TedarikciModel::detay($faturaDetay->tedarikci);
-
-        if($stok == ""){
-
-            $sil = FaturaModel::sil($id);
-
-        }else{
-
-            foreach ($faturaUrunleri as $fu) {
-
-                $malzemeDetay = MalzemeModel::detay($fu->urun);
-
-
-                $stok = $malzemeDetay->stok-$fu->miktar;
-
-
-                $stokData = [
-                    'id'        => $malzemeDetay->id,
-                    'stok'      => $stok
-                ];
-
-                $stokGuncelle = MalzemeModel::stokGuncelle($stokData);
-
-                $faturaData = ["fatura_no"=>$faturaDetay->id,"malzeme"=>$fu->urun];
-
-                $stokHareketSil = MalzemeModel::stokHareketSil($id,$faturaData);
-
-            }
-
-            $sil = FaturaModel::sil($id);
-
-        }
-
-        /*******TEDARİKÇİ BAKİYE GÜNCELLE******/
-
-        $guncelBakiye = $tedarikci->guncel_bakiye+$faturaDetay->toplam;
-
-        $tedarikciBakiyeGuncelle = TedarikciModel::bakiyeGuncelle($id,$guncelBakiye);
-
-        /*******TEDARİKÇİ BAKİYE GÜNCELLE******/
-
-
-        if ($sil) {
-
-            AyarModel::nelerOluyor($user->isim,'fatura',$id.' Numaralı fatura silindi');
-
-            Redirect::insert(['bilgi' => '<div class="callout callout-success">Silme işlemi başarı ile yapıldı!</div>'])->action('tedarikci/detay/'.$faturaDetay->tedarikci);
-
-        } else {
-
-            Redirect::insert(['bilgi' => '<div class="callout callout-danger">Silme işlemi yapılamadı!</div>'])->action('tedarikci/detay/'.$faturaDetay->tedarikci);
-
-        }
+        View::odemeYontemleri($odemeYontemi);
+        View::detay($detay);
+        View::faturaUrunleri($faturaUrunleri);
 
     }
 

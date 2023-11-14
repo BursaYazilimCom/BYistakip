@@ -21,6 +21,7 @@
         <div class="card card-page">
             <!--begin::Card body-->
             <div class="card-body">
+                {{ Redirect::select('bilgi',true) }}
                 <!--begin::Row-->
                 <div class="row gy-5 g-xl-8">
                     <!--begin::Col-->

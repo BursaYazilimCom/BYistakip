@@ -11,15 +11,14 @@
 											<path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="black" />
 										</svg>
 									</span>
-                <!--end::Svg Icon-->
+
             </div>
         </div>
-        <!--end::Heaeder menu toggle-->
-        <!--begin::Header Logo-->
+
         <div class="header-logo me-5 me-md-10 flex-grow-1 flex-lg-grow-0">
-            <a href="../dist/index.html">
-                <img alt="Logo" src="media/logos/logo-light.svg" class="h-15px h-lg-20px logo-default" />
-                <img alt="Logo" src="media/logos/logo-default.svg" class="h-15px h-lg-20px logo-sticky" />
+            <a href="{{URl::site()}}">
+                <img alt="Logo" src="{{URl::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" class="h-15px h-lg-20px logo-default" />
+                <img alt="Logo" src="{{URl::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" class="h-15px h-lg-20px logo-sticky" />
             </a>
         </div>
         <!--end::Header Logo-->
@@ -38,16 +37,13 @@
 												</span>
                         </div>
                     </div>
-                    <!--end::Menu-->
-                </div>
-                <!--end::Menu wrapper-->
-            </div>
-            <!--end::Navbar-->
-            <!--begin::Topbar-->
 
-            <!--end::Topbar-->
+                </div>
+
+            </div>
+
         </div>
-        <!--end::Wrapper-->
+
     </div>
-    <!--end::Container-->
+
 </div>

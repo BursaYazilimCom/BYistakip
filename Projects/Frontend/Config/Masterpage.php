@@ -123,7 +123,7 @@
     [
         'html' => [],
         'head' => [],
-        'body' => ['id'=>'kt_body','style'=>'background-image: url('.CURRENT_THEME_DIR.'media/patterns/header-bg.png)','class'=>'header-fixed header-tablet-and-mobile-fixed toolbar-enabled']
+        'body' => ['id'=>'kt_body','style'=>'background-image: url('.URL::site().CURRENT_THEME_DIR.'media/patterns/header-bg.png)','class'=>'header-fixed header-tablet-and-mobile-fixed toolbar-enabled']
     ],
 
     /*
