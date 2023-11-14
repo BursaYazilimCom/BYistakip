@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-use User,Method,Post,Redirect,AyarModel,CariModel,URL,Date;
+use User,Method,Post,Redirect,AyarModel,CariModel,InternalFaturaModel as FaturaModel,URL,Date;
 
 class paytr extends Controller
 {
@@ -41,100 +41,104 @@ class paytr extends Controller
              }
           */
 
-         $kontrol = CariModel::krediKartiOdemeKontrol($post['merchant_oid']);
 
-         if($kontrol->durum=="1" || $kontrol->durum=="2" ){
+         $faturaId = $post['merchant_oid'];
+         $faturaDetay = FaturaModel::detay($faturaId);
+         $cariDetay = CariModel::detay($faturaDetay->musteri);
+
+         if($faturaDetay->odeme=="1" ){
              echo "OK";
              exit;
              }
 
          if( $post['status'] == 'success' ) { ## Ödeme Onaylandı
 
-             $data = [
-                 'uye'           => $kontrol->uye,
-                 'anahtar'       => $post['merchant_oid'],
-                 'durum'         => '1',
-                 'hata_kodu'     => 'ok',
-                 'hata_mesaji'   => 'Başarılı ödeme',
-                 'odeme_tutari'  => $post['total_amount']/100
+             $odendiYap = FaturaModel::odemeDurumDegistir($faturaId,1,date('Y-m-d'));
+
+             /*** Kasa Defterine İşle ***/
+
+
+             $defterData = [
+                 'kasa'          =>$kasa_hesabı,
+                 'islem'         =>"t",
+                 'hesap'         =>"Fatura Tahsilatı: ".$cariDetay->adi,
+                 'islem_turu'    =>"fatura",
+                 'islem_tur_id'  =>$id,
+                 'aciklama'      =>$id." Numaralı Fatura Ödemesi",
+                 'gelir'         =>$tutar,
+                 'gider'         =>"",
+                 'mevcut_kasa_toplami'=>KasaModel::kasaToplami()+$tutar,
+                 'yil'           =>Date::set('{year}'),
+                 'tarih'         =>$odeme_tarihi,
+                 'islem_yapan'   =>$user->id
              ];
 
-             $guncelle = CariModel::kartOdemeGuncelle($data);
+             $kasayaKaydet = KasaModel::deftereKaydet($defterData);
 
-             UyeModel::IpEkle($user->id,User::ip(),"KARTODEMESIBASARILI");
+             $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabı);
 
-             $bakiyeData = [
-                 'uye'           =>$kontrol->uye,
-                 'tutar'         =>$kontrol->tutar,
-                 'hareket'       =>'+',
-                 'odeme_sekli'   =>'Kredi kartı ödemesi',
-                 'aciklama'      => Date::convert($kontrol->tarih, '{dayNumber0}.{monthNumber0}.{year}').' tarihinde Kredi kartınız ile '.$kontrol->tutar.' TL tutarında ödeme yapılmıştır. '
-             ];
+             if ($kasayaKaydet) {
+                 $odemData = [
+                     'id'  =>$id,
+                     'alinan_odeme'        =>$tutar+$faturaDetay->alinan_odeme,
+                 ];
 
-             $bakiyeGecmisEkle = CariModel::bakiyeGecmisEkle($bakiyeData);
+                 $faturaOdemeEkle = FaturaModel::odemeEkle($odemData);
 
-             $bakiyeArtir = CariModel::bakiyeArtir($kontrol->uye,$kontrol->tutar);
+                 $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabı);
 
-             if($bakiyeArtir){   $uyari2 = '<div class="callout callout-success">Bakiyeniz Artırıldı </div>';
-             }else{              $uyari2 = '<div class="callout callout-danger">Bakiye artırımı yapılamadı!</div>'; }
+                 $toplamFaturaOdemesi = $tutar+$faturaDetay->alinan_odeme;
 
-             $bildirimEkle = UyeModel::bildirimEkle($kontrol->uye,' Kredi kartı ile bakiye yüklemesi yapıldı. Ödeme Bakiyenize Eklendi !');
+                 if ($toplamFaturaOdemesi>=$faturaDetay->genel_toplam){
 
-             $hediyeBakiye = AyarModel::defaultAyarlar('bakiyeYuklemeHediyesi');
+                     DB::siparislerUpdateId(['odeme_durumu'=>'1'],$faturaDetay->siparis_id);
 
-             if($hediyeBakiye!="" and $hediyeBakiye>"0"){
+                 }
 
-                 if(UyeModel::kuponKullanim('ilkBakiye',$kontrol->uye)=="0"){
+                 if(Post::odendi()=="1"){
 
-                     if($hediyeBakiye[0]=="%"){
+                     $faturaOdemeDurumDegistir = FaturaModel::odemeDurumDegistir($faturaDetay->id,"1");
 
-                         $yuzde = $hediyeBakiye[1].$hediyeBakiye[2];
-                         $hediyeTutar = number_format(($kontrol->tutar/100)*$yuzde,2);
+                 }
 
-                         $hediyeBakiyeData = [
-                             'uye'           =>$kontrol->uye,
-                             'tutar'         =>$hediyeTutar,
-                             'hareket'       =>'+',
-                             'odeme_sekli'   =>'Bakiye Yükleme Hediyesi',
-                             'aciklama'      => Date::convert($kontrol->tarih, '{dayNumber0}.{monthNumber0}.{year}').' tarihinde yaptığınız ilk ödemeye istinaden hediye edilen '.$hediyeTutar.' TL hesabınıza eklenmiştir. '
-                         ];
 
-                         $hediyeBakiyeGecmisEkle = CariModel::bakiyeGecmisEkle($hediyeBakiyeData);
+                 /*BİLDİRİM*/
+                 $ekMailBilgi = "";
 
-                         $hediyeBakiyeArtir = CariModel::bakiyeArtir($kontrol->uye,$hediyeTutar);
+                 if($bildirim=="1"){
 
-                         UyeModel::kuponKullandir('ilkBakiye',$kontrol->uye);
+                     $mailgonder = Email::subject('Ödeme Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
 
+                         'konu' => 'Ödeme Bildirimi',
+                         'mesaj' => $faturaDetay->id.' numaralı faturanız için '.Date::convert($odeme_tarihi, '{dayInMonth}.{monthInYear-}.{year}').' tarihinde '.$tutar.' TL Tutarında ödemeniz alınmış ve kayıtlarımıza işlenmiştir.<br> Ödemeniz için teşekkür ederiz.<br><hr>'.$aciklama,
+                         //'link' => URL::site(),
+                         //'link_baslik' => 'Tıklayınız',
+                         'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                         'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                         'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                         'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+                     ])->send();
+
+                     if ($mailgonder) {
+                         $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderildi !";
                      }else{
-
-                         $hediyeBakiyeData = [
-                             'uye'           =>$kontrol->uye,
-                             'tutar'         =>$hediyeBakiye,
-                             'hareket'       =>'+',
-                             'odeme_sekli'   =>'Bakiye Yükleme Hediyesi',
-                             'aciklama'      => Date::convert($kontrol->tarih, '{dayNumber0}.{monthNumber0}.{year}').' tarihinde yaptığınız ilk ödemeye istinaden hediye edilen '.$hediyeBakiye.' TL hesabınıza eklenmiştir. '
-                         ];
-
-                         $hediyeBakiyeGecmisEkle = CariModel::bakiyeGecmisEkle($hediyeBakiyeData);
-
-                         $hediyeBakiyeArtir = CariModel::bakiyeArtir($kontrol->uye,$hediyeBakiye);
-
-                         UyeModel::kuponKullandir('ilkBakiye',$kontrol->uye);
-
+                         $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderilemedi !".Email::error();
                      }
 
-                     $bildirimEkle = UyeModel::bildirimEkle($kontrol->uye,' İlk Bakiye yüklemenize istinaden hesabınıza hediyeniz yüklendi!');
                  }
+
+                 /*BİLDİRİM*/
+
+                 Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Ödeme Başarı İle Eklendi !.<br>'.$ekMailBilgi.'</div></div>'])->action('siparisler/duzenle/'.$id);
+
+             }else{
+                 Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">İşlem sırasında hata oluştu !.</div></div>'])->action(URL::prev());
              }
 
 
-             /*if($bakiyeArtir){
-                 Redirect::wait(1)->insert(['bilgi'=>$uyari2.'<div class="callout callout-success">Kredi kartı ödeme işlemi gerçekleşti ve BAKİYENİZ ARTIRILDI!</div>'])->action('cari/bakiyeYukle');
-             }else{
 
-                 Redirect::wait(1)->insert(['bilgi'=>$uyari2.'<div class="callout callout-warning">Kredi kartı ödeme işlemi gerçekleşti ve BAKİYENİZ ARTIRMA YAPILAMADI!. Lütfen bizimle iletişime geçiniz</div>'])->action('cari/bakiyeYukle');
+             /*** Kasa Defterine İşle ***/
 
-             }*/
 
              ## BURADA YAPILMASI GEREKENLER
              ## 1) Siparişi onaylayın.

@@ -201,9 +201,7 @@ class Faturalar extends Controller
 
         $payment_amount	= number_format($faturaDetay->genel_toplam,2,'.','')*100; //9.99 için 9.99 * 100 = 999 gönderilmelidir.
 
-        $merchant_oid = $cariDetay->id.''.rand(111111,999999);
-
-       // $cariKrediKartiOdemesiEkle = CariModel::krediKartiOdemesi($cariDetay->id,$payment_amount/100,$merchant_oid);
+        $merchant_oid = $id;
 
         $user_name = $cariDetay->adi;
 
