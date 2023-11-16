@@ -87,7 +87,7 @@ class Faturalar extends Controller
 
     }
 
-    public function detay($id=""){
+    public function detay($id="",$odemeDurum = ""){
 
         if ($id==""){
             AyarModel::basarisiz('Hatalı İşlem','Tanımsız bir faturaya ulaşmaya çalışıyorsunuz.',URL::site());
@@ -107,6 +107,20 @@ class Faturalar extends Controller
                 AyarModel::basarisiz('Hatalı İşlem','İlgili Fatura tarafınıza Ait Değildir.',URL::site());
 
             }
+
+        }
+
+        if ($odemeDurum=="ok"){
+
+            $uyari = '<div class="alert alert-success" role="alert"><h4 class="alert-heading">Fatura Ödemeniz Gerçekleştirildi</h4><div class="alert-body">Kredi Kartı İle Yaptığınız fatura ödemeniz başarı ile alındı. Ödemeniz için teşekkür ederiz.</div></div>';
+
+        }elseif($odemeDurum=="nok"){
+
+            $uyari = '<div class="alert alert-danger" role="alert"><h4 class="alert-heading">HATA! Fatura Ödemeniz Alınamadı !</h4><div class="alert-body">Kredi Kartı ile gerçekleştirdiğiniz işleminizde bir hata oluştu.</div></div>';
+
+        }else{
+
+            $uyari = "";
 
         }
 
@@ -131,6 +145,7 @@ class Faturalar extends Controller
 
         View::detay($detay);
         View::faturaUrunleri($faturaUrunleri);
+        View::uyari($uyari);
 
     }
 
@@ -209,9 +224,9 @@ class Faturalar extends Controller
 
         $user_phone = $cariDetay->gsm;
 
-        $merchant_ok_url = URL::site('faturalar/odemeIslemi/ok');
+        $merchant_ok_url = URL::site('faturalar/detay/'.$id.'/ok');
 
-        $merchant_fail_url = URL::site('faturalar/odemeIslemi/nok');
+        $merchant_fail_url = URL::site('faturalar/detay/'.$id.'/nok');
 
         $urunler = [];
 

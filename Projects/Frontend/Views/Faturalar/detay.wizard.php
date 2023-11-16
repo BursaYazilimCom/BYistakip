@@ -31,6 +31,7 @@
                         <!--end::Head-->
                         <!--begin::Wrapper-->
                         <div class="mb-0">
+                            {{$uyari}}
                             <!--begin::Label-->
                             <div class="fw-bolder fs-3 text-gray-800 mb-8">Fatura No #{{$detay->belge_no}}</div>
                             <!--end::Label-->
