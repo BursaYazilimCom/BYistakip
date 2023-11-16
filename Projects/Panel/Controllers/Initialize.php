@@ -5,7 +5,7 @@ Use User,KasaModel;
 class Initialize extends Controller
 {
 
-    const exclude = ["By","Login"];
+    const exclude = ["By","Login","Paytr"];
     
     
     public function main()

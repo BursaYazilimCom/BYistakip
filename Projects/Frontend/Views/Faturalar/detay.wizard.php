@@ -22,7 +22,9 @@
                                 <a href="{{URL::site()}}../Uploads/faturalar/{{ $detay->resmi_fatura_dosyasi }}" class="btn btn-sm btn-warning me-2">Resmi Fatura İndir</a>
                                 @endif
                                 <a href="#" class="btn btn-sm btn-success me-2" onclick="window.print()">Yazdır</a>
-                                <a href="{{URL::site()}}faturalar/odemeYap/{{$detay->id}}" class="btn btn-sm btn-primary">Ödeme Yap</a>
+                                @if($detay->odeme=="0")
+                                <a href="{{URL::site()}}faturalar/odemeYap/{{$detay->id}}" class="btn btn-sm btn-primary">Kredi Kartı İle Öde</a>
+                                @endif
                             </div>
                             <!--end::Actions-->
                         </div>
@@ -152,7 +154,7 @@
                                             <td class="pt-6">{{$furun->miktar}}</td>
                                             <td class="pt-6">{{number_format($furun->fiyat,2)}}</td>
                                             <td class="pt-6">%{{$furun->kdv}}</td>
-                                            <td class="pt-6 text-dark fw-boldest">{{number_format($furun->tutar,2)}} ₺</td>
+                                            <td class="pt-6 text-dark fw-boldest">{{number_format($furun->fiyat*$furun->miktar,2)}} ₺</td>
                                         </tr>
                                         @endforeach
 

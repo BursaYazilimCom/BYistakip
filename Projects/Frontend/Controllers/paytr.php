@@ -1,14 +1,15 @@
 <?php namespace Project\Controllers;
 
-use User,Method,Post,Redirect,AyarModel,CariModel,InternalFaturaModel as FaturaModel,URL,Date;
+use User,Method,Post,Request,Email,Redirect,AyarModel,CariModel,KasaModel,InternalFaturaModel as FaturaModel,URL,Date,DB;
 
-class paytr extends Controller
+class Paytr extends Controller
 {
 
      public function main(){
 
 
-         $post = $_POST;
+         $kasa_hesabi = AyarModel::defaultAyarlar('paytrKasaHesabi');
+         $odeme_tarihi = date('Y-m-d');
 
          ####################### DÜZENLEMESİ ZORUNLU ALANLAR #######################
          #
@@ -20,14 +21,14 @@ class paytr extends Controller
          ####### Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur. #######
          #
          ## POST değerleri ile hash oluştur.
-         $hash = base64_encode( hash_hmac('sha256', $post['merchant_oid'].$merchant_salt.$post['status'].$post['total_amount'], $merchant_key, true) );
+         $hash = base64_encode( hash_hmac('sha256', Request::merchant_oid().$merchant_salt.Request::status().Request::total_amount(), $merchant_key, true) );
          //$hash = "123456789";
          #
          ## Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
          ## Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
-         if( $hash != $post['hash'] ) {
+        /* if( $hash != Request::hash() ) {
              die('PAYTR notification failed: bad hash');
-         }
+         }*/
          ###########################################################################
          ## BURADA YAPILMASI GEREKENLER
          ## 1) Siparişin durumunu $post['merchant_oid'] değerini kullanarak veri tabanınızdan sorgulayın.
@@ -42,103 +43,73 @@ class paytr extends Controller
           */
 
 
-         $faturaId = $post['merchant_oid'];
+         $faturaBilgi = explode('80108',Request::merchant_oid());
+         $faturaId = $faturaBilgi[0];
          $faturaDetay = FaturaModel::detay($faturaId);
          $cariDetay = CariModel::detay($faturaDetay->musteri);
 
          if($faturaDetay->odeme=="1" ){
              echo "OK";
              exit;
-             }
+         }
 
-         if( $post['status'] == 'success' ) { ## Ödeme Onaylandı
+         if( Request::status() == 'success' ) { ## Ödeme Onaylandı
 
-             $odendiYap = FaturaModel::odemeDurumDegistir($faturaId,1,date('Y-m-d'));
+             $odendiYap = FaturaModel::odemeDurumDegistir($faturaId,'1',date('Y-m-d'));
 
-             /*** Kasa Defterine İşle ***/
-
+             $tutar = $faturaDetay->genel_toplam;
 
              $defterData = [
-                 'kasa'          =>$kasa_hesabı,
+                 'kasa'          =>$kasa_hesabi,
                  'islem'         =>"t",
                  'hesap'         =>"Fatura Tahsilatı: ".$cariDetay->adi,
                  'islem_turu'    =>"fatura",
-                 'islem_tur_id'  =>$id,
-                 'aciklama'      =>$id." Numaralı Fatura Ödemesi",
+                 'islem_tur_id'  =>$faturaId,
+                 'aciklama'      =>$faturaId." Numaralı Fatura (PAYTR KK) Ödemesi",
                  'gelir'         =>$tutar,
-                 'gider'         =>"",
+                 'gider'         =>"0",
                  'mevcut_kasa_toplami'=>KasaModel::kasaToplami()+$tutar,
                  'yil'           =>Date::set('{year}'),
                  'tarih'         =>$odeme_tarihi,
-                 'islem_yapan'   =>$user->id
+                 'islem_yapan'   =>$cariDetay->id
              ];
 
-             $kasayaKaydet = KasaModel::deftereKaydet($defterData);
+             $kasayaKaydet              = KasaModel::deftereKaydet($defterData);
 
-             $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabı);
+             $kasaHesapBilgi            = KasaModel::hesapBilgi($kasa_hesabi);
 
-             if ($kasayaKaydet) {
-                 $odemData = [
-                     'id'  =>$id,
-                     'alinan_odeme'        =>$tutar+$faturaDetay->alinan_odeme,
-                 ];
+             $kasaHesapTutarGuncelle    = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabi);
 
-                 $faturaOdemeEkle = FaturaModel::odemeEkle($odemData);
+             DB::siparislerUpdateId(['odeme_durumu'=>'1'],$faturaDetay->siparis_id);
 
-                 $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabı);
+             $odemeData = [
+                 'fatura_id'            =>$faturaId,
+                 'tutar'                =>$tutar,
+                 'aciklama'             =>'Paytr Ödeme İşlemi Gerçekleştirildi'
+             ];
 
-                 $toplamFaturaOdemesi = $tutar+$faturaDetay->alinan_odeme;
+             $faturaOdemeIslemiEkle = FaturaModel::odemeIslemiEkle($odemeData);
 
-                 if ($toplamFaturaOdemesi>=$faturaDetay->genel_toplam){
+             /*
+             $ekMailBilgi = "Ödemeniz kredi kartı ekstrenizde ".AyarModel::defaultAyarlar('firmaAdi')." yada PAYTR olarak görünecektir";
 
-                     DB::siparislerUpdateId(['odeme_durumu'=>'1'],$faturaDetay->siparis_id);
+             $mailgonder = Email::subject('Ödeme Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
 
-                 }
+                 'konu' => 'Ödeme Bildirimi',
+                 'mesaj' => $faturaDetay->id.' numaralı faturanız için '.Date::convert($odeme_tarihi, '{dayInMonth}.{monthInYear-}.{year}').' tarihinde '.$tutar.' TL Tutarında kredi kartı ödemeniz alınmış ve kayıtlarımıza işlenmiştir.<br> Ödemeniz için teşekkür ederiz.<br><hr>'.$ekMailBilgi,
+                 'link' => URL::site('faturalar/detay/'.$faturaId),
+                 'link_baslik' => 'Fatura Detay',
+                 'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                 'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                 'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                 'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+             ])->send();
+            */
 
-                 if(Post::odendi()=="1"){
-
-                     $faturaOdemeDurumDegistir = FaturaModel::odemeDurumDegistir($faturaDetay->id,"1");
-
-                 }
-
-
-                 /*BİLDİRİM*/
-                 $ekMailBilgi = "";
-
-                 if($bildirim=="1"){
-
-                     $mailgonder = Email::subject('Ödeme Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
-
-                         'konu' => 'Ödeme Bildirimi',
-                         'mesaj' => $faturaDetay->id.' numaralı faturanız için '.Date::convert($odeme_tarihi, '{dayInMonth}.{monthInYear-}.{year}').' tarihinde '.$tutar.' TL Tutarında ödemeniz alınmış ve kayıtlarımıza işlenmiştir.<br> Ödemeniz için teşekkür ederiz.<br><hr>'.$aciklama,
-                         //'link' => URL::site(),
-                         //'link_baslik' => 'Tıklayınız',
-                         'firma' => AyarModel::defaultAyarlar('firmaAdi'),
-                         'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
-                         'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
-                         'telefon' => AyarModel::defaultAyarlar('firmaTel'),
-                     ])->send();
-
-                     if ($mailgonder) {
-                         $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderildi !";
-                     }else{
-                         $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderilemedi !".Email::error();
-                     }
-
-                 }
-
-                 /*BİLDİRİM*/
-
-                 Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Ödeme Başarı İle Eklendi !.<br>'.$ekMailBilgi.'</div></div>'])->action('siparisler/duzenle/'.$id);
-
-             }else{
-                 Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">İşlem sırasında hata oluştu !.</div></div>'])->action(URL::prev());
-             }
-
-
+             echo "OK";
+             exit;
 
              /*** Kasa Defterine İşle ***/
-
 
              ## BURADA YAPILMASI GEREKENLER
              ## 1) Siparişi onaylayın.
@@ -148,18 +119,12 @@ class paytr extends Controller
 
          } else { ## Ödemeye Onay Verilmedi
 
-             UyeModel::IpEkle($user->id,User::ip(),"KARTODEMESIBASARISIZ");
-
-             $data = [
-                 'uye'           => $kontrol->uye,
-                 'anahtar'       => $post['merchant_oid'],
-                 'durum'         => '2',
-                 'hata_kodu'     => $post['failed_reason_code'],
-                 'hata_mesaji'   => $post['failed_reason_msg'],
-                 'odeme_tutari'  => $post['total_amount']
+             $odemeData = [
+                 'fatura_id'     =>Post::merchant_oid(),
+                 'tutar'         =>Post::total_amount(),
+                 'aciklama'      =>'HATA ! Paytr Ödeme İşlemi Başarısız.['.Request::failed_reason_code().']['.Request::failed_reason_msg().']'
              ];
-
-             $guncelle = CariModel::kartOdemeGuncelle($data);
+             $faturaOdemeIslemiEkle = FaturaModel::odemeIslemiEkle($odemeData);
 
              ## BURADA YAPILMASI GEREKENLER
              ## 1) Siparişi iptal edin.
@@ -171,39 +136,15 @@ class paytr extends Controller
                      <div class="alert alert-info">Hata Kodu: '.$failed_reason_code.' Hata Mesajı: '.$failed_reason_msg.'</div>
                      </div>'])->action('cari/bakiyeYukle');*/
 
+             echo "OK";
+             exit;
+
          }
 
+
          ## Bildirimin alındığını PayTR sistemine bildir.
-         echo "OK";
-         exit;
+
      }
 
-    public function hata(){
-
-        $user = User::data();
-
-        if (!empty($user->id)){
-            Redirect::action('cari/bakiyeYukle');
-        }
-
-        $kontrol = CariModel::krediKartiOdemeKontrol($post['merchant_oid']);
-
-        $data = [
-            'uye'           => $kontrol->uye,
-            'anahtar'       => $post['merchant_oid'],
-            'durum'         => '2',
-            'hata_kodu'     => $post['failed_reason_code'],
-            'hata_mesaji'   => $post['failed_reason_msg'],
-            'odeme_tutari'  => $post['total_amount']
-        ];
-
-        $guncelle = CariModel::kartOdemeGuncelle($data);
-
-        echo "OK";
-    }
-
-    public function s404()
-    {
-
-    }
+    public function s404(){}
 }

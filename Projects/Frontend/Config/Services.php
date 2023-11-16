@@ -34,22 +34,22 @@
         'driver' => 'smtp',
         'smtp'   =>
         [
-            'host'      => '',
-            'user'      => '',
-            'password'  => '',
+            'host'      => 'mail.kurumsaleposta.com',
+            'user'      => 'info@bursayazilim.com',
+            'password'  => 'HMyk*963,*963,',
             'port'      => 587,
             'keepAlive' => false,
-            'timeout'   => 10,
+            'timeout'   => 30,
             'encode'    => '',  # empty, tls, ssl
             'dsn'       => false,
             'auth'      => true
         ],
         'imap' => 
         [
-            'host'      => '',
-            'user'      => '',
-            'password'  => '',
-            'port'      => 993,
+            'host'      => 'mail.bursayazilim.com',
+            'user'      => 'info@bursayazilim.com',
+            'password'  => 'HMyk*963,*963,',
+            'port'      => 995,
             'flags'     => [],
             'mailbox'   => 'INBOX'
         ],

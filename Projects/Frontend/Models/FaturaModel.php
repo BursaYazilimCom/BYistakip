@@ -74,6 +74,17 @@ class InternalFaturaModel extends Model
         return $guncelle;
     }
 
+    static function odemeIslemiEkle($data){
+
+        $ekle = DB::insert('fatura_odeme_islemleri',[
+            'fatura_id'     =>$data['fatura_id'],
+            'tutar'         =>$data['tutar'],
+            'aciklama'      =>$data['aciklama']
+        ]);
+
+        return DB::insertID();
+    }
+
 
 
 

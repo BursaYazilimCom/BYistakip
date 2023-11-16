@@ -201,7 +201,7 @@ class Faturalar extends Controller
 
         $payment_amount	= number_format($faturaDetay->genel_toplam,2,'.','')*100; //9.99 için 9.99 * 100 = 999 gönderilmelidir.
 
-        $merchant_oid = $id;
+        $merchant_oid = $id.'80108'.rand(111111,999999);
 
         $user_name = $cariDetay->adi;
 
@@ -245,6 +245,13 @@ class Faturalar extends Controller
 
         $hash_str = $merchant_id .$user_ip .$merchant_oid .$email .$payment_amount .$user_basket.$no_installment.$max_installment.$currency.$test_mode;
         $paytr_token=base64_encode(hash_hmac('sha256',$hash_str.$merchant_salt,$merchant_key,true));
+
+        $odemeData = [
+            'fatura_id'     =>$id,
+            'tutar'         =>$faturaDetay->genel_toplam,
+            'aciklama'      =>'Paytr KK Ödeme İşlemi Başlatıldı.'
+        ];
+        $faturaOdemeIslemiEkle = FaturaModel::odemeIslemiEkle($odemeData);
 
 
         $post_vals=array(
