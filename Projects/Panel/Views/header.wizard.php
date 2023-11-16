@@ -72,6 +72,7 @@
                     </li>
 
                     <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('cari')}}"><i data-feather="users"></i><span data-i18n="Misc">Müşteriler</span></a>
+                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('projeler')}}"><i data-feather="check-square"></i><span data-i18n="Misc">Projeler</span></a>
                     </li>
 
 
