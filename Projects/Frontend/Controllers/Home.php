@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-Use User,URL,AyarModel;
+Use User,URL,AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel;
 
 class Home extends Controller
 {
@@ -12,7 +12,10 @@ class Home extends Controller
      */
     public function main(string ...$parameters)
     {
-
+        $cariHesaplar = CariModel::liste();
+        $projeler = ProjeModel::liste();
+        View::musteriSayisi($cariHesaplar['adet']);
+        View::projeSayisi($projeler['adet']);
         Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
     }
 

@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-
+                                {{ Redirect::select('bilgi',true) }}
                                 <div class="table-responsive">
                                     <table class="table table-hover  table-bordered">
                                         <thead>
@@ -54,11 +54,17 @@
                                         @foreach($listele['liste'] as $u)
                                         <tr id="row-{{$u->id}}">
                                             <td>{{$u->id}}</td>
-                                            <td>{{$u->proje_adi}}</td>
-                                            <td>{{$u->musteri}}</td>
-                                            <td>{{$u->proje_baslangic_tarihi}}</td>
-                                            <td>{{$u->tahmini_bitis_tarihi}}</td>
-                                            <td>{{$u->bitis_tarihi}}</td>
+                                            <td>{{$u->proje_adi}} <a href="{{URL::site()}}../proje/{{$u->sef}}" class="badge badge-light-info rounded-pill" target="_blank"><i data-feather="external-link" class="me-50"></i></a> </td>
+                                            <td>{{CariModel::cariAdi($u->musteri)}}</td>
+                                            <td>{{Date::convert($u->proje_baslangic_tarihi,'{dayInMonth}.{monthInYear-}.{year}')}}</td>
+                                            <td>{{Date::convert($u->tahmini_bitis_tarihi,'{dayInMonth}.{monthInYear-}.{year}')}}</td>
+                                            <td>
+                                                @if($u->bitis_tarihi!="0000-00-00")
+
+                                                    {{Date::convert($u->bitis_tarihi,'{dayInMonth}.{monthInYear-}.{year}')}}
+
+                                                @endif
+                                            </td>
                                             <td>
                                                 @if($u->durum=="1")
                                                 <span class="badge bg-success">Teslim Edildi</span>
@@ -72,10 +78,15 @@
                                                         <i data-feather="more-vertical"></i>
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="{{URL::site('projeler/yolHaritasi/'.$u->id)}}" class="dropdown-item">
+                                                            <i data-feather="activity" class="me-50"></i>
+                                                            <span>Yol Haritası</span>
+                                                        </a>
                                                         <a href="{{URL::site('projeler/form')}}/{{$u->id}}" class="dropdown-item">
                                                             <i data-feather="edit-2" class="me-50"></i>
                                                             <span>Düzenle</span>
                                                         </a>
+
                                                         <a class="dropdown-item" onclick="deleteAction('{{$u->id}}','{{URL::site('projeler/ajax')}}','projeSil')">
                                                             <i data-feather="trash" class="me-50"></i>
                                                             <span>Sil</span>

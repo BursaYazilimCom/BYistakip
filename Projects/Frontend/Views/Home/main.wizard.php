@@ -4,7 +4,7 @@
     <!--begin::Container-->
     <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
         <!--begin::Title-->
-        <h3 class="text-white fw-bolder fs-2qx me-5">{{AyarModel::defaultAyarlar('siteAdi')}} Bazı İstatistikler</h3>
+        <h3 class="text-white fw-bolder fs-2qx me-5">{{AyarModel::defaultAyarlar('siteAdi')}}</h3>
         <!--begin::Title-->
         <!--begin::Actions-->
 
@@ -25,27 +25,26 @@
                 <!--begin::Row-->
                 <div class="row gy-5 g-xl-8">
                     <!--begin::Col-->
+                    @if(AyarModel::defaultAyarlar('musteriPaneliIstatistikleri')=='1')
                     <div class="col-xxl-6">
-                        <!--begin::Table Widget 1-->
-                        <div class="card card-xxl-stretch">
-                            <!--begin::Header-->
-                            <div class="card-header border-0 pt-5 pb-3">
-                                <!--begin::Card title-->
-                                <h3 class="card-title fw-bolder text-gray-800 fs-2">Giriş Yap</h3>
-                                <!--end::Card title-->
+                    @else
+                        <div class="col-xxl-12">
+                    @endif
 
-                            </div>
-                            <!--end::Header-->
-                            <!--begin::Body-->
-                            <div class="card-body py-0">
+                    <div class="alert alert-primary">
 
-                            </div>
-                            <!--end::Body-->
+                        <div class="d-flex flex-column">
+
+                            <span>{{AyarModel::defaultAyarlar('musteripaneliKarsilamaYazisi')}}</span>
+
                         </div>
-                        <!--end::Table Widget 1-->
+
+                    </div>
+
                     </div>
                     <!--end::Col-->
                     <!--begin::Col-->
+                    @if(AyarModel::defaultAyarlar('musteriPaneliIstatistikleri')=='1')
                     <div class="col-xxl-6">
                         <!--begin::Row-->
                         <div class="row g-5 g-xl-8">
@@ -58,7 +57,7 @@
                                         <!--begin::Hidden-->
                                         <div class="d-flex flex-column px-9 pt-5">
                                             <!--begin::Number-->
-                                            <div class="text-success fw-boldest fs-2hx">620 Adet</div>
+                                            <div class="text-success fw-boldest fs-2hx">{{$musteriSayisi}} Adet</div>
                                             <!--end::Number-->
                                             <!--begin::Description-->
                                             <span class="text-gray-400 fw-bold fs-6">Mutlu Müşteri</span>
@@ -122,7 +121,7 @@
                                         <!--begin::Hidden-->
                                         <div class="d-flex flex-column px-9 pt-5">
                                             <!--begin::Number-->
-                                            <span class="text-primary fw-boldest fs-2hx">75 Adet</span>
+                                            <span class="text-primary fw-boldest fs-2hx">{{$projeSayisi}} Adet</span>
                                             <!--end::Number-->
                                             <!--begin::Description-->
                                             <span class="text-gray-400 fw-bold fs-6">Tamamlanan Proje</span>
@@ -138,6 +137,7 @@
                         </div>
                         <!--end::Row-->
                     </div>
+                    @endif
                     <!--end::Col-->
                 </div>
 

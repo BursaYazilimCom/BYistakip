@@ -1,0 +1,29 @@
+<?php
+
+class InternalProjeModel extends Model
+{
+    static function detay($sef)
+    {
+        $veri =  DB::where('sef',$sef)->projeler()->row();
+
+        return $veri;
+
+    }
+
+    static function liste(){
+        $veri= DB::limit(null,25)->projeler();
+
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
+    }
+    
+    /*****************************************************/
+    static function yolHaritasi($id){
+        $veri = DB::where('proje_id',$id)->orderby('sira','ASC')->proje_yol_haritasi();
+
+
+        return ['liste'=>$veri->result()];
+
+    }
+
+
+}

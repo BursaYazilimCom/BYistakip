@@ -17,7 +17,7 @@ class InternalCariModel extends Model
     static function liste(){
         $veri= DB::limit(null,25)->cari();
 
-        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
     }
 
     static function tumListe(){

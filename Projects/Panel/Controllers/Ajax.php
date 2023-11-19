@@ -2,7 +2,7 @@
 
 Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
 Use AjaxModel,KasaModel,UrunModel,AyarModel, InternalFaturaModel as FaturaModel;
-Use PersonelModel;
+Use PersonelModel,InternalProjeModel as ProjeModel;
 
 
 
@@ -1132,6 +1132,138 @@ class Ajax extends Controller
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
                 <button type="submit" class="btn btn-primary">Gönder</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+
+        if(Post::action()=="yolHaritasiEkle"){
+
+            $id = Post::rowid();
+            $projeDetay = ProjeModel::detay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('projeler/yolHaritasiEkle/'.$id)->open('yolHaritasiEkle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Yol Haritası Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="baslik">Baslik:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('baslik')->placeholder('Başlık')->text('baslik','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="aciklama">Açıklama:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('aciklama')->placeholder('Açıklama')->textarea('aciklama','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="sira">Sıra:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('sira')->placeholder('Sıra')->text('sira','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="aciklama">Durum:</label>
+                            <div class="input-group input-group-merge">
+                                <select name="durum" id="durum" class="form-control">
+                                    <option value="0">Bekliyor</option>
+                                    <option value="1">Gerçekleştirildi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+
+        if(Post::action()=="yolHaritasiDuzenle"){
+
+            $id = Post::rowid();
+            $detay = ProjeModel::yolHaritasiDetay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('projeler/yolHaritasiGuncelle/'.$id)->open('yolHaritasiGuncelle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Yol Haritası Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="baslik">Baslik:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('baslik')->placeholder('Başlık')->text('baslik',$detay->baslik,['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="aciklama">Açıklama:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('aciklama')->placeholder('Açıklama')->textarea('aciklama',$detay->aciklama,['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="sira">Sıra:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('sira')->placeholder('Sıra')->text('sira',$detay->sira,['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="aciklama">Durum:</label>
+                            <div class="input-group input-group-merge">
+                                <select name="durum" id="durum" class="form-control">
+                                    <option value="0" <?php if($detay->durum=="0"){ echo "selected"; } ?>>Bekliyor</option>
+                                    <option value="1" <?php if($detay->durum=="1"){ echo "selected"; } ?>>Gerçekleştirildi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
             </div>
 
             <?php echo Form::close(); ?>

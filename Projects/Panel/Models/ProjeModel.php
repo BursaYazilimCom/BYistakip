@@ -28,6 +28,7 @@ class InternalProjeModel extends Model
         $ekle = DB::insert('projeler',[
             'musteri'                   =>$data['musteri'],
             'proje_adi'                 =>$data['proje_adi'],
+            'sef'                       =>$data['sef'],
             'aciklama'                  =>$data['aciklama'],
             'proje_baslangic_tarihi'    =>$data['proje_baslangic_tarihi'],
             'tahmini_bitis_tarihi'      =>$data['tahmini_bitis_tarihi'],
@@ -44,6 +45,7 @@ class InternalProjeModel extends Model
                     ->update('projeler',[
                         'musteri'                   =>$data['musteri'],
                         'proje_adi'                 =>$data['proje_adi'],
+                        'sef'                       =>$data['sef'],
                         'aciklama'                  =>$data['aciklama'],
                         'proje_baslangic_tarihi'    =>$data['proje_baslangic_tarihi'],
                         'tahmini_bitis_tarihi'      =>$data['tahmini_bitis_tarihi'],
@@ -61,4 +63,52 @@ class InternalProjeModel extends Model
     }
     
     /*****************************************************/
+    static function yolHaritasi($id){
+        $veri = DB::where('proje_id',$id)->orderby('sira','ASC')->proje_yol_haritasi();
+
+
+        return ['liste'=>$veri->result()];
+
+    }
+
+    static function yolHaritasiDetay($id){
+
+        $veri = DB::where('id',$id)->proje_yol_haritasi()->row();
+
+
+        return $veri;
+
+    }
+
+    static function yolHaritasiEkle($data){
+
+        $ekle = DB::insert('proje_yol_haritasi',[
+            'proje_id'                   =>$data['proje_id'],
+            'baslik'                 =>$data['baslik'],
+            'aciklama'                  =>$data['aciklama'],
+            'sira'                  =>$data['sira'],
+            'durum'                     =>$data['durum']
+        ]);
+
+        return DB::insertID();
+    }
+
+    static function yolHaritasiGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('proje_yol_haritasi',[
+                'baslik'                 =>$data['baslik'],
+                'aciklama'                  =>$data['aciklama'],
+                'sira'                  =>$data['sira'],
+                'durum'                     =>$data['durum']
+            ]);
+        return $guncelle;
+    }
+
+    static function yolHaritasiSil($id){
+
+        $sil        = DB::whereId($id)->delete('proje_yol_haritasi');
+
+        return $sil;
+    }
 }
