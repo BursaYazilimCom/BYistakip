@@ -278,6 +278,14 @@ class InternalSiparisModel extends Model
 
     }
 
+    public function siparisUrunleriAdet(){
+
+        $veri = DB::siparis_urunleri();
+
+        return ['liste'=>$veri->result(),'adet'=>$veri->totalRows(true)];
+
+    }
+
     public function siparisUrunleri($id){
 
         $veri = DB::where('siparis',$id)->siparis_urunleri()->result();

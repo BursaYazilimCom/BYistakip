@@ -111,6 +111,18 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="sifre">Proje Giriş Şifresi</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @Form::id('sifre')->placeholder('Proje Giriş Şifresi')->text('sifre','',['class'=>'form-control'])
+
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

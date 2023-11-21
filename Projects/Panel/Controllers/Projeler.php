@@ -47,6 +47,7 @@ class Projeler extends Controller
                 'proje_baslangic_tarihi'    =>date('d.m.Y'),
                 'tahmini_bitis_tarihi'      =>date('d.m.Y'),
                 'bitis_tarihi'              =>'',
+                'sifre'                     =>'',
                 'durum'                     =>'0'
 
             ];
@@ -92,6 +93,10 @@ class Projeler extends Controller
             $ekle = ProjeModel::ekle($ekleData);
 
             if ($ekle) {
+                if (Post::sifre()!="") {
+                    ProjeModel::sifreGuncelle(['id'=>$ekle,'sifre'=>Encode::type(Post::sifre(), 'md5')] );
+                }
+
                 Redirect::insert(['bilgi' => '<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Ekleme İşlemi Yapıldı !.'.$ekle.'</div></div>'])->action('projeler');
             } else {
 
@@ -104,10 +109,10 @@ class Projeler extends Controller
 
     public function update($id){
 
-        if(!Validation::check()){
+        if(Post::proje_adi()==""){
 
 
-            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
 
         }else{
 
@@ -121,6 +126,10 @@ class Projeler extends Controller
 
             }else{
                 $bitisTarihi = "0000-00-00";
+            }
+
+            if (Post::sifre()!="") {
+                ProjeModel::sifreGuncelle(['id'=>$id,'sifre'=>Encode::type(Post::sifre(), 'md5')] );
             }
 
             $ekleData = [
@@ -139,11 +148,11 @@ class Projeler extends Controller
 
             if($ekle){
 
-                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Ekleme İşlemi Yapıldı !.</div></div>'])->action('projeler/form/'.$id);
+                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Güncelleme İşlemi Yapıldı !.</div></div>'])->action('projeler/form/'.$id);
 
             }else{
 
-                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());
+                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());
 
             }
 

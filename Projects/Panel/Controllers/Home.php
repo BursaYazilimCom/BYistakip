@@ -1,6 +1,7 @@
 <?php namespace Project\Controllers;
 
-Use User,URL,PersonelModel;
+Use User,URL;
+use PersonelModel,AyarModel,KasaModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel,InternalFaturaModel as FaturaModel;
 
 class Home extends Controller
 {
@@ -12,8 +13,25 @@ class Home extends Controller
      */
     public function main(string ...$parameters)
     {
+        $kasaToplami = KasaModel::kasaToplami();
 
-        Masterpage::title('Sağlık Raporları');
+        $cariHesaplar = CariModel::liste();
+        $projeler = ProjeModel::liste();
+        $siparisurunleri = SiparisModel::siparisUrunleriAdet();
+        $odenmeyenFaturalar = FaturaModel::faturaListele('odenmeyen');
+        $kasaHesaplari = KasaModel::kasaHesaplari();
+        $siparisler     = SiparisModel::liste();
+
+        View::listele($siparisler);
+        View::musteriSayisi($cariHesaplar['adet']);
+        View::odenmeyenFaturaSayisi($odenmeyenFaturalar['adet']);
+        View::projeSayisi($projeler['adet']);
+        View::siparisurunleri($siparisurunleri['adet']);
+        View::kasaHesaplari($kasaHesaplari);
+
+        Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
+
+        View::kasaToplami(number_format($kasaToplami,2));
     }
 
     public function logout(){

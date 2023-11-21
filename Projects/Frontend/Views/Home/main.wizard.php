@@ -79,7 +79,7 @@
                                         <!--begin::Hidden-->
                                         <div class="d-flex flex-column px-9 pt-5">
                                             <!--begin::Number-->
-                                            <span class="text-primary fw-boldest fs-2hx">3 Adet</span>
+                                            <span class="text-primary fw-boldest fs-2hx">{{$devamEdenProjeler}} Adet</span>
                                             <!--end::Number-->
                                             <!--begin::Description-->
                                             <span class="text-gray-400 fw-bold fs-6">Devam Eden Proje</span>
@@ -100,7 +100,7 @@
                                         <!--begin::Hidden-->
                                         <div class="d-flex flex-column px-9 pt-5">
                                             <!--begin::Number-->
-                                            <div class="text-success fw-boldest fs-2hx">1620 Adet</div>
+                                            <div class="text-success fw-boldest fs-2hx">{{$siparisurunleri}} Adet</div>
                                             <!--end::Number-->
                                             <!--begin::Description-->
                                             <span class="text-gray-400 fw-bold fs-6">Verilen Hizmet</span>

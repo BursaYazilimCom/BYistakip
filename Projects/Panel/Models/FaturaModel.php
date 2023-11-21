@@ -35,6 +35,22 @@ class InternalFaturaModel extends Model
 
     }
 
+    static function faturaListele($sorgu){
+
+        if ($sorgu == 'tum') {
+            $veri = DB::orderby('id','DESC')->faturalar();
+        }elseif($sorgu == 'odenmeyen'){
+            $veri = DB::where('odeme','0')->orderby('id','DESC')->faturalar();
+        }elseif($sorgu == 'odenen'){
+            $veri = DB::where('odeme','1')->orderby('id','DESC')->faturalar();
+        }else{
+
+        }
+
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows()];
+
+    }
+
     static function uyeFaturalari($uye){
 
         $veri = DB::where('musteri',$uye)->faturalar()->result();

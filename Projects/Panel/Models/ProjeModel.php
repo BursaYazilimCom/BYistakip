@@ -19,7 +19,7 @@ class InternalProjeModel extends Model
             ->orderby('id','DESC')->projeler();
 
 
-        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
 
     }
 
@@ -52,6 +52,15 @@ class InternalProjeModel extends Model
                         'bitis_tarihi'              =>$data['bitis_tarihi'],
                         'durum'                     =>$data['durum']
                     ]);
+        return $guncelle;
+    }
+
+    static function sifreGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('projeler',[
+                'sifre'                   =>$data['sifre']
+            ]);
         return $guncelle;
     }
 

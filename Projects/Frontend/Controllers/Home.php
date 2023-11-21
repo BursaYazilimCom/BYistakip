@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-Use User,URL,AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel;
+Use User,URL,AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel;
 
 class Home extends Controller
 {
@@ -14,8 +14,14 @@ class Home extends Controller
     {
         $cariHesaplar = CariModel::liste();
         $projeler = ProjeModel::liste();
+        $devamEdenProjeler = ProjeModel::devamEden();
+        $siparisurunleri = SiparisModel::siparisUrunleriAdet();
+
         View::musteriSayisi($cariHesaplar['adet']);
         View::projeSayisi($projeler['adet']);
+        View::devamEdenProjeler($devamEdenProjeler['adet']);
+        View::siparisurunleri($siparisurunleri['adet']);
+
         Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
     }
 

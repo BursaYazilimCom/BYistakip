@@ -4,11 +4,11 @@
         <!--begin::Invoice-->
         <div class="card">
             <!--begin::Body-->
-            <div class="card-body p-lg-20">
+            <div class="card-body">
                 <!--begin::Layout-->
-                <div class="d-flex flex-column flex-xl-row">
+                <div class="row">
                     <!--begin::Content-->
-                    <div class="flex-lg-row-fluid me-xl-18 mb-10 mb-xl-0">
+                    <div class="col-xl-9">
                         <!--begin::Head-->
                         <div class="d-flex flex-stack mb-10 mb-lg-15">
                             <!--begin::Logo-->
@@ -38,7 +38,7 @@
                                 </div>
                                 <!--end::Header-->
                                 <!--begin::Body-->
-                                <div class="card-body pt-1">
+                                <div class="card-body">
                                     <!--begin::Item-->
                                     @foreach($yolHaritasi['liste'] as $yol)
                                     <div class="d-flex flex-stack item-border-hover px-3 py-2 ms-n4 mb-3">
@@ -104,13 +104,13 @@
                     </div>
                     <!--end::Content-->
                     <!--begin::Sidebar-->
-                    <div class="m-0">
+                    <div class=" col-xl-3">
                         <!--begin::Invoice sidebar-->
-                        <div class="d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 min-w-md-350px p-9 bg-lighten">
+                        <div class="d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 p-9 bg-lighten">
                             <!--begin::Labels-->
                             <div class="mb-8">
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <!--end::Label-->
                                     <div class="fw-bold fs-7 text-gray-600 mb-1">Proje Başlangıç Tarihi:</div>
                                     <!--end::Label-->
@@ -119,12 +119,12 @@
                                     <!--end::Col-->
                                 </div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <!--end::Label-->
                                     <div class="fw-bold fs-7 text-gray-600 mb-1">Proje Termin Tarihi:</div>
                                     <!--end::Label-->
                                     <!--end::Col-->
-                                    <div class="fw-bolder fs-6 text-gray-800">{{Date::convert($detay->tahmini_bitis_tarihi,'d.m.Y')}}</div>
+                                    <div class="fw-bolder fs-6">{{Date::convert($detay->tahmini_bitis_tarihi,'d.m.Y')}}</div>
                                     <!--end::Col-->
                                 </div>
 
@@ -134,7 +134,7 @@
                             <!--begin::Item-->
                                 <div class="mb-6">
                                     <div class="fw-bold text-gray-600 fs-7">Açıklama:</div>
-                                    <div class="fw-bolder text-gray-800 fs-6">{{$detay->aciklama}}</div>
+                                    <div class="fs-6">{{$detay->aciklama}}</div>
                                 </div>
 
                             <!--end::Item-->

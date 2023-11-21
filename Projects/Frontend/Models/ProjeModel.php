@@ -15,6 +15,12 @@ class InternalProjeModel extends Model
 
         return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
     }
+
+    static function devamEden(){
+        $veri= DB::where('durum','0')->limit(null,25)->projeler();
+
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
+    }
     
     /*****************************************************/
     static function yolHaritasi($id){
