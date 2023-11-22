@@ -119,7 +119,7 @@
                                                                             <i data-feather="send" class="me-50"></i>Ödeme Hatırlat
                                                                         </a>
 
-                                                                        <a href="{{URL::site('siparisler/hatirlatmaGonder')}}/{{$fatura->id}}" class="dropdown-item">
+                                                                        <a href="{{URL::site()}}../faturalar/detay/{{$fatura->id}}" target="_blank" class="dropdown-item">
                                                                             <i data-feather="eye" class="me-50"></i>
                                                                             <span>Fatura Görüntüle</span>
                                                                         </a>
@@ -136,7 +136,7 @@
 
                                                                         <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaOdendiYap" class="dropdown-item">
                                                                             <i data-feather="edit-2" class="me-50"></i>
-                                                                            <span class="text-success">Ödenme EKle</span>
+                                                                            <span class="text-success">Ödeme EKle</span>
                                                                         </a>
 
                                                                         @if($fatura->odeme=="1")

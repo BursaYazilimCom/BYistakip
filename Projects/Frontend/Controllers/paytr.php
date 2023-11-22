@@ -60,18 +60,18 @@ class Paytr extends Controller
              $tutar = $faturaDetay->genel_toplam;
 
              $defterData = [
-                 'kasa'          =>$kasa_hesabi,
-                 'islem'         =>"t",
-                 'hesap'         =>"Fatura Tahsilatı: ".$cariDetay->adi,
-                 'islem_turu'    =>"fatura",
-                 'islem_tur_id'  =>$faturaId,
-                 'aciklama'      =>$faturaId." Numaralı Fatura (PAYTR KK) Ödemesi",
-                 'gelir'         =>$tutar,
-                 'gider'         =>"0",
-                 'mevcut_kasa_toplami'=>KasaModel::kasaToplami()+$tutar,
-                 'yil'           =>Date::set('{year}'),
-                 'tarih'         =>$odeme_tarihi,
-                 'islem_yapan'   =>$cariDetay->id
+                 'kasa'                 => $kasa_hesabi,
+                 'islem'                => "t",
+                 'hesap'                => "Fatura Tahsilatı: ".$cariDetay->adi,
+                 'islem_turu'           => "fatura",
+                 'islem_tur_id'         => $faturaId,
+                 'aciklama'             => $faturaId." Numaralı Fatura (PAYTR KK) Ödemesi",
+                 'gelir'                => $tutar,
+                 'gider'                => "0",
+                 'mevcut_kasa_toplami'  => KasaModel::kasaToplami()+$tutar,
+                 'yil'                  => Date::set('{year}'),
+                 'tarih'                => $odeme_tarihi,
+                 'islem_yapan'          => $cariDetay->id
              ];
 
              $kasayaKaydet              = KasaModel::deftereKaydet($defterData);

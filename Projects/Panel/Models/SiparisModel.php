@@ -150,15 +150,16 @@ class InternalSiparisModel extends Model
 
         $ekle = DB::insert('siparisler',[
 
-                    'cari'           =>$data['cari'],
-                    'odeme_yontemi'  =>$data['odeme_yontemi'],
-                    'odeme_durumu'  =>$data['odeme_durumu'],
-                    'olusturan'  =>$data['olusturan'],
-                    'kayit_sekli'  =>$data['kayit_sekli'],
-                    'fatura'  =>$data['fatura'],
-                    'siparis_notu'  =>$data['siparis_notu'],
-                    'durum'         =>$data['durum']
+                    'cari'              =>$data['cari'],
+                    'odeme_yontemi'     =>$data['odeme_yontemi'],
+                    'odeme_durumu'      =>$data['odeme_durumu'],
+                    'olusturan'         =>$data['olusturan'],
+                    'kayit_sekli'       =>$data['kayit_sekli'],
+                    'siparis_notu'      =>$data['siparis_notu'],
+                    'durum'             =>$data['durum']
                 ]);
+
+        echo DB::stringQuery();
 
         return DB::insertID();
     }

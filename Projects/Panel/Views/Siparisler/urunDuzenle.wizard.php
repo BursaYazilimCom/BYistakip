@@ -84,7 +84,7 @@
                                                         <label class="col-form-label" for="baslangic_tarihi">Baslangıç Tarihi</label>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        <input type="date" class="form-control" name="baslangic_tarihi" value="{{$urunDetay->baslangic_tarihi}}">
+                                                        <input type="text" class="form-control date-picker" name="baslangic_tarihi" value="{{AyarModel::tarihGoster($urunDetay->baslangic_tarihi)}}">
 
                                                     </div>
                                                 </div>
@@ -95,8 +95,7 @@
                                                         <label class="col-form-label" for="odeme_yontemi">Bitiş Tarihi</label>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        <input type="date" class="form-control" name="bitis_tarihi" value="{{$urunDetay->bitis_tarihi}}">
-
+                                                        <input type="text" class="form-control date-picker" name="bitis_tarihi" value="{{AyarModel::tarihGoster($urunDetay->bitis_tarihi)}}">
                                                     </div>
                                                 </div>
                                             </div>

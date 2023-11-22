@@ -94,7 +94,7 @@
 
                                     <div class="rounded border border-primary bg-light-primary border-dashed px-6 py-5">
                                         <a href="#" class="link-primary fw-bolder fs-6 me-1">Önemli Not</a><br>
-                                        <span class="text-gray-800 fw-bold fs-6">Proje Yol haritası; İlgili projenin gidişatını belirlemek ve Müşterilerimiz ile etkileşimli çalışmak için oluşturulmuştur. <br>Mevcut Yol Haritası projenin ihtiyaçlarına göre güncellenebilir. Lütfen Takip etmeyi ihmal etmeyin.<br>Yol haritası öğeleri gerçekleştirme sorasına göre listelenmiştir.</span>
+                                        <span class="text-gray-800 fw-bold fs-6">Proje Yol haritası; İlgili projenin gidişatını belirlemek ve Müşterilerimiz ile etkileşimli çalışmak için oluşturulmuştur. <br>Mevcut Yol Haritası projenin ihtiyaçlarına göre güncellenebilir. Lütfen Takip etmeyi ihmal etmeyin.<br>Yol haritası öğeleri planlanan gerçekleştirme sırasına göre listelenmiştir.<br> Bu sıralama yazılım gerekliliklerine göre değişiklik gösterebilir</span>
 
                                     </div>
                                     <!--end::Alert-->

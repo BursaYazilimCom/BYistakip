@@ -126,11 +126,8 @@ class InternalKasaModel extends Model
             'kasa_defteri.gider as gider',
             'kasa_defteri.mevcut_kasa_toplami as mevcut_kasa_toplami',
             'kasa_defteri.yil as yil',
-            'kasa_defteri.tarih as tarih',
-            'kasa_defteri.islem_yapan as islemYapan',
-            'yonetim.isim as islemYapaIsim'
+            'kasa_defteri.tarih as tarih'
             )
-            ->innerJoin('yonetim.id','kasa_defteri.islem_yapan')
             ->innerjoin('kasa_hesaplari.id','kasa_defteri.kasa')
             ->where('kasa_defteri.kasa',$id)
             ->limit($sayfa,25)
@@ -160,14 +157,14 @@ class InternalKasaModel extends Model
             'kasa_defteri.yil as yil',
             'kasa_defteri.tarih as tarih',
             'kasa_defteri.islem_yapan as islemYapan',
-            'yonetim.isim as islemYapaIsim'
         )
-            ->innerJoin('yonetim.id','kasa_defteri.islem_yapan')
             ->innerjoin('kasa_hesaplari.id','kasa_defteri.kasa')
             ->limit(Null,25)
             ->orderby('kasa_defteri.id','DESC')->kasa_defteri();
 
         $veri = ['liste'=>$kayitlar->result(),'sayfalama'=>$kayitlar->pagination()];
+
+       // echo DB::stringQuery();
 
         return $veri;
 

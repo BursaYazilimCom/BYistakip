@@ -128,7 +128,7 @@
                                                             <span>{{AyarModel::odemeYontemiAdi($s->odeme_yontemi)}}</span>
                                                         </div>
                                                     </td>
-                                                    <td>{{$s->odeme_durumu=="1"?"Ödendi":"Ödeme Bekliyor"}}</td>
+                                                    <td>{{$s->odeme_durumu=="1"?"<span class='text text-success'>Ödendi</span>":"<span class='text text-danger'>Ödeme Bekliyor</span>"}}</td>
                                                     <td>{{number_format($s->genel_toplam_tutari,2)}} ₺</td>
                                                     <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
                                                     <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>

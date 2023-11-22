@@ -52,7 +52,6 @@
                                 <tr>
                                     <th>Tarih</th>
                                     <th>İşlem</th>
-                                    <th>İşlem Yapan</th>
                                     <th>Hesap</th>
                                     <th>Açıklama</th>
                                     <th>Gelir</th>
@@ -68,7 +67,6 @@
                                 <tr>
                                     <td>{{Date::convert($kayit->tarih, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td class="text-{{$kayit->islem=='o'?'danger':'success'}}">{{$kayit->islem=="o"?"Ödeme":"Tahsilat"}}</td>
-                                    <td>{{$kayit->islemYapaIsim}}</td>
                                     <td>{{$kayit->hesap}}</td>
                                     <td>{{$kayit->aciklama}}</td>
                                     <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format($kayit->gelir,2)}}</td>

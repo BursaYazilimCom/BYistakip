@@ -73,7 +73,8 @@
                                                 @elseif($u->odeme_turu=="T")
                                                 {{$u->fiyat}} {{$u->fiyat_birim}}
                                                 @else
-                                                <a href="" ><span class="badge bg-info">Fiyatlar</span></a>
+                                                <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$u->id}}" data-action="urunFiyatlariniGoster" ><span class="badge bg-info">Fiyatlar</span></a>
+
                                                 @endif
                                             </td>
                                             <td>
@@ -205,4 +206,20 @@
     </div>
 </div>
 <!-- END: Content-->
+
+<div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1 class="text-center mb-1" id="modalTitle">Ürün İşlemleri</h1>
+
+                <div class="fetched-data"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
 

@@ -99,8 +99,8 @@ class InternalAyarModel extends Model
     }
 
     public function sqlHataEkle($hata){
-        $ekle = DB::insert('sql_hata_kayitlari',[
-            'hata'      =>$hata
+        $ekle = DB::insert('sql_kayitlari',[
+            'sql'      =>$hata
         ]);
 
         return $ekle;
@@ -453,7 +453,7 @@ class InternalAyarModel extends Model
 
         $veri = DB::where('id',$id)->siparis_durumlari()->row();
 
-        return $veri->adi;
+        return "<span class='text text-".$veri->uyari."'>".$veri->adi."</span> ";
     }
 
     static function siparisDurumGuncelle($data){

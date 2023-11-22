@@ -62,8 +62,6 @@ class Proje extends Controller
 
         }
 
-
-
         View::detay($projeDetay);
 
     }

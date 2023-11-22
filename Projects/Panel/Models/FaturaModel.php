@@ -76,16 +76,20 @@ class InternalFaturaModel extends Model
             'kdv_toplami'       =>$data['kdv_toplami'],
             'genel_toplam'      =>$data['genel_toplam'],
             'belge_tarihi'      =>$data['belge_tarihi'],
+            'vade_tarihi'       =>$data['vade_tarihi'],
             'durum'             =>$data['durum'],
             'odeme'             =>$data['odeme'],
+            'odeme_yontemi'     =>$data['odeme_yontemi'],
             'aciklama'          =>$data['aciklama']
         ]);
+
+        $eklenenId = DB::insertID();
 
         //AyarModel::sqlHataEkle(DB::stringQuery());
 
         //echo DB::stringQuery();
 
-        return DB::insertID();
+        return $eklenenId;
 
     }
 

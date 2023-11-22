@@ -114,7 +114,7 @@ class Masraf extends Controller
 
                 $masrafKalemi = MasrafModel::bilgi(Post::kalem());
 
-                $kasaDetay = KasaModel::bilgi(Post::kasa());
+                $kasaDetay = KasaModel::hesapBilgi(Post::kasa());
                 $kasaToplami = KasaModel::kasaToplami();
 
                 $defterData = [
@@ -138,7 +138,7 @@ class Masraf extends Controller
 
                 $kasadaTutari = $kasaDetay->tutar-$tutar;
 
-                $kasaGuncelle = KasaModel::tutarGuncelle($kasadaTutari,Post::kasa());
+                $kasaGuncelle = KasaModel::kasaHesabiTutarGuncelle($kasadaTutari,Post::kasa());
 
             }
 

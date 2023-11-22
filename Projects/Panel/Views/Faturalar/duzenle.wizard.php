@@ -15,6 +15,7 @@
                                 <li class="breadcrumb-item"><a href="{{URL::site('faturalar')}}">Faturalar</a>
                                 </li>
                             </ol>
+
                         </div>
                     </div>
                 </div>
@@ -387,9 +388,6 @@
                                                 <a href="#" class="dt-button create-new btn btn-danger"><span><i data-feather="x-circle"></i> Faturayı İptal Et</span></a>
                                                 @endif
 
-                                                @if($detay->odeme=="0")
-                                                <a href="#" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> Faturayı Ödendi Yap</span></a>
-                                                @endif
                                             </div>
 
                                         </div>

@@ -1,8 +1,8 @@
 <?php namespace Project\Controllers;
 
 Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
-Use AjaxModel,KasaModel,UrunModel,AyarModel, InternalFaturaModel as FaturaModel;
-Use PersonelModel,InternalProjeModel as ProjeModel;
+Use AjaxModel,KasaModel,AyarModel, InternalFaturaModel as FaturaModel;
+Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel;
 
 
 
@@ -1274,6 +1274,75 @@ class Ajax extends Controller
 
         }
 
+        if(Post::action()=="urunFiyatlariniGoster"){
+
+            $id = Post::rowid();
+            
+            $urunBilgi = UrunModel::detay($id);
+
+            ?>
+                
+
+                <table class="table table-bordered">
+                        <tr>
+                            <td><strong>KDV:</strong></td>
+                            <td>
+                                %<?php echo $urunBilgi->kdv; ?>
+                            </td>
+                        </tr>
+
+                    <?php if($urunBilgi->odeme_turu=="U"){ ?>
+
+                        <tr>
+                            <td><strong>Ücretsiz:</strong></td>
+                            <td>
+                                0.00 <?php echo $urunBilgi->fiyat_birim; ?>
+                            </td>
+                        </tr>
+
+                    <?php }elseif($urunBilgi->odeme_turu=="T") { ?>
+
+                        <tr>
+                            <td><strong>Tek Seferlik:</strong></td>
+                            <td>
+                               <?php echo $urunBilgi->fiyat; ?> <?php echo $urunBilgi->fiyat_birim; ?>
+                            </td>
+                        </tr>
+
+                    <?php }else{ ?>
+
+                        <tr>
+                            <td><strong>Aylık:</strong></td>
+                            <td>
+                                <?php echo $urunBilgi->aylik_fiyat; ?> <?php echo $urunBilgi->fiyat_birim; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>3 Aylık:</strong></td>
+                            <td>
+                                <?php echo $urunBilgi->uc_aylik_fiyat; ?> <?php echo $urunBilgi->fiyat_birim; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>6 Aylık:</strong></td>
+                            <td>
+                                <?php echo $urunBilgi->alti_aylik_fiyat; ?> <?php echo $urunBilgi->fiyat_birim; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Yıllık:</strong></td>
+                            <td>
+                                <?php echo $urunBilgi->yillik_fiyat; ?> <?php echo $urunBilgi->fiyat_birim; ?>
+                            </td>
+                        </tr>
+
+                    <?php } ?>
+
+                </table>
+
+            <?php
+
+        }
 
 
     }
