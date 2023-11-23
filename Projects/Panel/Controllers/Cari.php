@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 use User,Method,Post,Session,Cookie,Redirect,DB,Upload,Json,Import,Encode,URL,Validation;
-use InternalCariModel as CariModel,AyarModel;
+use InternalCariModel as CariModel,AyarModel,SiparisModel,InternalProjeModel as ProjeModel;
 
 class Cari extends Controller
 {
@@ -24,6 +24,18 @@ class Cari extends Controller
         $listeleme = CariModel::liste();
 
         View::listeleme($listeleme);
+
+    }
+
+    public function detay($id){
+        $cariDetay = CariModel::detay($id);
+        $uyeUrunleri = SiparisModel::uyeSiparisUrunleri($id);
+        $cariProjeleri = ProjeModel::CariProjeleri($id,0);
+
+
+        View::cariDetay($cariDetay);
+        View::uyeUrunleri($uyeUrunleri);
+        View::cariProjeleri($cariProjeleri);
 
     }
     

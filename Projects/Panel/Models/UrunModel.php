@@ -63,6 +63,17 @@ class InternalUrunModel extends Model
 
     }
 
+    static function urunAdi($id){
+        $veri =  DB::select(
+            'urunler.adi as adi'
+        )
+            ->where('urunler.id',$id)
+            ->urunler()
+            ->row();
+
+        return $veri->adi;
+    }
+
     static function tumListe(){
         $veri = DB::select(
             'urunler.id as id',

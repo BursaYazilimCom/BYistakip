@@ -66,7 +66,7 @@
                                 @foreach($listeleme['liste'] as $cari)
                                 <tr id="row-{{$cari->id}}">
                                     <td>{{$cari->id}}</td>
-                                    <td>{{$cari->adi}}</td>
+                                    <td><a href="{{URL::site('cari/detay/')}}{{$cari->id}}"> {{$cari->adi}}</a></td>
                                     <td>{{$cari->email}}</td>
                                     <td>{{$cari->gsm}}</td>
                                     <td>{{$cari->firma_adi}}</td>

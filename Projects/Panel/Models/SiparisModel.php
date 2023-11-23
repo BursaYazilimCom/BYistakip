@@ -69,29 +69,28 @@ class InternalSiparisModel extends Model
 
     public function uyeSiparisleri($id,$sayfa=""){
 
-            $liste = DB::select(
-                'siparisler.id as siparisId',
-                'siparisler.belge_no as belge_no',
-                'siparisler.cari as cari',
-                'siparisler.siparis_notu as siparis_notu',
-                'siparisler.toplam_fiyat as toplam_fiyat',
-                'siparisler.durum as durum',
-                'siparisler.toplam_tutar as toplam_tutar',
-                'siparisler.indirim_tutar as indirim_tutar',
-                'siparisler.ara_toplam_tutar as ara_toplam_tutar',
-                'siparisler.kdv_tutari as kdv_tutari',
-                'siparisler.genel_toplam_tutari as genel_toplam_tutari',
-                'siparisler.kayit_sekli as kayit_sekli',
-                'siparisler.fatura as fatura',
-                'siparisler.tarih as tarih',
-                'siparisler.teslim_tarihi as teslim_tarihi',
-                'siparisler.olusturan as olusturan')
-                ->where('siparisler.uye',$id)
+            $liste = DB::where('siparisler.cari',$id)
                 ->orderby('siparisler.id','DESC')
                 ->limit($sayfa,25)
                 ->siparisler();
 
            // AyarModel::sqlHataEkle(DB::stringQuery());
+
+        $veri = ['liste'=>$liste->result(),'sayfalama'=>$liste->pagination()];
+
+        return $veri;
+
+    }
+
+    public function uyeSiparisUrunleri($id,$sayfa=""){
+
+        $liste = DB::where('cari',$id)
+            ->orderby('id','DESC')
+            ->limit($sayfa,25)
+            ->siparis_urunleri();
+
+
+        // AyarModel::sqlHataEkle(DB::stringQuery());
 
         $veri = ['liste'=>$liste->result(),'sayfalama'=>$liste->pagination()];
 
