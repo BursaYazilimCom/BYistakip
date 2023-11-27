@@ -570,49 +570,13 @@ class InternalAyarModel extends Model
 
     }
 
-    public function nelerOluyor($personel,$url,$olay){
+    public function nelerOluyor($olay,$tur,$tur_id){
 
-        //$sonEklenen = DB::lastInsertId()->neler_oluyor();
-
-        $sonEklenen = DB::orderby("id","DESC")->limit(1)->neler_oluyor()->row();
-
-        $sonOlay = DB::where('id',$sonEklenen->id)->neler_oluyor()->row();
-
-        if($sonOlay->olay!=$olay){
             $ekle = DB::insert('neler_oluyor',[
-                'personel'  =>$personel,
-                'url'       =>$url,
-                'olay'      =>$olay
+                'olay'     =>$olay,
+                'tur'       =>$tur,
+                'tur_id'    =>$tur_id
             ]);
-
-            if($url=="guncellemeler/hatalar"){
-                $ses = "cok-eglenecuk";
-            }elseif ($url=="Pazaryeri/N11"){
-                $ses = "n11";
-            }elseif ($url=="Pazaryeri/Trendyol"){
-                $ses = "trendyol";
-            }elseif ($url=="Pazaryeri/ciceksepeti"){
-                $ses = "cicek-sepeti";
-            }else{
-                $ses = "button-26";
-            }
-
-            $client = new Client(new Version2X($this->defaultAyarlar('nodeIp').':'.$this->defaultAyarlar('nodePort')));
-
-            $client->initialize();
-            $client->emit('nelerOluyor', [
-                'personel' => $personel,
-                'url' => $url,
-                'olay' => $olay,
-                'ses' => $ses,
-                'zaman' => date("d.m.Y H:i")
-            ]);
-            $client->close();
-        }else{
-            $ekle = false;
-        }
-
-
 
         return $ekle;
 

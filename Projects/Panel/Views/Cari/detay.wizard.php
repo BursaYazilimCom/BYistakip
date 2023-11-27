@@ -8,7 +8,7 @@
             <section class="app-user-view-account">
                 <div class="row">
                     <!-- User Sidebar -->
-                    <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
+                    <div class="col-xl-3 col-lg-4 col-md-6">
                         <!-- User Card -->
                         <div class="card">
                             <div class="card-body">
@@ -26,8 +26,8 @@
                                                 <i data-feather="check" class="font-medium-2"></i>
                                             </span>
                                         <div class="ms-75">
-                                            <h4 class="mb-0">1.23k</h4>
-                                            <small>Ödedikleri</small>
+                                            <h4 class="mb-0 text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Hesaplamalar Faturalar üzerinden yapılmaktadır. Ödeme yapıldı olarak işaretlenmiş faturaların toplamıdır.">{{$cariFaturaToplamlari['odenen']}} ₺</h4>
+                                            <small>Ödemeler</small>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-start">
@@ -35,8 +35,8 @@
                                                 <i data-feather="briefcase" class="font-medium-2"></i>
                                             </span>
                                         <div class="ms-75">
-                                            <h4 class="mb-0">568</h4>
-                                            <small>Borçları</small>
+                                            <h4 class="mb-0 text-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Hesaplamalar Faturalar üzerinden yapılmaktadır. ÖDENMEDİ olarak işaretlenmiş olan faturaların toplamıdır.">{{$cariFaturaToplamlari['odenmeyen']}} ₺</h4>
+                                            <small>Borçlar</small>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                     <!--/ User Sidebar -->
 
                     <!-- User Content -->
-                    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+                    <div class="col-xl-9 col-lg-8 col-md-6">
                         <!-- User Pills -->
                         <ul class="nav nav-pills mb-2">
                             <li class="nav-item">
@@ -103,27 +103,12 @@
                                     <span class="fw-bold">Detay</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="app-user-view-security.html">
+                                <a class="nav-link" href="{{URL::site('cari/form/'.$cariDetay->id)}}">
                                     <i data-feather="lock" class="font-medium-3 me-50"></i>
-                                    <span class="fw-bold">Security</span>
+                                    <span class="fw-bold">Düzenle</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="app-user-view-billing.html">
-                                    <i data-feather="bookmark" class="font-medium-3 me-50"></i>
-                                    <span class="fw-bold">Billing & Plans</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="app-user-view-notifications.html">
-                                    <i data-feather="bell" class="font-medium-3 me-50"></i><span class="fw-bold">Notifications</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="app-user-view-connections.html">
-                                    <i data-feather="link" class="font-medium-3 me-50"></i><span class="fw-bold">Connections</span>
-                                </a>
-                            </li>
+
                         </ul>
                         <!--/ User Pills -->
 
@@ -135,6 +120,7 @@
                                     <thead>
                                     <tr>
                                         <th>Ürün Adı</th>
+                                        <th>Açıklama</th>
                                         <th>Başlangıç</th>
                                         <th>Bitiş</th>
                                         <th>Durum</th>
@@ -145,7 +131,8 @@
                                     <tbody>
                                     @foreach($uyeUrunleri['liste'] as $uyeUrun)
                                         <tr>
-                                            <td>{{$uyeUrun->urun_adi}}<br><small>{{urunModel::urunAdi($uyeUrun->urun)}}</small></smü></td>
+                                            <td>{{$uyeUrun->urun_adi}}<br><small>{{urunModel::urunAdi($uyeUrun->urun)}}</small></td>
+                                            <td>{{$uyeUrun->notu}}<br></td>
                                             <td>{{Date::convert($uyeUrun->baslangic_tarihi,'d.m.Y')}}</td>
                                             <td>{{Date::convert($uyeUrun->bitis_tarihi,'d.m.Y')}}</td>
                                             <td>{{AyarModel::siparisDurumAdi($uyeUrun->durum)}}</td>
@@ -179,6 +166,52 @@
                                                 <td>{{$proje->durum==1?'Aktif':'Pasif'}}</td>
                                             </tr>
                                         @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h4 class="card-header">Faturaları</h4>
+                            <div class="table-responsive">
+                                <table class="table datatable-project">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Oluşturma Tarihi</th>
+                                        <th>Son Ödeme Tarihi</th>
+                                        <th>Tutar</th>
+                                        <th>Durum</th>
+                                        <th>Ödeme</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($faturalar as $fatura)
+                                    <tr>
+                                        <td>{{$fatura->id}}</td>
+                                        <td>{{$fatura->belge_tarihi}}</td>
+                                        <td>{{$fatura->vade_tarihi}}</td>
+                                        <td>{{$fatura->genel_toplam}} ₺</td>
+
+                                        <td>
+                                            @if($fatura->durum=="0")
+                                            <span class="badge rounded-pill badge-light-danger"> İptal </span>
+                                            @elseif($fatura->durum=="1")
+                                            <span class="badge rounded-pill badge-light-warning"> Resmileşmemiş </span>
+                                            @elseif($fatura->durum=="2")
+                                            <span class="badge rounded-pill badge-light-success"> Resmi Faturalı </span>
+                                            @else
+                                            <span class="badge rounded-pill badge-light-primary"> Tanımsız </span>
+                                            @endif
+                                        </td>
+                                        <td>@if($fatura->odeme=="1")
+                                            <span class="badge rounded-pill badge-light-success"> Ödendi </span>
+                                            @else
+                                            <span class="badge rounded-pill badge-light-danger"> Ödenmedi </span>
+                                            @endif</td>
+                                    </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

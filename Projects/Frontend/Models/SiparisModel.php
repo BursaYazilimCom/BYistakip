@@ -214,6 +214,18 @@ class InternalSiparisModel extends Model
 
     }
 
+    public function siparisUrunTarihGuncelle($id,$baslangic,$bitis){
+
+        $guncelle = DB::where('id',$id)
+            ->update('siparis_urunleri',[
+                'baslangic_tarihi'      =>$baslangic,
+                'bitis_tarihi'          =>$bitis
+            ]);
+
+        return $guncelle;
+
+    }
+
 
     public function durumDegistir($id,$durum){
 
@@ -233,6 +245,18 @@ class InternalSiparisModel extends Model
             ]);
 
         return $guncelle;
+    }
+
+    public function siparisGesmisEkle($data){
+
+        $ekle = DB::insert('siparis_gecmisi',[
+            'cari'          =>$data['cari'],
+            'siparis'       =>$data['siparis'],
+            'aciklama'      =>$data['aciklama'],
+            'guncelleyen'   =>$data['guncelleyen']
+        ]);
+
+        return $ekle;
     }
 
     public function siparisGecmisi($id){
@@ -255,6 +279,18 @@ class InternalSiparisModel extends Model
                 ->siparisler()->result();
 
         return $liste;
+
+    }
+
+    public function siparisurunIslemGerekiyor($id,$gerekiyormu,$islem){
+
+        $guncelle = DB::where('id',$id)
+            ->update('siparis_urunleri',[
+                'islem_gerekiyor'       =>$gerekiyormu,
+                'yapilacak_islem'       => $islem
+            ]);
+
+        return $guncelle;
 
     }
 

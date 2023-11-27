@@ -177,6 +177,18 @@ class Siparisler extends Controller
 
                 $bitis_tarihi           = Date::calculate($tarihKaydet, AyarModel::odemePeriyoduEklenecekGun($su["odemePeriyodu"]).' day');
 
+                if(AyarModel::defaultAyarlar('baslangicTarihiOdemedenSonra')=='1'){
+
+                    $tarihKaydet = $siparis_tarihi;
+                    $bitis_tarihi = $siparis_tarihi;
+
+                }else{
+
+                    $tarihKaydet = $tarihKaydet;
+                    $bitis_tarihi = $bitis_tarihi;
+
+                }
+
                 $urunData =[
                     'siparis'           => $siparisOlustur,
                     'urun'              => $su["urun"],
@@ -229,6 +241,7 @@ class Siparisler extends Controller
 
             $faturaData = [
                 'tur'               =>"2",
+                'satis_turu'        =>"1",
                 'belge_no'          =>$fatura_no,
                 'fatura_adi'        =>$musteriBilgi->firma_adi,
                 'fatura_adresi'     =>$musteriBilgi->fatura_adresi,
@@ -257,15 +270,17 @@ class Siparisler extends Controller
                 foreach ($siparisUrunleriDB as $suDb){
 
                     $fUrun = [
-                        'fatura'        =>$faturaOlustur,
-                        'urun'          =>$suDb->urun,
-                        'urun_adi'      =>$suDb->urun_adi,
-                        'aciklama'      =>$suDb->notu,
-                        'miktar'        =>$suDb->adet,
-                        'fiyat'         =>$suDb->birim_fiyat,
-                        'kdv'           =>$suDb->kdv,
-                        'kdv_tutari'    =>$suDb->kdv_tutari,
-                        'tutar'         =>$suDb->toplam_fiyat,
+                        'fatura'                =>$faturaOlustur,
+                        'urun'                  =>$suDb->urun,
+                        'siparis_urun_id'       =>$suDb->id,
+                        'eklenecek_gun_sayisi'  =>AyarModel::odemePeriyoduEklenecekGun($suDb->odeme_periyodu),
+                        'urun_adi'              =>$suDb->urun_adi,
+                        'aciklama'              =>$suDb->notu,
+                        'miktar'                =>$suDb->adet,
+                        'fiyat'                 =>$suDb->birim_fiyat,
+                        'kdv'                   =>$suDb->kdv,
+                        'kdv_tutari'            =>$suDb->kdv_tutari,
+                        'tutar'                 =>$suDb->toplam_fiyat,
                     ];
 
                     $faturaUrunEkle = FaturaModel::urunEkle($fUrun);

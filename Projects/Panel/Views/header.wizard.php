@@ -16,6 +16,17 @@
 
             </div>
             <ul class="nav navbar-nav align-items-center ms-auto">
+                <li class="nav-item dropdown dropdown-language">
+                    <a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i data-feather="dollar-sign"></i><span class="selected-language">Kurlar</span></a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-flag">
+
+                        @foreach($paraBirimleri as $pb)
+                        <a class="dropdown-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$pb->para}}">{{$pb->sembol}} {{number_format($pb->guncel_kur,2,',','.')}} TL</a>
+                        @endforeach
+
+                    </div>
+                </li>
                 <li class="nav-item d-none d-lg-block">
                     <a class="nav-link nav-link-style" id="clickAction" data-action="panelColor" action="{{URL::site('personel/ajax')}}" data-id="0">
                         @if(USER_PANEL_COLOR=="light")

@@ -1,6 +1,7 @@
 <?php namespace Project\Controllers;
 
-use User,Method,Post,Request,Email,Redirect,AyarModel,CariModel,KasaModel,InternalFaturaModel as FaturaModel,URL,Date,DB;
+use User,Method,Post,Request,Email,Redirect,URL,Date,DB;
+use AyarModel,CariModel,KasaModel,InternalFaturaModel as FaturaModel,SiparisModel;
 
 class Paytr extends Controller
 {
@@ -47,6 +48,8 @@ class Paytr extends Controller
          $faturaId = $faturaBilgi[0];
          $faturaDetay = FaturaModel::detay($faturaId);
          $cariDetay = CariModel::detay($faturaDetay->musteri);
+         $faturaUrunleri = FaturaModel::faturaUrunleri($faturaId);
+         $siparisUrunleri = SiparisModel::siparisUrunleri($faturaDetay->siparis);
 
          if($faturaDetay->odeme=="1" ){
              echo "OK";
@@ -55,7 +58,54 @@ class Paytr extends Controller
 
          if( Request::status() == 'success' ) { ## Ödeme Onaylandı
 
+             AyarModel::nelerOluyor($faturaId.' Numaralı fatura ödemesi yapıldı','3',$faturaId);
+
              $odendiYap = FaturaModel::odemeDurumDegistir($faturaId,'1',date('Y-m-d'));
+
+             if($faturaDetay->satis_turu=="1"){ // Eğer Fatura satış türü ilk satış faturası ise
+
+                 if(AyarModel::defaultAyarlar('baslangicTarihiOdemedenSonra')=="1"){
+
+                     foreach ($siparisUrunleri as $sur){
+
+                         $baslangic_tarihi       = Date::set('{year}-{monthInYear}-{dayInMonth}');
+                         $bitis_tarihi           = Date::calculate($baslangic_tarihi, AyarModel::odemePeriyoduEklenecekGun($sur->odemePeriyodu).' day');
+
+                         $siparisUrunleriTarihGuncelle = SiparisModel::siparisUrunTarihGuncelle();
+
+                         if ($siparisUrunleriTarihGuncelle) {
+
+                             AyarModel::nelerOluyor($sur->siparis.' Numaralı siparişin '.$sur->urun_adi.' ürünü başlangıç bitiş tarihi güncellendi','1',$sur->siparis);
+
+                             $sipariGecmisi = [
+                                 'cari'          =>$sur->cari,
+                                 'siparis'       =>$sur->siparis,
+                                 'aciklama'      =>" Fatura Ödemesi sonrası sistem tarafından ".$sur->urun_adi." ".$sur->notu." ürününün başlangıç tarihi: ".$baslangic_tarihi." - bitis tarihi: ".$bitis_tarihi." olarak değiştirildi",
+                                 'guncelleyen'   => $sur->cari
+                             ];
+
+                             $gecmisEkle = SiparisModel::siparisGesmisEkle($sipariGecmisi);
+
+                             SiparisModel::siparisurunIslemGerekiyor($sur->id,'1','Başlangıç bitiş tarihi güncellendi kontrol gerekiyor. Ürüne ait yapılması gereken bir işlem varsa gerçekleştiriniz.');
+
+                         }
+
+                     }
+
+                 }
+                 /*
+                  * başlangıç ve bitiş tarihleri ayarlanacak
+                  * */
+
+             }else{
+
+
+
+             }
+
+             foreach($faturaUrunleri as $fur){
+
+             }
 
              $tutar = $faturaDetay->genel_toplam;
 

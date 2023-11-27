@@ -1,11 +1,11 @@
 <?php namespace Project\Controllers;
 
-Use User,KasaModel;
+Use User,KasaModel,AyarModel;
 
 class Initialize extends Controller
 {
 
-    const exclude = ["By","Login","Paytr"];
+    const exclude = ["By","Login","Paytr","CronJob"];
     
     
     public function main()
@@ -26,6 +26,7 @@ class Initialize extends Controller
         $kkartiHesaplari    = KasaModel::turHesaplari(4);
         $veresiyeHesaplari  = KasaModel::turHesaplari(5);
         $digerHesaplar      = KasaModel::turHesaplari(6);
+        $paraBirimleri      = AyarModel::paraBirimleri();
 
         //AyarModel::nelerOluyor($user->isim,'masraf', 'Masraf Yönetimini inceliyor');
 
@@ -36,6 +37,7 @@ class Initialize extends Controller
         View::kkartiHesaplari($kkartiHesaplari);
         View::veresiyeHesaplari($veresiyeHesaplari);
         View::digerHesaplar($digerHesaplar);
+        View::paraBirimleri($paraBirimleri);
 
         Theme::active('Default');
         

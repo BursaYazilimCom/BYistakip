@@ -51,9 +51,33 @@ class InternalFaturaModel extends Model
 
     }
 
-    static function uyeFaturalari($uye){
+    static function cariFaturalari($uye,$odeme=""){
 
-        $veri = DB::where('musteri',$uye)->faturalar()->result();
+        if($odeme==""){
+
+            $veri = DB::where('musteri',$uye)->orderby('id','DESC')->faturalar()->result();
+
+        }else{
+
+            $veri = DB::where('musteri',$uye)->where('odeme',$odeme)->orderby('id','DESC')->faturalar()->result();
+
+        }
+
+        return $veri;
+
+    }
+
+    static function cariFaturaToplamlari($uye,$odeme=""){
+
+        if($odeme==""){
+
+            $veri = DB::select('SUM(genel_toplam) as toplam')->where('musteri',$uye)->orderby('id','DESC')->faturalar()->row();
+
+        }else{
+
+            $veri = DB::select('SUM(genel_toplam) as toplam')->where('musteri',$uye)->where('odeme',$odeme)->orderby('id','DESC')->faturalar()->row();
+
+        }
 
         return $veri;
 
@@ -64,6 +88,7 @@ class InternalFaturaModel extends Model
 
         $ekle = DB::insert('faturalar',[
             'tur'               =>$data['tur'],
+            'satis_turu'        =>$data['satis_turu'],
             'belge_no'          =>$data['belge_no'],
             'fatura_adi'        =>$data['fatura_adi'],
             'fatura_adresi'     =>$data['fatura_adresi'],
@@ -129,15 +154,17 @@ class InternalFaturaModel extends Model
     {
 
         $ekle = DB::insert('fatura_urunleri',[
-            'fatura'    =>$data['fatura'],
-            'urun'      =>$data['urun'],
-            'urun_adi'  =>$data['urun_adi'],
-            'aciklama'  =>$data['aciklama'],
-            'miktar'    =>$data['miktar'],
-            'fiyat'     =>$data['fiyat'],
-            'kdv'       =>$data['kdv'],
-            'kdv_tutari'       =>$data['kdv_tutari'],
-            'tutar'     =>$data['tutar']
+            'fatura'                =>$data['fatura'],
+            'urun'                  =>$data['urun'],
+            'siparis_urun_id'       =>$data['siparis_urun_id'],
+            'eklenecek_gun_sayisi'  =>$data['eklenecek_gun_sayisi'],
+            'urun_adi'              =>$data['urun_adi'],
+            'aciklama'              =>$data['aciklama'],
+            'miktar'                =>$data['miktar'],
+            'fiyat'                 =>$data['fiyat'],
+            'kdv'                   =>$data['kdv'],
+            'kdv_tutari'            =>$data['kdv_tutari'],
+            'tutar'                 =>$data['tutar']
         ]);
 
         return DB::insertID();
@@ -238,6 +265,14 @@ class InternalFaturaModel extends Model
         $urunSil = DB::where('fatura',$fatura)->where('id',$urun)->delete('fatura_urunleri');
 
         return $urunSil;
+    }
+
+    static function tarihSonrasiOdenmemisFaturalar($tarih){
+
+        $veri = DB::where('odeme','0')->where('vade_tarihi<',$tarih)->orderby('id','DESC')->faturalar();
+
+        return $veri->result();
+
     }
 
     static function kdvHesapla($fiyat,$kdv){

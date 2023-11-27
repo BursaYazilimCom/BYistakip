@@ -107,7 +107,7 @@
                                 <input type="hidden" name="dataAction" id="dataAction" value="paraBirimiEkle">
                                 <input type="hidden" name="update_id" id="update_id" value="">
                                 <div class="col-12">
-                                    <label class="form-label" for="para">Para Adı</label>
+                                    <label class="form-label" for="para">Para Adı <br><a href="https://www.tcmb.gov.tr/kurlar/today.xml" target="_blank">Otomatik Güncellenen Dövizler Listesi</a> </label>
                                     <div class="input-group input-group-merge">
                                         @Form::vRequired()->id('para')->placeholder('Para Adı')->text('para','',['class'=>'form-control'])
                                     </div>
@@ -115,7 +115,7 @@
 
                                 <div class="col-md-6">
                                     <label class="form-label" for="kod">Kod</label>
-                                    @Form::vRequired()->id('kod')->placeholder('TL')->text('kod','',['class'=>'form-control'])
+                                    @Form::vRequired()->id('kod')->placeholder('EUR')->text('kod','',['class'=>'form-control'])
                                 </div>
 
                             <div class="col-md-6">
