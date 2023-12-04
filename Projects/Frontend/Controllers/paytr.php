@@ -27,9 +27,9 @@ class Paytr extends Controller
          #
          ## Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
          ## Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
-        /* if( $hash != Request::hash() ) {
+         if( $hash != Request::hash() ) {
              die('PAYTR notification failed: bad hash');
-         }*/
+         }
          ###########################################################################
          ## BURADA YAPILMASI GEREKENLER
          ## 1) Siparişin durumunu $post['merchant_oid'] değerini kullanarak veri tabanınızdan sorgulayın.
@@ -49,7 +49,7 @@ class Paytr extends Controller
          $faturaDetay = FaturaModel::detay($faturaId);
          $cariDetay = CariModel::detay($faturaDetay->musteri);
          $faturaUrunleri = FaturaModel::faturaUrunleri($faturaId);
-         $siparisUrunleri = SiparisModel::siparisUrunleri($faturaDetay->siparis);
+         $siparisUrunleri = SiparisModel::siparisUrunleri($faturaDetay->siparis_id);
 
          if($faturaDetay->odeme=="1" ){
              echo "OK";
@@ -62,16 +62,15 @@ class Paytr extends Controller
 
              $odendiYap = FaturaModel::odemeDurumDegistir($faturaId,'1',date('Y-m-d'));
 
-             if($faturaDetay->satis_turu=="1"){ // Eğer Fatura satış türü ilk satış faturası ise
 
                  if(AyarModel::defaultAyarlar('baslangicTarihiOdemedenSonra')=="1"){
 
                      foreach ($siparisUrunleri as $sur){
 
                          $baslangic_tarihi       = Date::set('{year}-{monthInYear}-{dayInMonth}');
-                         $bitis_tarihi           = Date::calculate($baslangic_tarihi, AyarModel::odemePeriyoduEklenecekGun($sur->odemePeriyodu).' day');
+                         $bitis_tarihi           = Date::calculate($baslangic_tarihi, AyarModel::odemePeriyoduEklenecekGun($sur->odeme_periyodu).' day');
 
-                         $siparisUrunleriTarihGuncelle = SiparisModel::siparisUrunTarihGuncelle();
+                         $siparisUrunleriTarihGuncelle = SiparisModel::siparisUrunTarihGuncelle($sur->id,$baslangic_tarihi,$bitis_tarihi);
 
                          if ($siparisUrunleriTarihGuncelle) {
 
@@ -84,6 +83,8 @@ class Paytr extends Controller
                                  'guncelleyen'   => $sur->cari
                              ];
 
+                             $urunDurumDegistir = SiparisModel::urunDurumDegistir($sur->id,AyarModel::defaultAyarlar('odemeSonrasiUrunDurumu'));
+
                              $gecmisEkle = SiparisModel::siparisGesmisEkle($sipariGecmisi);
 
                              SiparisModel::siparisurunIslemGerekiyor($sur->id,'1','Başlangıç bitiş tarihi güncellendi kontrol gerekiyor. Ürüne ait yapılması gereken bir işlem varsa gerçekleştiriniz.');
@@ -92,20 +93,32 @@ class Paytr extends Controller
 
                      }
 
+                 }else{
+
+                     foreach ($siparisUrunleri as $sur) {
+
+                         AyarModel::nelerOluyor($sur->siparis . ' Numaralı siparişin ' . $sur->urun_adi . ' ürünü başlangıç bitiş tarihi güncellendi', '1', $sur->siparis);
+
+                         // Ürün durumunu işlem bekliyor olarak değiştir
+                         $urunDurumDegistir = SiparisModel::urunDurumDegistir($sur->id, AyarModel::defaultAyarlar('odemeSonrasiUrunDurumu'));
+
+                         //sipariş geçmişi ekleniyor
+                         $sipariGecmisi = [
+                             'cari' => $sur->cari,
+                             'siparis' => $sur->siparis,
+                             'aciklama' => $faturaId." Numaralı Fatura Paytr ile Ödemesi yapıldı.",
+                             'guncelleyen' => $sur->cari
+                         ];
+
+                         $gecmisEkle = SiparisModel::siparisGesmisEkle($sipariGecmisi);
+
+                         //ürüne işlem yapılması için uyarı eklendi
+                         SiparisModel::siparisurunIslemGerekiyor($sur->id, '1', 'Faturanın ödemesi yapıldı, Faturaya ait Ürünlerde yapılması gereken bir işlem varsa gerçekleştiriniz.');
+                     }
                  }
                  /*
                   * başlangıç ve bitiş tarihleri ayarlanacak
                   * */
-
-             }else{
-
-
-
-             }
-
-             foreach($faturaUrunleri as $fur){
-
-             }
 
              $tutar = $faturaDetay->genel_toplam;
 

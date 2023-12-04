@@ -36,7 +36,7 @@
                             <div class="col-md-6 col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title">Sipariş Ürün Detayları (#{{$urunDetay->id}})</h4>
+                                        <h4 class="card-title">{{$urunDetay->urun_adi}} Detayları (#{{$urunDetay->id}})</h4>
                                     </div>
                                     <div class="card-body">
 
@@ -212,6 +212,32 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                @if($urunDetay->islem_gerekiyor=='1')
+
+                                <div class="card  alert alert-danger">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Yapılması Gereken İşlem var</h4>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="col-12">
+                                            <label class="form-label" for="siparis_notu">Yapılacak İşlem</label>
+                                            <div class="input-group input-group-merge">
+                                               {{$urunDetay->yapilacak_islem}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="input-group input-group-merge pt-50">
+                                                <a href="{{URL::site('siparisler/urunKontrolEdildi/')}}{{$urunDetay->id}}" class="btn btn-primary">Kontrol Sağlangı İşlem Yapıldı</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                @endif
 
                             </div>
 

@@ -9,10 +9,12 @@
                         <h2 class="content-header-title float-start mb-0">Sipariş Yönetimi</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a></li>
-                                <li class="breadcrumb-item"><a href="{{URL::site('siparisler')}}">Siparişler</a></li>
-                                <li class="breadcrumb-item"><a href="{{URL::site('siparisler/urunler')}}">Sipariş Ürünleri</a></li>
-                                <li class="breadcrumb-item"><a href="{{URL::site('siparisler/gruplar/')}}{{$grupDetay->id}}">{{$grupDetay->adi}} Siparişleri</a></li>
+                                <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="{{URL::site('siparisler')}}">Siparişler</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Sipariş Ürünleri</a>
+                                </li>
                             </ol>
                         </div>
                     </div>
@@ -28,7 +30,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="head-label">
-                                    <h4 class="card-title">{{$grupDetay->adi}} Siparişleri</h4>
+                                    <h4 class="card-title">Sipariş Ürünleri</h4>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -52,7 +54,7 @@
                                         <tbody id="addDataTable">
                                         @foreach($listele['liste'] as $s)
                                         <tr id="row-{{$s->id}}">
-                                            <td><a href="{{URL::site('siparisler/siparisUrunDetay')}}/{{$s->id}}">{{$s->id}}</a></td>
+                                            <td><a href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}">{{$s->id}}</a></td>
                                             <td>{{$s->urun}}<br>{{$s->urun_adi}}</td>
                                             <td>{{CariModel::cariAdi($s->cari)}}</td>
                                             <td>{{$s->notu}}</td>

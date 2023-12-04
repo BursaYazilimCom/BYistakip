@@ -2,7 +2,7 @@
 
 
 use User,Method,Post,Session,Cookie,Redirect,DB,Upload,Json,Import,Encode,URL,Validation,Folder,Converter;
-use InternalUrunModel as UrunModel,AyarModel;
+use InternalUrunModel as UrunModel,AyarModel,InternalTedarikciModel as TedarikciModel;
 
 class Urun extends Controller
 {
@@ -32,6 +32,7 @@ class Urun extends Controller
     public function form($id=""){
         $gruplar = UrunModel::urunGrupListe();
         $paraBirimleri = AyarModel::paraBirimleri();
+        $tedarikciler = TedarikciModel::tumListe();
 
         if($id){
             $data = UrunModel::detay($id);
@@ -42,6 +43,7 @@ class Urun extends Controller
         }else{
             $data = (object)[
                 'id'            =>'',
+                'tedarikci'     =>'',
                 'urun_kodu'     =>'',
                 'grup'          =>'',
                 'grupId'          =>'',
@@ -65,6 +67,7 @@ class Urun extends Controller
             View::action("urun/ekle");
         }
 
+        View::tedarikciler($tedarikciler);
         View::gruplar($gruplar);
         View::paraBirimleri($paraBirimleri);
 
@@ -81,6 +84,7 @@ class Urun extends Controller
 
             $ekleData = [
                 'urun_kodu'         =>Post::urun_kodu(),
+                'tedarikci'         =>Post::tedarikci(),
                 'grup'              =>Post::grup(),
                 'adi'               =>Post::adi(),
                 'fiyat'             =>Post::fiyat()==""?"0.0000":Post::fiyat(),
@@ -122,6 +126,7 @@ class Urun extends Controller
 
             $ekleData = [
                 'id'                =>$id,
+                'tedarikci'         =>Post::tedarikci(),
                 'urun_kodu'         =>Post::urun_kodu(),
                 'grup'              =>Post::grup(),
                 'adi'               =>Post::adi(),
@@ -142,10 +147,10 @@ class Urun extends Controller
             $ekle = UrunModel::guncelle($ekleData);
 
             if($ekle){
-                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Ekleme İşlemi Yapıldı !.</div></div>'])->action('urun/form/'.$id);
+                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Güncelleme İşlemi Yapıldı !.</div></div>'])->action('urun/form/'.$id);
             }else{
 
-                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());
+                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());
 
             }
 

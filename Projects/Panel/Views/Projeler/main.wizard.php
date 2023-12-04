@@ -82,6 +82,10 @@
                                                             <i data-feather="activity" class="me-50"></i>
                                                             <span>Yol Haritası</span>
                                                         </a>
+                                                        <a href="{{URL::site('projeler/yapilanlar/'.$u->id)}}" class="dropdown-item">
+                                                            <i data-feather="activity" class="me-50"></i>
+                                                            <span>Yapılan Çalışmalar</span>
+                                                        </a>
                                                         <a href="{{URL::site('projeler/form')}}/{{$u->id}}" class="dropdown-item">
                                                             <i data-feather="edit-2" class="me-50"></i>
                                                             <span>Düzenle</span>

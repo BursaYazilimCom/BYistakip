@@ -83,6 +83,7 @@
                     </li>
 
                     <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('cari')}}"><i data-feather="users"></i><span data-i18n="Misc">Müşteriler</span></a>
+                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('tedarikci')}}"><i data-feather="archive"></i><span data-i18n="Misc">Tedarikciler</span></a>
                     <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('projeler')}}"><i data-feather="check-square"></i><span data-i18n="Misc">Projeler</span></a>
                     </li>
 
@@ -114,6 +115,19 @@
                             <li data-menu="">
                                 <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/teklifler')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support">Teklifler</span></a>
                             </li>
+
+                        </ul>
+                    </li>
+                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="shopping-bag"></i><span data-i18n="Misc">Sipariş Ürünleri</span></a>
+                        <ul class="dropdown-menu" data-bs-popper="none">
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/urunler')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support" class="text-success">Tüm Sipariş Ürünleri</span></a>
+                            </li>
+                            @foreach($urunGruplari as $ug)
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/gruplar/'.$ug->id)}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="{{$ug->adi}}">{{$ug->adi}}</span></a>
+                            </li>
+                            @endforeach
 
                         </ul>
                     </li>

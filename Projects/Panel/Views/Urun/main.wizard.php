@@ -43,6 +43,7 @@
                                             <th>#</th>
                                             <th>Kodu</th>
                                             <th>Grup Adı</th>
+                                            <th>Tedarikçi</th>
                                             <th>Adı</th>
                                             <th>Ödeme Türü</th>
                                             <th>Fiyat</th>
@@ -57,6 +58,7 @@
                                             <td>{{$u->id}}</td>
                                             <td>{{$u->urun_kodu}}</td>
                                             <td>{{$u->grupAdi}}</td>
+                                            <td>{{TedarikciModel::tedarikciAdi($u->tedarikci)}}</td>
                                             <td>{{$u->adi}}</td>
                                             <td>
                                                 @if($u->odeme_turu=="U")

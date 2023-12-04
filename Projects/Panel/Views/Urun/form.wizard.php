@@ -59,6 +59,25 @@
 
                                         <div class="col-12">
                                             <div class="mb-1 row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="tedarikci">Tedarikci (Sipariş Sırasında değiştirilebilir)</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <select class="select2 form-select" name="tedarikci" id="tedarikci">
+
+                                                        <option value="0">--Seçiniz--</option>
+                                                        @foreach($tedarikciler as $tedarikci)
+                                                        <option {{$tedarikci->id==$detay->tedarikci?'selected':''}} value="{{$tedarikci->id}}">{{$tedarikci->adi}}</option>
+                                                        @endforeach
+
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
                                                 <div class="col-sm-3">
                                                     <label class="col-form-label" for="urun_kodu">Ürün Kodu</label>
                                                 </div>
@@ -106,6 +125,7 @@
                                                         <label class="col-form-label" for="fiyat">Stoklu Ürün</label>
                                                     </div>
                                                     <div class="col-sm-12">
+
                                                         <script type="text/javascript">
                                                             function getval(sel)
                                                             {
@@ -140,7 +160,11 @@
                                                         <label class="col-form-label" for="guncel_stok">Güncel Stok</label>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        @Form::id('guncel_stok')->placeholder('Güncel Stok')->text('guncel_stok',$detay->guncel_stok,['class'=>'form-control','disabled'=>'disabled'])
+                                                        @if($detay->id=="")
+                                                            @Form::id('guncel_stok')->placeholder('Güncel Stok')->number('guncel_stok',$detay->guncel_stok,['class'=>'form-control','disabled'=>'disabled'])
+                                                        @else
+                                                            @Form::id('guncel_stok')->placeholder('Güncel Stok')->number('guncel_stok',$detay->guncel_stok,['class'=>'form-control'])
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

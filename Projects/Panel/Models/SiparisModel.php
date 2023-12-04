@@ -257,6 +257,21 @@ class InternalSiparisModel extends Model
             'durum'                 => $data['durum']
         ]);
 
+        //echo DB::stringQuery();
+
+        return $guncelle;
+
+    }
+
+    public function siparisUrunKontrolEdildi($data){
+
+        $guncelle = DB::where('id',$data['id'])->update('siparis_urunleri',[
+            'islem_gerekiyor'         => $data['islem_gerekiyor'],
+            'yapilacak_islem'         => $data['yapilacak_islem']
+        ]);
+
+        //echo DB::stringQuery();
+
         return $guncelle;
 
     }
@@ -291,6 +306,20 @@ class InternalSiparisModel extends Model
         $veri = DB::where('siparis',$id)->siparis_urunleri()->result();
 
         return $veri;
+
+    }
+
+    public function siparisUrunleriListe($gurup=""){
+
+        if ($gurup=="") {
+
+            $veri = DB::orderby('bitis_tarihi','ASC')->siparis_urunleri();
+
+        }else{
+            $veri = DB::select('siparis_urunleri.*')->innerjoin('urunler.id','siparis_urunleri.urun')->where('urunler.grup',$gurup)->orderby('bitis_tarihi','ASC')->siparis_urunleri();
+        }
+
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
 
     }
 

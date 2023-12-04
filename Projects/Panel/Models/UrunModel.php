@@ -6,6 +6,7 @@ class InternalUrunModel extends Model
     {
         $veri =  DB::select(
                 'urunler.id as id',
+                'urunler.tedarikci as tedarikci',
                 'urunler.urun_kodu as urun_kodu',
                 'urunler.adi as adi',
                 'urunler.fiyat as fiyat',
@@ -37,6 +38,7 @@ class InternalUrunModel extends Model
     static function liste(){
         $veri = DB::select(
             'urunler.id as id',
+            'urunler.tedarikci as tedarikci',
             'urunler.urun_kodu as urun_kodu',
             'urunler.adi as adi',
             'urunler.fiyat as fiyat',
@@ -77,6 +79,7 @@ class InternalUrunModel extends Model
     static function tumListe(){
         $veri = DB::select(
             'urunler.id as id',
+            'urunler.tedarikci as tedarikci',
             'urunler.urun_kodu as urun_kodu',
             'urunler.adi as adi',
             'urunler.fiyat as fiyat',
@@ -105,6 +108,7 @@ class InternalUrunModel extends Model
     static function ekle($data){
 
         $ekle = DB::insert('urunler',[
+            'tedarikci'     =>$data['tedarikci'],
             'urun_kodu'     =>$data['urun_kodu'],
             'grup'          =>$data['grup'],
             'adi'           =>$data['adi'],
@@ -130,6 +134,7 @@ class InternalUrunModel extends Model
         $guncelle = DB::where('id',$data["id"])
                     ->update('urunler',[
                         'urun_kodu'     =>$data['urun_kodu'],
+                        'tedarikci'     =>$data['tedarikci'],
                         'grup'          =>$data['grup'],
                         'adi'           =>$data['adi'],
                         'fiyat'         =>$data['fiyat'],
@@ -145,6 +150,7 @@ class InternalUrunModel extends Model
                         'stoklu_urun'   =>$data['stoklu_urun'],
                         'guncel_stok'   =>$data['guncel_stok']
                     ]);
+       // echo DB::stringQuery();
         return $guncelle;
     }
 

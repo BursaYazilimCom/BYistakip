@@ -50,6 +50,30 @@ class Siparisler extends Controller
 
     }
 
+    public function urunler(){
+
+
+        $user = User::data();
+
+        $siparisUrunleri     = SiparisModel::siparisUrunleriListe();
+
+        View::listele($siparisUrunleri);
+
+    }
+
+    public function gruplar($id){
+
+        $grupDetay = UrunModel::urunGrupDetay($id);
+
+        $user = User::data();
+
+        $siparisUrunleri     = SiparisModel::siparisUrunleriListe($id);
+
+        View::listele($siparisUrunleri);
+        View::grupDetay($grupDetay);
+
+    }
+
     public function teklifler(){
 
         $siparisler     = SiparisModel::teklifler();
@@ -455,11 +479,34 @@ class Siparisler extends Controller
 
         $user = User::data();
 
-        $baslangic_tarihi       = Post::baslangic_tarihi();
-        $bitis_tarihi           = Post::bitis_tarihi();
+        $degisim = "";
+
+        $siparisUrunDetay   = SiparisModel::siparisUrunBilgi($urun);
+
+        $degisim = $siparisUrunDetay->urun_adi." ürününde değişiklik yapıldı<br>";
+
+
+        $baslangic_tarihi       = AyarModel::tarihDuzelt(Post::baslangic_tarihi());
+        if($siparisUrunDetay->baslangic_tarihi!=$baslangic_tarihi){
+            $degisim = $degisim."<br>Başlangıç Tarihi : ".Ayarmodel::tarihGoster($siparisUrunDetay->baslangic_tarihi)." yerine ".Post::baslangic_tarihi()." olarak değiştirildi<br>";
+        }
+        $bitis_tarihi           = AyarModel::tarihDuzelt(Post::bitis_tarihi());
+        if($siparisUrunDetay->bitis_tarihi!=$bitis_tarihi){
+            $degisim = $degisim."<br>Bitiş Tarihi : ".Ayarmodel::tarihGoster($siparisUrunDetay->bitis_tarihi)." yerine ".Post::bitis_tarihi()." olarak değiştirildi<br>";
+        }
         $durum                  = Post::durum();
+        if($siparisUrunDetay->durum!=$durum){
+            $degisim = $degisim."<br>Ürün Durumu : ".Ayarmodel::siparisDurumAdi($durum)." olarak değiştirildi ";
+            $durum = $durum;
+        }else{
+            $durum = $siparisUrunDetay->durum;
+        }
         $siparis_notu           = Post::siparis_notu();
-        $fiyat_sabitle           = Post::fiyat_sabitle();
+        $fiyat_sabitle           = Post::fiyat_sabitle()==""?'0':Post::fiyat_sabitle();
+
+        if($siparisUrunDetay->fiyat_sabitle!=$fiyat_sabitle){
+            $degisim = $degisim."<br>Ürün'ün fiyat Sabitleme özelliği değiştirildi";
+        }
 
 
         $siparisUrunData = [
@@ -475,9 +522,21 @@ class Siparisler extends Controller
 
         if ($guncelle){
 
-            Redirect::insert(['bilgi'=>'<div class="alert alert-success">Ürün Güncelleme işlemi yapıldı yeni ürün eklebilrisinizi</div>'])->action('siparisler/urunDuzenle/'.$urun);
+            $gecmisData = [
+                'cari'          =>$siparisUrunDetay->cari,
+                'siparis'       =>$siparisUrunDetay->siparis,
+                'aciklama'      =>$degisim,
+                'guncelleyen'   =>$user->id
+            ];
+
+            $siparisGecmisEkle = SiparisModel::siparisGesmisEkle($gecmisData);
+
+            AyarModel::basarili('Başarılı işlem','Ürün Güncelleme işlemi başarı ile gerçekleştirildi','siparisler/urunDuzenle/'.$urun);
+
+
         }else{
-            Redirect::insert(['bilgi'=>'<div class="alert alert-danger">Ürün Güncelleme işlemi yapılamadı lütfen tekrar deneyin !</div>'])->action('siparisler/urunDuzenle/'.$urun);
+
+            AyarModel::basarisiz('Başarısiz işlem','Ürün Güncelleme işlemi yapılamadı lütfen tekrar deneyin !','siparisler/urunDuzenle/'.$urun);
         }
 
     }
@@ -609,16 +668,38 @@ class Siparisler extends Controller
 
     public function urunDuzenle($id){
 
-        $siparisUrunDetay = SiparisModel::siparisUrunBilgi($id);
-        $siparisDetay = SiparisModel::detay($siparisUrunDetay->siparis);
-        $cariBilgi   = CariModel::detay($siparisDetay->cari);
-        $siparisDurumlari = AyarModel::siparisDurumlari();
+        $siparisUrunDetay   = SiparisModel::siparisUrunBilgi($id);
+        $siparisDetay       = SiparisModel::detay($siparisUrunDetay->siparis);
+        $cariBilgi          = CariModel::detay($siparisDetay->cari);
+        $siparisDurumlari   = AyarModel::siparisDurumlari();
 
 
         View::urunDetay($siparisUrunDetay);
         View::siparisDurumlari($siparisDurumlari);
         View::siparisDetay($siparisDetay);
         View::cariBilgi($cariBilgi);
+
+    }
+
+    public function urunKontrolEdildi($id){
+
+        $siparisUrunData = [
+            'id'                =>$id,
+            'islem_gerekiyor'   =>'0',
+            'yapilacak_islem'   =>'-'
+        ];
+
+        $guncelle = SiparisModel::siparisUrunKontrolEdildi($siparisUrunData);
+
+        if ($guncelle){
+
+            AyarModel::basarili('Başarılı işlem','Ürün Güncelleme işlemi başarı ile gerçekleştirildi','siparisler/urunDuzenle/'.$id);
+
+        }else{
+
+            AyarModel::basarisiz('Başarısiz işlem','Ürün Güncelleme işlemi yapılamadı lütfen tekrar deneyin !','siparisler/urunDuzenle/'.$id);
+        }
+
 
     }
 

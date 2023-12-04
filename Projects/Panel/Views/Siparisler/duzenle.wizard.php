@@ -202,7 +202,7 @@
                                                     @foreach($urunler as $sUrun)
                                                     <tr>
                                                         <td>{{$sUrun->id}}</td>
-                                                        <td><a href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->urun}}"> {{$sUrun->urun_adi}}</a></td>
+                                                        <td><a href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->id}}"> {{$sUrun->urun_adi}}</a></td>
                                                         <td>{{$sUrun->cari}}</td>
                                                         <td>{{AyarModel::odemePeriyodu($sUrun->odeme_periyodu)}}</td>
                                                         <td>{{$sUrun->adet}}</td>
@@ -216,7 +216,7 @@
                                                                     <i data-feather="more-vertical"></i>
                                                                 </button>
                                                                 <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->urun}}" >
+                                                                <a class="dropdown-item" href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->id}}" >
                                                                         <i data-feather="eye" class="me-50"></i>
                                                                         <span>Detay</span>
                                                                     </a>
