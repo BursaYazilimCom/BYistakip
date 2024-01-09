@@ -592,7 +592,7 @@ class Faturalar extends Controller
             Redirect::insert(['bilgi' => '<div class="callout callout-danger">Silme işlemi yapılamadı!</div>'])->action('faturalar/siparis/'.$faturaDetay->siparis_id);
 
         }
-
+//test
     }
 
     public function yazdir($id){
