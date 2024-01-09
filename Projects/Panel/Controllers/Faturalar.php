@@ -576,65 +576,20 @@ class Faturalar extends Controller
 
     }
 
-    public function sil($id,$stok="")
+    public function sil($id)
     {
 
-        $user = User::data();
-
         $faturaDetay = FaturaModel::detay($id);
-        $faturaUrunleri = FaturaModel::faturaUrunleri($id);
 
-        $tedarikci = TedarikciModel::detay($faturaDetay->tedarikci);
-
-        if($stok == ""){
-
-            $sil = FaturaModel::sil($id);
-
-        }else{
-
-            foreach ($faturaUrunleri as $fu) {
-
-                $malzemeDetay = MalzemeModel::detay($fu->urun);
-
-
-                $stok = $malzemeDetay->stok-$fu->miktar;
-
-
-                $stokData = [
-                    'id'        => $malzemeDetay->id,
-                    'stok'      => $stok
-                ];
-
-                $stokGuncelle = MalzemeModel::stokGuncelle($stokData);
-
-                $faturaData = ["fatura_no"=>$faturaDetay->id,"malzeme"=>$fu->urun];
-
-                $stokHareketSil = MalzemeModel::stokHareketSil($id,$faturaData);
-
-            }
-
-            $sil = FaturaModel::sil($id);
-
-        }
-
-        /*******TEDARİKÇİ BAKİYE GÜNCELLE******/
-
-        $guncelBakiye = $tedarikci->guncel_bakiye+$faturaDetay->toplam;
-
-        $tedarikciBakiyeGuncelle = TedarikciModel::bakiyeGuncelle($id,$guncelBakiye);
-
-        /*******TEDARİKÇİ BAKİYE GÜNCELLE******/
-
+        $sil = FaturaModel::sil($id);
 
         if ($sil) {
 
-            AyarModel::nelerOluyor($user->isim,'fatura',$id.' Numaralı fatura silindi');
-
-            Redirect::insert(['bilgi' => '<div class="callout callout-success">Silme işlemi başarı ile yapıldı!</div>'])->action('tedarikci/detay/'.$faturaDetay->tedarikci);
+            Redirect::insert(['bilgi' => '<div class="callout callout-success">Silme işlemi başarı ile yapıldı!</div>'])->action('faturalar/siparis/'.$faturaDetay->siparis_id);
 
         } else {
 
-            Redirect::insert(['bilgi' => '<div class="callout callout-danger">Silme işlemi yapılamadı!</div>'])->action('tedarikci/detay/'.$faturaDetay->tedarikci);
+            Redirect::insert(['bilgi' => '<div class="callout callout-danger">Silme işlemi yapılamadı!</div>'])->action('faturalar/siparis/'.$faturaDetay->siparis_id);
 
         }
 
@@ -737,7 +692,7 @@ class Faturalar extends Controller
 
             'konu' => 'Fatura Hatırlatma',
             'mesaj' => $faturaDetay->id.' Numaralı faturanızın ödemesini hatırlatmak için bu maili aldınız. <br>'.AyarModel::tarihGoster($faturaDetay->vade_tarihi).' ödeme tarihli '.number_format($faturaDetay->genel_toplam,2).'TL Tutarında ki faturanızı ödemek için aşağıdaki sayfayı ziyaret edebilirsiniz.<br><br><br>Ek Not:<br>'.$ekNot.' <hr>',
-            'link' => AyarModel::defaultAyarlar('siteUrl')."/fatura/detay/".$id,
+            'link' => AyarModel::defaultAyarlar('siteUrl')."/faturalar/detay/".$id,
             'link_baslik' => 'Fatura\'yı Ödemek İçin Tıklayınız',
             'firma' => AyarModel::defaultAyarlar('firmaAdi'),
             'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),

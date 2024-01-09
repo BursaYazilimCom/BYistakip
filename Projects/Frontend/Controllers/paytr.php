@@ -43,7 +43,7 @@ class Paytr extends Controller
              }
           */
 
-
+         $odemeTutari = Request::total_amount();
          $faturaBilgi = explode('80108',Request::merchant_oid());
          $faturaId = $faturaBilgi[0];
          $faturaDetay = FaturaModel::detay($faturaId);
@@ -62,6 +62,13 @@ class Paytr extends Controller
 
              $odendiYap = FaturaModel::odemeDurumDegistir($faturaId,'1',date('Y-m-d'));
 
+             $siparisOdenmemisFaturaToplami = FaturaModel::siparisOdenmemisFaturaToplami($faturaDetay->siparis_id);
+
+             if ($odemeTutari>=$siparisOdenmemisFaturaToplami->toplam) {
+
+                $siparisOdendiYap = SiparisModel::odemeDurumDegistir($faturaDetay->siparis_id,'1');
+
+             }
 
                  if(AyarModel::defaultAyarlar('baslangicTarihiOdemedenSonra')=="1"){
 

@@ -56,19 +56,27 @@
                                     <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center flex-wrap">
                                         <span class="pe-2">{{$detay->vade_tarihi}}</span>
 
+                                        @if($detay->odeme=="0")
                                             @if($detay->gecen_gun>0)
-                                                <span class="fs-7 text-danger d-flex align-items-center">
-											    	<span class="bullet bullet-dot bg-danger me-2"></span>{{$detay->gecen_gun}} gün geçmiş
-                                                </span>
+                                            <span class="fs-7 text-danger d-flex align-items-center">
+                                                        <span class="bullet bullet-dot bg-danger me-2"></span>{{$detay->gecen_gun}} gün geçmiş
+                                                    </span>
                                             @elseif($detay->gecen_gun==0)
-                                                <span class="fs-7 text-primary d-flex align-items-center">
-                                                <span class="bullet bullet-dot bg-primary me-2"></span>Bugün Ödeme Günü
-                                                </span>
+                                            <span class="fs-7 text-primary d-flex align-items-center">
+                                                    <span class="bullet bullet-dot bg-primary me-2"></span>Bugün Ödeme Günü
+                                                    </span>
                                             @else
-                                                <span class="fs-7 text-success d-flex align-items-center">
-                                                    <span class="bullet bullet-dot bg-success me-2"></span>{{-$detay->gecen_gun}} gün var
-                                                </span>
+                                            <span class="fs-7 text-success d-flex align-items-center">
+                                                        <span class="bullet bullet-dot bg-success me-2"></span>{{-$detay->gecen_gun}} gün var
+                                                    </span>
                                             @endif
+                                        @elseif($detay->odeme=="1")
+                                            <span class="fs-7 text-success d-flex align-items-center">
+                                                    <span class="bullet bullet-dot bg-success me-2"></span>Ödeme Yapıldı
+                                                    </span>
+                                        @endif
+
+
                                     </div>
                                     <!--end::Info-->
                                 </div>

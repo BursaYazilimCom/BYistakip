@@ -14,6 +14,20 @@ class InternalAyarModel extends Model
 
     }
 
+    static function durum($d){
+
+        if ($d=="1"){
+
+            return "<span class='text text-success'>Aktif</span>";
+
+        }else{
+
+            return "<span class='text text-danger'>Pasif</span>";
+
+        }
+
+    }
+
 
     static function defaultAyarlar($anahtar){
 

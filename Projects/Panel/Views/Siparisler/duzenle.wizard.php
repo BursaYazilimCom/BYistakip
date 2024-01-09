@@ -130,9 +130,8 @@
                                                     <select class="select2 form-select" name="durum" id="durum">
 
                                                         <option value="">--Seçiniz--</option>
-                                                        @foreach($siparisDurumlari as $sd)
-                                                        <option  value="{{$sd->id}}" {{$sd->id==$detay->durum?'selected':''}}>{{$sd->adi}}</option>
-                                                        @endforeach
+                                                        <option  value="0" {{$detay->durum=="0"?'selected':''}}>Pasif</option>
+                                                        <option  value="1" {{$detay->durum=="1"?'selected':''}}>Aktif</option>
 
                                                     </select>
                                                 </div>

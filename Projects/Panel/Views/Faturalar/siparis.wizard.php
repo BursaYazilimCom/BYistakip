@@ -114,11 +114,15 @@
                                                                         <i data-feather="more-vertical"></i>
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-end">
-                                                                        <a href="{{URL::site('siparisler/urunler')}}/{{$fatura->id}}" class="dropdown-item">
+                                                                        <a href="{{URL::site('siparisler/urunler')}}/{{$fatura->siparis_id}}" class="dropdown-item">
                                                                             <i data-feather="send" class="me-50"></i>
-                                                                            <span>Bildirim Gönder</span>
+                                                                            <span>Sipariş Ürünleri</span>
                                                                         </a>
-                                                                        <a href="{{URL::site('siparisler/hatirlatmaGonder')}}/{{$fatura->id}}" class="dropdown-item">
+                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="bildirimGonder" class="dropdown-item">
+                                                                            <i data-feather="send" class="me-50"></i>
+                                                                            <span class="text-success">Bildirim Gönder</span>
+                                                                        </a>
+                                                                        <a href="{{URL::site()}}../faturalar/detay/{{$fatura->id}}" target="_blank" class="dropdown-item">
                                                                             <i data-feather="eye" class="me-50"></i>
                                                                             <span>Fatura Görüntüle</span>
                                                                         </a>
@@ -147,7 +151,7 @@
 
                                                                         @endif
 
-                                                                        <a class="dropdown-item" onclick="deleteAction('{{$fatura->id}}','{{URL::site('siparisler/ajax')}}','siparisSil')">
+                                                                        <a class="dropdown-item" href="{{URL::site()}}faturalar/sil/{{$fatura->id}}">
                                                                             <i data-feather="trash" class="me-50"></i>
                                                                             <span>Sil</span>
                                                                         </a>

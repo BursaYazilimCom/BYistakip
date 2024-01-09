@@ -46,7 +46,7 @@
                                             <th>Ödeme Durumu</th>
                                             <th>Toplam Tutar</th>
                                             <th>Sipariş Tarihi</th>
-                                            <th>Durum</th>
+                                            <th>Sipariş Durumu</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -59,7 +59,7 @@
                                             <td>{{$s->odeme_durumu=="1"?"<span class='text text-success'>Ödendi</span>":"<span class='text text-danger'>Ödeme Bekliyor</span>"}}</td>
                                             <td>{{number_format($s->genel_toplam_tutari,2)}} ₺</td>
                                             <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
-                                            <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>
+                                            <td>{{AyarModel::durum($s->durum)}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">

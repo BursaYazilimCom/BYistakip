@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 use User,Method,Post,Redirect,Upload,Pagination,Date,Time,File,Email,URL,Security,Cart,Validation,Json;
-use AyarModel,UyeModel,CariModel,SiparisModel,UrunModel,KasaModel,FaturaModel;
+use AyarModel,UyeModel,CariModel,SiparisModel,UrunModel,KasaModel,FaturaModel,InternalTedarikciModel as TedarikciModel;
 
 class Siparisler extends Controller
 {
@@ -40,9 +40,11 @@ class Siparisler extends Controller
 
         $siparisler     = SiparisModel::liste($durum,$sayfa,$filtre);
         $durumlar       = AyarModel::siparisDurumlari();
+        $tedarikciler   = TedarikciModel::tumListe();
 
         View::listele($siparisler);
         View::siparisDurumlari($durumlar);
+        View::tedarikciler($tedarikciler);
 
         View::durumum($durum);
         View::sayfa($sayfa);
@@ -128,8 +130,10 @@ class Siparisler extends Controller
         $musteriler = CariModel::liste();
         $odemeYontemleri = AyarModel::odemeYontemleri();
         $urunler = UrunModel::tumListe();
+        $tedarikciler   = TedarikciModel::tumListe();
 
 
+        View::tedarikciler($tedarikciler);
         View::kasaHesaplari($kasaHesaplari);
         View::uyeBilgi($uyeBilgi);
         View::musteriler($musteriler);
@@ -217,6 +221,7 @@ class Siparisler extends Controller
                     'siparis'           => $siparisOlustur,
                     'urun'              => $su["urun"],
                     'urun_adi'          => $su["urun_adi"],
+                    'tedarikci'         => $su["tedarikci"],
                     'cari'              => $musteri,
                     'adet'              => $su["adet"],
                     'notu'              => $su["siparis_notu"],
@@ -353,8 +358,8 @@ class Siparisler extends Controller
 
             Cart::deleteAll();
 
+            AyarModel::basarili('Başarılı İşlem','Sipariş Oluşlturuldu !',URL::site('siparisler'));
 
-           AyarModel::basarili('Başarılı İşlem','Sipariş Oluşlturuldu !',URL::site('siparisler'));
         }else{
 
             AyarModel::basarili('Başarısız İşlem','Sipariş Oluşlturma hatası lütfen tekrar deneyin hata devam ederse sistem yöneticinize bildirin !',URL::site('siparisler/form'));
@@ -394,7 +399,6 @@ class Siparisler extends Controller
 
         $musteriBilgi       = CariModel::detay($siparisDetay->cari);
         $yeniSiparisDurumu  = Post::durum();
-        $urunDurumDegistir  = Post::urunDurumDegistir();
         $siparis_notu       = Post::siparis_notu();
 
         $siparisData = [
@@ -406,26 +410,12 @@ class Siparisler extends Controller
         $siparisGuncelle = SiparisModel::guncelle($siparisData);
         $ekUyari ="";
 
-        if($urunDurumDegistir=="1"){
-
-            $siparisUrunleri = SiparisModel::siparisUrunleri($siparis);
-
-            foreach ($siparisUrunleri as $surun) {
-
-                $urunGuncelle = SiparisModel::urunDurumDegistir($surun->id,$yeniSiparisDurumu);
-
-            }
-
-            $ekUyari = "Bunun yanında talep doğrultusunda siparişe bağlı ürünlerinde durumu değiştirildi. ";
-
-        }
-
         if($siparisDetay->durum!=$yeniSiparisDurumu){
 
             $gecmisData = [
                 'cari'              =>$siparisDetay->cari,
                 'siparis'           =>$siparis,
-                'aciklama'          =>'Sipariş güncellenirken aynı zamanda durumuda değiştirildi.'.$ekUyari.'<br> Yeni Sipariş Durumu:  '.AyarModel::siparisDurumAdi($yeniSiparisDurumu).'<br><small>Güncelleyen: '.$user->isim.'</small>',
+                'aciklama'          =>'Sipariş güncellenirken aynı zamanda durumuda değiştirildi.'.$ekUyari.'<br> Yeni Sipariş Durumu:  '.AyarModel::durum($yeniSiparisDurumu).'<br><small>Güncelleyen: '.$user->isim.'</small>',
                 'guncelleyen'       =>$user->id
             ];
 
@@ -508,12 +498,20 @@ class Siparisler extends Controller
             $degisim = $degisim."<br>Ürün'ün fiyat Sabitleme özelliği değiştirildi";
         }
 
+        $tedarikci           = Post::tedarikci();
+
+        if($siparisUrunDetay->tedarikci!=$tedarikci){
+            $degisim = $degisim."<br>Ürün'ün tedarikcisi ".TedarikciModel::tedarikciAdi($tedarikci)." olarak değiştirildi";
+        }
+
+
 
         $siparisUrunData = [
             'id'                =>$urun,
             'baslangic_tarihi'  =>$baslangic_tarihi,
             'bitis_tarihi'      =>$bitis_tarihi,
             'fiyat_sabitle'     =>$fiyat_sabitle,
+            'tedarikci'         =>$tedarikci,
             'durum'             =>$durum,
             'siparis_notu'      =>$siparis_notu
         ];
@@ -672,8 +670,10 @@ class Siparisler extends Controller
         $siparisDetay       = SiparisModel::detay($siparisUrunDetay->siparis);
         $cariBilgi          = CariModel::detay($siparisDetay->cari);
         $siparisDurumlari   = AyarModel::siparisDurumlari();
+        $tedarikciler       = TedarikciModel::tumListe();
 
 
+        View::tedarikciler($tedarikciler);
         View::urunDetay($siparisUrunDetay);
         View::siparisDurumlari($siparisDurumlari);
         View::siparisDetay($siparisDetay);
@@ -977,9 +977,22 @@ class Siparisler extends Controller
 
                     $serial = Date::set('{year}{monthInYear}{dayInMonth}{hour}{minute}{second}');
 
+                    if (Post::tedarikci()=='0'){
+
+                        $tedarikci = $urunDetay->tedarikci;
+
+                    }else{
+
+                        $tedarikci = Post::tedarikci();
+
+                    }
+
+                    $baslangicTarihi = Post::baslangic_tarihi()==""?date('d.m.Y'):Post::baslangic_tarihi();
+
                     $ekleData = [
                         'serial'                    =>$serial,
                         'urun'                      =>Post::urun(),
+                        'tedarikci'                 =>$tedarikci,
                         'urun_adi'                  =>$urunDetay->adi,
                         'odemePeriyodu'             =>Post::odeme_periyodu(),
                         'odemePeriyoduTanim'        =>AyarModel::odemePeriyodu(Post::odeme_periyodu()),
@@ -987,7 +1000,7 @@ class Siparisler extends Controller
                         'urunKdv'                   =>Post::kdv(),
                         'siparis_notu'              =>Post::siparis_notu(),
                         'fiyat_sabitle'             =>Post::fiyat_sabitle()==""?"0":Post::fiyat_sabitle(),
-                        'baslangic_tarihi'          =>Post::baslangic_tarihi()==""?date('d.m.Y'):Post::baslangic_tarihi(),
+                        'baslangic_tarihi'          =>$baslangicTarihi,
                         'fiyat'                     =>$fiyat,
                         'fiyat_birim'               =>$urunDetay->fiyat_birim
                     ];
@@ -1001,9 +1014,11 @@ class Siparisler extends Controller
                         $data['addData'] = '<tr id="row-'.$serial.'">
                                                 <td>'.$serial.'</td>
                                                 <td>'.$urunDetay->adi.'</td>
+                                                <td>'.TedarikciModel::tedarikciAdi($tedarikci).'</td>
                                                 <td>'.AyarModel::odemePeriyodu(Post::odeme_periyodu()).'</td>
                                                 <td>'.Post::adet().'</td>
                                                 <td>'.Post::siparis_notu().'</td>
+                                                <td>'.$baslangicTarihi.'</td>
                                                 <td>'.$fiyat." ".$urunDetay->fiyat_birim.'</td>
                                                 <td>'.Post::kdv().'</td>
                                                 <td>

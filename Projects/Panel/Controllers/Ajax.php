@@ -720,7 +720,7 @@ class Ajax extends Controller
 
         }
 
-        if (Post::action()=="faturaOdendiYap") {
+        if(Post::action()=="faturaOdendiYap") {
 
             $id = Post::rowid();
             $faturaDetay = FaturaModel::detay($id);
@@ -850,7 +850,7 @@ class Ajax extends Controller
 
         }
 
-        if (Post::action()=="faturaOdenmediYap") {
+        if(Post::action()=="faturaOdenmediYap") {
 
             $id = Post::rowid();
             $faturaDetay = FaturaModel::detay($id);
@@ -1022,7 +1022,7 @@ class Ajax extends Controller
 
         }
 
-        if (Post::action() == "faturayaUrunEkle") {
+        if(Post::action()=="faturayaUrunEkle") {
             $id = Post::rowid();
             ?>
 
@@ -1098,6 +1098,18 @@ class Ajax extends Controller
 
 
         <?php
+
+        }
+
+        if(Post::action()=="faturaSil") {
+            $id = Post::rowid();
+
+            $sil = FaturaModel::sil($id);
+
+            if($sil){
+
+            }
+
 
         }
 

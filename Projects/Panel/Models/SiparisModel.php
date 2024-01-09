@@ -158,7 +158,7 @@ class InternalSiparisModel extends Model
                     'durum'             =>$data['durum']
                 ]);
 
-        echo DB::stringQuery();
+       // echo DB::stringQuery();
 
         return DB::insertID();
     }
@@ -224,6 +224,7 @@ class InternalSiparisModel extends Model
             'siparis'           =>$data['siparis'],
             'urun'              =>$data['urun'],
             'urun_adi'          =>$data['urun_adi'],
+            'tedarikci'          =>$data['tedarikci'],
             'cari'              =>$data['cari'],
             'adet'              =>$data['adet'],
             'notu'              =>$data['notu'],
@@ -241,7 +242,7 @@ class InternalSiparisModel extends Model
             'durum'             =>$data['durum'],
         ]);
 
-        echo DB::stringQuery();
+        //echo DB::stringQuery();
 
         return $ekle;
 
@@ -251,6 +252,7 @@ class InternalSiparisModel extends Model
 
         $guncelle = DB::where('id',$data['id'])->update('siparis_urunleri',[
             'notu'                  => $data['siparis_notu'],
+            'tedarikci'             => $data['tedarikci'],
             'fiyat_sabitle'         => $data['fiyat_sabitle'],
             'baslangic_tarihi'      => $data['baslangic_tarihi'],
             'bitis_tarihi'          => $data['bitis_tarihi'],

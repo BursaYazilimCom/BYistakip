@@ -49,7 +49,7 @@
 
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-3 col-12">
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Detayları</h4>
@@ -134,7 +134,7 @@
 
                             </div>
 
-                            <div class="col-md-8 col-12">
+                            <div class="col-md-9 col-12">
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Ürünleri</h4>
@@ -147,6 +147,7 @@
                                                     <tr>
                                                         <th>Kod</th>
                                                         <th>Ürün/Hizmet</th>
+                                                        <th>Tedarikçi</th>
                                                         <th>Ödeme Periyodu</th>
                                                         <th>Adet</th>
                                                         <th>Sipariş Notu</th>
@@ -162,6 +163,7 @@
                                                     <tr>
                                                         <td>{{$sUrun["serial"]}}</td>
                                                         <td>{{$sUrun["urun_adi"]}}</td>
+                                                        <td>{{Tedarikcimodel::tedarikciAdi($sUrun["tedarikci"])}}</td>
                                                         <td>{{$sUrun["odemePeriyoduTanim"]}}</td>
                                                         <td>{{$sUrun["adet"]}}</td>
                                                         <td>{{$sUrun["siparis_notu"]}}</td>
@@ -280,7 +282,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="mb-1 row">
                                         <div class="col-sm-12">
                                             <label class="col-form-label" for="adet">Adet</label>
@@ -290,7 +292,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="mb-1 row">
                                         <div class="col-sm-12">
                                             <label class="col-form-label" for="kdv">Ürün KDV</label>
@@ -301,6 +303,22 @@
                                                 <option value="0">KDV (%0)</option>
                                                 <option value="10">KDV (%10)</option>
                                                 <option value="20" selected>KDV (%20)</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="mb-1 row">
+                                        <div class="col-sm-12">
+                                            <label class="col-form-label" for="tedarikci">Tedarikçi</label>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <select class="select2 form-select" id="tedarikci" name="tedarikci">
+                                                <option value="0">--Ürünün Tedarikçisi--</option>
+                                                @foreach($tedarikciler as $tedarikci)
+                                                <option value="{{$tedarikci->id}}">{{$tedarikci->adi}}</option>
+                                                @endforeach
                                             </select>
 
                                         </div>

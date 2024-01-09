@@ -20,17 +20,11 @@ class InternalFaturaModel extends Model
         return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
     }
 
-    static function siparisFaturalari($id){
+    static function siparisOdenmemisFaturaToplami($id){
 
-        $veri = DB::whereGroup(
-            ['siparis_id',$id],
-            'and'
-        )->whereGroup(
-            ['tur','3','or'],
-            ['tur','2',]
-        )->orderby('id','DESC')->faturalar()->result();
+        $veri = DB::select('SUM(genel_toplam) AS toplam')->where('siparis_id',$id)->where('tur','2')->Where('odeme','0')->orderby('id','DESC')->faturalar()->row();
 
-        return ['liste'=>$veri];
+        return $veri;
 
 
     }

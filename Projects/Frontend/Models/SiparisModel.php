@@ -146,8 +146,6 @@ class InternalSiparisModel extends Model
         return $veri;
     }
 
-
-
     public function guncelle($data){
 
         $guncelle = DB::where('id',$data['id'])->update('siparisler',[
@@ -177,9 +175,6 @@ class InternalSiparisModel extends Model
         return $guncelle;
     }
 
-
-
-
     public function siparisUrunBilgi($id){
 
         $veri = DB::where('id',$id)->siparis_urunleri()->row();
@@ -187,8 +182,6 @@ class InternalSiparisModel extends Model
         return $veri;
 
     }
-
-
 
     public function siparisUrunleri($id){
 
@@ -225,7 +218,6 @@ class InternalSiparisModel extends Model
         return $guncelle;
 
     }
-
 
     public function durumDegistir($id,$durum){
 

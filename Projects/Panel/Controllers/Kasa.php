@@ -76,12 +76,6 @@ class Kasa extends Controller
             $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabı);
 
             if ($kasayaKaydet) {
-                $odemData = [
-                    'id'  =>$id,
-                    'alinan_odeme'        =>$tutar+$siparisDetay->alinan_odeme,
-                ];
-
-                $siparisOdemeEkle = SiparisModel::odemeEkle($odemData);
 
                 $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabı);
 

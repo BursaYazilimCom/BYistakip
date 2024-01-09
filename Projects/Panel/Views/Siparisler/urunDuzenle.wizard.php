@@ -179,6 +179,24 @@
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-3">
+                                                    <label class="col-form-label" for="tedarikci">Tedarikçi</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <select class="select2 form-select" name="tedarikci" id="tedarikci">
+
+                                                        <option value="">--Seçiniz--</option>
+                                                        @foreach($tedarikciler as $tedarikci)
+                                                        <option  value="{{$tedarikci->id}}" {{$tedarikci->id==$urunDetay->tedarikci?'selected':''}}>{{$tedarikci->adi}}</option>
+                                                        @endforeach
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
                                                     <label class="col-form-label" for="durum">Sipariş Durumları</label>
                                                 </div>
                                                 <div class="col-sm-12">
