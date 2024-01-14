@@ -478,7 +478,7 @@ class Ayarlar extends Controller
                 if($sil){
 
                     $data['success'] = 'Yetki Alanı silme işlemi başarı ile yapıldı!';
-                    $data['redirect'] = '/Ayarlar/yetkiAlanlari';
+                    $data['redirect'] = URL::site().'Ayarlar/yetkiAlanlari';
 
                 }else{
 
@@ -546,7 +546,7 @@ class Ayarlar extends Controller
                 if($sil){
 
                     $data['success'] = 'Silme işlemi başarı ile yapıldı!';
-                    $data['redirect'] = '/Ayarlar/odemeYontemleri';
+                    $data['redirect'] = URL::site().'Ayarlar/odemeYontemleri';
 
                 }else{
 
@@ -567,7 +567,7 @@ class Ayarlar extends Controller
                 if($sil){
 
                     $data['success'] = 'Silme işlemi başarı ile yapıldı!';
-                    $data['redirect'] = '/Ayarlar/siparisDurumlari';
+                    $data['redirect'] = URL::site().'Ayarlar/siparisDurumlari';
 
                 }else{
 

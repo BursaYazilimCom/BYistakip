@@ -93,7 +93,7 @@
                                     </td>
                                     <td>
 
-                                        <input type="text" name="aciklama[{{$ayar->anahtar}}]" class="form-control" value="{{$ayar->aciklama}}">
+                                        {{$ayar->aciklama}}
 
                                     </td>
                                 </tr>

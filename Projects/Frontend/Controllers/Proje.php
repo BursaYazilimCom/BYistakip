@@ -41,6 +41,27 @@ class Proje extends Controller
 
     }
 
+    public function calismalar($sef)
+    {
+        $projeDetay = ProjeModel::detay($sef);
+
+        if (empty($projeDetay->sef)) {
+            Redirect::action('s404');
+            exit();
+        }
+
+        $calismalar = ProjeModel::yapilanlar($projeDetay->id);
+
+        if (Session::select('kullanici')!=$projeDetay->musteri.'-'.$projeDetay->id) {
+            Session::insert('proje',$sef);
+            Redirect::action('proje/login/'.$sef);
+            exit();
+        }
+
+        View::detay($projeDetay);
+        View::calismalar($calismalar);
+    }
+
     public function login($sef){
 
         $projeDetay = ProjeModel::detay($sef);

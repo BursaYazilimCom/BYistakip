@@ -23,7 +23,9 @@
                                 @else
                                 <span class="btn btn-sm btn-success me-2">Devam Ediyor</span>
                                 @endif
+                                <a href="{{URL::site('proje/calismalar/'.$detay->sef)}}" class="btn btn-sm btn-info me-2">Yapılan Çalışmalar</a>
                                 <a href="#" class="btn btn-sm btn-success me-2" onclick="window.print()">Yazdır</a>
+
                             </div>
                             <!--end::Actions-->
                         </div>

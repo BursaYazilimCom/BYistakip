@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/COMMITMENT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/SECURITY.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/VERSION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/composer.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/get_oauth_token.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-af.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ar.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-as.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-az.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ba.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-be.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-bg.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-bn.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ca.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-cs.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-da.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-de.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-el.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-eo.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-es.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-et.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-fa.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-fi.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-fo.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-fr.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-gl.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-he.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-hi.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-hr.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-hu.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-hy.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-id.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-it.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ja.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ka.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ko.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-lt.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-lv.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-mg.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-mn.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ms.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-nb.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-nl.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-pl.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-pt.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-pt_br.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ro.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ru.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-si.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sk.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sl.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sr.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sr_latn.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sv.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-tl.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-tr.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-uk.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-vi.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-zh.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-zh_cn.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/DSNConfigurator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/Exception.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/OAuth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/OAuthTokenProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/PHPMailer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/POP3.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/SMTP.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/calismalar.wizard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/yapilanlar.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/istakip.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/istakip.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php-test-framework.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Config/Services.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Config/Services.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Controllers/Faturalar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Controllers/Faturalar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Controllers/Proje.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Controllers/Proje.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Controllers/paytr.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Controllers/paytr.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Models/ProjeModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Models/ProjeModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Config/Services.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Config/Services.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Ayarlar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Ayarlar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Faturalar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Faturalar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Projeler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Projeler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/AyarModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/AyarModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/ProjeModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/ProjeModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/duzenle.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/duzenle.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/External/Resources/Files/DefaultProject.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-database/DB.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-database/DBForge.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-database/DBTool.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datatypes/Collection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datatypes/Stack.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datetime/Date.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datetime/DateTimeCommon.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datetime/DateTimeDefaultConfiguration.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-email/Drivers/ImapDriver.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-email/Sender.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-image/GD.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-pagination/Paginator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-security/Secure.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-validation/Data.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-validation/DataInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Controller.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Controller/Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Functions.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Model.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/zeroneed.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-database/DB.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-datetime/Date.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-datetime/DateTimeCommon.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-datetime/DateTimeCommonInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-filesystem/Converter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/zeroneed.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.3/Internal/package-database/DB.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.3/Internal/package-datetime/Date.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.3/Internal/package-zerocore/IS.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.3/zeroneed.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-console/Async.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-database/Connection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-zerocore/In.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-zerocore/Kernel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-zerocore/ZN.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/zeroneed.php" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerConfigs">
+    <option name="configs">
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/recursion-context/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phar-io/version/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/webmozart/assert/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpspec/prophecy/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-file-iterator/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phar-io/manifest/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/object-reflector/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/reflection-docblock/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpunit/phpunit/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-timer/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/comparator/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-zerocore/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/environment/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/symfony/polyfill-ctype/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/reflection-common/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-text-template/composer.json" />
+      <option value="$PROJECT_DIR$/Projects/Devtools/Views/composer.json" />
+      <option value="$PROJECT_DIR$/Projects/Devtools/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/type-resolver/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/version/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/exporter/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/myclabs/deep-copy/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-code-coverage/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/resource-operations/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/global-state/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/code-unit-reverse-lookup/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/type/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/doctrine/instantiator/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/diff/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-token-stream/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/sebastian/object-enumerator/composer.json" />
+      <option value="$PROJECT_DIR$/Internal/package-composer/theseer/tokenizer/composer.json" />
+    </option>
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="D:\wamp\bin\php\php7.4.33\php.exe">
+    <include_path>
+      <path value="$PROJECT_DIR$/Internal/package-composer/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/composer" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phar-io/version" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/version" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/diff" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/environment" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/type" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/webmozart/assert" />
+      <path value="$PROJECT_DIR$/Projects/Devtools/vendor/composer" />
+    </include_path>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2ajdX3B9cY7nvhHWc2mKYmnCqj9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "0.3.3.9",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/wamp/www/istakip/External/Libraries",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\wamp\www\istakip\External\Libraries" />
+      <recent name="D:\wamp\www\istakip\Projects\Frontend\Views\Proje" />
+      <recent name="D:\wamp\www\istakip\Projects\Panel\Views\Projeler" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml.dist" scope="XML" use_alternative_configuration_file="true" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-php-predefined-ba97393d7c68-b4dcf6bb9de9-com.jetbrains.php.sharedIndexes-PS-233.13135.108" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="" />
+      <created>1704835960642</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1704835960642</updated>
+      <workItem from="1704835964986" duration="2194000" />
+      <workItem from="1705176728253" duration="616000" />
+      <workItem from="1705181442925" duration="18959000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

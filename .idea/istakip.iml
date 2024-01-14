@@ -36,8 +36,8 @@
       <sourceFolder url="file://$MODULE_DIR$/Internal/package-composer/symfony/polyfill-ctype/" isTestSource="false" packagePrefix="Symfony\Polyfill\Ctype\" />
       <sourceFolder url="file://$MODULE_DIR$/Internal/package-composer/webmozart/assert/bin/src" isTestSource="true" packagePrefix="Webmozart\Assert\Bin\" />
       <sourceFolder url="file://$MODULE_DIR$/Internal/package-composer/webmozart/assert/src" isTestSource="false" packagePrefix="Webmozart\Assert\" />
-      <sourceFolder url="file://$MODULE_DIR$/Internal/package-composer/webmozart/assert/tests" isTestSource="true" packagePrefix="Webmozart\Assert\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/Internal/package-composer/webmozart/assert/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Internal/package-composer/webmozart/assert/tests" isTestSource="true" packagePrefix="Webmozart\Assert\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/Internal/package-zerocore/" isTestSource="false" packagePrefix="ZN\" />
       <sourceFolder url="file://$MODULE_DIR$/Projects/Devtools" isTestSource="false" packagePrefix="Project" />
       <sourceFolder url="file://$MODULE_DIR$/Projects/Devtools/Libraries" isTestSource="false" />

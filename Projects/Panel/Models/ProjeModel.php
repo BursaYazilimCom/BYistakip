@@ -129,4 +129,52 @@ class InternalProjeModel extends Model
 
         return $sil;
     }
+
+    /***************/
+
+    /*****************************************************/
+    static function yapilanlar($id){
+        $veri = DB::where('proje_id',$id)->orderby('tarih','DESC')->proje_yapilanlar();
+
+
+        return ['liste'=>$veri->result()];
+
+    }
+
+    static function yapilanIslemDetay($id){
+
+        $veri = DB::where('id',$id)->proje_yapilanlar()->row();
+
+
+        return $veri;
+
+    }
+
+    static function yapilanIslemEkle($data){
+
+        $ekle = DB::insert('proje_yapilanlar',[
+            'proje_id'  =>$data['proje_id'],
+            'tur'       =>$data['tur'],
+            'islem'     =>$data['islem']
+        ]);
+
+        return DB::insertID();
+    }
+
+    static function yapilanIslemGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('proje_yapilanlar',[
+                'tur'       =>$data['tur'],
+                'islem'     =>$data['islem']
+            ]);
+        return $guncelle;
+    }
+
+    static function yapilanIslemSil($id){
+
+        $sil        = DB::whereId($id)->delete('proje_yapilanlar');
+
+        return $sil;
+    }
 }

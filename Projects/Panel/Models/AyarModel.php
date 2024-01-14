@@ -42,7 +42,7 @@ class InternalAyarModel extends Model
         $guncelle = DB::where('anahtar',$data['anahtar'])
             ->update('ayarlar',[
                 'deger'=>$data['deger'],
-                'aciklama'=>$data['aciklama']
+               // 'aciklama'=>$data['aciklama']
             ]);
 
         return $guncelle;

@@ -1286,6 +1286,112 @@ class Ajax extends Controller
 
         }
 
+        if(Post::action()=="yapilanIslemEkle"){
+
+            $id = Post::rowid();
+            $projeDetay = ProjeModel::detay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('projeler/yapilanIslemEkle/'.$id)->open('yapilanIslemEkle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Yapilan İşlem Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="baslik">Tür:</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="tur" id="tur">
+                                    <option value="1" selected>Değişiklik yapıldı</option>
+                                    <option value="2">Hata Çözümü Gerçekleştirildi</option>
+                                    <option value="3">Yenilik Getirildi</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="islem">Yapılan İşlem:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('islem')->placeholder('işlem')->textarea('islem','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+
+        if(Post::action()=="yapilanIslemDuzenle"){
+
+            $id = Post::rowid();
+            $detay = ProjeModel::yapilanIslemDetay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('projeler/yapilanIslemGuncelle/'.$id)->open('yapilanIslemGuncelle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Yol Haritası Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="tur">Tür:</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="tur" id="tur">
+                                    <option value="1" <?php if($detay->tur=="1"){ echo "selected"; } ?> >Değişiklik yapıldı</option>
+                                    <option value="2" <?php if($detay->tur=="2"){ echo "selected"; } ?> >Hata Çözümü Gerçekleştirildi</option>
+                                    <option value="3" <?php if($detay->tur=="3"){ echo "selected"; } ?> >Yenilik Getirildi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="aciklama">Yapılan İşlem:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('islem')->placeholder('İşlem')->textarea('islem',$detay->islem,['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+
         if(Post::action()=="urunFiyatlariniGoster"){
 
             $id = Post::rowid();

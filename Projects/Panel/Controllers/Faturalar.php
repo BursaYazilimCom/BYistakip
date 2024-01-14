@@ -3,6 +3,11 @@
 use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email,Json;
 use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel;
 use InternalMalzemeModel as MalzemeModel, TedarikciModel,InternalCariModel as CariModel;
+/*use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;*/
+
+
 
 class Faturalar extends Controller
 {
@@ -278,18 +283,21 @@ class Faturalar extends Controller
                 'cariDetay' => $cariDetay
             ];
 
-
+            $gelir = 0;
+            $gider = 0;
             View::detay($detay);
+            View::gelir($gelir);
+            View::gider($gider);
             View::maliIslemler($maliIslemler);
             View::faturaUrunleri($faturaUrunleri);
 
         }else{
 
-           $faturaDetay = [
+            $faturaDetay = [
                'belge_no'    => '',
                'belge_tarihi'    => '',
                'vade_tarihi'    => '',
-           ];
+            ];
 
         }
 
@@ -683,6 +691,10 @@ class Faturalar extends Controller
     }
 
     public function bildirimGonder($id){
+
+        //$mail = new PHPMailer(true);
+
+
 
         $faturaDetay = FaturaModel::detay($id);
         $cariDetay = CariModel::detay($faturaDetay->musteri);

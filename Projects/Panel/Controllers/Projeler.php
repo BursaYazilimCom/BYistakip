@@ -231,6 +231,73 @@ class Projeler extends Controller
 
     }
 
+    public function yapilanlar($id)
+    {
+        $projeDetay = ProjeModel::detay($id);
+        $listeData = ProjeModel::yapilanlar($id);
+
+        View::listele($listeData);
+        View::detay($projeDetay);
+
+
+    }
+
+    public function yapilanIslemEkle($id){
+
+        if(!Validation::check()){
+
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
+
+        }else {
+
+            $ekleData = [
+                'proje_id'  => $id,
+                'tur'       => Post::tur(),
+                'islem'     => Post::islem()
+            ];
+
+            $ekle = ProjeModel::yapilanIslemEkle($ekleData);
+
+            if ($ekle) {
+                Redirect::insert(['bilgi' => '<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Ekleme İşlemi Yapıldı !.'.$ekle.'</div></div>'])->action('projeler/yapilanlar/'.$id);
+            } else {
+
+                Redirect::insert(['bilgi' => '<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.'.$ekle.'</div></div>'])->action(URL::prev());
+
+            }
+        }
+
+    }
+
+    public function yapilanIslemGuncelle($id){
+
+        $yIDetay = ProjeModel::yapilanIslemDetay($id);
+
+        if(!Validation::check()){
+
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
+
+        }else {
+
+            $ekleData = [
+                'id'        => $id,
+                'tur'       => Post::tur(),
+                'islem'     => Post::islem()
+            ];
+
+            $ekle = ProjeModel::yapilanIslemGuncelle($ekleData);
+
+            if ($ekle) {
+                Redirect::insert(['bilgi' => '<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Güncelleme İşlemi Yapıldı !.'.$ekle.'</div></div>'])->action('projeler/yapilanlar/'.$yIDetay->proje_id);
+            } else {
+
+                Redirect::insert(['bilgi' => '<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.'.$ekle.'</div></div>'])->action(URL::prev());
+
+            }
+        }
+
+    }
+
         public function ajax():void
     {
         $user       = User::data();
@@ -280,6 +347,30 @@ class Projeler extends Controller
                 }else{
 
                     $data['error'] = "Proje Yol Haritasi silme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
+
+            case "yapilanIslemSil":
+
+                $yHDetay = ProjeModel::yapilanIslemDetay($dataId);
+
+                $sil = ProjeModel::yapilanIslemSil($dataId);
+
+                $data['title'] = "Proje yapilan işlem Silme İşlemi";
+
+                if($sil){
+
+                    $data['success'] = 'Proje yapilan işlem Silme İşlem başarı ile yapıldı!';
+                    //$data['redirect'] = '/projeler/yolHaritasi/'.$yHDetay->proje_id;
+                    $data['redirect'] = '';
+
+                }else{
+
+                    $data['error'] = "Proje yapilan işlem Silme işlemi yapılamadı!";
 
                 }
 

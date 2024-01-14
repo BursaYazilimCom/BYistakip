@@ -415,6 +415,15 @@
 
                                             @foreach($maliIslemler as $mi)
 
+                                            {[
+                                            if($mi->islem=="t"){
+                                            $gelir = $gelir+$mi->gelir;
+
+                                            }else{
+                                            $gider = $gider+$mi->gider;
+                                            }
+                                            ]}
+
                                             <tr id="row-{{$mi->id}}">
                                                 <td>{{Date::convert($mi->tarih,'d.m.Y')}}</td>
                                                 <td>{{KasaModel::hesapAdi($mi->kasa)}}</td>
@@ -436,17 +445,17 @@
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td style="text-align: right">Toplam Tahsilat :</td>
-                                                <td>10000 ₺</td>
+                                                <td>{{$gelir}} ₺</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td style="text-align: right">Toplam İade :</td>
-                                                <td>100 ₺</td>
+                                                <td>{{$gider}} ₺</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td style="text-align: right">Toplam Alınan :</td>
-                                                <td>900 ₺</td>
+                                                <td>{{$gelir-$gider}} ₺</td>
                                             </tr>
 
                                             </tfoot>

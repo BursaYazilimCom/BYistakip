@@ -37,16 +37,16 @@
             'host'      => 'mail.kurumsaleposta.com',
             'user'      => 'info@bursayazilim.com',
             'password'  => 'HMyk*963,*963,',
-            'port'      => 587,
+            'port'      => 465,
             'keepAlive' => false,
             'timeout'   => 30,
-            'encode'    => '',  # empty, tls, ssl
+            'encode'    => 'ssl',  # empty, tls, ssl
             'dsn'       => false,
             'auth'      => true
         ],
         'imap' => 
         [
-            'host'      => 'mail.bursayazilim.com',
+            'host'      => 'mail.kurumsaleposta.com',
             'user'      => 'info@bursayazilim.com',
             'password'  => 'HMyk*963,*963,',
             'port'      => 995,
@@ -64,7 +64,7 @@
             'xMailer'       => 'ZN',
             'encoding'      => '8bit',              # 8bit, 7bit
             'mimeVersion'   => '1.0',               # MIME Version
-            'mailPath'      => '/usr/sbin/sendmail' # Default Mail Path
+            'mailPath'      => '/var/qmail/bin/sendmail' # Default Mail Path
         ]
     ],
 

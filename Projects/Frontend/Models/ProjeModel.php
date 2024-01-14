@@ -31,5 +31,13 @@ class InternalProjeModel extends Model
 
     }
 
+    static function yapilanlar($id){
+        $veri = DB::where('proje_id',$id)->orderby('tarih','DESC')->proje_yapilanlar();
+
+
+        return ['liste'=>$veri->result()];
+
+    }
+
 
 }

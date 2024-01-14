@@ -37,32 +37,32 @@
             'host'      => 'mail.kurumsaleposta.com',
             'user'      => 'info@bursayazilim.com',
             'password'  => 'HMyk*963,*963,',
-            'port'      => 587,
+            'port'      => 465,
             'keepAlive' => false,
             'timeout'   => 30,
-            'encode'    => 'empty',  # empty, tls, ssl
+            'encode'    => 'ssl',  # empty, tls, ssl
             'dsn'       => false,
             'auth'      => true
         ],
         'imap' => 
         [
-            'host'      => 'mail.bursayazilim.com',
+            'host'      => 'mail.kurumsaleposta.com',
             'user'      => 'info@bursayazilim.com',
             'password'  => 'HMyk*963,*963,',
-            'port'      => 995,
+            'port'      => 465,
             'flags'     => [],
             'mailbox'   => 'INBOX'
         ],
         'general' =>
         [
-            'senderMail'    => '',                  # Default Sender E-mail Address.
-            'senderName'    => '',                  # Default Sender Name.
+            'senderMail'    => 'info@bursayazilim.com',                  # Default Sender E-mail Address.
+            'senderName'    => 'Bursa Yazılım',                  # Default Sender Name.
             'priority'      => 3,                   # 1, 2, 3, 4, 5
             'charset'       => 'UTF-8',             # Charset Type
             'contentType'   => 'html',              # plain, html
             'multiPart'     => 'mixed',             # mixed, related, alternative
             'xMailer'       => 'ZN',
-            'encoding'      => '8bit',              # 8bit, 7bit
+            'encoding'      => '7bit',              # 8bit, 7bit
             'mimeVersion'   => '1.0',               # MIME Version
             'mailPath'      => '/usr/sbin/sendmail' # Default Mail Path
         ]

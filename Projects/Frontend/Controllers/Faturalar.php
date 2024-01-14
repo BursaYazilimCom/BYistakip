@@ -243,6 +243,7 @@ class Faturalar extends Controller
         } else {
             $ip = $_SERVER["REMOTE_ADDR"];
         }
+        //
 
         $user_ip=$ip;
 
