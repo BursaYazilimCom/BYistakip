@@ -62,7 +62,7 @@
             'contentType'   => 'html',              # plain, html
             'multiPart'     => 'mixed',             # mixed, related, alternative
             'xMailer'       => 'ZN',
-            'encoding'      => '7bit',              # 8bit, 7bit
+            'encoding'      => '8bit',              # 8bit, 7bit
             'mimeVersion'   => '1.0',               # MIME Version
             'mailPath'      => '/usr/sbin/sendmail' # Default Mail Path
         ]

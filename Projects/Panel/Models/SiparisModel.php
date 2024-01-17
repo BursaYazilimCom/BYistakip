@@ -36,6 +36,28 @@ class InternalSiparisModel extends Model
 
     }
 
+    public function tumSiparisler($durum="")
+    {
+        $veri = DB::where('durum',$durum)->siparisler()->result();
+
+        return $veri;
+
+    }
+
+    public function yenilenecekSiparisler($tarih,$tur){
+
+        $veri = DB::select('siparisler.*')
+            ->where('siparisler.durum','1')
+            ->where('siparis_urunleri.odeme_periyodu=',$tur)
+            ->where('siparis_urunleri.bitis_tarihi<=',$tarih)
+            ->innerjoin('siparis_urunleri.siparis','siparisler.id')->siparisler()->result();
+
+       // echo DB::stringQuery();
+
+        return $veri;
+
+    }
+
     public function teklifler(){
 
             $liste = DB::select(
@@ -311,6 +333,28 @@ class InternalSiparisModel extends Model
 
     }
 
+    public function siparisYenilenecekUrunleri($id){
+
+        $veri = DB::where('odeme_periyodu!=','t')->where('odeme_periyodu!=','u')->where('siparis',$id)->siparis_urunleri()->result();
+
+        return $veri;
+
+    }
+
+    public function yenilenecekSiparisUrunleri($tarih,$siparis="",$tur=""){
+
+        $veri = DB::select('siparis_urunleri.*')
+            ->where('siparisler.durum','1')
+            ->where('siparis_urunleri.odeme_periyodu=',$tur)
+            ->where('siparis_urunleri.bitis_tarihi<=',$tarih)
+            ->where('siparisler.id',$siparis)
+            ->innerjoin('siparisler.id','siparis_urunleri.siparis')->siparis_urunleri()->result();
+
+        return $veri;
+
+    }
+
+
     public function siparisUrunleriListe($gurup=""){
 
         if ($gurup=="") {
@@ -322,6 +366,12 @@ class InternalSiparisModel extends Model
         }
 
         return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
+
+    }
+
+    public function siparisUrunleriTariheGore($tarih)
+    {
+        $veri = DB::where('bitis_tarihi',$tarih)->siparis_urunleri()->result();
 
     }
 

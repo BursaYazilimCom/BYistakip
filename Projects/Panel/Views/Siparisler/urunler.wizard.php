@@ -55,7 +55,7 @@
                                         @foreach($listele['liste'] as $s)
                                         <tr id="row-{{$s->id}}">
                                             <td><a href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}">{{$s->id}}</a></td>
-                                            <td>{{$s->urun}}<br>{{$s->urun_adi}}</td>
+                                            <td><a href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}">{{$s->urun_adi}}</a></td>
                                             <td>{{CariModel::cariAdi($s->cari)}}</td>
                                             <td>{{$s->notu}}</td>
                                             <td>{{AyarModel::odemePeriyodu($s->odeme_periyodu)}}</td>

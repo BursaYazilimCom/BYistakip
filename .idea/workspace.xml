@@ -4,143 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/COMMITMENT" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/SECURITY.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/VERSION" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/composer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/get_oauth_token.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-af.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ar.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-as.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-az.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ba.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-be.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-bg.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-bn.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ca.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-cs.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-da.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-de.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-el.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-eo.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-es.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-et.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-fa.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-fi.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-fo.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-fr.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-gl.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-he.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-hi.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-hr.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-hu.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-hy.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-id.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-it.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ja.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ka.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ko.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-lt.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-lv.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-mg.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-mn.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ms.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-nb.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-nl.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-pl.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-pt.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-pt_br.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ro.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-ru.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-si.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sk.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sl.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sr.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sr_latn.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-sv.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-tl.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-tr.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-uk.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-vi.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-zh.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/language/phpmailer.lang-zh_cn.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/DSNConfigurator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/Exception.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/OAuth.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/OAuthTokenProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/PHPMailer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/POP3.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/External/Libraries/PHPMailer/src/SMTP.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/calismalar.wizard.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/yapilanlar.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/istakip.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/istakip.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php-test-framework.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="Projeler geliştirildi&#10;Projelere Yapılanlan çalışmaların listelendiği bir bölüm eklandi&#10;Müşteri tarafında çalışmaları görebileceği bir sayfa eklendi, &#10;Mail göndermeme sorunu giderildi">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Config/Services.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Config/Services.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Controllers/Faturalar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Controllers/Faturalar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Controllers/Proje.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Controllers/Proje.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Controllers/paytr.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Controllers/paytr.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Models/ProjeModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Models/ProjeModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Config/Services.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Config/Services.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Ayarlar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Ayarlar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Faturalar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Faturalar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Projeler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Projeler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/AyarModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/AyarModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/ProjeModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/ProjeModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/main.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/duzenle.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/duzenle.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/External/Resources/Files/DefaultProject.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-database/DB.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-database/DBForge.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-database/DBTool.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datatypes/Collection.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datatypes/Stack.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datetime/Date.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datetime/DateTimeCommon.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-datetime/DateTimeDefaultConfiguration.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-email/Drivers/ImapDriver.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-email/Sender.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-image/GD.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-pagination/Paginator.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-security/Secure.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-validation/Data.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-validation/DataInterface.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Controller.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Controller/Base.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Functions.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Model.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/Internal/package-zerocore/Wizard.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/7.6.2/zeroneed.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-database/DB.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-datetime/Date.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-datetime/DateTimeCommon.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-datetime/DateTimeCommonInterface.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/Internal/package-filesystem/Converter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.0/zeroneed.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.3/Internal/package-database/DB.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.3/Internal/package-datetime/Date.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.3/Internal/package-zerocore/IS.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.0.3/zeroneed.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-console/Async.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-database/Connection.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-zerocore/In.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-zerocore/Kernel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/Internal/package-zerocore/ZN.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UpgradeBackups/8.4.0/zeroneed.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/SiparisModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/SiparisModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/urunler.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/urunler.wizard.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,8 +111,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "0.3.3.9",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/wamp/www/istakip/External/Libraries",
@@ -249,7 +123,13 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -282,11 +162,30 @@
       <updated>1704835960642</updated>
       <workItem from="1704835964986" duration="2194000" />
       <workItem from="1705176728253" duration="616000" />
-      <workItem from="1705181442925" duration="18959000" />
+      <workItem from="1705181442925" duration="26538000" />
+      <workItem from="1705513833932" duration="4315000" />
+      <workItem from="1705518690053" duration="6138000" />
     </task>
+    <task id="LOCAL-00001" summary="Projeler geliştirildi&#10;Projelere Yapılanlan çalışmaların listelendiği bir bölüm eklandi&#10;Müşteri tarafında çalışmaları görebileceği bir sayfa eklendi, &#10;Mail göndermeme sorunu giderildi">
+      <option name="closed" value="true" />
+      <created>1705272466474</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1705272466474</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Projeler geliştirildi&#10;Projelere Yapılanlan çalışmaların listelendiği bir bölüm eklandi&#10;Müşteri tarafında çalışmaları görebileceği bir sayfa eklendi, &#10;Mail göndermeme sorunu giderildi" />
+    <option name="LAST_COMMIT_MESSAGE" value="Projeler geliştirildi&#10;Projelere Yapılanlan çalışmaların listelendiği bir bölüm eklandi&#10;Müşteri tarafında çalışmaları görebileceği bir sayfa eklendi, &#10;Mail göndermeme sorunu giderildi" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
