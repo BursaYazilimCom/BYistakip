@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="Yenileme faturası oluşturma işlemleri yapılıyor">
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/FaturaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/FaturaModel.php" afterDir="false" />
     </list>
@@ -163,7 +162,7 @@
       <workItem from="1705513833932" duration="4315000" />
       <workItem from="1705518690053" duration="6233000" />
       <workItem from="1705602454322" duration="2053000" />
-      <workItem from="1705605539561" duration="14181000" />
+      <workItem from="1705605539561" duration="28012000" />
     </task>
     <task id="LOCAL-00001" summary="Projeler geliştirildi&#10;Projelere Yapılanlan çalışmaların listelendiği bir bölüm eklandi&#10;Müşteri tarafında çalışmaları görebileceği bir sayfa eklendi, &#10;Mail göndermeme sorunu giderildi">
       <option name="closed" value="true" />

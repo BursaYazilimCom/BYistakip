@@ -87,9 +87,13 @@ class InternalFaturaModel extends Model
     {
         $veri = DB::where('donem_baslangic_tarihi',$baslangic)
             ->where('donem_bitis_tarihi',$bitis)
-            ->where('siparis_urun_',$urun)->faturalar();
+            ->where('siparis_urun_id',$urun)->orderby('id','DESC')->limit(1)->fatura_urunleri();
         
-        $data = ['liste'=>$veri->row(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows()];
+        $data = ['data'=>$veri->row(),'adet'=>$veri->totalRows()];
+
+        //echo DB::stringQuery()."<br>";
+
+        //print_r($data);
 
         return $data;
     }
