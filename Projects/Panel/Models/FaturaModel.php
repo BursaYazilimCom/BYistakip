@@ -83,6 +83,17 @@ class InternalFaturaModel extends Model
 
     }
 
+    public function faturaTekrarKonrolu($baslangic,$bitis,$urun)
+    {
+        $veri = DB::where('donem_baslangic_tarihi',$baslangic)
+            ->where('donem_bitis_tarihi',$bitis)
+            ->where('siparis_urun_',$urun)->faturalar();
+        
+        $data = ['liste'=>$veri->row(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows()];
+
+        return $data;
+    }
+
     static function ekle($data)
     {
 
@@ -158,6 +169,8 @@ class InternalFaturaModel extends Model
             'urun'                  =>$data['urun'],
             'siparis_urun_id'       =>$data['siparis_urun_id'],
             'eklenecek_gun_sayisi'  =>$data['eklenecek_gun_sayisi'],
+            'donem_baslangic_tarihi'=>$data['donem_baslangic_tarihi'],
+            'donem_bitis_tarihi'    =>$data['donem_bitis_tarihi'],
             'urun_adi'              =>$data['urun_adi'],
             'aciklama'              =>$data['aciklama'],
             'miktar'                =>$data['miktar'],

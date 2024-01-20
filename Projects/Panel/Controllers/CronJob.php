@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
-use User,Method,DB,Post,Get,Date,XML,CURL,Json,Time,Email;
-use AyarModel,PersonelModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalCariModel as CariModel;
+use User,Method,DB,Post,Get,Date,XML,CURL,Json,Time,Email,URL,Masterpage;
+use AyarModel,PersonelModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalCariModel as CariModel,UrunModel;
 
 class CronJob extends Controller
 {
@@ -114,12 +114,34 @@ class CronJob extends Controller
 
     }
 
-    public function aylikYenilemeFaturasiOlustur(){
-        $tur = "A";
+    public function yenilemeFaturasiOlustur($tur=""){
+
+        if ($tur=="") {
+            echo "<h3>Yenileme Faturası oluşturabilmek için oluşturulacak fatura döngüsünü belirtiniz.</h3><ul style='line-height: 30px'>";
+            echo "<li><strong>Aylık döngüler için: </strong>".URL::site('cronJob/yenilemeFaturasiOlustur/A')."</li>";
+            echo "<li><strong>3 Aylık döngüler için: </strong>".URL::site('cronJob/yenilemeFaturasiOlustur/3A')."</li>";
+            echo "<li><strong>6Aylık döngüler için: </strong>".URL::site('cronJob/yenilemeFaturasiOlustur/6A')."</li>";
+            echo "<li><strong>Yıllık döngüler için: </strong>".URL::site('cronJob/yenilemeFaturasiOlustur/Y')."</li>";
+            echo "<li><strong>Faturaların otomatik oluşturulması için belirleyeceğiniz aralıklarda üstteki adresleri CronJob çalıştırılması gerekmektedir.</li></ul>";
+            echo "Aşağıdaki kodu cronTab'a eklerseniz 30dk aralıklarla Aylık ödeme periyodlu siparişleri kontrol ederek süresi gelen ürünlerin faturalarını oluşturur<br>";
+            echo "<pre>";
+            echo "*/30 * * * * curl -L -s ".URL::site('cronJob/yenilemeFaturasiOlustur/')."<strong>A</strong> >/dev/null 2>&1";
+            echo "</pre>";
+            exit();
+        }
+        if ($tur=="A") {
+            $faturaGunu = AyarModel::defaultAyarlar('aylikurunFaturaGunu');
+        }elseif ($tur=="3A") {
+            $faturaGunu = AyarModel::defaultAyarlar('3aylikurunFaturaGunu');
+        }elseif ($tur=="6A") {
+            $faturaGunu = AyarModel::defaultAyarlar('6aylikurunFaturaGunu');
+        }elseif ($tur=="Y") {
+            $faturaGunu = AyarModel::defaultAyarlar('yillikUrunFaturaGunu');
+        }
 
         $bugun = date('Y-m-d');
 
-        $tarih = Date::addDay($bugun,AyarModel::defaultAyarlar('yillikUrunFaturaGunu')).' 00:00:00';
+        $tarih = Date::addDay($bugun,$faturaGunu.' 00:00:00');
 
         echo $bugun;
         echo "<hr>";
@@ -128,10 +150,12 @@ class CronJob extends Controller
         echo "<pre>";
 
         $tumSiparisler = SiparisModel::yenilenecekSiparisler($tarih,$tur);
+
         //print_r($tumSiparisler);
         foreach ($tumSiparisler as $siparis) {
 
             $cariBilgi = CariModel::detay($siparis->cari);
+            $faturaID= "";
 
             $siparisurunleri = SiparisModel::yenilenecekSiparisUrunleri($tarih,$siparis->id,$tur);
             $yenilenecekurunsayisi = count($siparisurunleri);
@@ -139,13 +163,56 @@ class CronJob extends Controller
             $faturaUrunSayi = 1;
             foreach ($siparisurunleri as $su) {
 
-                if($faturaUrunSayi==1){
-                    $toplamFiyat = "";
+                if ($su->odeme_periyodu == "A") {
+                    $bitisTarihi = date("Y-m-d", strtotime("+1 month", strtotime($su->bitis_tarihi)));
+                }elseif ($su->odeme_periyodu == "3A"){
+                    $bitisTarihi = date("Y-m-d", strtotime("+3 month", strtotime($su->bitis_tarihi)));
+                }elseif ($su->odeme_periyodu == "6A"){
+                    $bitisTarihi = date("Y-m-d", strtotime("+6 month", strtotime($su->bitis_tarihi)));
+                } elseif ($su->odeme_periyodu == "Y") {
+                    $bitisTarihi = date("Y-m-d", strtotime("+12 month", strtotime($su->bitis_tarihi)));
+                }else{
+                    echo "odeme periyodu bulunamadı";
+                    exit();
+                }
+
+                $faturaTekrarKontrolu = FaturaModel::faturaTekrarKonrolu($su->bitis_tarihi,$bitisTarihi,$su->siparis_urun_id);
+
+                if ($faturaTekrarKontrolu['adet']>0) {
+
+
+                }
+
+                if($faturaID==""){
+                    $toplamFiyat = 0;
+                    $kdvToplami = 0;
                     //eğer siparişteki ürün adeti 1 den fazla ile fatura oluşturmak için fiyat toplamlarını alıyoruz
                     foreach ($siparisurunleri as $sut) {
-                        $toplamFiyat = $toplamFiyat+$sut->birim_fiyat * $sut->adet;
-                        $kdvToplami = $kdvToplami+($toplamFiyat*$sut->kdv/100);
                         //fiyat birimine egöre güncel kur alınacak
+                        if($sut->fiyat_sabitle=="0"){
+                            //Ürünün güncel fiyatını öğreniyoruz
+                            $urunBilgi = UrunModel::detay($sut->urun);
+                            //ödeme periyoduna göre fiyatı hesaplıyoruz
+                            if ($sut->odeme_periyodu == "A") {
+                               $urunFiyati = $urunBilgi->aylik_fiyat;
+                            }elseif ($sut->odeme_periyodu == "3A"){
+                                $urunFiyati = $urunBilgi->uc_aylik_fiyat;
+                            }elseif ($sut->odeme_periyodu == "6A"){
+                                $urunFiyati = $urunBilgi->alti_aylik_fiyat;
+                            } elseif ($sut->odeme_periyodu == "Y") {
+                               $urunFiyati = $urunBilgi->yillik_fiyat;
+                            }
+
+                            $toplamFiyat = $toplamFiyat+$urunFiyati * $sut->adet;
+                            $kdvToplami = $kdvToplami+($toplamFiyat*$sut->kdv/100);
+
+                        }else{
+                            $toplamFiyat = $toplamFiyat+$sut->birim_fiyat * $sut->adet;
+                            $kdvToplami = $kdvToplami+($toplamFiyat*$sut->kdv/100);
+                            $urunFiyati = $sut->birim_fiyat;
+                        }
+                        $toplamTutar = $toplamFiyat+$kdvToplami;
+
                     }
 
                     $faturaData = [
@@ -159,50 +226,48 @@ class CronJob extends Controller
                         'tedarikci'         =>"0",
                         'musteri'           =>$cariBilgi->id,
                         'siparis_id'        =>$siparis->id,
-                        'toplam_tutar'      =>$toplamTutar,
-                        'kdv_toplami'       =>$kdvToplami,
-                        'genel_toplam'      =>$kdvToplami+$toplamTutar,
-                        'belge_tarihi'      =>$siparis_tarihi,
-                        'vade_tarihi'       =>Date::addDay($siparis_tarihi, 5),
+                        'toplam_tutar'      =>AyarModel::tlCevir($toplamFiyat,$su->para_birimi),
+                        'kdv_toplami'       =>AyarModel::tlCevir($kdvToplami,$su->para_birimi),
+                        'genel_toplam'      =>AyarModel::tlCevir($toplamTutar,$su->para_birimi),
+                        'belge_tarihi'      =>date("Y-m-d"),
+                        'vade_tarihi'       =>$sut->bitis_tarihi,
                         'durum'             =>"1",
-                        'odeme'             =>$odeme_durumu,
-                        'odeme_yontemi'     =>$odeme_yontemi,
-                        'aciklama'          =>""
+                        'odeme'             =>"0",
+                        'odeme_yontemi'     =>$siparis->odeme_yontemi,
+                        'aciklama'          =>$siparis->id." Numaralı sipariş yenileme faturası"
                     ];
 
-                    $faturaOlustur = FaturaModel::ekle($faturaData);
+                    $faturaID = FaturaModel::ekle($faturaData);
 
                 }
+                        $urunTLFiyat = AyarModel::tlCevir($urunFiyati,$su->para_birimi);
+                        $urunKdvTutari = $su->kdv*$urunTLFiyat/100;
 
+                        $urunToplamFiyat = ($urunTLFiyat*$su->adet)+$urunKdvTutari;
 
-
-                if ($faturaOlustur){
-
-                    $siparisUrunleriDB = SiparisModel::siparisUrunleri($siparisOlustur);
-
-                    foreach ($siparisUrunleriDB as $suDb){
 
                         $fUrun = [
-                            'fatura'                =>$faturaOlustur,
-                            'urun'                  =>$suDb->urun,
-                            'siparis_urun_id'       =>$suDb->id,
-                            'eklenecek_gun_sayisi'  =>AyarModel::odemePeriyoduEklenecekGun($suDb->odeme_periyodu),
-                            'urun_adi'              =>$suDb->urun_adi,
-                            'aciklama'              =>$suDb->notu,
-                            'miktar'                =>$suDb->adet,
-                            'fiyat'                 =>$suDb->birim_fiyat,
-                            'kdv'                   =>$suDb->kdv,
-                            'kdv_tutari'            =>$suDb->kdv_tutari,
-                            'tutar'                 =>$suDb->toplam_fiyat,
+                            'fatura'                =>$faturaID,
+                            'urun'                  =>$su->urun,
+                            'siparis_urun_id'       =>$su->id,
+                            'eklenecek_gun_sayisi'  =>AyarModel::odemePeriyoduEklenecekGun($su->odeme_periyodu),
+                            'donem_baslangic_tarihi'=>$su->bitis_tarihi,
+                            'donem_bitis_tarihi'    =>$bitisTarihi,
+                            'urun_adi'              =>$su->urun_adi,
+                            'aciklama'              =>$su->notu,
+                            'miktar'                =>$su->adet,
+                            'fiyat'                 =>$urunTLFiyat,
+                            'kdv'                   =>$su->kdv,
+                            'kdv_tutari'            =>$urunKdvTutari,
+                            'tutar'                 =>$urunToplamFiyat,
                         ];
+
+                        //print_r($fUrun);
 
                         $faturaUrunEkle = FaturaModel::urunEkle($fUrun);
 
-                    }
-
-                }
-
                 $faturaUrunSayi++;
+
             }
 
 
