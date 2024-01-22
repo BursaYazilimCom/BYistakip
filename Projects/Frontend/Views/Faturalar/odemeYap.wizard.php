@@ -1,26 +1,25 @@
+<div class="toolbar py-5 py-lg-15" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+        <!--begin::Title-->
+        <h3 class="text-white fw-bolder fs-2qx me-5"> #{{$detay->belge_no}} Kredi Kartı Ödemesi</h3>
+        <!--begin::Title-->
+
+    </div>
+    <!--end::Container-->
+</div>
 <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
     <!--begin::Post-->
     <div class="content flex-row-fluid" id="kt_content">
         <!--begin::Invoice-->
         <div class="card">
             <!--begin::Body-->
-            <div class="card-body p-lg-20">
+            <div class="card-body">
                 <!--begin::Layout-->
                 <div class="d-flex flex-column flex-xl-row">
                     <!--begin::Content-->
                     <div class="flex-lg-row-fluid me-xl-18 mb-10 mb-xl-0">
 
-
-                        <!--begin::Head-->
-                        <div class="d-flex flex-stack mb-10 mb-lg-15">
-                            <!--begin::Logo-->
-                            <a href="#">
-                                <img alt="Logo" class="h-40px" src="{{URl::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" />
-                            </a>
-                            <!--end::Logo-->
-                        </div>
-                        <!--end::Head-->
-                        <!--begin::Wrapper-->
                         <div class="mb-0">
 
                             <!-- Ödeme formunun açılması için gereken HTML kodlar / Başlangıç -->

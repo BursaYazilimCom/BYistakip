@@ -22,8 +22,6 @@
 <script src="vendors/js/forms/repeater/jquery.repeater.min.js"></script>
 <!-- END: Page Vendor JS-->
 
-<script type='text/javascript' src='plugins/jodit/jodit.js'></script>
-
     <!-- BEGIN: Theme JS-->
     <script src="js/core/app-menu.js"></script>
     <script src="js/core/app.js"></script>
@@ -43,7 +41,28 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#summernote').summernote();
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+
+                ['para', ['ul','ol','paragraph']],
+                ["view", ["fullscreen", "codeview"]]
+            ],
+        });
+
+        $('#openModal').on('shown.bs.modal', function() {
+            $('#summernote').summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+
+                    ['para', ['ul','ol','paragraph']],
+                    ["view", ["fullscreen", "codeview"]]
+                ],
+            });
+        })
+
     });
 </script>
 

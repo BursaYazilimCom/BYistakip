@@ -1,34 +1,39 @@
+<div class="toolbar py-5 py-lg-15" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+        <!--begin::Title-->
+        <h3 class="text-white fw-bolder fs-2qx me-5">Fatura No #{{$detay->belge_no}}</h3>
+        <!--begin::Title-->
+        <!--begin::Actions-->
+        <div class="d-flex align-items-center flex-wrap py-2">
+
+            @if($detay->durum=="2")
+            <a href="{{URL::site()}}../Uploads/faturalar/{{ $detay->resmi_fatura_dosyasi }}" class="btn btn-sm btn-warning me-2">Resmi Fatura İndir</a>
+            @endif
+            <a href="#" class="btn btn-sm btn-success me-2" onclick="window.print()">Yazdır</a>
+            @if($detay->odeme=="0")
+            <a href="{{URL::site()}}faturalar/odemeYap/{{$detay->id}}" class="btn btn-sm btn-primary me-2">Kredi Kartı İle Öde</a>
+            @endif
+
+            <a href="{{URL::site()}}faturalar/odemeBildirimi/{{$detay->id}}" class="btn btn-sm btn-warning me-2">Havale Ödeme Bildirimi</a>
+            <!--end::Button-->
+        </div>
+        <!--end::Actions-->
+    </div>
+    <!--end::Container-->
+</div>
 <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
     <!--begin::Post-->
     <div class="content flex-row-fluid" id="kt_content">
         <!--begin::Invoice-->
         <div class="card">
             <!--begin::Body-->
-            <div class="card-body p-lg-20">
+            <div class="card-body">
                 <!--begin::Layout-->
                 <div class="d-flex flex-column flex-xl-row">
                     <!--begin::Content-->
                     <div class="flex-lg-row-fluid me-xl-18 mb-10 mb-xl-0">
-                        <!--begin::Head-->
-                        <div class="d-flex flex-stack mb-10 mb-lg-15">
-                            <!--begin::Logo-->
-                            <a href="#">
-                                <img alt="Logo" class="h-40px" src="{{URL::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" />
-                            </a>
-                            <!--end::Logo-->
-                            <!--begin::Actions-->
-                            <div class="my-1">
-                                @if($detay->durum=="2")
-                                <a href="{{URL::site()}}../Uploads/faturalar/{{ $detay->resmi_fatura_dosyasi }}" class="btn btn-sm btn-warning me-2">Resmi Fatura İndir</a>
-                                @endif
-                                <a href="#" class="btn btn-sm btn-success me-2" onclick="window.print()">Yazdır</a>
-                                @if($detay->odeme=="0")
-                                <a href="{{URL::site()}}faturalar/odemeYap/{{$detay->id}}" class="btn btn-sm btn-primary">Kredi Kartı İle Öde</a>
-                                @endif
-                            </div>
-                            <!--end::Actions-->
-                        </div>
-                        <!--end::Head-->
+
                         <!--begin::Wrapper-->
                         <div class="mb-0">
                             {{$uyari}}

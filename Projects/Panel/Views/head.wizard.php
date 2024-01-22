@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="vendors/css/charts/apexcharts.css">
     <link rel="stylesheet" type="text/css" href="vendors/css/extensions/toastr.min.css">
 <link rel="stylesheet" type="text/css" href="vendors/css/forms/select/select2.min.css">
-<link rel="stylesheet" type="text/css" href="plugins/jodit/jodit.min.css">
     <!-- END: Vendor CSS-->
 
 
@@ -26,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="css/themes/dark-layout.css">
     <link rel="stylesheet" type="text/css" href="css/themes/bordered-layout.css">
     <link rel="stylesheet" type="text/css" href="css/themes/semi-dark-layout.css">
-
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="css/plugins/forms/form-validation.css">
     <link rel="stylesheet" type="text/css" href="css/pages/authentication.css">
@@ -38,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="css/plugins/extensions/ext-component-toastr.css">
         <link rel="stylesheet" type="text/css" href="css/pages/modal-create-app.css">
         <link rel="stylesheet" type="text/css" href="vendors/css/pickers/flatpickr/flatpickr.min.css">
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
 
 
     <!-- END: Page CSS-->
