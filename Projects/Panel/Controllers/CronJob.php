@@ -277,7 +277,7 @@ class CronJob extends Controller
                             'kdv_toplami'       =>AyarModel::tlCevir($kdvToplami,$su->para_birimi),
                             'genel_toplam'      =>AyarModel::tlCevir($toplamTutar,$su->para_birimi),
                             'belge_tarihi'      =>date("Y-m-d"),
-                            'vade_tarihi'       =>$sut->bitis_tarihi,
+                            'vade_tarihi'       =>$donemBitisTarihi,
                             'durum'             =>"1",
                             'odeme'             =>"0",
                             'odeme_yontemi'     =>$siparis->odeme_yontemi,
@@ -285,6 +285,12 @@ class CronJob extends Controller
                         ];
 
                         $faturaID = FaturaModel::ekle($faturaData);
+
+                        if ($faturaID) {
+                            echo $su->id." Numaralı sipariş ürünü için  ".$faturaID." Numaralı yenileme faturası Oluşturuldu<br>";
+                        }else{
+                            echo $su->id." Numaralı sipariş ürünü için yenileme faturası oluşturulamadı<br>";
+                        }
 
                     }
                     $urunTLFiyat = AyarModel::tlCevir($urunFiyati,$su->para_birimi);
@@ -313,7 +319,16 @@ class CronJob extends Controller
 
                     $faturaUrunEkle = FaturaModel::urunEkle($fUrun);
 
+                    if ($faturaUrunEkle) {
+                        echo $su->id." Numaralı sipariş ürünü için oluşturulan  ".$faturaID." Numaralı yenileme faturasına fatura ürünü eklendi<br>";
+                    }else{
+                        echo $su->id." Numaralı sipariş ürünü için yenileme faturası oluşturulamadı<br>";
+                    }
 
+
+                }else{
+
+                    echo $su->id." Numaralı sipariş ürünü için yenileme faturası daha önce oluşturulmuş<br>";
                 }
 
 

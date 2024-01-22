@@ -531,7 +531,7 @@ class InternalAyarModel extends Model
             ->update('odeme_yontemleri',[
                 'baslik'                    =>$data["baslik"],
                 'kasa_hesabi'               =>$data["kasa_hesabi"],
-                'entegrasyon_bilgileri'     =>$data["entegrasyon_bilgileri"],
+                'bilgiler'                  =>$data["bilgiler"],
                 'durum'                     =>$data["durum"]
             ]);
 
@@ -545,7 +545,7 @@ class InternalAyarModel extends Model
         $ekle = DB::insert('odeme_yontemleri',[
             'baslik'                    =>$data["baslik"],
             'kasa_hesabi'               =>$data["kasa_hesabi"],
-            'entegrasyon_bilgileri'     =>$data["entegrasyon_bilgileri"],
+            'bilgiler'                  =>$data["bilgiler"],
             'durum'                     =>$data["durum"]
         ]);
 

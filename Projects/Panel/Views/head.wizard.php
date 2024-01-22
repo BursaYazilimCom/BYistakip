@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="plugins/jodit/jodit.min.css">
     <!-- END: Vendor CSS-->
 
+
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-extended.css">
@@ -37,6 +38,7 @@
     <link rel="stylesheet" type="text/css" href="css/plugins/extensions/ext-component-toastr.css">
         <link rel="stylesheet" type="text/css" href="css/pages/modal-create-app.css">
         <link rel="stylesheet" type="text/css" href="vendors/css/pickers/flatpickr/flatpickr.min.css">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
 
     <!-- END: Page CSS-->

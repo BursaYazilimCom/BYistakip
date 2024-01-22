@@ -5,10 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="Yenileme faturası oluşturma işlemleri yapılıyor">
+      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Resources/Themes/Default/css/style.bundle.css" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Resources/Themes/Default/css/style.bundle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/calismalar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/calismalar.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Views/Proje/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Views/head.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Views/head.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Views/header.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Views/header.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Ayarlar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Ayarlar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/FaturaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/FaturaModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/AyarModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/AyarModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/odemeYontemleri.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/odemeYontemleri.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/duzenle.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/duzenle.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Kasa/tumKayitlar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Kasa/tumKayitlar.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/head.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/head.wizard.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +132,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -162,7 +175,11 @@
       <workItem from="1705513833932" duration="4315000" />
       <workItem from="1705518690053" duration="6233000" />
       <workItem from="1705602454322" duration="2053000" />
-      <workItem from="1705605539561" duration="28012000" />
+      <workItem from="1705605539561" duration="28729000" />
+      <workItem from="1705778000032" duration="10489000" />
+      <workItem from="1705827600419" duration="667000" />
+      <workItem from="1705828291322" duration="2832000" />
+      <workItem from="1705952990299" duration="3673000" />
     </task>
     <task id="LOCAL-00001" summary="Projeler geliştirildi&#10;Projelere Yapılanlan çalışmaların listelendiği bir bölüm eklandi&#10;Müşteri tarafında çalışmaları görebileceği bir sayfa eklendi, &#10;Mail göndermeme sorunu giderildi">
       <option name="closed" value="true" />

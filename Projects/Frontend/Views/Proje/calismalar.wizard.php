@@ -1,46 +1,47 @@
+<div class="toolbar py-5 py-lg-15" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+        <!--begin::Title-->
+        <h3 class="text-white fw-bolder fs-2qx me-5">{{$detay->proje_adi}}</h3>
+        <!--begin::Title-->
+        <!--begin::Actions-->
+        <div class="d-flex align-items-center flex-wrap py-2">
+
+            <a href="{{URL::site('proje/main/'.$detay->sef)}}" class="btn btn-info my-2 me-2 me-lg-6 d-print-none">Yol Haritası</a>
+
+            <a href="javascript:void(0);" class="btn btn-primary my-2 me-2 me-lg-6 d-print-none" onclick="window.print()">Yazdır</a>
+
+            @if($detay->durum=="2")
+
+            <span class="btn btn-success my-2 d-print-none" tooltip="Tamamlandı">Tamamlandı</span>
+            @else
+            <span class="btn btn-warning my-2 d-print-none" tooltip="Devam Ediyor">Devam Ediyor</span>
+            @endif
+            <!--end::Button-->
+        </div>
+        <!--end::Actions-->
+    </div>
+    <!--end::Container-->
+</div>
+
 <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
     <!--begin::Post-->
     <div class="content flex-row-fluid" id="kt_content">
         <!--begin::Invoice-->
         <div class="card">
             <!--begin::Body-->
+            <div class="card-header align-items-center border-0 mt-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="fw-bolder text-dark fs-2">Projede  Yapılan Çalışmalar ve Devam Eden Çalışmalar</span>
+                    <span class="text-gray-400 mt-2 fw-bold fs-6"></span>
+                </h3>
+            </div>
             <div class="card-body">
                 <!--begin::Layout-->
                 <div class="row">
                     <!--begin::Content-->
-                    <div class="col-xl-9">
-                        <!--begin::Head-->
-                        <div class="d-flex flex-stack mb-10 mb-lg-15">
-                            <!--begin::Logo-->
-                            <a href="#">
-                                <img alt="Logo" class="h-40px" src="{{URL::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" />
-                            </a>
-                            <!--end::Logo-->
-                            <!--begin::Actions-->
-                            <div class="my-1">
-                                @if($detay->durum=="2")
-                                <span class="btn btn-sm btn-success me-2">Tamamlandı</span>
-                                @else
-                                <span class="btn btn-sm btn-success me-2">Devam Ediyor</span>
-                                @endif
-                                <a href="{{URL::site('proje/main/'.$detay->sef)}}" class="btn btn-sm btn-info me-2">Yol Haritası</a>
-                                <a href="#" class="btn btn-sm btn-success me-2" onclick="window.print()">Yazdır</a>
+                    <div class="col-xl-12">
 
-                            </div>
-                            <!--end::Actions-->
-                        </div>
-
-
-                        <!--begin::Header-->
-                        <div class="card-header align-items-center border-0 mt-5">
-                            <h3 class="card-title align-items-start flex-column">
-                                <span class="fw-bolder text-dark fs-2">{{$detay->proje_adi}}</span>
-                                <span class="text-gray-400 mt-2 fw-bold fs-6">Projede  Yapılan Çalışmalar</span>
-                            </h3>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
-                        <div class="card-body">
                             <table class="table table-borderless">
                             <!--begin::Item-->
                                 {[
@@ -101,53 +102,9 @@
                                 <span class="text-gray-800 fw-bold fs-6">Bu sayfa; Projenizin ilerleyişi için detaylı bilgilendirme ve gelişmelerden haberdar olmanız için yapılan çalışmaları içermektedir.</span>
 
                             </div>
-                            <!--end::Alert-->
-                        </div>
-
 
                     </div>
-                    <!--end::Content-->
-                    <!--begin::Sidebar-->
-                    <div class=" col-xl-3">
-                        <!--begin::Invoice sidebar-->
-                        <div class="d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 p-9 bg-lighten">
-                            <!--begin::Labels-->
-                            <div class="mb-8">
 
-                                <div class="col-sm-12">
-                                    <!--end::Label-->
-                                    <div class="fw-bold fs-7 text-gray-600 mb-1">Proje Başlangıç Tarihi:</div>
-                                    <!--end::Label-->
-                                    <!--end::Col-->
-                                    <div class="fw-bolder fs-6 text-gray-800">{{Date::convert($detay->proje_baslangic_tarihi,'d.m.Y')}}</div>
-                                    <!--end::Col-->
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <!--end::Label-->
-                                    <div class="fw-bold fs-7 text-gray-600 mb-1">Proje Termin Tarihi:</div>
-                                    <!--end::Label-->
-                                    <!--end::Col-->
-                                    <div class="fw-bolder fs-6">{{Date::convert($detay->tahmini_bitis_tarihi,'d.m.Y')}}</div>
-                                    <!--end::Col-->
-                                </div>
-
-                            </div>
-                            <!--end::Labels-->
-
-                            <!--begin::Item-->
-                            <div class="mb-6">
-                                <div class="fw-bold text-gray-600 fs-7">Açıklama:</div>
-                                <div class="fs-6">{{$detay->aciklama}}</div>
-                            </div>
-
-                            <!--end::Item-->
-                            <!--begin::Item-->
-
-                        </div>
-                        <!--end::Invoice sidebar-->
-                    </div>
-                    <!--end::Sidebar-->
                 </div>
                 <!--end::Layout-->
             </div>

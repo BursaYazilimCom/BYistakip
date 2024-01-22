@@ -17,8 +17,8 @@
 
         <div class="header-logo me-5 me-md-10 flex-grow-1 flex-lg-grow-0">
             <a href="{{URl::site()}}">
-                <img alt="Logo" src="{{URl::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" class="h-15px h-lg-20px logo-default" />
-                <img alt="Logo" src="{{URl::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" class="h-15px h-lg-20px logo-sticky" />
+                <img alt="Logo" src="{{URl::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" class="h-15px h-lg-40px logo-default" />
+                <img alt="Logo" src="{{URl::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" class="h-15px h-lg-40px logo-sticky" />
             </a>
         </div>
         <!--end::Header Logo-->

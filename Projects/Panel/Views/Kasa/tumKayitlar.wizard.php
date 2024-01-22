@@ -38,49 +38,47 @@
             <div class="row" id="table-hover-row">
                 <div class="col-12">
                     <div class="card">
+                        {{ Redirect::select('bilgi',true) }}
                         <div class="card-header">
-                            <h4 class="card-title">Kasa Kayıtları</h4>
+                            <h4 class="card-title">Kasa Kayıtları | Toplam: <strong>{{$kasaToplami}}</strong></h4>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">
-                                Tüm Kasa Defteri Kayıtları ({{$kasaToplami}})
-                            </p>
-                            {{ Redirect::select('bilgi',true) }}
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <tr>
+                                        <th>Tarih</th>
+                                        <th>İşlem</th>
+                                        <th>Kasa</th>
+                                        <th>Hesap</th>
+                                        <th>Açıklama</th>
+                                        <th>Gelir</th>
+                                        <th>Gider</th>
+                                        <th>Bakiye</th>
+                                        <th>#</th>
+                                    </tr>
+
+                                    @foreach($kayitlar['liste'] as $kayit)
+
+                                    <tr>
+                                        <td>{{Date::convert($kayit->tarih, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
+                                        <td class="text-{{$kayit->islem=='o'?'danger':'success'}}">{{$kayit->islem=="o"?"Ödeme":"Tahsilat"}}</td>
+                                        <td>{{$kayit->KasaAdi}}</td>
+                                        <td>{{$kayit->hesap}}</td>
+                                        <td>{{$kayit->aciklama}}</td>
+                                        <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format($kayit->gelir,2)}}</td>
+                                        <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format($kayit->gider,2)}} </td>
+                                        <td>{{number_format($kayit->mevcut_kasa_toplami,2)}}</td>
+                                        <td>
+                                            <a href="" data-toggle="tooltip" title="Kayıt Sil" class="btn btn-danger btn-xs"><i data-feather="trash"></i></a>
+                                        </td>
+
+                                    </tr>
+                                    @endforeach
+                                </table>
+
+                            </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
-                                <tr>
-                                    <th>Tarih</th>
-                                    <th>İşlem</th>
-                                    <th>Kasa</th>
-                                    <th>Hesap</th>
-                                    <th>Açıklama</th>
-                                    <th>Gelir</th>
-                                    <th>Gider</th>
-                                    <th>Bakiye</th>
-                                    <th>#</th>
-                                </tr>
 
-                                @foreach($kayitlar['liste'] as $kayit)
-
-                                <tr>
-                                    <td>{{Date::convert($kayit->tarih, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
-                                    <td class="text-{{$kayit->islem=='o'?'danger':'success'}}">{{$kayit->islem=="o"?"Ödeme":"Tahsilat"}}</td>
-                                    <td>{{$kayit->KasaAdi}}</td>
-                                    <td>{{$kayit->hesap}}</td>
-                                    <td>{{$kayit->aciklama}}</td>
-                                    <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format($kayit->gelir,2)}}</td>
-                                    <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format($kayit->gider,2)}} </td>
-                                    <td>{{number_format($kayit->mevcut_kasa_toplami,2)}}</td>
-                                    <td>
-                                        <a href="" data-toggle="tooltip" title="Kayıt Sil" class="btn btn-danger btn-xs"><i data-feather="trash"></i></a>
-                                    </td>
-
-                                </tr>
-                                @endforeach
-                            </table>
-
-                        </div>
                         <div class="card-footer">
                             <nav aria-label="Page navigation">
                                 {{$kayitlar['sayfalama']}}

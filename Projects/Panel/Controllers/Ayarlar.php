@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 
-use User,Method,Post,Session,Cookie,Redirect,DB,Upload,Json,Import,Encode,URL,Validation;
+use User,Method,Post,Session,Cookie,Redirect,DB,Upload,Json,Import,Encode,URL,Validation,Security;
 use InternalPersonelModel as PersonelModel,InternalAyarModel as AyarModel, KasaModel;
 
 class Ayarlar extends Controller
@@ -292,10 +292,11 @@ class Ayarlar extends Controller
             $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
 
         }else{
+            /*
             $keys = Post::key();
             $values = Post::value();
 
-            if (!empty($keys[0])){
+           if (!empty($keys[0])){
 
                 for ($key = 0; $key < count($keys); $key++) {
                     $entegrasyon_bilgileri[$key]['key'] = $keys[$key];
@@ -304,13 +305,13 @@ class Ayarlar extends Controller
                 $entegrasyon = Json::encode($entegrasyon_bilgileri);
             }else{
                 $entegrasyon = "";
-            }
+            }*/
 
 
             $ekleData = [
                 'baslik'                    =>Post::baslik(),
                 'kasa_hesabi'               =>Post::kasa_hesabi(),
-                'entegrasyon_bilgileri'     =>$entegrasyon,
+                'bilgiler'                  =>Security::htmlEncode(Post::bilgiler()),
                 'durum'                     =>Post::durum()
             ];
 
@@ -336,7 +337,7 @@ class Ayarlar extends Controller
             $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
 
         }else{
-            $keys = Post::key();
+            /*$keys = Post::key();
             $values = Post::value();
 
             if (!empty($keys[0])){
@@ -348,15 +349,15 @@ class Ayarlar extends Controller
                 $entegrasyon = Json::encode($entegrasyon_bilgileri);
             }else{
                 $entegrasyon = "";
-            }
+            }*/
 
 
             $ekleData = [
-                'id'             =>$id,
-                'baslik'             =>Post::baslik(),
-                'kasa_hesabi'               =>Post::kasa_hesabi(),
-                'entegrasyon_bilgileri'               =>$entegrasyon,
-                'durum'             =>Post::durum()
+                'id'                    =>$id,
+                'baslik'                =>Post::baslik(),
+                'kasa_hesabi'           =>Post::kasa_hesabi(),
+                'bilgiler'              =>Security::htmlEncode(Post::bilgiler()),
+                'durum'                 =>Post::durum()
             ];
 
             $ekle = AyarModel::odemeYontemiGuncelle($ekleData);

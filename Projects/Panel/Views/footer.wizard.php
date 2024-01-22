@@ -40,6 +40,14 @@
 <script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
 
 
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+</script>
+
+
 <script src="js/by.js"></script>
     <!-- END: Page JS-->
 

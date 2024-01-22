@@ -1,3 +1,4 @@
+
 <div class="app-content content ">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
@@ -44,7 +45,7 @@
                                             <th>#</th>
                                             <th>Başlık</th>
                                             <th>Kasa Hesabı</th>
-                                            <th>Entegrasyon Bilgileri</th>
+                                            <th>Bilgiler</th>
                                             <th>Durum</th>
                                             <th></th>
                                         </tr>
@@ -55,17 +56,7 @@
                                             <td>{{$oy->id}}</td>
                                             <td>{{$oy->baslik}}</td>
                                             <td>{{KasaModel::hesapAdi($oy->kasa_hesabi)}}</td>
-                                            <td>{[
-
-                                                $data = Json::decode($oy->entegrasyon_bilgileri);
-
-                                                if (!empty($data) && is_array($data)) {
-                                                foreach ($data as $item) {
-                                                echo $item->key . ": " . $item->value . "<br>";
-                                                }
-                                                }
-
-                                                ]}</td>
+                                            <td>{{Security::htmlDecode($oy->bilgiler)}}</td>
                                             <td>
                                                 @if($oy->durum=="1")
                                                 <span class="badge rounded-pill badge-light-primary me-1">Aktif</span>
@@ -154,17 +145,14 @@
                                 </select>
                             </div>
                                 <div class="col-md-12">
-                                    <label class="form-label" for="modalAddCardName"><strong>Entegrasyon Bilgileri</strong></label><br>
-                                    <small>Giriş yaparken ilk kutusa anahtar ikinci kotuya Değer giriniz</small>
-                                    <br>
-                                    <button type="button" class="btn btn-success" value="Satır Ekle" onclick="satirEkle()"><i data-feather="plus"></i> </button>
-                                    <table id="satirEklemeTablosu">
-                                        <tr>
-                                            <td><input type="text" name="key[]" class="form-control" placeholder="key"></td>
-                                            <td><input type="text" name="value[]" class="form-control" placeholder="value"></td>
-                                            <td><button type="button" class="btn btn-danger" value="Sil" onclick="silSatir(this)">x<button</td>
-                                        </tr>
-                                    </table>
+                                    <label class="form-label" for="modalAddCardName">Bilgiler</label><br>
+                                    <small>Banka Hesapları, Bilgilendirme mesajı vs yazabilirsiniz. Ödeme sayfasında görünecektir</small>
+                                    <div class="input-group input-group-merge">
+
+                                        <textarea class="form-control" id="summernote" name="bilgiler"></textarea>
+
+                                    </div>
+
                                 </div>
 
                                 <div class="col-12 text-center">
@@ -175,24 +163,6 @@
                                 </div>
                             @Form::close()
 
-                            <script>
-                                function satirEkle() {
-                                    var tablo = document.getElementById("satirEklemeTablosu");
-                                    var yeniSatir = tablo.insertRow(tablo.rows.length);
-                                    var hucre1 = yeniSatir.insertCell(0);
-                                    var hucre2 = yeniSatir.insertCell(1);
-                                    var hucre3 = yeniSatir.insertCell(2);
-
-                                    hucre1.innerHTML = '<input type="text" name="key[]" class="form-control" placeholder="Key">';
-                                    hucre2.innerHTML = '<input type="text" name="value[]" class="form-control" placeholder="value">';
-                                    hucre3.innerHTML = '<button type="button" class="btn btn-danger" value="Sil" onclick="silSatir(this)">x</button>';
-                                }
-
-                                function silSatir(button) {
-                                    var satir = button.parentNode.parentNode;
-                                    satir.parentNode.removeChild(satir);
-                                }
-                            </script>
                         </div>
                     </div>
                 </div>

@@ -130,38 +130,14 @@ class Ajax extends Controller
             </div>
             <div class="col-md-12">
                 <label class="form-label" for="modalAddCardName"><strong>Entegrasyon Bilgileri</strong></label><br>
-                <small>Giriş yaparken ilk kutusa anahtar ikinci kotuya Değer giriniz</small>
-                <br>
-                <button type="button" class="btn btn-success" value="Satır Ekle" onclick="satirEkle()">+</button>
-                <table id="satirEklemeTablosu">
-                    <?php
+                <small>Banka Hesapları, Bilgilendirme mesajı vs yazabilirsiniz. Ödeme sayfasında görünecektir</small>
 
-                    $data = Json::decode($odemeYontemi->entegrasyon_bilgileri);
+                <div class="input-group input-group-merge">
 
-                    if (!empty($data) && is_array($data)) {
-                        foreach ($data as $item) {
-                            ?>
-                            <tr>
-                                <td><input type="text" name="key[]" class="form-control" placeholder="key" value="<?= $item->key ?>"></td>
-                                <td><input type="text" name="value[]" class="form-control" placeholder="value" value="<?= $item->value ?>"></td>
-                                <td><button type="button" class="btn btn-danger" value="Sil" onclick="silSatir(this)">x</button></td>
-                            </tr>
-                    <?php
-                        }
-                    }else{
-                        ?>
-                        <tr>
-                            <td><input type="text" name="key[]" class="form-control" placeholder="key"></td>
-                            <td><input type="text" name="value[]" class="form-control" placeholder="value"></td>
-                            <td><button type="button" class="btn btn-danger" value="Sil" onclick="silSatir(this)">x</button></td>
-                        </tr>
-                    <?php
+                    <textarea class="form-control" id="summernote" name="bilgiler"><?=Security::htmlDecode($odemeYontemi->bilgiler)?></textarea>
 
-                    }
+                </div>
 
-                    ?>
-
-                </table>
             </div>
 
             <div class="col-12 text-center">

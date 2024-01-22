@@ -195,10 +195,11 @@
                                                     <td>
                                                         <input type="hidden" name="id[]" id="id" value="{{$furun->id}}">
                                                         <input type="hidden" name="urun_adi[]" id="urun_adi" value="{{$furun->urun_adi}}">
-                                                        {{$furun->urun_adi}}
+                                                        <strong>{{$furun->urun_adi}}</strong><br><small><strong>Dönemi:</strong>{{Date::convert($furun->donem_baslangic_tarihi,'d.m.Y')}} {{Date::convert($furun->donem_bitis_tarihi,'d.m.Y')}}</small>
                                                     </td>
                                                     <td style="min-width: 400px">
                                                         <input type="text" name="aciklama[]" id="aciklama" value="{{$furun->aciklama}}" class="form-control">
+
                                                     </td>
                                                     <td>
                                                         @if($detay->durum=="2")
