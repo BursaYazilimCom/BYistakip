@@ -43,9 +43,10 @@ class Kasa extends Controller
     }
 
     public function odemeEkle($yer,$id){
+        $user = User::data();
 
         $user           = User::data();
-        $kasa_hesabı    = Post::kasa();
+        $kasa_hesabi    = Post::kasa();
         $aciklama       = Post::aciklama();
         $tutar          = Post::tutar();
         $odeme_tarihi   = Post::odeme_tarihi();
@@ -57,7 +58,7 @@ class Kasa extends Controller
             $cariDetay = CariModel::detay($siparisDetay->cari);
 
             $defterData = [
-                'kasa'          =>$kasa_hesabı,
+                'kasa'          =>$kasa_hesabi,
                 'islem'         =>"t",
                 'hesap'         =>"Sipariş Ödemesi Tahsilatı: ".$cariDetay->adi,
                 'islem_turu'    =>"siparis",
@@ -73,11 +74,11 @@ class Kasa extends Controller
 
             $kasayaKaydet = KasaModel::deftereKaydet($defterData);
 
-            $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabı);
+            $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabi);
 
             if ($kasayaKaydet) {
 
-                $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabı);
+                $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabi);
 
                 $toplamSiparisOdemesi = $tutar+$siparisDetay->alinan_odeme;
 
@@ -128,18 +129,19 @@ class Kasa extends Controller
         elseif ($yer=="fatura"){
 
             $faturaDetay = FaturaModel::detay($id);
+            $faturaUrunleri = FaturaModel::faturaUrunleri($faturaDetay->id);
 
             $cariDetay = CariModel::detay($faturaDetay->musteri);
 
             $defterData = [
-                'kasa'          =>$kasa_hesabı,
+                'kasa'          =>$kasa_hesabi,
                 'islem'         =>"t",
                 'hesap'         =>"Fatura Tahsilatı: ".$cariDetay->adi,
                 'islem_turu'    =>"fatura",
                 'islem_tur_id'  =>$id,
                 'aciklama'      =>$id." Numaralı Fatura Ödemesi",
                 'gelir'         =>$tutar,
-                'gider'         =>"",
+                'gider'         =>"0",
                 'mevcut_kasa_toplami'=>KasaModel::kasaToplami()+$tutar,
                 'yil'           =>Date::set('{year}'),
                 'tarih'         =>$odeme_tarihi,
@@ -148,9 +150,22 @@ class Kasa extends Controller
 
             $kasayaKaydet = KasaModel::deftereKaydet($defterData);
 
-            $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabı);
+            $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabi);
 
             if ($kasayaKaydet) {
+                //Sipariş geçmişine yapılan ödemeyi ekle
+
+                //sipariş geçmişi ekleniyor
+                $sipariGecmisi = [
+                    'cari' => $faturaDetay->musteri,
+                    'siparis' => $faturaDetay->siparis_id,
+                    'aciklama' => $faturaDetay->id." Numaralı Fatura ödemesi ".$kasaHesapBilgi->adi." kasa hesabına kaydedildi.",
+                    'guncelleyen' => $user->id
+                ];
+
+                $gecmisEkle = SiparisModel::siparisGesmisEkle($sipariGecmisi);
+
+
                 $odemData = [
                     'id'  =>$id,
                     'alinan_odeme'        =>$tutar+$faturaDetay->alinan_odeme,
@@ -158,7 +173,7 @@ class Kasa extends Controller
 
                 $faturaOdemeEkle = FaturaModel::odemeEkle($odemData);
 
-                $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabı);
+                $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabi);
 
                 $toplamFaturaOdemesi = $tutar+$faturaDetay->alinan_odeme;
 
@@ -168,12 +183,20 @@ class Kasa extends Controller
 
                 }
 
+                //Fatura ödendi yapılyıor
+                if(Post::siparisOdendi()=="1"){
+
+                    $faturaOdemeDurumDegistir = SiparisModel::odemeDurumDegistir($faturaDetay->siparis_id,"1");
+
+                }
+                //Fatura ödendi yapılyıor
                 if(Post::odendi()=="1"){
 
                     $faturaOdemeDurumDegistir = FaturaModel::odemeDurumDegistir($faturaDetay->id,"1");
 
-                }
+                    SiparisModel::siparisurunIslemGerekiyor($faturaDetay->siparis_id, '1', 'Ürünün Faturası ödendi olarak işaretlendi. Üründe yapılması gereken bir işlem varsa gerçekleştiriniz.');
 
+                }
 
                 /*BİLDİRİM*/
                 $ekMailBilgi = "";
@@ -202,7 +225,7 @@ class Kasa extends Controller
 
                 /*BİLDİRİM*/
 
-                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Ödeme Başarı İle Eklendi !.<br>'.$ekMailBilgi.'</div></div>'])->action('siparisler/duzenle/'.$id);
+                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Ödeme Başarı İle Eklendi !.<br>'.$ekMailBilgi.'</div></div>'])->action(URL::prev());
 
             }else{
                 Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">İşlem sırasında hata oluştu !.</div></div>'])->action(URL::prev());

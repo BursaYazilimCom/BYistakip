@@ -189,6 +189,7 @@ class InternalSiparisModel extends Model
 
         $guncelle = DB::where('id',$data['id'])->update('siparisler',[
             'siparis_notu'          =>$data['siparis_notu'],
+            'odeme_durumu'          =>$data['odeme_durumu'],
             'durum'                 =>$data['durum']
         ]);
 
@@ -227,6 +228,18 @@ class InternalSiparisModel extends Model
         $data = ['liste'=>$veri->result(),'kayitSAyisi'=>$veri->totalRows()];
 
         return $data;
+
+    }
+
+    public function siparisurunIslemGerekiyor($id,$gerekiyormu,$islem){
+
+        $guncelle = DB::where('siparis',$id)
+            ->update('siparis_urunleri',[
+                'islem_gerekiyor'       =>$gerekiyormu,
+                'yapilacak_islem'       => $islem
+            ]);
+
+        return $guncelle;
 
     }
 
@@ -279,6 +292,22 @@ class InternalSiparisModel extends Model
             'baslangic_tarihi'      => $data['baslangic_tarihi'],
             'bitis_tarihi'          => $data['bitis_tarihi'],
             'durum'                 => $data['durum']
+        ]);
+
+        //echo DB::stringQuery();
+
+        return $guncelle;
+
+    }
+
+    public function siparisUrunFiyatGuncelle($data){
+
+        $guncelle = DB::where('id',$data['id'])->update('siparis_urunleri',[
+            'adet'          => $data['adet'],
+            'birim_fiyat'   => $data['birim_fiyat'],
+            'kdv'           => $data['kdv'],
+            'kdv_tutari'    => $data['kdv_tutari'],
+            'toplam_fiyat'  => $data['toplam_fiyat']
         ]);
 
         //echo DB::stringQuery();

@@ -18,6 +18,7 @@ class InternalUrunModel extends Model
                 'urunler.kdv as kdv',
                 'urunler.odeme_turu as odeme_turu',
                 'urunler.aciklama as aciklama',
+                'urunler.detay as detay',
                 'urunler.durum as durum',
                 'urunler.guncel_stok as guncel_stok',
                 'urunler.stoklu_urun as stoklu_urun',
@@ -50,6 +51,7 @@ class InternalUrunModel extends Model
             'urunler.kdv as kdv',
             'urunler.odeme_turu as odeme_turu',
             'urunler.aciklama as aciklama',
+            'urunler.detay as detay',
             'urunler.durum as durum',
             'urunler.guncel_stok as guncel_stok',
             'urunler.stoklu_urun as stoklu_urun',
@@ -91,6 +93,7 @@ class InternalUrunModel extends Model
             'urunler.kdv as kdv',
             'urunler.odeme_turu as odeme_turu',
             'urunler.aciklama as aciklama',
+            'urunler.detay as detay',
             'urunler.durum as durum',
             'urunler.guncel_stok as guncel_stok',
             'urunler.stoklu_urun as stoklu_urun',
@@ -121,10 +124,13 @@ class InternalUrunModel extends Model
             'kdv'           =>$data['kdv'],
             'odeme_turu'    =>$data['odeme_turu'],
             'aciklama'      =>$data['aciklama'],
+            'detay'      =>$data['detay'],
             'durum'         =>$data['durum'],
             'stoklu_urun'   =>$data['stoklu_urun'],
             'guncel_stok'   =>$data['guncel_stok']
         ]);
+
+        echo DB::stringQuery();
 
         return DB::insertID();
     }
@@ -146,6 +152,7 @@ class InternalUrunModel extends Model
                         'kdv'           =>$data['kdv'],
                         'odeme_turu'    =>$data['odeme_turu'],
                         'aciklama'      =>$data['aciklama'],
+                        'detay'      =>$data['detay'],
                         'durum'         =>$data['durum'],
                         'stoklu_urun'   =>$data['stoklu_urun'],
                         'guncel_stok'   =>$data['guncel_stok']

@@ -399,11 +399,13 @@ class Siparisler extends Controller
 
         $musteriBilgi       = CariModel::detay($siparisDetay->cari);
         $yeniSiparisDurumu  = Post::durum();
+        $odeme_durumu       = Post::odeme_durumu();
         $siparis_notu       = Post::siparis_notu();
 
         $siparisData = [
             'id'                    => $siparis,
             'siparis_notu'          => $siparis_notu,
+            'odeme_durumu'          => $odeme_durumu,
             'durum'                 => $yeniSiparisDurumu
         ];
 

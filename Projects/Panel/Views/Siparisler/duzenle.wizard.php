@@ -76,27 +76,28 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="mb-1 row">
-                                                    <div class="col-sm-12">
-                                                        <label class="col-form-label" for="odeme_yontemi">Ödeme Durumu</label>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        {{$detay->odeme_durumu=="1"?"<span class='text text-success'>Ödeme Yapıldı</span>":"<span class='text text-danger'>Ödeme Bekleniyor</span>"}}
 
-                                                    </div>
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="odeme_durumu">Ödeme Durumu</label>
                                                 </div>
-                                            </div>
-                                            <div class="col-6">
+                                                <div class="col-sm-12">
+                                                    <select class="form-select" name="odeme_durumu" id="odeme_durumu">
 
+                                                        <option value="">--Seçiniz--</option>
+                                                        <option  value="0" {{$detay->odeme_durumu=="0"?'selected':''}}>Ödeme Bekleniyor</option>
+                                                        <option  value="1" {{$detay->odeme_durumu=="1"?'selected':''}}>Ödeme Yapıldı</option>
+
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="mb-1 row">
-                                                <div class="col-sm-3">
-                                                    <label class="col-form-label" for="odeme_yontemi">Fiyat Bilgisi</label>
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="odeme_yontemi">İlk Sipariş Fiyatı</label>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <table class="table table-bordered">
@@ -173,7 +174,7 @@
                             <div class="col-md-9 col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title">Sipariş Ürünleri</h4>
+                                        <h4 class="card-title">Sipariş Ürünleri <small>Bu listedeki fiyatlar KDV dahil fiyatlardır. Fiyat değişikliği için faturayı düzenleyin</small></h4>
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href="{{URL::site()}}siparisler/iptal/{{$detay->id}}" class="btn btn-danger waves-effect waves-float waves-light">İptal Et</a>
                                             <a href="{{URL::site()}}faturalar/hatirlat/{{$detay->id}}" class="btn btn-info waves-effect waves-float waves-light">Ödeme Hatırlat</a>
@@ -187,7 +188,7 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Ürün/Hizmet</th>
-                                                        <th>Cari</th>
+
                                                         <th>Ödeme Periyodu</th>
                                                         <th>Adet</th>
                                                         <th>Sipariş Notu</th>
@@ -200,14 +201,18 @@
                                                     <tbody id="addDataTable">
                                                     @foreach($urunler as $sUrun)
                                                     <tr>
+                                                        @if($sUrun->islem_gerekiyor == "1")
+                                                        <td rowspan="2" style="color: #ff0000; font-weight: bold">{{$sUrun->id}}</td>
+                                                        @else
                                                         <td>{{$sUrun->id}}</td>
+                                                        @endif
                                                         <td><a href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->id}}"> {{$sUrun->urun_adi}}</a></td>
-                                                        <td>{{$sUrun->cari}}</td>
+
                                                         <td>{{AyarModel::odemePeriyodu($sUrun->odeme_periyodu)}}</td>
                                                         <td>{{$sUrun->adet}}</td>
                                                         <td>{{$sUrun->notu}}</td>
                                                         <td>{{Date::convert($sUrun->baslangic_tarihi, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
-                                                        <td>{{number_format($sUrun->toplam_fiyat,2)}} ₺</td>
+                                                        <td>{{number_format($sUrun->toplam_fiyat,2)}} ₺  </td>
                                                         <td>{{AyarModel::siparisDurumAdi($sUrun->durum)}}</td>
                                                         <td>
                                                             <div class="dropdown">
@@ -223,17 +228,20 @@
 
                                                             </div>
                                                         </td>
+
                                                     </tr>
+                                                    @if($sUrun->islem_gerekiyor == "1")
+                                                    <tr style="border-bottom: solid 1px #ff0000; color: #ff0000;"> <td colspan="9">
+                                                        <strong>Yapılması Gereken İşlem var!: </strong>{{$sUrun->yapilacak_islem}} <a class="badge bg-info" href="{{URL::site()}}siparisler/urunKontrolEdildi/{{$sUrun->id}}" data-bs-toggle="tooltip" title="Bu işlem; bu ürün için tedarik, ödeme, satın alma vs işlemler yapılacaksa bunları yapmanızı hatırlatmak için vardır."> Kontrol sağlandı İşlem Yapıldı</a> </td></tr>
+                                                    @endif
 
                                                     @endforeach
 
                                                     </tbody>
                                                 </table>
                                             </div>
-
-
-                                            <hr>
                                         </div>
+                                    <div class="card-footer">Not: Bu fiyatlar ilk sipariş fiyatlarıdır. Ürünlerin ödeme periyodları geldiğinde (Eğer ürün fiyatını  sabitleMEmişseniz), Sistem yeni faturaları güncel fiyatlarla oluşturur.</div>
 
 
 
@@ -247,7 +255,7 @@
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
                                             @foreach($siparisGecmisi as $sg)
-                                            <li class="list-group-item">{{Date::convert($sg->tarih, '{dayInMonth}.{monthInYear-}.{year} {hour}:{minute}')}} -> {{$sg->aciklama}}</li>
+                                            <li class="list-group-item"><strong>{{Date::convert($sg->tarih, '{dayInMonth}.{monthInYear-}.{year} {hour}:{minute}')}}</strong> -> {{$sg->aciklama}}</li>
                                             @endforeach
 
                                         </ul>

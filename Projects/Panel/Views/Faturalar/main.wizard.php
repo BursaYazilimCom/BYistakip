@@ -78,6 +78,11 @@
                                                             @else
                                                             <span class="badge rounded-pill badge-light-primary"> Tanımsız </span>
                                                             @endif
+                                                            @if($fatura->satis_turu=="1")
+                                                            <span class="badge rounded-pill badge-light-info"> İlk Sipariş Faturası </span>
+                                                            @else
+                                                            <span class="badge rounded-pill badge-light-primary"> Yenileme Faturası </span>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             <div class="d-flex justify-content-left align-items-center">
@@ -145,7 +150,11 @@
                                                                                 <i data-feather="edit-2" class="me-50"></i>
                                                                                 <span class="text-danger">ÖdenMEdi Yap</span>
                                                                             </a>
-
+                                                                        @else
+                                                                            <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturayiOdendiYap" class="dropdown-item">
+                                                                                <i data-feather="edit-2" class="me-50"></i>
+                                                                                <span class="text-danger">Sadece Ödendi Yap</span>
+                                                                            </a>
                                                                         @endif
 
                                                                         <a class="dropdown-item" onclick="deleteAction('{{$fatura->id}}','{{URL::site('siparisler/ajax')}}','siparisSil')">

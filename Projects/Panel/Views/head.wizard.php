@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="vendors/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="vendors/css/charts/apexcharts.css">
     <link rel="stylesheet" type="text/css" href="vendors/css/extensions/toastr.min.css">
@@ -25,7 +26,7 @@
     <link rel="stylesheet" type="text/css" href="css/themes/dark-layout.css">
     <link rel="stylesheet" type="text/css" href="css/themes/bordered-layout.css">
     <link rel="stylesheet" type="text/css" href="css/themes/semi-dark-layout.css">
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
 
     <link rel="stylesheet" type="text/css" href="css/plugins/forms/form-validation.css">
     <link rel="stylesheet" type="text/css" href="css/pages/authentication.css">

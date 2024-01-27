@@ -56,37 +56,39 @@
                                         <h4 class="card-title">Ürün Bilgileri</h4>
                                     </div>
                                     <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-form-label" for="tedarikci">Tedarikci (Sipariş Sırasında değiştirilebilir)</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <select class="select2 form-select" name="tedarikci" id="tedarikci">
 
-                                        <div class="col-12">
-                                            <div class="mb-1 row">
-                                                <div class="col-sm-12">
-                                                    <label class="col-form-label" for="tedarikci">Tedarikci (Sipariş Sırasında değiştirilebilir)</label>
+                                                            <option value="0">--Seçiniz--</option>
+                                                            @foreach($tedarikciler as $tedarikci)
+                                                            <option {{$tedarikci->id==$detay->tedarikci?'selected':''}} value="{{$tedarikci->id}}">{{$tedarikci->adi}}</option>
+                                                            @endforeach
+
+                                                        </select>
+
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-12">
-                                                    <select class="select2 form-select" name="tedarikci" id="tedarikci">
+                                            </div>
 
-                                                        <option value="0">--Seçiniz--</option>
-                                                        @foreach($tedarikciler as $tedarikci)
-                                                        <option {{$tedarikci->id==$detay->tedarikci?'selected':''}} value="{{$tedarikci->id}}">{{$tedarikci->adi}}</option>
-                                                        @endforeach
+                                            <div class="col-6">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-form-label" for="urun_kodu">Ürün Kodu</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        @Form::vRequired()->id('urun_kodu')->placeholder('Ürün Kodu')->text('urun_kodu',$detay->urun_kodu,['class'=>'form-control'])
 
-                                                    </select>
-
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
-                                            <div class="mb-1 row">
-                                                <div class="col-sm-3">
-                                                    <label class="col-form-label" for="urun_kodu">Ürün Kodu</label>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    @Form::vRequired()->id('urun_kodu')->placeholder('Ürün Kodu')->text('urun_kodu',$detay->urun_kodu,['class'=>'form-control'])
-
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="col-12">
                                             <div class="mb-1 row">
@@ -117,59 +119,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
 
-                                            <div class="col-6">
-                                                <div class="mb-1 row">
-                                                    <div class="col-sm-12">
-                                                        <label class="col-form-label" for="fiyat">Stoklu Ürün</label>
-                                                    </div>
-                                                    <div class="col-sm-12">
-
-                                                        <script type="text/javascript">
-                                                            function getval(sel)
-                                                            {
-
-                                                                if (sel.value == 1) {
-                                                                    //document.getElementById('guncel_stok').removeAttribute('disabled');
-                                                                    $('#guncel_stok').prop('disabled', false);
-                                                                    $('#guncel_stok').prop('required', true);
-
-                                                                }
-                                                                if (sel.value == 0) {
-                                                                    $('#guncel_stok').prop('disabled', true);
-                                                                    $('#guncel_stok').prop('required', false);
-
-                                                                }
-                                                            }
-                                                        </script>
-
-                                                        <select class="select2 form-select" onchange="getval(this);" name="stoklu_urun" id="stoklu_urun">
-
-                                                            <option value="1"{{$detay->stoklu_urun=='1'?'selected':''}}>Evet</option>
-                                                            <option value="0"{{$detay->stoklu_urun=='0'?'selected':''}}>Hayır</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-6">
-                                                <div class="mb-1 row">
-                                                    <div class="col-sm-12">
-                                                        <label class="col-form-label" for="guncel_stok">Güncel Stok</label>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        @if($detay->id=="")
-                                                            @Form::id('guncel_stok')->placeholder('Güncel Stok')->number('guncel_stok',$detay->guncel_stok,['class'=>'form-control','disabled'=>'disabled'])
-                                                        @else
-                                                            @Form::id('guncel_stok')->placeholder('Güncel Stok')->number('guncel_stok',$detay->guncel_stok,['class'=>'form-control'])
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
 
                                         <div class="col-12">
                                             <div class="mb-1 row">
@@ -178,6 +128,18 @@
                                                 </div>
                                                 <div class="col-sm-12">
                                                     @Form::id('aciklama')->placeholder('Açıklama')->textarea('aciklama',$detay->aciklama,['class'=>'form-control'])
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label " id="detay" for="detay">Detay</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @Form::id('summernote')->placeholder('Detay')->textarea('detay',$detay->detay,['class'=>'form-control'])
 
                                                 </div>
                                             </div>
@@ -194,6 +156,60 @@
                                     </div>
 
                                         <div class="card-body">
+
+                                            <div class="row">
+
+                                                <div class="col-6">
+                                                    <div class="mb-1 row">
+                                                        <div class="col-sm-12">
+                                                            <label class="col-form-label" for="fiyat">Stoklu Ürün</label>
+                                                        </div>
+                                                        <div class="col-sm-12">
+
+                                                            <script type="text/javascript">
+                                                                function getval(sel)
+                                                                {
+
+                                                                    if (sel.value == 1) {
+                                                                        //document.getElementById('guncel_stok').removeAttribute('disabled');
+                                                                        $('#guncel_stok').prop('disabled', false);
+                                                                        $('#guncel_stok').prop('required', true);
+
+                                                                    }
+                                                                    if (sel.value == 0) {
+                                                                        $('#guncel_stok').prop('disabled', true);
+                                                                        $('#guncel_stok').prop('required', false);
+
+                                                                    }
+                                                                }
+                                                            </script>
+
+                                                            <select class="select2 form-select" onchange="getval(this);" name="stoklu_urun" id="stoklu_urun">
+
+                                                                <option value="1"{{$detay->stoklu_urun=='1'?'selected':''}}>Evet</option>
+                                                                <option value="0"{{$detay->stoklu_urun=='0'?'selected':''}}>Hayır</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="mb-1 row">
+                                                        <div class="col-sm-12">
+                                                            <label class="col-form-label" for="guncel_stok">Güncel Stok</label>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            @if($detay->id=="")
+                                                            @Form::id('guncel_stok')->placeholder('Güncel Stok')->number('guncel_stok',$detay->guncel_stok,['class'=>'form-control','disabled'=>'disabled'])
+                                                            @else
+                                                            @Form::id('guncel_stok')->placeholder('Güncel Stok')->number('guncel_stok',$detay->guncel_stok,['class'=>'form-control'])
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
 
                                             <div class="row custom-options-checkable g-1">
                                                 <script type="text/javascript">

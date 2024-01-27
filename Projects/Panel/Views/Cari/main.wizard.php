@@ -20,15 +20,10 @@
             </div>
             <div class="content-header-right text-md-end col-md-2 col-12 d-md-block d-none">
                 <div class="mb-1 breadcrumb-right">
-                    <div class="dropdown">
-                        <a class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i data-feather="grid"  data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="İşlemler"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="{{URL::site('cari/form')}}"><i class="me-1" data-feather="plus"></i><span class="align-middle">Cari Ekle</span></a>
 
-                        </div>
-                    </div>
+                        <a href="{{URL::site('cari/form')}}" class="btn-icon btn btn-primary btn-round" data-bs-toggle="tooltip" title="Cari Ekle"><i data-feather="grid"  data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="İşlemler"></i> Cari Ekle
+                        </a>
+
                 </div>
             </div>
         </div>

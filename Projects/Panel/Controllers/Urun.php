@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 
-use User,Method,Post,Session,Cookie,Redirect,DB,Upload,Json,Import,Encode,URL,Validation,Folder,Converter;
+use User,Method,Post,Redirect,Json,URL,Validation,Converter,Security;
 use InternalUrunModel as UrunModel,AyarModel,InternalTedarikciModel as TedarikciModel;
 
 class Urun extends Controller
@@ -56,6 +56,7 @@ class Urun extends Controller
                 'fiyat_birim'   =>'TL',
                 'kdv'           =>'',
                 'aciklama'      =>'',
+                'detay'         =>'',
                 'durum'         =>'1',
                 'odeme_turu'    =>'T',
                 'stoklu_urun'   =>'0',
@@ -75,10 +76,9 @@ class Urun extends Controller
 
     public function ekle(){
 
-        if(!Validation::check()){
+        if(empty(Post::adi()) or empty(Post::grup()) or empty(Post::fiyat()) or empty(Post::kdv())){
 
-
-            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu ! Lütfen giriş yaptığınız bilgileri klontrol edin.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
 
         }else{
 
@@ -94,11 +94,12 @@ class Urun extends Controller
                 'yillik_fiyat'      =>Post::yillik_fiyat()==""?"0.0000":Post::yillik_fiyat(),
                 'fiyat_birim'       =>Post::fiyat_birim(),
                 'kdv'               =>Post::kdv(),
-                'aciklama'          =>Post::aciklama(),
+                'aciklama'          =>Security::htmlEncode(Post::aciklama()),
+                'detay'             =>Security::htmlEncode(Post::detay()),
                 'durum'             =>Post::durum(),
                 'odeme_turu'        =>Post::odeme_turu(),
                 'stoklu_urun'       =>Post::stoklu_urun(),
-                'guncel_stok'       =>Post::guncel_stok(),
+                'guncel_stok'       =>Post::stoklu_urun()=="0"?"0":Post::guncel_stok(),
             ];
 
             $ekle = UrunModel::ekle($ekleData);
@@ -137,7 +138,8 @@ class Urun extends Controller
                 'yillik_fiyat'      =>Post::yillik_fiyat()==""?"0.0000":Post::yillik_fiyat(),
                 'fiyat_birim'       =>Post::fiyat_birim(),
                 'kdv'               =>Post::kdv(),
-                'aciklama'          =>Post::aciklama(),
+                'aciklama'          =>Security::htmlEncode(Post::aciklama()),
+                'detay'             =>Security::htmlEncode(Post::detay()),
                 'durum'             =>Post::durum(),
                 'odeme_turu'        =>Post::odeme_turu(),
                 'stoklu_urun'       =>Post::stoklu_urun(),

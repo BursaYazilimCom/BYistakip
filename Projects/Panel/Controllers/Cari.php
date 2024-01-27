@@ -106,15 +106,14 @@ class Cari extends Controller
                 'email'         =>'',
                 'adi'           =>'',
                 'gsm'           =>'',
-                'gsm'           =>'',
                 'il'            =>'',
-                'tc'            =>'',
+                'tc'            =>'0',
                 'firma_adi'     =>'',
                 'fatura_adresi' =>'',
                 'vergi_dairesi' =>'',
-                'vergi_no'      =>'',
-                'bakiye'        =>'',
-                'yonetim_notu'        =>'',
+                'vergi_no'      =>'0',
+                'bakiye'        =>'0',
+                'yonetim_notu'  =>'',
                 'durum'         =>'1',
 
             ];
@@ -146,7 +145,7 @@ class Cari extends Controller
                 'vergi_dairesi'     =>Post::vergi_dairesi(),
                 'vergi_no'          =>Post::vergi_no(),
                 'bakiye'            =>Post::bakiye(),
-                'yonetim_notu'            =>Post::yonetim_notu(),
+                'yonetim_notu'      =>Post::yonetim_notu(),
                 'durum'             =>Post::durum()
             ];
 

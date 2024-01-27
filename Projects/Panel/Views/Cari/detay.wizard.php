@@ -131,8 +131,8 @@
                                     <tbody>
                                     @foreach($uyeUrunleri['liste'] as $uyeUrun)
                                         <tr>
-                                            <td>{{$uyeUrun->urun_adi}}<br><small>{{urunModel::urunAdi($uyeUrun->urun)}}</small></td>
-                                            <td>{{$uyeUrun->notu}}<br></td>
+                                            <td><a href="{{URL::site()}}siparisler/urunDuzenle/{{$uyeUrun->id}}"> {{$uyeUrun->urun_adi}}</a></td>
+                                            <td><strong>{{$uyeUrun->notu}}</strong></td>
                                             <td>{{Date::convert($uyeUrun->baslangic_tarihi,'d.m.Y')}}</td>
                                             <td>{{Date::convert($uyeUrun->bitis_tarihi,'d.m.Y')}}</td>
                                             <td>{{AyarModel::siparisDurumAdi($uyeUrun->durum)}}</td>
@@ -189,10 +189,10 @@
                                     <tbody>
                                     @foreach($faturalar as $fatura)
                                     <tr>
-                                        <td>{{$fatura->id}}</td>
-                                        <td>{{$fatura->belge_tarihi}}</td>
-                                        <td>{{$fatura->vade_tarihi}}</td>
-                                        <td>{{$fatura->genel_toplam}} ₺</td>
+                                        <td><a href="{{URL::site()}}faturalar/duzenle/{{$fatura->id}}" data-bs-toggle="tooltip" title="Fatura Görüntüle"> {{$fatura->id}}</a></td>
+                                        <td>{{Date::convert($fatura->belge_tarihi,"d.m.Y")}}</td>
+                                        <td>{{Date::convert($fatura->vade_tarihi,"d.m.Y")}}</td>
+                                        <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
 
                                         <td>
                                             @if($fatura->durum=="0")

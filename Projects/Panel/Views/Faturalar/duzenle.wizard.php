@@ -195,7 +195,13 @@
                                                     <td>
                                                         <input type="hidden" name="id[]" id="id" value="{{$furun->id}}">
                                                         <input type="hidden" name="urun_adi[]" id="urun_adi" value="{{$furun->urun_adi}}">
-                                                        <strong>{{$furun->urun_adi}}</strong><br><small><strong>Dönemi:</strong>{{Date::convert($furun->donem_baslangic_tarihi,'d.m.Y')}} {{Date::convert($furun->donem_bitis_tarihi,'d.m.Y')}}</small>
+                                                        <strong>{{$furun->urun_adi}}</strong><br>
+                                                        @if($detay->satis_turu=="1")
+                                                        <small>İlk Sipariş</small>
+                                                        @else
+                                                        <small><strong>Yenilenme Dönemi:</strong>{{Date::convert($furun->donem_baslangic_tarihi,'d.m.Y')}} {{Date::convert($furun->donem_bitis_tarihi,'d.m.Y')}}</small>
+                                                        @endif
+
                                                     </td>
                                                     <td style="min-width: 400px">
                                                         <input type="text" name="aciklama[]" id="aciklama" value="{{$furun->aciklama}}" class="form-control">
@@ -409,7 +415,7 @@
                                                 <th>Kasa</th>
                                                 <th>İşlem</th>
                                                 <th>Açıklama</th>
-                                                <th>Tutar</th>
+                                                <th align="right">Tutar</th>
                                             </tr>
                                             </thead>
                                             <tbody id="addDataTable">
@@ -430,7 +436,8 @@
                                                 <td>{{KasaModel::hesapAdi($mi->kasa)}}</td>
                                                 <td>{{$mi->islem=="t"?"<span class='text-success'>Tahsilat</span> ":"<span class='text-danger'>Ödeme Yapıldı</span>"}}</td>
                                                 <td>{{$mi->aciklama}}</td>
-                                                <td>{{$mi->gelir}}</td>
+                                                <td align="right">{{number_format($mi->gelir,2)}}</td>
+
                                             </tr>
 
                                             @endforeach
@@ -446,17 +453,17 @@
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td style="text-align: right">Toplam Tahsilat :</td>
-                                                <td>{{$gelir}} ₺</td>
+                                                <td align="right">{{number_format($gelir,2)}} ₺</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td style="text-align: right">Toplam İade :</td>
-                                                <td>{{$gider}} ₺</td>
+                                                <td align="right">{{number_format($gider,2)}} ₺</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td style="text-align: right">Toplam Alınan :</td>
-                                                <td>{{$gelir-$gider}} ₺</td>
+                                                <td align="right">{{number_format($gelir-$gider,2)}} ₺</td>
                                             </tr>
 
                                             </tfoot>

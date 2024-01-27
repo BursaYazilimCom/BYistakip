@@ -5,9 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="Yenileme faturası oluşturma işlemleri yapılıyor">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Views/Faturalar/detay.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Views/Faturalar/detay.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Frontend/Views/Faturalar/odemeYap.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Frontend/Views/Faturalar/odemeYap.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Cari.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Cari.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Faturalar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Faturalar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Kasa.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Kasa.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Siparisler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Siparisler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Urun.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Urun.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/KasaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/KasaModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/SiparisModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/SiparisModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/UrunModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/UrunModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Cari/detay.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Cari/detay.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Cari/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Cari/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/duzenle.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/duzenle.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/duzenle.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/duzenle.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/form.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/form.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Urun/form.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Urun/form.wizard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/head.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/head.wizard.php" afterDir="false" />
     </list>
@@ -145,7 +164,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-ba97393d7c68-b4dcf6bb9de9-com.jetbrains.php.sharedIndexes-PS-233.13135.108" />
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14015.96" />
       </set>
     </attachedChunks>
   </component>
@@ -167,7 +186,10 @@
       <workItem from="1705778000032" duration="10489000" />
       <workItem from="1705827600419" duration="667000" />
       <workItem from="1705828291322" duration="2832000" />
-      <workItem from="1705952990299" duration="6836000" />
+      <workItem from="1705952990299" duration="7479000" />
+      <workItem from="1706129978802" duration="598000" />
+      <workItem from="1706269661350" duration="13973000" />
+      <workItem from="1706343009843" duration="8545000" />
     </task>
     <task id="LOCAL-00001" summary="Projeler geliştirildi&#10;Projelere Yapılanlan çalışmaların listelendiği bir bölüm eklandi&#10;Müşteri tarafında çalışmaları görebileceği bir sayfa eklendi, &#10;Mail göndermeme sorunu giderildi">
       <option name="closed" value="true" />

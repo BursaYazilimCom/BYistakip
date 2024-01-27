@@ -12,6 +12,7 @@
     <!-- BEGIN: Vendor JS-->
     <script src="vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <script src="vendors/js/forms/select/select2.full.min.js"></script>
 
@@ -38,31 +39,23 @@
 <script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
 
 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('#summernote').summernote({
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['fontsize', ['fontsize']],
-
-                ['para', ['ul','ol','paragraph']],
-                ["view", ["fullscreen", "codeview"]]
-            ],
+            placeholder: 'Müşterilerinize Göstereceğiniz Detayları Girin',
+            tabsize: 2,
+            height: 200
         });
+        let buttons = $('.note-editor button[data-toggle="dropdown"]');
 
-        $('#openModal').on('shown.bs.modal', function() {
-            $('#summernote').summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontsize', ['fontsize']],
-
-                    ['para', ['ul','ol','paragraph']],
-                    ["view", ["fullscreen", "codeview"]]
-                ],
-            });
+        buttons.each((key, value)=>{
+            $(value).on('click', function(e){
+                $(this).attr('data-bs-toggle', 'dropdown')
+                console.log()
+                ata('id', 'dropdownMenu');
+            })
         })
-
     });
 </script>
 

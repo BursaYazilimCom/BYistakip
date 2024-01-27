@@ -264,7 +264,7 @@ class CronJob extends Controller
 
                         $faturaData = [
                             'tur'               =>"2",
-                            'satis_turu'        =>"1",
+                            'satis_turu'        =>"2",
                             'belge_no'          =>rand(0,999999),
                             'fatura_adi'        =>$cariBilgi->firma_adi,
                             'fatura_adresi'     =>$cariBilgi->fatura_adresi,

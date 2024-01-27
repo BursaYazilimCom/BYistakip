@@ -3,9 +3,6 @@
 use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email,Json;
 use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel;
 use InternalMalzemeModel as MalzemeModel, TedarikciModel,InternalCariModel as CariModel;
-/*use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;*/
 
 
 
@@ -174,6 +171,7 @@ class Faturalar extends Controller
 
         $faturaGuncelle = FaturaModel::guncelle($data);
 
+
         if ($faturaGuncelle){
 
             $say = count(Post::id());
@@ -203,7 +201,28 @@ class Faturalar extends Controller
 
                 $faturaUrunGuncelle = FaturaModel::faturaUrunGuncelle($urunData);
 
+
+
                 if ($faturaUrunGuncelle){
+
+                    if($faturaDetay->satis_turu=="1"){
+                        //Eğer fatura ürünli ilk sipariş ise faturada ki ürün fiyatları ile siparişteki ürün fiyatları eşitleniyor
+                        $faturaUrunDetay = FaturaModel::faturaUrunDetay($urunId[$i]);
+
+                        $urunFiyatData = [
+
+                            'id'            => $faturaUrunDetay->siparis_urun_id,
+                            'adet'          => $miktar[$i],
+                            'birim_fiyat'   => $fiyati,
+                            'kdv'           => $kdv[$i],
+                            'kdv_tutari'    => (($fiyati*$adet)/100)*$kdv[$i],
+                            'toplam_fiyat'  => ((($fiyati*$adet)/100)*$kdv[$i])+($fiyati*$adet)
+
+                        ];
+                        $siparisUrunFiyatGuncelle = SiparisModel::siparisUrunFiyatGuncelle($urunFiyatData);
+
+                    }
+
                     $urunGuncellemeUyariNotu = "<br>".$urun_adi[$i]." Ürünü güncellendi";
                 }else{
                     $urunGuncellemeUyariNotu = "<br>".$urun_adi[$i]." Ürünü Malesef güncelleneMEdi";
@@ -238,7 +257,21 @@ class Faturalar extends Controller
             if ($faturaTutarGuncelle){
                 $urunTutarGuncellemeUyariNotu = "<br>Fatura Tutarı güncellendi";
             }else{
-                $urunTutarGuncellemeUyariNotu = "<br>Fatura Tutarı Malesef güncelleneMEdi";
+                $urunTutarGuncellemeUyariNotu = "<br><span class='text-danger'>Fatura Tutarı Malesef güncelleneMEdi</span>";
+            }
+
+            //Eğer güncellenen fatura yenileme faturası değilde SATIŞ FATURASI İSE sipariş tutarınıda güncelliyoruz
+            if($faturaDetay->satis_turu=="1"){
+
+                $siparisToplamData =[
+                    'id'                    =>$faturaDetay->siparis_id,
+                    'toplam_tutar'          =>$toplamTutar,
+                    'kdv_tutari'            =>$kdvToplami,
+                    'genel_toplam_tutari'   =>$geneltoplamTutar
+                ];
+
+                SiparisModel::siparisToplamTutarGuncelle($siparisToplamData);
+
             }
 
             AyarModel::basarili('Başarıli İşlem','Fatura Güncelleme İşlemi gerçekleştirildi'.$urunGuncellemeUyariNotu.$urunTutarGuncellemeUyariNotu,URL::site('faturalar/duzenle/'.$id));
@@ -269,18 +302,19 @@ class Faturalar extends Controller
             $cariDetay = CariModel::detay($faturaDetay->musteri);
 
             $detay = (object)[
-                'id'    => $id,
-                'musteri'    => $cariDetay->id,
-                'tur'    => $faturaDetay->tur,
-                'aciklama'    => $faturaDetay->aciklama,
-                'belge_no'    => $faturaDetay->belge_no,
-                'odeme'    => $faturaDetay->odeme,
-                'durum'    => $faturaDetay->durum,
+                'id'            => $id,
+                'musteri'       => $cariDetay->id,
+                'tur'           => $faturaDetay->tur,
+                'satis_turu'    => $faturaDetay->satis_turu,
+                'aciklama'      => $faturaDetay->aciklama,
+                'belge_no'      => $faturaDetay->belge_no,
+                'odeme'         => $faturaDetay->odeme,
+                'durum'         => $faturaDetay->durum,
                 'resmi_fatura_dosyasi'    => $faturaDetay->resmi_fatura_dosyasi,
-                'belge_tarihi'    => AyarModel::tarihGoster($faturaDetay->belge_tarihi),
-                'vade_tarihi'    => $faturaDetay->vade_tarihi=="0000-00-00" ? '': AyarModel::tarihGoster($faturaDetay->vade_tarihi),
-                'odeme_yontemi'    => $faturaDetay->odeme_yontemi,
-                'cariDetay' => $cariDetay
+                'belge_tarihi'      => AyarModel::tarihGoster($faturaDetay->belge_tarihi),
+                'vade_tarihi'       => $faturaDetay->vade_tarihi=="0000-00-00" ? '': AyarModel::tarihGoster($faturaDetay->vade_tarihi),
+                'odeme_yontemi'     => $faturaDetay->odeme_yontemi,
+                'cariDetay'         => $cariDetay
             ];
 
             $gelir = 0;
@@ -580,6 +614,57 @@ class Faturalar extends Controller
             }else{
                 AyarModel::basarisiz("Başarısız işlem","Ürün Ekleme işlemi YAPILAMADI!",URL::site("faturalar/duzenle/").$id);
             }
+
+
+    }
+
+    public function odendiYap($id)
+    {
+
+        $user = User::data();
+        $faturaDetay = FaturaModel::detay($id);
+        $faturaUrunleri = FaturaModel::faturaUrunleri($faturaDetay->id);
+
+        $cariDetay = CariModel::detay($faturaDetay->musteri);
+
+
+
+        //Fatura ödendi yapılyıor
+        if(Post::siparisOdendi()=="1"){
+
+            $siparisOdemeDurumDegistir = SiparisModel::odemeDurumDegistir($faturaDetay->siparis_id,"1");
+
+            if($siparisOdemeDurumDegistir){
+                $ekBilgi = "Siparişin Ödeme durumu değiştirildi !";
+            }
+
+        }
+
+        //Fatura ödendi yapılyıor
+        if(Post::odendi()=="1"){
+
+            $faturaOdemeDurumDegistir = FaturaModel::odemeDurumDegistir($faturaDetay->id,"1");
+
+        }
+
+        if ($faturaOdemeDurumDegistir) {
+
+            $sipariGecmisi = [
+                'cari' => $faturaDetay->musteri,
+                'siparis' => $faturaDetay->siparis_id,
+                'aciklama' => $faturaDetay->id." Numaralı Fatura ödendi olarak işaretlendi kasa defterine herhangi bir veri işlenmedi.",
+                'guncelleyen' => $user->id
+            ];
+
+            $gecmisEkle = SiparisModel::siparisGesmisEkle($sipariGecmisi);
+
+            Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Fatura Ödendi olarak işaretlendi !.<br>'.$ekBilgi.'</div></div>'])->action(URL::prev());
+
+        }else{
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">İşlem sırasında hata oluştu !.</div></div>'])->action(URL::prev());
+        }
+
+
 
 
     }

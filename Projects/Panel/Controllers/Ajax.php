@@ -785,6 +785,10 @@ class Ajax extends Controller
                                             <input class="form-check-input" type="checkbox" name="odendi" id="odendi" value="1" />
                                             <label class="form-check-label" for="odendi">Faturayı <strong>Ödendi</strong> olarak işaretle !</label>
                                         </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="siparisOdendi" id="siparisOdendi" value="1" />
+                                            <label class="form-check-label" for="siparisOdendi">İlgili Siparişi <strong>Ödendi</strong> olarak işaretle !</label>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -821,6 +825,63 @@ class Ajax extends Controller
             </form>
 
 <?php
+
+
+
+        }
+
+        if(Post::action()=="faturayiOdendiYap") {
+
+            $id = Post::rowid();
+            $faturaDetay = FaturaModel::detay($id);
+
+            ?>
+
+            <form action="<?=URL::site('faturalar/odendiYap/')?><?=$id?>" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Faturayı Ödendi Yap</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 text-danger">
+                            DİKKAT: Bu işlem sadece fatura ve siparişin durumunu değiştirir. Kasa defterine herhangi bir veri işlemez, Eğer bu fatura ile iglili gelir gider kaydı daha önceden yapmadıysanız hesaplarda hata oluşabilir.<br> Eğer kasa defterine işlensin istiyorsanız "ÖDEME EKLE" seçeneğini kullanın
+                        </div>
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="odendi">Ödendi Yap</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="odendi" id="odendi" value="1" />
+                                            <label class="form-check-label" for="odendi">Faturayı <strong>Ödendi</strong> olarak işaretle !</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="siparisOdendi" id="siparisOdendi" value="1" />
+                                            <label class="form-check-label" for="siparisOdendi">İlgili Siparişi <strong>Ödendi</strong> olarak işaretle !</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+
+            <?php
 
 
 
