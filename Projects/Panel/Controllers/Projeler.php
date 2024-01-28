@@ -243,6 +243,7 @@ class Projeler extends Controller
     }
 
     public function yapilanIslemEkle($id){
+        $user = User::data();
 
         if(!Validation::check()){
 
@@ -253,7 +254,8 @@ class Projeler extends Controller
             $ekleData = [
                 'proje_id'  => $id,
                 'tur'       => Post::tur(),
-                'islem'     => Post::islem()
+                'islem'     => Post::islem(),
+                'ekleyen'     => $user->id
             ];
 
             $ekle = ProjeModel::yapilanIslemEkle($ekleData);
@@ -270,6 +272,7 @@ class Projeler extends Controller
     }
 
     public function yapilanIslemGuncelle($id){
+        $user = User::data();
 
         $yIDetay = ProjeModel::yapilanIslemDetay($id);
 
@@ -282,7 +285,8 @@ class Projeler extends Controller
             $ekleData = [
                 'id'        => $id,
                 'tur'       => Post::tur(),
-                'islem'     => Post::islem()
+                'islem'     => Post::islem(),
+                'ekleyen'     => $user->id
             ];
 
             $ekle = ProjeModel::yapilanIslemGuncelle($ekleData);

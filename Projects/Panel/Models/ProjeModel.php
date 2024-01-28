@@ -155,7 +155,8 @@ class InternalProjeModel extends Model
         $ekle = DB::insert('proje_yapilanlar',[
             'proje_id'  =>$data['proje_id'],
             'tur'       =>$data['tur'],
-            'islem'     =>$data['islem']
+            'islem'     =>$data['islem'],
+            'ekleyen'     =>$data['ekleyen']
         ]);
 
         return DB::insertID();
@@ -166,7 +167,8 @@ class InternalProjeModel extends Model
         $guncelle = DB::where('id',$data["id"])
             ->update('proje_yapilanlar',[
                 'tur'       =>$data['tur'],
-                'islem'     =>$data['islem']
+                'islem'     =>$data['islem'],
+                'ekleyen'     =>$data['ekleyen']
             ]);
         return $guncelle;
     }
