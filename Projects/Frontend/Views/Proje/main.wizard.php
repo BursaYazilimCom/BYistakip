@@ -7,6 +7,7 @@
         <!--begin::Actions-->
         <div class="d-flex align-items-center flex-wrap py-2">
 
+        <a href="#" class="btn btn-custom btn-color-white my-2 me-2 me-lg-6  d-print-none" data-bs-toggle="modal" data-bs-target="#projeEkibi">Ekip</a>
             <a href="{{URL::site('proje/calismalar/'.$detay->sef)}}" class="btn btn-info my-2 me-2 me-lg-6 d-print-none">Çalışmalar</a>
 
             <a href="javascript:void(0);" class="btn btn-primary my-2 me-2 me-lg-6 d-print-none" onclick="window.print()">Yazdır</a>
@@ -32,6 +33,7 @@
                 <h3 class="card-title align-items-start flex-column">
                     <span class="fw-bolder text-dark fs-2">Proje Yol Haritası</span>
                 </h3>
+                {{ Redirect::select('bilgi',true) }}
             </div>
             <!--begin::Body-->
             <div class="card-body">
@@ -118,4 +120,87 @@
         <!--end::Invoice-->
     </div>
     <!--end::Post-->
+
+    <div class="modal fade" id="projeEkibi" tabindex="-1" aria-hidden="true">
+			<!--begin::Modal dialog-->
+			<div class="modal-dialog mw-650px">
+				<!--begin::Modal content-->
+				<div class="modal-content">
+					<!--begin::Modal header-->
+					<div class="modal-header pb-0 border-0 justify-content-end">
+						<!--begin::Close-->
+						
+						<!--end::Close-->
+					</div>
+					<!--begin::Modal header-->
+					<!--begin::Modal body-->
+					<div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+						<!--begin::Heading-->
+						<div class="text-center mb-13">
+							<!--begin::Title-->
+							<h1 class="mb-3">Proje Ekibi ile Etkileşim</h1>
+							<!--end::Title-->
+							<!--begin::Description-->
+							<div class="text-muted fw-bold fs-5">Proje ile ilgili bir geri bildiriminiz varsa aşağıdaki formu kullanabilirsiniz</div>
+							<!--end::Description-->
+						</div>
+						<!--end::Heading-->
+						<!--begin::Separator-->
+						<div class="separator d-flex flex-center mb-8">
+							<span class="text-uppercase bg-body fs-7 fw-bold text-muted px-3">Geri Bildirim Formu</span>
+						</div>
+						<!--end::Separator-->
+						<!--begin::Textarea-->
+                        @Form::csrf()->action("proje/bildirimYap/".$detay->sef)->open('submitForm',['class'=>'form form-horizontal','enctype'=>'multipart/form-data'])
+                        {[ Security::timeOnStay(); ]}
+                            <input type="hidden" value="{{$detay->sef}}" name="proje">
+						
+                            @Form::vMinchar(50)->vMessage("Geri bildiriminiz en az 50 karakter olmalıdır.")->id('detay')->placeholder('Geri bildiriminiz bizim için önemli')->textarea('detay','',['rows'=>5,'class'=>'form-control form-control-solid mb-8'])
+
+                            <button type="submit" class="btn btn-primary" style="width:100%">Gönder</button>
+                        @Form::close()
+						<!--end::Textarea-->
+                        <hr>
+						<!--begin::Users-->
+						<div class="mb-10">
+							<!--begin::Heading-->
+							<div class="fs-6 fw-bold mb-2">Proje Ekibimiz</div>
+							<!--end::Heading-->
+							<!--begin::List-->
+							<div class="mh-300px scroll-y me-n7 pe-7">
+
+								@foreach($projeEkibi as $pe)
+								<div class="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
+									
+									<div class="d-flex align-items-center">
+										
+										<div class="symbol symbol-35px symbol-circle">
+											<img alt="Pic" src="{{URL::site()}}../Uploads/personel_resimleri/{{PersonelModel::resim($pe->personel_id)}}" />
+										</div>
+										
+										<div class="ms-5">
+											<a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">{{PersonelModel::isim($pe->personel_id)}}</a>
+											<div class="fw-bold text-muted">{{$pe->gorevi}}</div>
+										</div>
+									
+									</div>
+								
+								</div>
+                                @endforeach
+							
+								
+	
+							</div>
+							<!--end::List-->
+						</div>
+						<!--end::Users-->
+					
+					</div>
+					<!--end::Modal body-->
+				</div>
+				<!--end::Modal content-->
+			</div>
+			<!--end::Modal dialog-->
+		</div>
+
 </div>

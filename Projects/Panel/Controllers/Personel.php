@@ -37,6 +37,24 @@ class Personel extends Controller
 
         }else{
 
+            $personelDetay = PersonelModel::detay(Post::id());
+
+            if(Upload::isFile('resim')){
+
+                Upload::mimes('image/jpeg', 'image/png')
+                    ->extensions('jpg', 'png')
+                    ->convertName()
+                    ->source('resim')
+                    ->target(REAL_BASE_DIR . 'Uploads/personel_resimleri')
+                    ->start();
+                $dosyaBilgi = Upload::info();
+
+                $dosya = $dosyaBilgi->encodeName;
+
+            }else{
+                $dosya = $personelDetay->resim;
+            }
+
             if(!empty(Post::pass())){
 
                 $passData = [
@@ -52,8 +70,10 @@ class Personel extends Controller
                 'username'      =>Post::username(),
                 'email'         =>Post::email(),
                 'isim'          =>Post::isim(),
+                'resim'         =>$dosya,
                 'telefon'       =>Post::telefon(),
                 'notlar'        =>Post::notlar(),
+                'unvan'         =>Post::unvan(),
                 'ban'           =>Post::ban()==''?'0':Post::ban(),
                 'aktivasyon'    =>Post::aktivasyon()==''?'0':Post::aktivasyon()
             ];
@@ -70,18 +90,17 @@ class Personel extends Controller
             }
 
         }
-
-        print_r($data);
         
     }
 
     public function form($id=""){
 
         $yetkiAlanlari = AyarModel::yetkiAlanlari();
+  
 
         if($id){
-            $data = PersonelModel::detay($id);
-            $yetkiler = Json::decode($data->yetkiler);
+            $data       = PersonelModel::detay($id);
+            $yetkiler   = Json::decode($data->yetkiler);
 
 
            View::yetkiler($yetkiler);
@@ -89,6 +108,7 @@ class Personel extends Controller
            View::action("personel/update/".$id);
 
         }else{
+      
             $data = (object)[
                 'id'  =>'',
                 'username'  =>'',
@@ -97,14 +117,17 @@ class Personel extends Controller
                 'telefon'   =>'',
                 'cinsiyet'  =>'',
                 'notlar'    =>'',
+                'unvan'     =>'',
                 'ban'       =>'',
                 'aktivasyon' =>''
             ];
             View::detay($data);
             View::action("personel/register");
+      
         }
 
         View::yetkiAlanlari($yetkiAlanlari);
+      
 
 
     }
@@ -117,13 +140,32 @@ class Personel extends Controller
 
         }else{
 
+            if(Upload::isFile('resim')){
+
+                Upload::mimes('image/jpeg', 'image/png')
+                    ->extensions('jpg', 'png')
+                    ->convertName()
+                    ->convertName()
+                    ->source('resim')
+                    ->target(REAL_BASE_DIR . 'Uploads/personel_resimleri/')
+                    ->start();
+                $dosyaBilgi = Upload::info();
+
+                $dosya = $dosyaBilgi->encodeName;
+
+            }else{
+                $dosya = "";
+            }
+
             $ekleData = [
                 'username'      =>Post::username(),
                 'password'      =>Encode::super(Post::password()),
                 'email'         =>Post::email(),
                 'isim'          =>Post::isim(),
+                'resim'         =>$dosya,
                 'telefon'       =>Post::telefon(),
                 'notlar'        =>Post::notlar(),
+                'unvan'         =>Post::unvan(),
                 'ban'           =>Post::ban()==''?'0':Post::ban(),
                 'aktivasyon'    =>Post::aktivasyon()==''?'0':Post::aktivasyon(),
                 'aktiflik'      =>'1',

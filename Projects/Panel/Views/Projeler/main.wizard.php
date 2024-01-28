@@ -86,6 +86,14 @@
                                                             <i data-feather="activity" class="me-50"></i>
                                                             <span>Yapılan Çalışmalar</span>
                                                         </a>
+                                                        <a href="{{URL::site('projeler/geriBildirimler/'.$u->id)}}" class="dropdown-item">
+                                                            <i data-feather="alert-triangle" class="me-50"></i>
+                                                            <span>Geri Bildirimler</span>
+                                                        </a>
+                                                        <a href="{{URL::site('projeler/personeller/'.$u->id)}}" class="dropdown-item">
+                                                            <i data-feather="user" class="me-50"></i>
+                                                            <span>Proje Çalışanları</span>
+                                                        </a>
                                                         <a href="{{URL::site('projeler/form')}}/{{$u->id}}" class="dropdown-item">
                                                             <i data-feather="edit-2" class="me-50"></i>
                                                             <span>Düzenle</span>

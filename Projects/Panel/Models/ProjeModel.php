@@ -177,4 +177,83 @@ class InternalProjeModel extends Model
 
         return $sil;
     }
+
+    static function personelDetay($id){
+
+        $veri = DB::where('id',$id)->proje_calisanlari()->row();
+
+
+        return $veri;
+
+    }
+
+    static function personeller($id){
+        $veri = DB::where('proje_id',$id)->proje_calisanlari();
+
+
+        return ['liste'=>$veri->result()];
+
+    }
+
+    static function personelEkle($data){
+
+        $ekle = DB::insert('proje_calisanlari',[
+            'proje_id'      =>$data['proje_id'],
+            'personel_id'   =>$data['personel_id'],
+            'gorevi'        =>$data['gorevi']
+        ]);
+
+        return DB::insertID();
+    }
+
+    static function personelGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('proje_calisanlari',[
+                'gorevi'        =>$data['gorevi']
+            ]);
+        return $guncelle;
+    }
+
+    static function personelSil($id){
+
+        $sil        = DB::whereId($id)->delete('proje_calisanlari');
+
+        return $sil;
+    }
+
+    static function geriBildirimler($id){
+        
+        $veri = DB::where('proje_id',$id)->proje_geri_bildirimleri();
+
+        return ['liste'=>$veri->result()];
+
+    }
+
+    static function geriBildirimDetay($id){
+
+        $veri = DB::where('id',$id)->proje_geri_bildirimleri()->row();
+
+
+        return $veri;
+
+    }
+
+    static function geriBildirimGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('proje_geri_bildirimleri',[
+                'cevap'        =>$data['cevap'],
+                'durum'        =>$data['durum']
+            ]);
+        return $guncelle;
+    }
+
+    static function geriBildirimSil($id){
+
+        $sil        = DB::whereId($id)->delete('proje_geri_bildirimleri');
+
+        return $sil;
+    }
+    
 }

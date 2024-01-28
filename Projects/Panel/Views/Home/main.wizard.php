@@ -10,22 +10,61 @@
                 <section id="dashboard-ecommerce">
                     <div class="row match-height">
                         <!-- Medal Card -->
-                        <div class="col-xl-4 col-md-6 col-12">
-                            <div class="card card-congratulation-medal">
-                                <div class="card-body">
-                                    <h5>Toplam Ciro</h5>
-                                    <h3 class="mb-75 mt-2 pt-50">
-                                        <a href="{{URL::site('kasa/tumKayitlar')}}">{{$kasaToplami}} ₺</a>
-                                    </h3>
-                                    <a href="{{URL::site('kasa/tumKayitlar')}}" class="btn btn-primary">İncele</a>
+                        <div class="col-xl-6 col-md-6 col-12">
+                            <div class="row">
+                                <style>
+                                    .card-body{
+                                        padding: 1.8rem 1.5rem !important;
+                                    }
+                                </style>
+                              
+                                        <div class="col-xl-4 col-md-4 col-sm-6">
+                                            <div class="card text-center">
+                                                <div class="card-body">
+                                                    <div class="avatar bg-light-success p-50 mb-1">
+                                                        <div class="avatar-content">
+                                                            <i data-feather="arrow-up" class="font-medium-5"></i>
+                                                        </div>
+                                                    </div>
+                                                    <h2 class="fw-bolder">{{$kasaToplami['gelir']}} ₺</h2>
+                                                    <p class="card-text">Toplam Gelir</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4 col-sm-6">
+                                            <div class="card text-center">
+                                                <div class="card-body">
+                                                    <div class="avatar bg-light-danger p-50 mb-1">
+                                                        <div class="avatar-content">
+                                                            <i data-feather="arrow-down" class="font-medium-5"></i>
+                                                        </div>
+                                                    </div>
+                                                    <h2 class="fw-bolder">{{$kasaToplami['gider']}} ₺</h2>
+                                                    <p class="card-text">Toplam Gider</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-4 col-sm-6">
+                                            <div class="card text-center">
+                                                <div class="card-body">
+                                                    <div class="avatar bg-light-info p-50 mb-1">
+                                                        <div class="avatar-content">
+                                                            <i data-feather="award" class="font-medium-5"></i>
+                                                        </div>
+                                                    </div>
+                                                    <h2 class="fw-bolder">{{$kasaToplami['kazanc']}} ₺</h2>
+                                                    <p class="card-text">Toplam Kazanç</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                           
 
-                                </div>
                             </div>
                         </div>
                         <!--/ Medal Card -->
 
                         <!-- Statistics Card -->
-                        <div class="col-xl-8 col-md-6 col-12">
+                        <div class="col-xl-6 col-md-6 col-12">
                             <div class="card card-statistics">
                                 <div class="card-header">
                                     <h4 class="card-title">İstatistikler</h4>
@@ -80,7 +119,7 @@
                                                 </div>
                                                 <div class="my-auto">
                                                     <h4 class="fw-bolder mb-0">{{$odenmeyenFaturaSayisi}} Adet</h4>
-                                                    <p class="card-text font-small-3 mb-0">Ödeme Bekleyen Fatura</p>
+                                                    <p class="card-text font-small-3 mb-0">Açık Fatura</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,7 +132,7 @@
 
                     <div class="row match-height">
                         <!-- Company Table Card -->
-                        <div class="col-lg-8 col-12">
+                        <div class="col-lg-9 col-12">
                             <div class="card card-company-table">
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
@@ -131,7 +170,7 @@
                                                     <td>{{$s->odeme_durumu=="1"?"<span class='text text-success'>Ödendi</span>":"<span class='text text-danger'>Ödeme Bekliyor</span>"}}</td>
                                                     <td>{{number_format($s->genel_toplam_tutari,2)}} ₺</td>
                                                     <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
-                                                    <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>
+                                                    <td>{{$s->durum=="1"?"<span class='text text-success'>Aktif</span>":"<span class='text text-danger'>Pasif</span>"}}</td>
 
                                                 </tr>
                                             @endforeach
@@ -146,7 +185,7 @@
 
 
                         <!-- Transaction Card -->
-                        <div class="col-lg-4 col-md-6 col-12">
+                        <div class="col-lg-3 col-md-6 col-12">
                             <div class="card card-transaction">
                                 <div class="card-header">
                                     <h4 class="card-title">Kasa Hesapları</h4>

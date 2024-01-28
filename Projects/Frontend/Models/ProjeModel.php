@@ -39,5 +39,25 @@ class InternalProjeModel extends Model
 
     }
 
+    static function personeller($id){
+        $veri = DB::where('proje_id',$id)->proje_calisanlari()->result();
+
+
+        return $veri;
+
+    }
+
+    static function bildirimKaydet($data){
+
+        $ekle = DB::insert('proje_geri_bildirimleri',[
+            'proje_id'          =>$data['proje_id'],
+            'detay'             =>$data['detay'],
+            'talep_ip'          =>$data['talep_ip'],
+            'talep_user_agent'  =>$data['talep_user_agent']
+        ]);
+
+        return DB::insertID();
+    }
+
 
 }

@@ -215,18 +215,9 @@
                                                         <td>{{number_format($sUrun->toplam_fiyat,2)}} ₺  </td>
                                                         <td>{{AyarModel::siparisDurumAdi($sUrun->durum)}}</td>
                                                         <td>
-                                                            <div class="dropdown">
-                                                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                                    <i data-feather="more-vertical"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->id}}" >
-                                                                        <i data-feather="eye" class="me-50"></i>
-                                                                        <span>Detay</span>
-                                                                    </a>
-                                                                </div>
+                                                            <a class=" btn btn-info btn-xs" data-bs-toggle="tooltip" title="Detay" href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->id}}" >
+                                                                <i data-feather="eye"></i></a>
 
-                                                            </div>
                                                         </td>
 
                                                     </tr>

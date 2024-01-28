@@ -298,8 +298,110 @@ class Projeler extends Controller
 
     }
 
-        public function ajax():void
+    public function personeller($id)
     {
+        $projeDetay = ProjeModel::detay($id);
+        $listeData = ProjeModel::personeller($id);
+
+        View::listele($listeData);
+        View::detay($projeDetay);
+
+
+    }
+
+    public function personelEkle($id){
+
+        if(!Validation::check()){
+
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
+
+        }else {
+
+            $ekleData = [
+                'proje_id'      => $id,
+                'personel_id'   => Post::personel_id(),
+                'gorevi'        => Post::gorevi(),
+                'islem'         => Post::islem()
+            ];
+
+            $ekle = ProjeModel::personelEkle($ekleData);
+
+            if ($ekle) {
+                Redirect::insert(['bilgi' => '<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Ekleme İşlemi Yapıldı !.'.$ekle.'</div></div>'])->action('projeler/personeller/'.$id);
+            } else {
+
+                Redirect::insert(['bilgi' => '<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.'.$ekle.'</div></div>'])->action(URL::prev());
+
+            }
+        }
+
+    }
+
+    public function personelGuncelle($id){
+
+        $yIDetay = ProjeModel::personelDetay($id);
+
+        if(!Validation::check()){
+
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
+
+        }else {
+
+            $ekleData = [
+                'id'            => $id,
+                'gorevi'        => Post::gorevi()
+            ];
+
+            $ekle = ProjeModel::personelGuncelle($ekleData);
+
+            if ($ekle) {
+                Redirect::insert(['bilgi' => '<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Güncelleme İşlemi Yapıldı !.'.$ekle.'</div></div>'])->action('projeler/personeller/'.$yIDetay->proje_id);
+            } else {
+
+                Redirect::insert(['bilgi' => '<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.'.$ekle.'</div></div>'])->action(URL::prev());
+
+            }
+        }
+
+    }
+
+    public function geriBildirimler($id){
+        $projeDetay = ProjeModel::detay($id);
+        $bildirimler = ProjeModel::geriBildirimler($id);
+
+        View::listele($bildirimler);
+        View::detay($projeDetay);
+    }
+
+    public function geriBildirimGuncelle($id){
+
+        $gbDetay = ProjeModel::geriBildirimDetay($id);
+
+        if(!Validation::check()){
+
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
+
+        }else {
+
+            $ekleData = [
+                'id'        => $id,
+                'cevap'     => Post::cevap(),
+                'durum'     => Post::durum()
+            ];
+
+            $ekle = ProjeModel::geriBildirimGuncelle($ekleData);
+
+            if ($ekle) {
+                Redirect::insert(['bilgi' => '<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Güncelleme İşlemi Yapıldı !.'.$ekle.'</div></div>'])->action('projeler/geriBildirimler/'.$gbDetay->proje_id);
+            } else {
+
+                Redirect::insert(['bilgi' => '<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.'.$ekle.'</div></div>'])->action(URL::prev());
+
+            }
+        }
+    }
+
+    public function ajax():void{
         $user       = User::data();
         $dataAction = Post::dataAction();
         $dataId     = Post::dataId();
@@ -378,6 +480,48 @@ class Projeler extends Controller
 
                 break;
 
+                case "personelSil":
+    
+                    $sil = ProjeModel::personelSil($dataId);
+    
+                    $data['title'] = "Projede çalışan personel Silme İşlemi";
+    
+                    if($sil){
+    
+                        $data['success'] = 'Projede çalışan personel Silme İşlemi başarı ile yapıldı!';
+                        //$data['redirect'] = '/projeler/yolHaritasi/'.$yHDetay->proje_id;
+                        $data['redirect'] = '';
+    
+                    }else{
+    
+                        $data['error'] = "Projede çalışan personel Silme işlemi yapılamadı!";
+    
+                    }
+    
+                    echo Json::encode($data);
+    
+                    break;
+                case "geriBildirimSil":
+    
+                    $sil = ProjeModel::geriBildirimSil($dataId);
+    
+                    $data['title'] = "Projede geri bildirim Silme İşlemi";
+    
+                    if($sil){
+    
+                        $data['success'] = 'Projede geri bildirim Silme İşlemi başarı ile yapıldı!';
+                        //$data['redirect'] = '/projeler/yolHaritasi/'.$yHDetay->proje_id;
+                        $data['redirect'] = '';
+    
+                    }else{
+    
+                        $data['error'] = "Projede geri bildirim Silme işlemi yapılamadı!";
+    
+                    }
+    
+                    echo Json::encode($data);
+    
+                    break;
             /*********************************************************/
 
 

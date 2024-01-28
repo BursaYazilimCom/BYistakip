@@ -4,7 +4,16 @@ class InternalPersonelModel extends Model
 {
     static function detay($id)
     {
-        return DB::where('id',$id)->yonetim()->row();
+        $veri = DB::where('id',$id)->yonetim()->row();
+
+        return $veri;
+    }
+
+    static function isim($id)
+    {
+        $veri = DB::where('id',$id)->yonetim()->row();
+
+        return $veri->isim;
     }
 
     static function liste(){
@@ -26,8 +35,10 @@ class InternalPersonelModel extends Model
             'password'      =>$data['password'],
             'email'         =>$data['email'],
             'isim'          =>$data['isim'],
+            'resim'          =>$data['resim'],
             'telefon'       =>$data['telefon'],
             'notlar'        =>$data['notlar'],
+            'unvan'         =>$data['unvan'],
             'ban'           =>$data['ban'],
             'aktiflik'      =>$data['aktiflik'],
             'panel_rengi'   =>$data['panel_rengi'],
@@ -46,8 +57,10 @@ class InternalPersonelModel extends Model
                 'username'      =>$data["username"],
                 'email'         =>$data["email"],
                 'isim'          =>$data["isim"],
+                'resim'          =>$data["resim"],
                 'telefon'       =>$data["telefon"],
                 'notlar'        =>$data["notlar"],
+                'unvan'         =>$data["unvan"],
                 'ban'           =>$data["ban"],
                 'aktivasyon'    =>$data['aktivasyon']
             ]);

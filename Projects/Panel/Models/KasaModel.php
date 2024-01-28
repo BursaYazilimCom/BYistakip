@@ -80,6 +80,11 @@ class InternalKasaModel extends Model
         return $toplam;
     }
 
+    public function gelirGiderToplami(){
+        $toplam = DB::select('SUM(gelir) as gelir','SUM(gider) as gider')->kasa_defteri()->row();
+        return $toplam;
+    }
+
     public function sil($id){
         return DB::whereId($id)->delete('kasa_hesaplari');
     }

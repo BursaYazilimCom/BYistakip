@@ -13,7 +13,14 @@ class Home extends Controller
      */
     public function main(string ...$parameters)
     {
-        $kasaToplami = KasaModel::kasaToplami();
+        $kasaToplami = KasaModel::gelirGiderToplami();
+        $gelir = $kasaToplami->gelir;
+        $gider = $kasaToplami->gider;
+        $kasa = [
+            'gelir'     => number_format($gelir,2),
+            'gider'     => number_format($gider,2),
+            'kazanc'    => number_format($gelir - $gider,2)
+        ];
 
         $cariHesaplar = CariModel::liste();
         $projeler = ProjeModel::liste();
@@ -31,7 +38,7 @@ class Home extends Controller
 
         Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
 
-        View::kasaToplami(number_format($kasaToplami,2));
+        View::kasaToplami($kasa);
     }
 
     public function logout(){

@@ -53,8 +53,9 @@
                                 <h4 class="card-title">Kullanıcı Bilgileri</h4>
                             </div>
                             <div class="card-body">
+                                
 
-                                    @Form::csrf()->action($action)->open('submitForm',['class'=>'form form-horizontal'])
+                                    @Form::csrf()->action($action)->open('submitForm',['class'=>'form form-horizontal','enctype'=>'multipart/form-data'])
 
                                     @Form::hidden('id',$detay->id,['class'=>'form-control'])
 
@@ -79,6 +80,19 @@
                                                 </div>
                                                 <div class="col-sm-9">
                                                     @Form::id('pass')->placeholder('Şifre')->text('pass','',['class'=>'form-control'])
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="resim">Resim</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                        
+                                                    @Form::id('resim')->placeholder('Kişi Resmi')->file('resim','',['class'=>'form-control'])
+
                                                 </div>
                                             </div>
                                         </div>
@@ -112,6 +126,16 @@
                                                 </div>
                                                 <div class="col-sm-9">
                                                     @Form::vNumber()->id('telefon')->placeholder('05xxxxxxx')->number('telefon',$detay->telefon,['class'=>'form-control'])
+                                                </div>+
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="telefon">Ünvan</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    @Form::vNumber()->id('unvan')->placeholder('Genel Müdür, Muhaebe Sorumlusu vs')->text('unvan',$detay->unvan,['class'=>'form-control'])
                                                 </div>
                                             </div>
                                         </div>

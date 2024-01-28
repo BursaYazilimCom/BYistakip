@@ -42,7 +42,7 @@ class Kasa extends Controller
 
     }
 
-    public function odemeEkle($yer,$id){
+    public function odemeEkle($yer,$id=""){
         $user = User::data();
 
         $user           = User::data();
@@ -51,6 +51,7 @@ class Kasa extends Controller
         $tutar          = Post::tutar();
         $odeme_tarihi   = Post::odeme_tarihi();
         $bildirim       = Post::bildirim();
+        $cari           = Post::cari();
 
         if ($yer=="siparis"){
 
@@ -232,6 +233,68 @@ class Kasa extends Controller
             }
 
 
+
+        }
+        elseif ($yer=="tahsilat"){
+            
+
+            $cariDetay = CariModel::detay($cari);
+
+            $defterData = [
+                'kasa'          =>$kasa_hesabi,
+                'islem'         =>"t",
+                'hesap'         =>"Harici Tahsilat: ".$cariDetay->adi,
+                'islem_turu'    =>"cari",
+                'islem_tur_id'  =>$cari,
+                'aciklama'      =>$cariDetay->adi." isimli Cari harici ödeme yaptı.".$aciklama,
+                'gelir'         =>$tutar,
+                'gider'         =>"0",
+                'mevcut_kasa_toplami'=>KasaModel::kasaToplami()+$tutar,
+                'yil'           =>Date::set('{year}'),
+                'tarih'         =>$odeme_tarihi,
+                'islem_yapan'   =>$user->id
+            ];
+
+            $kasayaKaydet = KasaModel::deftereKaydet($defterData);
+
+            $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabi);
+
+            if ($kasayaKaydet) {
+                //Sipariş geçmişine yapılan ödemeyi ekle
+
+                $ekMailBilgi = "";
+
+                $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabi);
+
+                if($bildirim=="1"){
+
+                    $mailgonder = Email::subject('Tahsilat Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
+
+                        'konu' => 'Tahsilat Bildirimi',
+                        'mesaj' => 'Sayın. '.$cariDetay->adi.' '.Date::convert($odeme_tarihi, '{dayInMonth}.{monthInYear-}.{year}').' tarihinde '.$tutar.' TL Tutarında ödemeniz alınmış ve kayıtlarımıza işlenmiştir.<br> Ödemeniz için teşekkür ederiz.<br><hr>'.$aciklama,
+                        //'link' => URL::site(),
+                        //'link_baslik' => 'Tıklayınız',
+                        'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                        'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                        'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                        'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+                    ])->send();
+
+                    if ($mailgonder) {
+                        $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderildi !";
+                    }else{
+                        $ekMailBilgi = "Müşteriye Bilgilendirme Maili Gönderilemedi !".Email::error();
+                    }
+
+                }
+
+                /*BİLDİRİM*/
+
+                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Tahsilat Başarı İle Eklendi !.<br>'.$ekMailBilgi.'</div></div>'])->action(URL::prev());
+
+            }else{
+                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">İşlem sırasında hata oluştu !.</div></div>'])->action(URL::prev());
+            }
 
         }
         else{

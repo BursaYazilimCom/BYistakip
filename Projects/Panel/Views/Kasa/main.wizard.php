@@ -32,6 +32,12 @@
                         <i data-feather="user" class="font-medium-3 me-50"></i>
                         <span class="fw-bold">Kasa Defteri</span>
                     </a>
+                    <a  data-bs-toggle="modal" data-bs-target="#openModal" data-action="tahsilatEkle"  class="btn btn-success waves-effect waves-float waves-light mb-2">
+                        <i data-feather="plus" class="font-medium-3 me-50"></i>
+                        <span class="fw-bold">Tahsilat Ekle</span>
+                    </a>
+
+               
 
                     <div class="row">
                         {{ Redirect::select('bilgi',true) }}
@@ -55,7 +61,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder text-danger" href="{{URL::site("kasa/kayitlar/")}}{{$kh->id}}">₺ {{$kh->tutar}} -></a>
+                                        <a class="fw-bolder {{$kh->tutar>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$kh->id}}">₺ {{number_format($kh->tutar,2)}} -></a>
                                     </div>
 
                                     @endforeach
@@ -83,7 +89,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder text-danger" href="{{URL::site("kasa/kayitlar/")}}{{$bh->id}}">₺ {{$bh->tutar}}</a>
+                                        <a class="fw-bolder {{$bh->tutar>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$bh->id}}">₺ {{number_format($bh->tutar,2)}}</a>
                                     </div>
 
                                     @endforeach
@@ -110,7 +116,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder text-danger" href="{{URL::site("kasa/kayitlar/")}}{{$kkh->id}}">₺ {{$kkh->tutar}}</a>
+                                        <a class="fw-bolder {{$kkh->tutar>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$kkh->id}}">₺ {{number_format($kkh->tutar,2)}}</a>
                                     </div>
 
                                     @endforeach
@@ -137,7 +143,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder text-danger" href="{{URL::site("kasa/kayitlar/")}}{{$ph->id}}">₺ {{$ph->tutar}}</a>
+                                        <a class="fw-bolder {{$ph->tutar>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$ph->id}}">₺ {{number_format($ph->tutar,2)}}</a>
                                     </div>
 
                                     @endforeach
@@ -164,7 +170,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder text-danger" href="{{URL::site("kasa/kayitlar/")}}{{$vh->id}}">₺ {{$vh->tutar}}</a>
+                                        <a class="fw-bolder {{$vh->tutar>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$vh->id}}">₺ {{number_format($vh->tutar,2)}}</a>
                                     </div>
 
                                     @endforeach
@@ -191,7 +197,9 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder text-danger" href="{{URL::site("kasa/kayitlar/")}}{{$dh->id}}">₺ {{$dh->tutar}}</a>
+                                        
+                                        <a class="fw-bolder {{$dh->tutar>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$dh->id}}">₺ {{number_format($dh->tutar,2)}}</a>
+
                                     </div>
 
                                     @endforeach

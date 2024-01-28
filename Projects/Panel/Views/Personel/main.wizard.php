@@ -53,6 +53,7 @@
                                     <th>#</th>
                                     <th>İsim</th>
                                     <th>Kullanıcı adı</th>
+                                    <th>Ünvan</th>
                                     <th>E-Posta</th>
                                     <th>Telefon</th>
                                     <th>Notlar</th>
@@ -66,6 +67,7 @@
                                     <td>{{$personel->id}}</td>
                                     <td>{{$personel->isim}}</td>
                                     <td>{{$personel->username}}</td>
+                                    <td>{{$personel->unvan}}</td>
                                     <td>{{$personel->email}}</td>
                                     <td>{{$personel->telefon}}</td>
                                     <td>{{$personel->notlar}}</td>

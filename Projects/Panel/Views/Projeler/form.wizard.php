@@ -45,6 +45,27 @@
                                 </a>
                             </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{URL::site('projeler/yapilanlar/'.$detay->id)}}">
+                                    <i data-feather="activity" class="font-medium-3 me-50"></i>
+                                    <span class="fw-bold">Yapılan Çalışmalar</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{URL::site('projeler/geriBildirimler/'.$detay->id)}}">
+                                    <i data-feather="alert-triangle" class="font-medium-3 me-50"></i>
+                                    <span class="fw-bold">Proje Geri Bildirimleri</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{URL::site('projeler/personeller/'.$detay->id)}}">
+                                    <i data-feather="user" class="font-medium-3 me-50"></i>
+                                    <span class="fw-bold">Proje Ekibi</span>
+                                </a>
+                            </li>
+
                             @endif
 
                             <!-- notification -->

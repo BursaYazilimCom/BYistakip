@@ -66,14 +66,14 @@
                                 ]}
 
                                 <tr>
-                                    <th colspan="2" style="border-bottom: solid 1px #379bff; padding-left: 10px" class="bg-primary"><h3>{{Date::convert($yol->tarih,"d.m.Y")}}</h3></th>
+                                    <th colspan="2" style="border-bottom: solid 1px #7BB8F5; padding-left: 10px" class="bg-primary"><h3>{{Date::convert($yol->tarih,"d.m.Y")}}</h3></th>
                                 </tr>
 
 
                                 {[ } ]}
 
                                 <tr>
-                                    <td style="border-left: solid 1px #379bff">
+                                    <td style="border-left: solid 1px #7BB8F5">
                                         @if($yol->tur=="1")
                                         <span class="badge badge-light-info rounded-pill fs-7 fw-boldest">Değişiklik</span>
                                         @elseif($yol->tur=="2")

@@ -2,7 +2,7 @@
 
 Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
 Use AjaxModel,KasaModel,AyarModel, InternalFaturaModel as FaturaModel;
-Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel;
+Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel,InternalCariModel as CariModel;
 
 
 
@@ -28,6 +28,7 @@ class Ajax extends Controller
         $kkartiHesaplari    = KasaModel::turHesaplari(4);
         $veresiyeHesaplari  = KasaModel::turHesaplari(5);
         $digerHesaplar      = KasaModel::turHesaplari(6);
+        $musteriler         = CariModel::tumListe();
 
         $user = User::data();
 
@@ -93,6 +94,126 @@ class Ajax extends Controller
                 </form>
 
             <?php
+
+        }
+
+        if(Post::action()=="tahsilatEkle") {
+
+            ?>
+
+            <form action="<?=URL::site('kasa/odemeEkle/tahsilat/')?>0" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tahsilat Ekle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <label class="form-label" for="modalAddCardNumber">Ödeme Yapan:</label>
+                                <div class="input-group input-group-merge">
+                                    <select name="cari" required class="form-control">
+                                        <option value="0">--Seçiniz--</option>
+
+                                            <?php foreach($musteriler as $m){?>
+                                                <option value="<?=$m->id?>"><?=$m->adi?>(<?=$m->firma_adi?>)</option>
+                                            <?php }?>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="modalAddCardNumber">Ödeme Hesabı:</label>
+                                <div class="input-group input-group-merge">
+                                    <select name="kasa" required class="form-control">
+                                        <option value="0">--Seçiniz--</option>
+                                        <optgroup label="Kasa Hesapları">
+                                            <?php foreach($kasaHesaplari as $kh){?>
+                                                <option value="<?=$kh->id?>"><?=$kh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="Banka Hesapları">
+                                            <?php foreach($bankaHesaplari as $bh){?>
+                                                <option value="<?=$bh->id?>"><?=$bh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="POS Hesapları">
+                                            <?php foreach($posHesaplari as $ph){?>
+                                                <option value="<?=$ph->id?>"><?=$ph->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="Kredi Kartı Hesapları">
+                                            <?php foreach($kkartiHesaplari as $kkh){?>
+                                                <option value="<?=$kkh->id?>"><?=$kkh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="Veresiye Hesapları">
+                                            <?php foreach($veresiyeHesaplari as $vh){?>
+                                                <option value="<?=$vh->id?>"><?=$vh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+                                        <optgroup label="Diğer Hesaplar">
+                                            <?php foreach($digerHesaplar as $dh){?>
+                                                <option value="<?=$dh->id?>"><?=$dh->adi?></option>
+                                            <?php }?>
+                                        </optgroup>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="odeme_tarihi">Ödeme Tarihi:</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="date" name="odeme_tarihi" id="odeme_tarihi" class="form-control" placeholder="24.10.2023" maxlength="10" value="{{Date::current()}}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="tutar">Tutar (TL):</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" class="form-control" onkeyup="$(this).val($(this).val().replace(/,/g, '.'));" name="tutar" id="tutar" placeholder="Ödenen tutar" value="">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="modalAddCardNumber">Açıklama:</label>
+                                <div class="input-group input-group-merge">
+                                    <textarea class="form-control" name="aciklama" placeholder="Açıklama"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="bildirim">Bildirim</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                  
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="bildirim" id="bildirim" value="1" />
+                                            <label class="form-check-label" for="bildirim">Müşteriye E-Posta ile bildir</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+
+            <?php
+
+
 
         }
 
@@ -824,7 +945,7 @@ class Ajax extends Controller
                 </div>
             </form>
 
-<?php
+        <?php
 
 
 
@@ -1096,15 +1217,19 @@ class Ajax extends Controller
                                     </div>
                                 </div>
                                 <div class="col-6">
+
                                     <label class="form-label" for="kdv">Kdv:</label>
+
                                     <div class="input-group input-group-merge">
 
                                         <?php
+
                                         $options = [ '' => '--Seçiniz--', '0' => '%0', '10' => '%10', '20' => '%20' ];
                                         echo Form::vRequired()->select('kdv', $options, '',['class'=>'form-control']);
 
                                         ?>
                                     </div>
+
                                 </div>
 
                             </div>
@@ -1187,6 +1312,66 @@ class Ajax extends Controller
 
             <?php
 
+
+
+        }
+
+        if(Post::action()=="projeGeriBildirimDuzenle"){
+
+            $id = Post::rowid();
+            $detay = ProjeModel::geriBildirimDetay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('projeler/geriBildirimGuncelle/'.$id)->open('geriBildirimGuncelle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Geri Bildirim Düzenle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="aciklama"><strong>Bildirim:</strong></label>
+                            <div class="input-group input-group-merge text-danger">
+                                <?=$detay->detay?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="tur">Tür:</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="durum" id="durum">
+                                    <option value="1" <?php if($detay->durum=="0"){ echo "selected"; } ?> >İşlem Bekliyor</option>
+                                    <option value="2" <?php if($detay->durum=="1"){ echo "selected"; } ?> >İşlem Planına Alındı</option>
+                                    <option value="3" <?php if($detay->durum=="2"){ echo "selected"; } ?> >Gerekli İşlem Yapıldı</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="cevap">Cevap:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('cevap')->placeholder('Cevap')->textarea('cevap',$detay->cevap,['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
 
 
         }
@@ -1322,7 +1507,110 @@ class Ajax extends Controller
 
 
         }
+        if(Post::action()=="projePersonelEkle"){
 
+            $id = Post::rowid();
+            $projeDetay = ProjeModel::detay($id);
+            $personeller = PersonelModel::tumListe();
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('projeler/personelEkle/'.$id)->open('personelEkle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Projeye Çalışan Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="personel_id">Dahil Olacak Personel:</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="personel_id" id="personel_id">
+                                    <option value="">--Seçiniz--</option>
+                                    <?php foreach($personeller as $personel){ ?>
+                                    <option value="<?=$personel->id?>"><?=$personel->isim?></option>
+                                    <?php }?>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="gorevi">Projedeki Görevi:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('gorevi')->placeholder('Görevi')->textarea('gorevi','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+        if(Post::action()=="projePersonelDuzenle"){
+
+            $id = Post::rowid();
+            $projeDetay = ProjeModel::detay($id);
+            $personelDetay = ProjeModel::personelDetay($id);
+            $personeller = PersonelModel::tumListe();
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('projeler/personelGuncelle/'.$id)->open('projePersonelDuzenle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Proje Çalışanı Düzenle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="personel_id">Dahil Olacak Personel:</label>
+                            <div class="input-group input-group-merge">
+                                <?=PersonelModel::isim($personelDetay->personel_id)?>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="gorevi">Projedeki Görevi:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('gorevi')->placeholder('Görevi')->textarea('gorevi',$personelDetay->gorevi,['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
         if(Post::action()=="yapilanIslemEkle"){
 
             $id = Post::rowid();
