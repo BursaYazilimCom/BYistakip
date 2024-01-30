@@ -30,13 +30,96 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="js/scripts/pages/dashboard-ecommerce.js"></script>
+
 <script src="js/scripts/pages/auth-login.js"></script>
 <script src="js/scripts/forms/form-select2.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDizM76Gj0ty8oFWl96MWJ_5y4b9FLvWyw&libraries=places"></script>
 <script type='text/javascript' src='js/scripts/gmap.js'></script>
 <script type='text/javascript' src='vendors/js/pickers/flatpickr/flatpickr.min.js'></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var options = {
+            chart: {
+                height: 500,
+                type: "area",
+                
+            },
+            dataLabels: {
+                enabled: false
+            },
+            series: [
+                {
+                    type: 'line',
+                name: "Gelir",
+                data: [{{$gelir}}],
+                color: '#009E2F'
+                }
+                ,
+                {
+                type: 'line',
+                name: "Gider",
+                data: [{{$gider}}],
+                color: '#ff0000'
+                }
+                ,
+                {
+                    type: 'column',
+                name: "Kasa Toplamı",
+                data: [{{$kasaToplami}}],
+                color: '#356BFF'
+                }
+            ],
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [50, 90, 100]
+                },
+                pattern: {
+                    style: 'verticalLines',
+                    width: 6,
+                    height: 6,
+                    strokeWidth: 2
+                }
+            },
+            xaxis: {
+                categories: [{{$kategoriler}}],
+            },
+            yaxis: {
+                labels: {
+                    formatter: function (value) {
+                    return value + "₺";
+                    }
+                },
+                },
+            stroke: {
+                show: true, 
+                curve: 'straight', //'straight', 'smooth', 'monotoneCubic', 'stepline'
+                lineCap: 'butt',
+                colors: undefined,
+                width: 3,
+                dashArray: 0, 
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#gelirGiderGrafigi"), options);
+
+        chart.render();
+ 
+    });
+    
+    
+
+        
+    </script>
 
 
 

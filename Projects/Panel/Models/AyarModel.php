@@ -640,6 +640,14 @@ class InternalAyarModel extends Model
         return $data;
     }
 
+    public function ay($id){
+
+        $gunler = ['','Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+
+        return $gunler[$id];
+
+    }
+
 
 
 }
