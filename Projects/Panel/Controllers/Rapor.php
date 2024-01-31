@@ -174,6 +174,11 @@ class Rapor extends Controller
         View::kasaToplami($kasaToplami);
     }
 
+    public function siparis(){
+
+        
+    }
+
     /**
      * Home::s404
      * 

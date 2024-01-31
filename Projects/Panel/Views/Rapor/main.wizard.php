@@ -34,9 +34,6 @@
 
                                     <div class="list-group">
                                         <a href="{{URL::site('rapor')}}" class="list-group-item list-group-item-action active"><i data-feather="eye"></i> Genel Bakış </a>
-                                        <a href="{{URL::site('rapor/siparis')}}" class="list-group-item list-group-item-action"><i data-feather="shopping-cart"></i> Sipariş Raporları</a>
-                                        <a href="{{URL::site('rapor/gelirgider')}}" class="list-group-item list-group-item-action"><i data-feather="minimize-2"></i> Gelir Gider Raporu</a>
-                                        <a href="{{URL::site('rapor/cari')}}" class="list-group-item list-group-item-action"><i data-feather="users"></i> Müşteri Raporu</a>
                                     </div>
 
                             
