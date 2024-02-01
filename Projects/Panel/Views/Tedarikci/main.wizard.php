@@ -21,13 +21,10 @@
             <div class="content-header-right text-md-end col-md-2 col-12 d-md-block d-none">
                 <div class="mb-1 breadcrumb-right">
                     <div class="dropdown">
-                        <a class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i data-feather="grid"  data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="İşlemler"></i>
+                        <a  href="{{URL::site('tedarikci/form')}}" class=" btn btn-primary" >
+                            <i data-feather="plus"></i> Tedarikci Ekle
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="{{URL::site('tedarikci/form')}}"><i class="me-1" data-feather="plus"></i><span class="align-middle">Tedarikci Ekle</span></a>
 
-                        </div>
                     </div>
                 </div>
             </div>
@@ -61,21 +58,10 @@
                                     <td>{{$cari->ek_bilgiler}}</td>
 
                                     <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                <i data-feather="more-vertical"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="{{URL::site('tedarikci/form/')}}{{$cari->id}}">
-                                                    <i data-feather="edit-2" class="me-50"></i>
-                                                    <span>Düzenle</span>
-                                                </a>
-                                                <a class="dropdown-item" onclick="deleteAction('{{$cari->id}}','{{URL::site('Tedarikci/ajax')}}','tedarikciSil')">
-                                                    <i data-feather="trash" class="me-50"></i>
-                                                    <span>Sil</span>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Düzenle" href="{{URL::site('tedarikci/form/')}}{{$cari->id}}"><i data-feather="edit-2" class="me-50"></i></a>
+
+                                        <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$cari->id}}','{{URL::site('Tedarikci/ajax')}}','tedarikciSil')"><i data-feather="trash" class="me-50"></i></a>
+
                                     </td>
                                 </tr>
                                 @endforeach

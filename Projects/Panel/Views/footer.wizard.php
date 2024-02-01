@@ -28,7 +28,6 @@
     <script src="js/core/app.js"></script>
     <script src="js/scripts/forms/form-repeater.js"></script>
     <!-- END: Theme JS-->
-
     <!-- BEGIN: Page JS-->
 
 <script src="js/scripts/pages/auth-login.js"></script>
@@ -37,6 +36,7 @@
 <script type='text/javascript' src='js/scripts/gmap.js'></script>
 <script type='text/javascript' src='vendors/js/pickers/flatpickr/flatpickr.min.js'></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 

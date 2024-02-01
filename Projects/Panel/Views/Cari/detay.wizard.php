@@ -82,7 +82,7 @@
 
                                     </ul>
                                     <div class="d-flex justify-content-center pt-2">
-                                        <a href="{{URL::site('cari/form/'.$cariDetay->id)}}" class="btn btn-primary me-1" data-bs-target="#editUser" data-bs-toggle="modal">
+                                        <a href="{{URL::site('cari/form/'.$cariDetay->id)}}" class="btn btn-primary me-1">
                                             Düzenle
                                         </a>
                                     </div>

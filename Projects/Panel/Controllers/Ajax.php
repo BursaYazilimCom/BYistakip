@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
-Use AjaxModel,KasaModel,AyarModel, InternalFaturaModel as FaturaModel;
+Use AjaxModel,KasaModel,AyarModel, InternalFaturaModel as FaturaModel,InternalPlanlamaModel as PlanlamaModel;
 Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel,InternalCariModel as CariModel;
 
 
@@ -1784,6 +1784,256 @@ class Ajax extends Controller
                 </table>
 
             <?php
+
+        }
+
+        if(Post::action()=="hatirlatmaEkle"){
+
+           // $id = Post::rowid();
+            //$hatirlatmaDetay = PlanlamaModel::hatirlatmaDetay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('planlama/hatirlatmaEkle')->open('hatirlatmaEkle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Hatırlatma Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                        <div class="mb-1 row">
+                            <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Hatırlatma Notu</label>
+                            <div class="col-sm-9">
+                                <?php echo Form::vRequired()->id('aciklama')->placeholder('Hatırlatma Notu')->textarea('aciklama','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                        <div class="mb-1 row">
+                            <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Periyod</label>
+                            <div class="col-sm-9">
+                                <div class="form-check form-check-inline  odeme_turuT">
+                                    <input class="form-check-input" type="radio" name="periyod" id="periyod1" value="0" checked />
+                                    <label class="form-check-label" for="periyod1">Tek Sefer</label>
+                                </div>
+                                <div class="form-check form-check-inline odeme_turuY">
+                                    <input class="form-check-input" type="radio" name="periyod" id="periyod2" value="1" />
+                                    <label class="form-check-label" for="periyod2">Yenilenen</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-1 row">
+                            <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Durum</label>
+                            <div class="col-sm-9">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="durum" id="durum1" value="1" checked />
+                                    <label class="form-check-label" for="durum1">Aktif</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="durum" id="durum2" value="0" />
+                                    <label class="form-check-label" for="durum2">Pasif</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    <div class="mb-1 row" id="yenilenen" style="display: none">
+                        <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Zaman</label>
+                        <div class="col-sm-3">
+                            <select name="ay" class="form-select">
+                                <option value="0">Her Ay</option>
+                                <option value="01">Ocak</option>
+                                <option value="02">Şubat</option>
+                                <option value="03">Mart</option>
+                                <option value="04">Nisan</option>
+                                <option value="05">Mayıs</option>
+                                <option value="06">Haziran</option>
+                                <option value="07">Temmuz</option>
+                                <option value="08">Agustos</option>
+                                <option value="09">Eylül</option>
+                                <option value="10">Ekim</option>
+                                <option value="11">Kasım</option>
+                                <option value="12">Aralık</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <select name="gun" class="form-select">
+                                <option value="0">Her Gün</option>
+                                <?php
+                                for($g=1;$g<=31;$g++){
+                                    if($g<10) {
+                                        $g = "0" . $g;
+                                    } ?>
+                                <option value="<?=$g?>"><?=$g?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="time" name="saat" class="form-control time-mask" placeholder="sa:dk" id="time" />
+                        </div>
+
+                    </div>
+
+                    <div class="mb-1 row" id="tek" style="display: block">
+                        <div class="mb-1 row">
+                            <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Zaman</label>
+                            <div class="col-sm-9">
+                                <input type="datetime-local" name="zaman"  style="width: 100%" class="form-control time-mask" placeholder="sa:dk" id="time" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+                    $(".odeme_turuT").click(function(){
+                        $("#tek").show();
+                        $("#yenilenen").hide();
+                    });
+                    $(".odeme_turuY").click(function(){
+                        $("#tek").hide();
+                        $("#yenilenen").show();
+                    });
+                });
+            </script>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+
+        if(Post::action()=="hatirlatmaDuzenle"){
+
+            $id = Post::rowid();
+            $detay = PlanlamaModel::hatirlatmaDetay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('planlama/hatirlatmaGuncelle/'.$id)->open('hatirlatmaGuncelle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Hatırlatma Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="mb-1 row">
+                        <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Hatırlatma Notu</label>
+                        <div class="col-sm-9">
+                            <?php echo Form::vRequired()->id('aciklama')->placeholder('Hatırlatma Notu')->textarea('aciklama',$detay->aciklama,['class'=>'form-control']); ?>
+                        </div>
+                    </div>
+                    <div class="mb-1 row">
+                        <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Periyod</label>
+                        <div class="col-sm-9">
+                            <div class="form-check form-check-inline  odeme_turuT">
+                                <input class="form-check-input" type="radio" name="periyod" id="periyod1" value="0" <?=$detay->periyod=="0"?"checked":""?> checked />
+                                <label class="form-check-label" for="periyod1">Tek Sefer</label>
+                            </div>
+                            <div class="form-check form-check-inline odeme_turuY">
+                                <input class="form-check-input" type="radio" name="periyod" id="periyod2" <?=$detay->periyod=="1"?"checked":""?> value="1" />
+                                <label class="form-check-label" for="periyod2">Yenilenen</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-1 row">
+                        <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Durum</label>
+                        <div class="col-sm-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="durum" id="durum1" value="1" <?=$detay->durum=="1"?"checked":""?> />
+                                <label class="form-check-label" for="durum1">Aktif</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="durum" id="durum2" value="0" <?=$detay->durum=="0"?"checked":""?> />
+                                <label class="form-check-label" for="durum2">Pasif</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-1 row" id="yenilenen" style="display: <?=$detay->periyod=="0"?"none":"block"?>">
+                        <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Zaman</label>
+                        <div class="col-sm-3">
+                            <select name="ay" class="form-select">
+                                <option value="0" <?=$detay->ay=="0"?"selected":""?>>Her Ay</option>
+                                <option value="01" <?=$detay->ay=="01"?"selected":""?>>Ocak</option>
+                                <option value="02" <?=$detay->ay=="02"?"selected":""?>>Şubat</option>
+                                <option value="03" <?=$detay->ay=="03"?"selected":""?>>Mart</option>
+                                <option value="04" <?=$detay->ay=="04"?"selected":""?>>Nisan</option>
+                                <option value="05" <?=$detay->ay=="05"?"selected":""?>>Mayıs</option>
+                                <option value="06" <?=$detay->ay=="06"?"selected":""?>>Haziran</option>
+                                <option value="07" <?=$detay->ay=="07"?"selected":""?>>Temmuz</option>
+                                <option value="08" <?=$detay->ay=="08"?"selected":""?>>Agustos</option>
+                                <option value="09" <?=$detay->ay=="09"?"selected":""?>>Eylül</option>
+                                <option value="10" <?=$detay->ay=="10"?"selected":""?>>Ekim</option>
+                                <option value="11" <?=$detay->ay=="11"?"selected":""?>>Kasım</option>
+                                <option value="12" <?=$detay->ay=="12"?"selected":""?>>Aralık</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <select name="gun" class="form-select">
+                                <option value="0">Her Gün</option>
+                                <?php
+                                for($g=1;$g<=31;$g++){
+                                    if($g<10) {
+                                        $g = "0" . $g;
+                                    } ?>
+                                    <option value="<?=$g?>" <?=$detay->ay==$g?"selected":""?>><?=$g?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="time" name="saat" class="form-control time-mask" value="$detay->saat" placeholder="sa:dk" id="time" />
+                        </div>
+
+                    </div>
+
+                    <div class="mb-1 row" id="tek" style="display: <?=$detay->periyod=="1"?"none":"block"?>">
+                        <div class="mb-1 row">
+                            <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Zaman</label>
+                            <div class="col-sm-9">
+                                <input type="datetime-local" name="zaman" value="<?=$detay->yil."-".$detay->ay."-".$detay->gun." ".$detay->saat?>"  style="width: 100%" class="form-control time-mask" placeholder="sa:dk" id="time" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+                    $(".odeme_turuT").click(function(){
+                        $("#tek").show();
+                        $("#yenilenen").hide();
+                    });
+                    $(".odeme_turuY").click(function(){
+                        $("#tek").hide();
+                        $("#yenilenen").show();
+                    });
+                });
+            </script>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
 
         }
 

@@ -78,21 +78,12 @@
                                     </td>
 
                                     <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                <i data-feather="more-vertical"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="{{URL::site('cari/form/')}}{{$cari->id}}">
-                                                    <i data-feather="edit-2" class="me-50"></i>
-                                                    <span>Düzenle</span>
-                                                </a>
-                                                <a class="dropdown-item" onclick="deleteAction('{{$cari->id}}','{{URL::site('Cari/ajax')}}','cariSil')">
-                                                    <i data-feather="trash" class="me-50"></i>
-                                                    <span>Sil</span>
-                                                </a>
-                                            </div>
-                                        </div>
+
+                                        <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Düzenle" href="{{URL::site('cari/form/')}}{{$cari->id}}"><i data-feather="edit-2" class="me-50"></i></a>
+
+                                        <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$cari->id}}','{{URL::site('Cari/ajax')}}','cariSil')"><i data-feather="trash" class="me-50"></i></a>
+
+
                                     </td>
                                 </tr>
                                 @endforeach

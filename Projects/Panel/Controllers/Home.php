@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 Use User,URL;
-use PersonelModel,AyarModel,KasaModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel,InternalFaturaModel as FaturaModel;
+use PersonelModel,AyarModel,KasaModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalPlanlamaModel as PlanlamaModel;
 
 class Home extends Controller
 {
@@ -28,8 +28,10 @@ class Home extends Controller
         $odenmeyenFaturalar = FaturaModel::faturaListele('odenmeyen');
         $kasaHesaplari = KasaModel::kasaHesaplari();
         $siparisler     = SiparisModel::liste();
+        $hatirlatmalar  = PlanlamaModel::hatirlatmalar(1);
 
         View::listele($siparisler);
+        View::hatirlatmalar($hatirlatmalar);
         View::musteriSayisi($cariHesaplar['adet']);
         View::odenmeyenFaturaSayisi($odenmeyenFaturalar['adet']);
         View::projeSayisi($projeler['adet']);

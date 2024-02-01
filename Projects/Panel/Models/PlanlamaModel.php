@@ -3,9 +3,13 @@
 class InternalPlanlamaModel extends Model
 {
 
-    static function hatirlatmalar(){
+    static function hatirlatmalar($durum=""){
 
-        $veri = DB::orderby('id','DESC')->hatirlatmalar();
+        if($durum!=""){
+            $veri = DB::where('durum',$durum)->orderby('id','DESC')->hatirlatmalar();
+        }else{
+            $veri = DB::orderby('id','DESC')->hatirlatmalar();
+        }
 
         return ['liste'=>$veri->result()];
 
@@ -24,6 +28,7 @@ class InternalPlanlamaModel extends Model
         $ekle = DB::insert('hatirlatmalar',[
             'aciklama'  =>$data['aciklama'],
             'periyod'   =>$data['periyod'],
+            'yil'        =>$data['yil'],
             'ay'        =>$data['ay'],
             'gun'       =>$data['gun'],
             'saat'      =>$data['saat'],
@@ -39,6 +44,7 @@ class InternalPlanlamaModel extends Model
             ->update('hatirlatmalar',[
                 'aciklama'  =>$data['aciklama'],
                 'periyod'   =>$data['periyod'],
+                'yil'        =>$data['yil'],
                 'ay'        =>$data['ay'],
                 'gun'       =>$data['gun'],
                 'saat'      =>$data['saat'],

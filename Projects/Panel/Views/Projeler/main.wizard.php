@@ -73,38 +73,19 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                        <i data-feather="more-vertical"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a href="{{URL::site('projeler/yolHaritasi/'.$u->id)}}" class="dropdown-item">
-                                                            <i data-feather="activity" class="me-50"></i>
-                                                            <span>Yol Haritası</span>
-                                                        </a>
-                                                        <a href="{{URL::site('projeler/yapilanlar/'.$u->id)}}" class="dropdown-item">
-                                                            <i data-feather="activity" class="me-50"></i>
-                                                            <span>Yapılan Çalışmalar</span>
-                                                        </a>
-                                                        <a href="{{URL::site('projeler/geriBildirimler/'.$u->id)}}" class="dropdown-item">
-                                                            <i data-feather="alert-triangle" class="me-50"></i>
-                                                            <span>Geri Bildirimler</span>
-                                                        </a>
-                                                        <a href="{{URL::site('projeler/personeller/'.$u->id)}}" class="dropdown-item">
-                                                            <i data-feather="user" class="me-50"></i>
-                                                            <span>Proje Çalışanları</span>
-                                                        </a>
-                                                        <a href="{{URL::site('projeler/form')}}/{{$u->id}}" class="dropdown-item">
-                                                            <i data-feather="edit-2" class="me-50"></i>
-                                                            <span>Düzenle</span>
-                                                        </a>
+                                                <a class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Yol Haritası" href="{{URL::site('projeler/yolHaritasi/'.$u->id)}}"><i data-feather="activity" class="me-50"></i></a>
 
-                                                        <a class="dropdown-item" onclick="deleteAction('{{$u->id}}','{{URL::site('projeler/ajax')}}','projeSil')">
-                                                            <i data-feather="trash" class="me-50"></i>
-                                                            <span>Sil</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                                <a class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Yapılan Çalışmalar" href="{{URL::site('projeler/yapilanlar/'.$u->id)}}"><i data-feather="activity" class="me-50"></i></a>
+
+                                                <a class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Geri Bildirimler" href="{{URL::site('projeler/geriBildirimler/'.$u->id)}}"><i data-feather="alert-triangle" class="me-50"></i></a>
+
+                                                <a class="btn btn-secondary btn-sm" data-bs-toggle="tooltip" title="Proje Çalışanları" href="{{URL::site('projeler/personeller/'.$u->id)}}"><i data-feather="user" class="me-50"></i></a>
+
+                                                <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Düzenle" href="{{URL::site('projeler/form/')}}{{$u->id}}"><i data-feather="edit-2" class="me-50"></i></a>
+
+                                                <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$u->id}}','{{URL::site('projeler/ajax')}}','projeSil')"><i data-feather="trash" class="me-50"></i></a>
+
+
                                             </td>
                                         </tr>
                                         @endforeach

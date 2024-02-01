@@ -56,7 +56,7 @@
                                                         <th>Periyod</th>
                                                         <th>Sonraki Tarih</th>
                                                         <th>Durum</th>
-                                                        
+                                                        <th> </th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -64,8 +64,14 @@
                                                     <tr id="row-{{$p->id}}">
                                                         <td>#{{$p->id}}</a></td>
                                                         <td>{{$p->aciklama}}</a></td>
-                                                        <td>{{$p->periyod}}</td>
-                                                        <td>{{$p->ay}} {{$p->gun}} {{$p->saat}}</td>
+                                                        <td>{{$p->periyod=="1"?"Tekrarlayan":"Tek Seferlik"}}</td>
+                                                        <td>
+                                                            @if($p->periyod=="1")
+                                                            {{$p->ay=="0"?"Her Ay'ın":$p->ay}} {{$p->gun=="0"?"Her Gün'ü":$p->gun}} Saat: {{$p->saat}}
+                                                            @else
+                                                            {{$p->gun}}.{{$p->ay}}.{{$p->yil}}  Saat: {{$p->saat}}
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             @if($p->durum=="0")
                                                                 <span class="badge rounded-pill badge-light-danger"> Pasif </span>

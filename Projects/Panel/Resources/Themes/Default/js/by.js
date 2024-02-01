@@ -6,7 +6,9 @@ $(window).on('load', function() {
             height: 14
         });
     }
-})
+});
+
+
 
 $(".odeme_turuU").click(function(){
     $("#tek").hide();

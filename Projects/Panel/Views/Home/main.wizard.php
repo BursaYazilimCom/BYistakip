@@ -132,7 +132,7 @@
 
                     <div class="row match-height">
                         <!-- Company Table Card -->
-                        <div class="col-lg-9 col-12">
+                        <div class="col-lg-6 col-12">
                             <div class="card card-company-table">
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
@@ -182,9 +182,45 @@
                             </div>
                         </div>
                         <!--/ Company Table Card -->
-
+                        <style>
+                            .card-user-timeline .timeline .timeline-item:not(:last-child) {
+                                padding-bottom: 0.3rem;
+                            }
+                        </style>
 
                         <!-- Transaction Card -->
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="card card-user-timeline">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center">
+                                        <i data-feather="list" class="user-timeline-title-icon"></i>
+                                        <h4 class="card-title"><a href="{{URL::site('planlama/hatirlatici')}}" >Hatırlatıcı</a></h4>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="timeline ms-50">
+                                        @foreach($hatirlatmalar['liste'] as $hatirlatma)
+                                        <li class="timeline-item">
+                                            <span class="timeline-point timeline-point-indicator"></span>
+                                            <div class="timeline-event">
+                                                <h6>
+                                                    @if($hatirlatma->periyod=="1")
+                                                    {{$hatirlatma->ay=="0"?"Her Ay'ın":$hatirlatma->ay}} {{$hatirlatma->gun=="0"?"Her Gün'ü":$hatirlatma->gun}} Saat: {{$hatirlatma->saat}}
+                                                    @else
+                                                    {{$hatirlatma->gun}}.{{$hatirlatma->ay}}.{{$hatirlatma->yil}}  Saat: {{$hatirlatma->saat}}
+                                                    @endif
+                                                </h6>
+                                                <p>{{$hatirlatma->aciklama}}</p>
+                                            </div>
+                                        </li>
+                                        @endforeach
+
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-lg-3 col-md-6 col-12">
                             <div class="card card-transaction">
                                 <div class="card-header">

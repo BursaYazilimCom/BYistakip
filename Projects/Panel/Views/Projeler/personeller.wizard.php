@@ -67,24 +67,15 @@
                                                         <td>{{Date::convert($p->tarih,"d.m.y H:i")}}</td>
                                                     
                                                         <td>
-                                                            <div class="d-flex align-items-center col-actions">
-                                                                <div class="dropdown">
-                                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                                        <i data-feather="more-vertical"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-end">
-
-                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$p->id}}" data-action="projePersonelDuzenle" class="dropdown-item">
-                                                                            <i data-feather="plus" class="me-50"></i>Düzenle
-                                                                        </a>
-
-                                                                        <a class="dropdown-item" onclick="deleteAction('{{$p->id}}','{{URL::site('Projeler/ajax')}}','personelSil')">
-                                                                            <i data-feather="trash" class="me-50"></i>
-                                                                            <span>Sil</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <span data-bs-toggle="tooltip" title="Düzenle">
+                                                                    <a class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$p->id}}" data-action="projePersonelDuzenle" class="dropdown-item">
+                                                                    <i data-feather="edit-2" class="me-50"></i>
+                                                                </a>
+                                                                </span>
+                                                                <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$p->id}}','{{URL::site('Projeler/ajax')}}','personelSil')"><i data-feather="trash" class="me-50"></i></a>
                                                             </div>
+
                                                         </td>
                                                     </tr>
                                                     @endforeach

@@ -211,10 +211,10 @@
                                                 <div class="col-md-6">
                                                     <input class="custom-option-item-check" type="radio" value="0" name="durum" id="durum1" {{$detay->durum=='0'?'checked':''}} />
                                                     <label class="custom-option-item p-1" for="durum1">
-                                            <span class="d-flex justify-content-between flex-wrap mb-50">
-                                                <span class="fw-bolder">Pasif</span>
+                                                    <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                        <span class="fw-bolder">Pasif</span>
 
-                                            </span>
+                                                    </span>
                                                         <small class="d-block">Cariye bildirim gönderilmez ve satış yapılmaz</small>
                                                     </label>
                                                 </div>
@@ -222,10 +222,10 @@
                                                 <div class="col-md-6">
                                                     <input class="custom-option-item-check" type="radio" name="durum" id="durum2" value="1" {{$detay->durum=='1'?'checked':''}} />
                                                     <label class="custom-option-item p-1" for="durum2">
-                                            <span class="d-flex justify-content-between flex-wrap mb-50">
-                                                <span class="fw-bolder">Aktif Üye</span>
+                                                    <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                        <span class="fw-bolder">Aktif Üye</span>
 
-                                            </span>
+                                                    </span>
                                                         <small class="d-block">Cariye ödeme ekstra bildirimler gönderilir ve satış yapılabilir</small>
                                                     </label>
                                                 </div>

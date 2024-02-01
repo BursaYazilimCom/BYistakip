@@ -24,23 +24,50 @@
             <section class="form-control-repeater">
                 <div class="row">
                     <!-- Invoice repeater -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="head-label">
-                                    <h4 class="card-title">Planlayıcılar</h4>
+
+
+                        {{ Redirect::select('bilgi',true) }}
+
+                        <div class="col-xl-2 col-md-3 col-sm-6">
+                            <a  href="{{URL::site()}}planlama/hatirlatici" class="card text-center">
+                                <div class="card-body">
+                                    <div  class="avatar bg-light-info p-50 mb-1">
+                                        <div class="avatar-content">
+                                            <i data-feather="bell" class="font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="fw-bolder">Hatırlatıcı</h2>
                                 </div>
-                                <div class="dt-action-buttons text-end">
-                                 
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                {{ Redirect::select('bilgi',true) }}
-                              <a href="{{URL::site()}}planlama/hatirlatici" class="btn btn-info">Hatırlatıcı</a>
-                             
-                            </div>
+                            </a>
                         </div>
-                    </div>
+
+                        <div class="col-xl-2 col-md-3 col-sm-6">
+                            <a  href="{{URL::site()}}planlama/gorevler" class="card text-center">
+                                <div class="card-body">
+                                    <div  class="avatar bg-light-success p-50 mb-1">
+                                        <div class="avatar-content">
+                                            <i data-feather="flag" class="font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="fw-bolder">Görevler</h2>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xl-2 col-md-3 col-sm-6">
+                            <a  href="{{URL::site()}}planlama/gorevler" class="card text-center">
+                                <div class="card-body">
+                                    <div  class="avatar bg-light-warning p-50 mb-1">
+                                        <div class="avatar-content">
+                                            <i data-feather="calendar" class="font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="fw-bolder">Etkinlikler</h2>
+                                </div>
+                            </a>
+                        </div>
+
+
                     <!-- /Invoice repeater -->
                 </div>
             </section>
