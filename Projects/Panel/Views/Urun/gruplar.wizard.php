@@ -57,21 +57,16 @@
                                             <td>{{$item->adi}}</td>
                                             <td class="table-{{$item->durum=='1'?'success':'danger'}}">{{$item->durum=="1"?"Aktif":"Pasif"}}</span></td>
                                             <td>
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                        <i data-feather="more-vertical"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item editButon" data-action="grupDuzenle">
+
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                     <span data-bs-toggle="tooltip" title="Düzenle">
+                                                        <a class="btn btn-warning editButon" data-action="grupDuzenle">
                                                             <i data-feather="edit-2" class="me-50"></i>
-                                                            <span>Düzenle</span>
                                                         </a>
-                                                        <a class="dropdown-item" onclick="deleteAction('{{$item->id}}','{{URL::site('urun/ajax')}}','grupSil')">
-                                                            <i data-feather="trash" class="me-50"></i>
-                                                            <span>Sil</span>
-                                                        </a>
-                                                    </div>
+                                                    </span>
+                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$item->id}}','{{URL::site('urun/ajax')}}','grupSil')"><i data-feather="trash" class="me-50"></i></a>
                                                 </div>
+
                                             </td>
                                         </tr>
                                         @endforeach
