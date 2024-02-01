@@ -150,6 +150,9 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('planlama')}}"><i data-feather="check-square"></i><span data-i18n="Misc">Planlama</span></a>
+                    </li>
+
                     <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="settings"></i><span data-i18n="Misc">Ayarlar</span></a>
                         <ul class="dropdown-menu" data-bs-popper="none">
                             <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">

@@ -103,6 +103,7 @@ class CronJob extends Controller
                 'link' => AyarModel::defaultAyarlar('siteUrl')."/faturalar/detay/".$fatura->id,
                 'link_baslik' => 'Fatura Görüntüle',
                 'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                'firma_link' => AyarModel::defaultAyarlar('siteUrl'),
                 'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
                 'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
                 'telefon' => AyarModel::defaultAyarlar('firmaTel'),

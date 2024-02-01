@@ -12,7 +12,7 @@
                                 <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a></li>
                                 <li class="breadcrumb-item"><a href="{{URL::site('projeler')}}">Projeler</a></li>
                                 <li class="breadcrumb-item"><a href="{{URL::site('projeler/form/'.$detay->id)}}">{{$detay->proje_adi}}</a></li>
-                                <li class="breadcrumb-item"><a href="#">Proje Yol Haritası</a></li>
+                                <li class="breadcrumb-item"><a href="#">Geri Bildirimler</a></li>
                             </ol>
                         </div>
                     </div>
@@ -28,13 +28,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="head-label">
-                                    <h4 class="card-title">Proje Yol Haritasi</h4>
+                                    <h4 class="card-title">Proje Geri Bildirimleri</h4>
                                 </div>
                                 <div class="dt-action-buttons text-end">
 
-                                    <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="yolHaritasiEkle" class="dt-button create-new btn btn-primary dropdown-item text-warning">
-                                        <i data-feather="plus" class="me-50"></i>EKLE
-                                    </a>
+                                   
                                 </div>
                             </div>
                             <div class="card-body">
@@ -44,8 +42,7 @@
                                 <section class="invoice-list-wrapper">
                                     <div class="card">
                                         <div class="card-datatable table-responsive">
-                                            <div id="DataTables_Table_0_wrapper"
-                                                 class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
 
                                                 <table class="invoice-list-table table dataTable no-footer dtr-column"
                                                        id="DataTables_Table_0" role="grid"
@@ -53,34 +50,21 @@
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Sıra</th>
-                                                        <th>Başlık</th>
-                                                        <th>Açıklama</th>
-                                                        <th>Durum</th>
-                                                        <th class="cell-fit"></th>
+                                                        <th>Bildirim</th>
+                                                        <th>Bildirim IP</th>
+
+                                                        <th>Tarih</th>
+                                                        <th></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($listele['liste'] as $h)
-                                                    <tr id="row-{{$h->id}}" 
-                                                    @if($h->durum=="0")
-                                                        style="background-color:#F8D2D2"
-                                                    @else
-                                                        style="background-color:#D5FFCD"
-                                                    @endif
-                                                    >
-                                                        <td>#{{$h->id}}</a></td>
-                                                        <td>{{$h->sira}}</a></td>
-                                                        <td>{{$h->baslik}}</td>
-                                                        <td>{{$h->aciklama}}</td>
-                                                        <td>
-                                                            @if($h->durum=="0")
-                                                                <span class="badge rounded-pill badge-light-danger"> Beklemede </span>
-                                                            @else
-                                                                <span class="badge rounded-pill badge-light-primary"> Gerçekleştirildi </span>
-                                                            @endif
-                                                        </td>
-
+                                                    @foreach($listele['liste'] as $gb)
+                                                    <tr id="row-{{$gb->id}}">
+                                                        <td>#{{$gb->id}}</td>
+                                                        <td>{{$gb->detay}}</td>
+                                                        <td>{{$gb->talep_ip}}</td>
+                                                        <td>{{Date::convert($gb->tarih,"d.m.y H:i")}}</td>
+                                                    
                                                         <td>
                                                             <div class="d-flex align-items-center col-actions">
                                                                 <div class="dropdown">
@@ -89,11 +73,11 @@
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-end">
 
-                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$h->id}}" data-action="yolHaritasiDuzenle" class="dropdown-item">
+                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$gb->id}}" data-action="projeGeriBildirimDuzenle" class="dropdown-item">
                                                                             <i data-feather="plus" class="me-50"></i>Düzenle
                                                                         </a>
 
-                                                                        <a class="dropdown-item" onclick="deleteAction('{{$h->id}}','{{URL::site('Projeler/ajax')}}','yolHaritasiSil')">
+                                                                        <a class="dropdown-item" onclick="deleteAction('{{$gb->id}}','{{URL::site('Projeler/ajax')}}','geriBildirimSil')">
                                                                             <i data-feather="trash" class="me-50"></i>
                                                                             <span>Sil</span>
                                                                         </a>

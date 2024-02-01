@@ -6,13 +6,12 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-start mb-0">Proje Yönetimi</h2>
+                        <h2 class="content-header-title float-start mb-0">Planlama Yönetimi</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a></li>
-                                <li class="breadcrumb-item"><a href="{{URL::site('projeler')}}">Projeler</a></li>
-                                <li class="breadcrumb-item"><a href="{{URL::site('projeler/form/'.$detay->id)}}">{{$detay->proje_adi}}</a></li>
-                                <li class="breadcrumb-item"><a href="#">Proje Yol Haritası</a></li>
+                                <li class="breadcrumb-item"><a href="{{URL::site('planlama')}}">Planlama</a></li>
+                                <li class="breadcrumb-item"><a href="#">Hatırlatıcı</a></li>
                             </ol>
                         </div>
                     </div>
@@ -28,11 +27,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="head-label">
-                                    <h4 class="card-title">Proje Yol Haritasi</h4>
+                                    <h4 class="card-title">Hatırlatıcı</h4>
                                 </div>
                                 <div class="dt-action-buttons text-end">
 
-                                    <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="yolHaritasiEkle" class="dt-button create-new btn btn-primary dropdown-item text-warning">
+                                    <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="hatirlatmaEkle" class="dt-button create-new btn btn-primary dropdown-item text-warning">
                                         <i data-feather="plus" class="me-50"></i>EKLE
                                     </a>
                                 </div>
@@ -53,31 +52,25 @@
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Sıra</th>
-                                                        <th>Başlık</th>
-                                                        <th>Açıklama</th>
+                                                        <th>Detay</th>
+                                                        <th>Periyod</th>
+                                                        <th>Sonraki Tarih</th>
                                                         <th>Durum</th>
-                                                        <th class="cell-fit"></th>
+                                                        
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($listele['liste'] as $h)
-                                                    <tr id="row-{{$h->id}}" 
-                                                    @if($h->durum=="0")
-                                                        style="background-color:#F8D2D2"
-                                                    @else
-                                                        style="background-color:#D5FFCD"
-                                                    @endif
-                                                    >
-                                                        <td>#{{$h->id}}</a></td>
-                                                        <td>{{$h->sira}}</a></td>
-                                                        <td>{{$h->baslik}}</td>
-                                                        <td>{{$h->aciklama}}</td>
+                                                    @foreach($listele['liste'] as $p)
+                                                    <tr id="row-{{$p->id}}">
+                                                        <td>#{{$p->id}}</a></td>
+                                                        <td>{{$p->aciklama}}</a></td>
+                                                        <td>{{$p->periyod}}</td>
+                                                        <td>{{$p->ay}} {{$p->gun}} {{$p->saat}}</td>
                                                         <td>
-                                                            @if($h->durum=="0")
-                                                                <span class="badge rounded-pill badge-light-danger"> Beklemede </span>
+                                                            @if($p->durum=="0")
+                                                                <span class="badge rounded-pill badge-light-danger"> Pasif </span>
                                                             @else
-                                                                <span class="badge rounded-pill badge-light-primary"> Gerçekleştirildi </span>
+                                                                <span class="badge rounded-pill badge-light-success"> Aktif </span>
                                                             @endif
                                                         </td>
 
@@ -89,11 +82,11 @@
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-end">
 
-                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$h->id}}" data-action="yolHaritasiDuzenle" class="dropdown-item">
+                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$p->id}}" data-action="hatirlatmaDuzenle" class="dropdown-item">
                                                                             <i data-feather="plus" class="me-50"></i>Düzenle
                                                                         </a>
 
-                                                                        <a class="dropdown-item" onclick="deleteAction('{{$h->id}}','{{URL::site('Projeler/ajax')}}','yolHaritasiSil')">
+                                                                        <a class="dropdown-item" onclick="deleteAction('{{$p->id}}','{{URL::site('Planlama/ajax')}}','hatirlatmaSil')">
                                                                             <i data-feather="trash" class="me-50"></i>
                                                                             <span>Sil</span>
                                                                         </a>
@@ -133,7 +126,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h1 class="text-center mb-1" id="modalTitle">Proje Yönetimi</h1>
+                <h1 class="text-center mb-1" id="modalTitle">Planlama Yönetimi</h1>
 
                 <div class="fetched-data"></div>
 

@@ -12,7 +12,7 @@
                                 <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a></li>
                                 <li class="breadcrumb-item"><a href="{{URL::site('projeler')}}">Projeler</a></li>
                                 <li class="breadcrumb-item"><a href="{{URL::site('projeler/form/'.$detay->id)}}">{{$detay->proje_adi}}</a></li>
-                                <li class="breadcrumb-item"><a href="#">Proje Yol Haritası</a></li>
+                                <li class="breadcrumb-item"><a href="#">Proje Çalışanları</a></li>
                             </ol>
                         </div>
                     </div>
@@ -28,11 +28,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="head-label">
-                                    <h4 class="card-title">Proje Yol Haritasi</h4>
+                                    <h4 class="card-title">Proje Çalışanları</h4>
                                 </div>
                                 <div class="dt-action-buttons text-end">
 
-                                    <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="yolHaritasiEkle" class="dt-button create-new btn btn-primary dropdown-item text-warning">
+                                    <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="projePersonelEkle" class="dt-button create-new btn btn-primary dropdown-item text-warning">
                                         <i data-feather="plus" class="me-50"></i>EKLE
                                     </a>
                                 </div>
@@ -44,8 +44,7 @@
                                 <section class="invoice-list-wrapper">
                                     <div class="card">
                                         <div class="card-datatable table-responsive">
-                                            <div id="DataTables_Table_0_wrapper"
-                                                 class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
 
                                                 <table class="invoice-list-table table dataTable no-footer dtr-column"
                                                        id="DataTables_Table_0" role="grid"
@@ -53,34 +52,20 @@
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Sıra</th>
-                                                        <th>Başlık</th>
-                                                        <th>Açıklama</th>
-                                                        <th>Durum</th>
-                                                        <th class="cell-fit"></th>
+                                                        <th>Personel</th>
+                                                        <th>Görevi</th>
+                                                        <th>Dahil Olma Tarihi</th>
+                                                        <th></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($listele['liste'] as $h)
-                                                    <tr id="row-{{$h->id}}" 
-                                                    @if($h->durum=="0")
-                                                        style="background-color:#F8D2D2"
-                                                    @else
-                                                        style="background-color:#D5FFCD"
-                                                    @endif
-                                                    >
-                                                        <td>#{{$h->id}}</a></td>
-                                                        <td>{{$h->sira}}</a></td>
-                                                        <td>{{$h->baslik}}</td>
-                                                        <td>{{$h->aciklama}}</td>
-                                                        <td>
-                                                            @if($h->durum=="0")
-                                                                <span class="badge rounded-pill badge-light-danger"> Beklemede </span>
-                                                            @else
-                                                                <span class="badge rounded-pill badge-light-primary"> Gerçekleştirildi </span>
-                                                            @endif
-                                                        </td>
-
+                                                    @foreach($listele['liste'] as $p)
+                                                    <tr id="row-{{$p->id}}">
+                                                        <td>#{{$p->id}}</td>
+                                                        <td>{{PersonelModel::isim($p->personel_id)}}</td>
+                                                        <td>{{$p->gorevi}}</td>
+                                                        <td>{{Date::convert($p->tarih,"d.m.y H:i")}}</td>
+                                                    
                                                         <td>
                                                             <div class="d-flex align-items-center col-actions">
                                                                 <div class="dropdown">
@@ -89,11 +74,11 @@
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-end">
 
-                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$h->id}}" data-action="yolHaritasiDuzenle" class="dropdown-item">
+                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$p->id}}" data-action="projePersonelDuzenle" class="dropdown-item">
                                                                             <i data-feather="plus" class="me-50"></i>Düzenle
                                                                         </a>
 
-                                                                        <a class="dropdown-item" onclick="deleteAction('{{$h->id}}','{{URL::site('Projeler/ajax')}}','yolHaritasiSil')">
+                                                                        <a class="dropdown-item" onclick="deleteAction('{{$p->id}}','{{URL::site('Projeler/ajax')}}','personelSil')">
                                                                             <i data-feather="trash" class="me-50"></i>
                                                                             <span>Sil</span>
                                                                         </a>
