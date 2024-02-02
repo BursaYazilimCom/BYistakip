@@ -138,7 +138,10 @@
                                 <a class="dropdown-item d-flex align-items-center" href="{{URL::site('Masraf')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="aperture"></i><span data-i18n="Raise Support">Gider Kayıtları</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('kasa')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="clock"></i><span data-i18n="Raise Support">Kasa Defteri</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('kasa')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="clock"></i><span data-i18n="Raise Support">Kasa Hesapları</span></a>
+                            </li>
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('kasa/tumKayitlar')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="clock"></i><span data-i18n="Raise Support">Kasa Defteri</span></a>
                             </li>
                             <li data-menu="">
                                 <a class="dropdown-item d-flex align-items-center" href="{{URL::site('faturalar')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="layout"></i><span data-i18n="Raise Support">Faturalar</span></a>

@@ -69,7 +69,7 @@
                                         <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format($kayit->gider,2)}} </td>
                                         <td>{{number_format($kayit->mevcut_kasa_toplami,2)}}</td>
                                         <td>
-                                            <a href="" data-toggle="tooltip" title="Kayıt Sil" class="btn btn-danger btn-xs"><i data-feather="trash"></i></a>
+                                            <a href="" data-toggle="tooltip" title="Kayıt Sil" class="btn btn-danger btn-sm"><i data-feather="trash"></i></a>
                                         </td>
 
                                     </tr>

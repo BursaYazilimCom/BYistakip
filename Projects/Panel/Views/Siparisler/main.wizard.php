@@ -61,25 +61,18 @@
                                             <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
                                             <td>{{AyarModel::durum($s->durum)}}</td>
                                             <td>
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                        <i data-feather="more-vertical"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a href="{{URL::site('faturalar/siparis')}}/{{$s->id}}" class="dropdown-item">
-                                                            <i data-feather="send" class="me-50"></i>
-                                                            <span>Siparişin Faturaları</span>
-                                                        </a>
-                                                        <a href="{{URL::site('siparisler/duzenle')}}/{{$s->id}}" class="dropdown-item">
-                                                            <i data-feather="edit-2" class="me-50"></i>
-                                                            <span>Düzenle</span>
-                                                        </a>
-                                                        <a class="dropdown-item" onclick="deleteAction('{{$s->id}}','{{URL::site('siparisler/ajax')}}','siparisSil')">
-                                                            <i data-feather="trash" class="me-50"></i>
-                                                            <span>Sil</span>
-                                                        </a>
-                                                    </div>
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+
+                                                    <a href="{{URL::site('faturalar/siparis')}}/{{$s->id}}" data-bs-toggle="tooltip" title="Siparişin Faturaları" class="btn btn-info btn-sm">
+                                                        <i data-feather="send" class="me-50"></i>
+                                                    </a>
+                                                    <a href="{{URL::site('siparisler/duzenle')}}/{{$s->id}}" data-bs-toggle="tooltip" title="Düzenle" class="btn btn-warning btn-sm">
+                                                        <i data-feather="edit-2" class="me-50"></i>
+                                                    </a>
+                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$s->id}}','{{URL::site('siparisler/ajax')}}','siparisSil')"><i data-feather="trash" class="me-50"></i></a>
                                                 </div>
+
+
                                             </td>
                                         </tr>
                                         @endforeach

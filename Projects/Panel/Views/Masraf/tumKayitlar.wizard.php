@@ -83,18 +83,11 @@
                                     <td>{{Date::convert($kayit->odeme_tarihi, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td>{{Date::convert($kayit->islem_tarihi, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td>
+                                        <a class="btn btn-danger btn-sm" onclick="deleteAction('{{$kayit->id}}','{{URL::site('masraf/ajax')}}','masrafSil')">
+                                            <i data-feather="trash" class="me-50"></i>
+                                        </a>
 
-                                        <div class="dropdown">
-                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                <i data-feather="more-vertical"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" onclick="deleteAction('{{$kayit->id}}','{{URL::site('masraf/ajax')}}','masrafSil')">
-                                                    <i data-feather="trash" class="me-50"></i>
-                                                    <span>Sil</span>
-                                                </a>
-                                            </div>
-                                        </div>
+
                                     </td>
 
                                 </tr>

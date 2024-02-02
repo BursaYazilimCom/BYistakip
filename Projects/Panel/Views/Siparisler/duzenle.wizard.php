@@ -215,7 +215,7 @@
                                                         <td>{{number_format($sUrun->toplam_fiyat,2)}} ₺  </td>
                                                         <td>{{AyarModel::siparisDurumAdi($sUrun->durum)}}</td>
                                                         <td>
-                                                            <a class=" btn btn-info btn-xs" data-bs-toggle="tooltip" title="Detay" href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->id}}" >
+                                                            <a class=" btn btn-info btn-sm" data-bs-toggle="tooltip" title="Detay" href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->id}}" >
                                                                 <i data-feather="eye"></i></a>
 
                                                         </td>

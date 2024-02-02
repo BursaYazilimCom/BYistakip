@@ -116,7 +116,7 @@
                                                             <div class="d-flex align-items-center col-actions">
                                                                 <div class="dropdown">
                                                                     <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                                        <i data-feather="more-vertical"></i>
+                                                                        <i data-feather="chevron-down"></i> İşlemler
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-end">
 

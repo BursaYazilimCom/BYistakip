@@ -60,7 +60,7 @@
 
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                      <span data-bs-toggle="tooltip" title="Düzenle">
-                                                        <a class="btn btn-warning editButon" data-action="grupDuzenle">
+                                                        <a class="btn btn-warning editButon btn-sm" data-action="grupDuzenle">
                                                             <i data-feather="edit-2" class="me-50"></i>
                                                         </a>
                                                     </span>

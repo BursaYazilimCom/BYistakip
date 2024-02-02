@@ -68,7 +68,7 @@
                                         <i data-feather="more-vertical" class="font-medium-3 cursor-pointer" data-bs-toggle="dropdown"></i>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             <a class="dropdown-item anaKalemDuzenle"  data-action="anaKalemDuzenle" data-names="{{$anaKalem->adi}}" data-color="{{$anaKalem->renk}}" data-id="{{$anaKalem->id}}" href="#">Güncelle</a>
-                                            <a href="{{URL::site('masraf/kalemSil/')}}{{$anaKalem->id}}" class="dropdown-item"><i data-feather="trash" class="me-50"></i><span>Sil</span></a>
+                                            <a href="{{URL::site('masraf/kalemSil/')}}{{$anaKalem->id}}" class="dropdown-item confirm"><i data-feather="trash" class="me-50"></i><span>Sil</span></a>
 
                                         </div>
                                     </div>

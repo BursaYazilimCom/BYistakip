@@ -6,35 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="Yenileme faturası oluşturma işlemleri yapılıyor">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fd04f14a-41c6-4007-83e7-140706f7bf10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fd04f14a-41c6-4007-83e7-140706f7bf10.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Home.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Planlama.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Planlama.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/PlanlamaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/PlanlamaModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Resources/Themes/Default/js/by.js" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Resources/Themes/Default/js/by.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Cari/detay.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Cari/detay.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Cari/form.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Cari/form.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Cari/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Cari/main.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Home/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Home/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/odemeYontemleri.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/odemeYontemleri.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/siparisDurumlari.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/siparisDurumlari.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/yetkiAlanlari.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/yetkiAlanlari.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/BolgeselAyarlar/paraBirimleri.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/BolgeselAyarlar/paraBirimleri.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Kasa/kayitlar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Kasa/kayitlar.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Kasa/tumKayitlar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Kasa/tumKayitlar.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Masraf/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Masraf/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Masraf/tumKayitlar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Masraf/tumKayitlar.wizard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Personel/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Personel/main.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Planlama/form.wizard.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Planlama/geriBildirimler.wizard.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Planlama/hatirlatici.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Planlama/hatirlatici.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Planlama/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Planlama/main.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Planlama/personeller.wizard.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Planlama/yapilanlar.wizard.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/geriBildirimler.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/geriBildirimler.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/main.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/personeller.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/personeller.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/yapilanlar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/yapilanlar.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/yolHaritasi.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Projeler/yolHaritasi.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Tedarikci/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Tedarikci/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/duzenle.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/duzenle.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/main.wizard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Urun/gruplar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Urun/gruplar.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Urun/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Urun/main.wizard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/header.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/header.wizard.php" afterDir="false" />
     </list>
@@ -203,7 +190,8 @@
       <workItem from="1706436450322" duration="8000" />
       <workItem from="1706440955508" duration="28000" />
       <workItem from="1706448257709" duration="28000" />
-      <workItem from="1706811666110" duration="11507000" />
+      <workItem from="1706811666110" duration="11580000" />
+      <workItem from="1706848588573" duration="2015000" />
     </task>
     <task id="LOCAL-00001" summary="Projeler geliştirildi&#10;Projelere Yapılanlan çalışmaların listelendiği bir bölüm eklandi&#10;Müşteri tarafında çalışmaları görebileceği bir sayfa eklendi, &#10;Mail göndermeme sorunu giderildi">
       <option name="closed" value="true" />
