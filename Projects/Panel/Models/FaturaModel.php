@@ -284,6 +284,13 @@ class InternalFaturaModel extends Model
         return $urunSil;
     }
 
+    static function faturaUrunieriSil($fatura){
+
+        $urunSil = DB::where('fatura',$fatura)->delete('fatura_urunleri');
+
+        return $urunSil;
+    }
+
     static function tarihSonrasiOdenmemisFaturalar($tarih){
 
         $veri = DB::where('odeme','0')->where('vade_tarihi<',$tarih)->orderby('id','DESC')->faturalar();
@@ -330,6 +337,14 @@ class InternalFaturaModel extends Model
     static function sil($id)
     {
         $faturaSil = DB::whereId($id)->delete('faturalar');
+
+        $urunSil = DB::where('fatura',$id)->delete('fatura_urunleri');
+
+        return $faturaSil;
+    }
+
+    static function siparisinFaturalariniSil($id)
+    {
 
         $urunSil = DB::where('fatura',$id)->delete('fatura_urunleri');
 

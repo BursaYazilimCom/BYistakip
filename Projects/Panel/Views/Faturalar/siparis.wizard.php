@@ -151,7 +151,7 @@
 
                                                                         @endif
 
-                                                                        <a class="dropdown-item" href="{{URL::site()}}faturalar/sil/{{$fatura->id}}">
+                                                                        <a class="dropdown-item confirm" href="{{URL::site()}}faturalar/sil/{{$fatura->id}}">
                                                                             <i data-feather="trash" class="me-50"></i>
                                                                             <span>Sil</span>
                                                                         </a>

@@ -373,6 +373,10 @@ class Siparisler extends Controller
         $urunler = UrunModel::tumListe();
         $kasaHesaplari = KasaModel::kasaHesaplari();
         $detay      = SiparisModel::detay($id);
+
+        if($detay->id==""){
+            Redirect::action(URL::prev());
+        }
         $urunleri   = SiparisModel::siparisUrunleri($id);
         $cariBilgi   = CariModel::detay($detay->cari);
         $cariler   = CariModel::tumListe();
@@ -437,6 +441,104 @@ class Siparisler extends Controller
 
         }
 
+    }
+
+    public function sil($id){
+        $siparisDetay               = SiparisModel::detay($id);
+
+        $siparisUrunleri            = SiparisModel::siparisUrunleri($id);
+
+        $faturalar                  = FaturaModel::siparisFaturalari($id);
+
+        $tumFaturalar               = (int) Post::tumFaturalar();
+        $odenmemisFaturalar         = (int) Post::odenmemisFaturalar();
+        $kasaDefterindenKaldir      = (int) Post::kasaDefterindenKaldir();
+
+        if($siparisDetay->id){
+
+            //Kasa Defteri kayıtları siliniyor
+            if($kasaDefterindenKaldir=="1"){
+
+                foreach($faturalar['liste'] as $fatura){
+
+                    $kasaKayitlariSil = KasaModel::kasaDefteriKayitSil('fatura',$fatura->id);
+
+                    if($kasaKayitlariSil){
+                        $silinmeUyarisi = $silinmeUyarisi.$fatura->id." Numaralı fatura kasa defteri kayıtları silindi<br>";
+                    }else{
+
+                        $silinmeUyarisi = $silinmeUyarisi."HATA ! -> ".$fatura->id." Numaralı fatura kasa defteri kayıtları silineMEdi<br>"; 
+                    }
+
+                }
+                
+            }
+
+            //Eüer tüm faturalar silinsiz olarak seçilmişse
+            if($tumFaturalar=="1"){
+
+                foreach($faturalar['liste'] as $fatura){
+
+                    // Fatura ile birlikte ürünleride silindi,
+                    $faturaSil = FaturaModel::sil($fatura->id);
+
+                    if($faturaSil){
+                        $silinmeUyarisi = $silinmeUyarisi.$siparisDetay->id." numaralı siparişe ait ".$fatura->id." Numaralı fatura kayıtları silindi<br>";
+                    }else{
+
+                        $silinmeUyarisi = $silinmeUyarisi."HATA ! -> ".$siparisDetay->id." numaralı siparişe ait ".$fatura->id." Numaralı fatura kayıtları silineMEdi<br>";
+                    }
+
+                }
+                
+            }
+            //sadece ödenmemiş faturalar silinsiz seçilmişse
+            if($odenmemisFaturalar=="1"){
+
+                foreach($faturalar['liste'] as $fatura){
+
+                    if($fatura->odeme=="0"){
+
+                        // Fatura ile birlikte ürünleride silindi,
+                        $faturaSil = FaturaModel::sil($fatura->id);
+
+                        if($faturaSil){
+                            $silinmeUyarisi = $silinmeUyarisi.$siparisDetay->id." numaralı siparişe ait ".$fatura->id." Numaralı fatura kayıtları silindi<br>";
+                        }else{
+    
+                            $silinmeUyarisi = $silinmeUyarisi."HATA ! -> ".$siparisDetay->id." numaralı siparişe ait ".$fatura->id." Numaralı fatura kayıtları silineMEdi<br>";
+                        }
+
+                    }
+                    
+                }
+                
+            }
+
+            // sipariş ürünleri siliniyor
+            foreach($siparisUrunleri as $su){
+                $siparisurunSil = SiparisModel::siparisUrunSil($su->id);
+            }
+
+            //sipariş siliniyor
+            $siparisSil = SiparisModel::sil($id);
+
+            if($siparisSil){
+                $silinmeUyarisi = $silinmeUyarisi.$siparisDetay->id." numaralı sipariş verileri silindi<br>";
+            }else{
+
+                $silinmeUyarisi = $silinmeUyarisi."HATA ! -> ".$siparisDetay->id." numaralı sipariş verileri silineMEdi<br>";
+            }
+
+        }else{
+
+            $silinmeUyarisi = "HATA ! -> Talep ettiğiniz sipariş sistemde bulunmuyor<br>";
+
+        }
+
+        AyarModel::bilgilendir("Sipariş Silme İşlemi Hakkında",$silinmeUyarisi,URL::prev());
+       
+    
     }
 
     public function siparislerimDurum($durum){
@@ -1038,6 +1140,17 @@ class Siparisler extends Controller
                 }
 
                 echo Json::encode($data);
+
+                break;
+
+            case "siparisSil":
+
+                $siparisDetay = SiparisModel::detay($dataId);
+                $siparisUrunleri = SiparisModel::siparisUrunleri($dataId);
+                $siparisFaturalari = FaturaModel::siparisFaturalari($dataId);
+
+
+
 
                 break;
 

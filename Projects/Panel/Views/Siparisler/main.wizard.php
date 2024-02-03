@@ -69,7 +69,13 @@
                                                     <a href="{{URL::site('siparisler/duzenle')}}/{{$s->id}}" data-bs-toggle="tooltip" title="Düzenle" class="btn btn-warning btn-sm">
                                                         <i data-feather="edit-2" class="me-50"></i>
                                                     </a>
-                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$s->id}}','{{URL::site('siparisler/ajax')}}','siparisSil')"><i data-feather="trash" class="me-50"></i></a>
+                                                    <span data-bs-toggle="tooltip" title="Sil">
+                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$s->id}}" data-action="siparisSil" class="btn btn-danger btn-sm">
+                                                        <i data-feather="trash" class="me-50"></i>
+
+                                                    </a>
+                                                    </span>
+
                                                 </div>
 
 
@@ -170,4 +176,19 @@
     </div>
 </div>
 <!-- END: Content-->
+<div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1 class="text-center mb-1" id="modalTitle">Sipariş İşlemleri</h1>
+
+                <div class="fetched-data"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
 

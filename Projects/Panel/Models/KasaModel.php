@@ -209,6 +209,15 @@ class InternalKasaModel extends Model
 
     }
 
+    public function kasaDefteriKayitSil($tur,$id){
+
+        $sil = DB::where('islem_tur_id',$id)->where('islem_turu',$tur)->delete('kasa_defteri');
+
+        return $sil;
+        
+
+    }
+
     /****ÖDEME İŞLEMLERİ********************ÖDEME İŞLEMLERİ*********************ÖDEME İŞLEMLERİ**********************ÖDEME İŞLEMLERİ***********************/
 
 }

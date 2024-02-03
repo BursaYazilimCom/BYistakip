@@ -196,6 +196,13 @@ class InternalSiparisModel extends Model
         return $guncelle;
     }
 
+    public function sil($id){
+        
+        $guncelle = DB::where('id',$id)->delete('siparisler');
+
+        return $guncelle;
+    }
+
     public function odemeEkle($data){
 
         $guncelle = DB::where('id',$data['id'])->update('siparisler',[
@@ -333,13 +340,13 @@ class InternalSiparisModel extends Model
 
         $sil = DB::whereId($id)->delete('siparis_urunleri');
 
-        $client = new Client(new Version2X(AyarModel::defaultAyarlar('nodeIp').':'.AyarModel::defaultAyarlar('nodePort')));
+        /*$client = new Client(new Version2X(AyarModel::defaultAyarlar('nodeIp').':'.AyarModel::defaultAyarlar('nodePort')));
 
         $client->initialize();
         $client->emit('siparisUrunSil', [
             'id'            =>$id
         ]);
-        $client->close();
+        $client->close();*/
 
         return $sil;
 

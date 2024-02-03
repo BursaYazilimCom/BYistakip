@@ -2,7 +2,7 @@
 
 Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
 Use AjaxModel,KasaModel,AyarModel, InternalFaturaModel as FaturaModel,InternalPlanlamaModel as PlanlamaModel;
-Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel,InternalCariModel as CariModel;
+Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel,InternalCariModel as CariModel,SiparisModel;
 
 
 
@@ -688,6 +688,88 @@ class Ajax extends Controller
             </table>
 
             <?php
+
+        }
+
+        if(Post::action()=="siparisSil") {
+
+            $id = Post::rowid();
+            $siparisDetay = SiparisModel::detay($id);
+
+            ?>
+
+            <form action="<?=URL::site('siparisler/sil/')?><?=$id?>" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Sipariş Sil</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="tumFaturalar">Tüm Faturalar</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="tumFaturalar" id="tumFaturalar" value="1" />
+                                            <label class="form-check-label" for="tumFaturalar">Siparişe Ait Tüm Faturaları Sil !</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="odenmemisFaturalar">Ödenmemiş Faturalar</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="odenmemisFaturalar" id="odenmemisFaturalar" value="1" checked />
+                                            <label class="form-check-label" for="odenmemisFaturalar">Sadece Ödenmemiş Faturaları Sil !</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label" for="kasaDefterindenKaldir">Kasa Defteri</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="kasaDefterindenKaldir" id="kasaDefterindenKaldir" value="1" />
+                                            <label class="form-check-label" for="kasaDefterindenKaldir">Sipariş ve Faturalar ile ilişkili tüm ödeme kayıtlarını kasa defterinden kaldır. <br> <br><div class="alert alert-warning p-1"><i>Not: Bu kasa defteri işlemi hesaplarınızda hataya sebep olabilir, Kasa hesaplarından silmek yerine geri iade ettiğiniz ödeme varsa bunları gider olarak tekrar kayıt altına almanız ileride yaşanabilecek bir olumsuzluk durumunda size bilgi sağlayacağı için, daha doğru bir yaklaşım olacaktır.</i></div></label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+
+            <?php
+
+
 
         }
 
@@ -1507,6 +1589,7 @@ class Ajax extends Controller
 
 
         }
+
         if(Post::action()=="projePersonelEkle"){
 
             $id = Post::rowid();
@@ -1561,6 +1644,7 @@ class Ajax extends Controller
 
 
         }
+
         if(Post::action()=="projePersonelDuzenle"){
 
             $id = Post::rowid();
@@ -1611,6 +1695,7 @@ class Ajax extends Controller
 
 
         }
+
         if(Post::action()=="yapilanIslemEkle"){
 
             $id = Post::rowid();
