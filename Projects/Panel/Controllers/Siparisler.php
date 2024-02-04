@@ -1143,16 +1143,7 @@ class Siparisler extends Controller
 
                 break;
 
-            case "siparisSil":
-
-                $siparisDetay = SiparisModel::detay($dataId);
-                $siparisUrunleri = SiparisModel::siparisUrunleri($dataId);
-                $siparisFaturalari = FaturaModel::siparisFaturalari($dataId);
-
-
-
-
-                break;
+          
 
         }
 

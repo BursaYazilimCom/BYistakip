@@ -250,6 +250,12 @@ class InternalSiparisModel extends Model
 
     }
 
+    public function islemGerekenSiparisler(){
+        $veri = DB::where('islem_gerekiyor','1')->siparis_urunleri();
+
+        return  ['liste'=>$veri->result,'adet'=>$veri->totalRows()];
+    }
+
     public function siparisUrunBilgi($id){
 
         $veri = DB::where('id',$id)->siparis_urunleri()->row();

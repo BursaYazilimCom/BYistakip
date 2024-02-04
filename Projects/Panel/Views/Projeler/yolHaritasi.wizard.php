@@ -13,6 +13,7 @@
                                 <li class="breadcrumb-item"><a href="{{URL::site('projeler')}}">Projeler</a></li>
                                 <li class="breadcrumb-item"><a href="{{URL::site('projeler/form/'.$detay->id)}}">{{$detay->proje_adi}}</a></li>
                                 <li class="breadcrumb-item"><a href="#">Proje Yol Haritası</a></li>
+                                <li class="breadcrumb-item"><span id="resultJS"></span></li>
                             </ol>
                         </div>
                     </div>
@@ -29,6 +30,7 @@
                             <div class="card-header">
                                 <div class="head-label">
                                     <h4 class="card-title">Proje Yol Haritasi</h4>
+                                 
                                 </div>
                                 <div class="dt-action-buttons text-end">
 
@@ -60,7 +62,8 @@
                                                         <th class="cell-fit"></th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody id="sort">
+                                                        
                                                     @foreach($listele['liste'] as $h)
                                                     <tr id="row-{{$h->id}}" 
                                                     @if($h->durum=="0")
@@ -69,7 +72,7 @@
                                                         style="background-color:#D5FFCD"
                                                     @endif
                                                     >
-                                                        <td>#{{$h->id}}</a></td>
+                                                        <td style="cursor:move;">#{{$h->id}}</a></td>
                                                         <td>{{$h->sira}}</a></td>
                                                         <td>{{$h->baslik}}</td>
                                                         <td>{{$h->aciklama}}</td>

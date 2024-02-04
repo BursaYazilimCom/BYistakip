@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-use Method, Post,URL, Redirect,Date,Pagination,User,Email,DB;
+use Method, Post,URL, Redirect,Date,Pagination,User,Email,DB,Json;
 use TedarikciModel, FaturaModel,AyarModel,MalzemeModel,KasaModel,SiparisModel,CariModel;
 
 class Kasa extends Controller
@@ -24,13 +24,52 @@ class Kasa extends Controller
         $user               = User::data();
 
         $kasaHesaplari      = KasaModel::turHesaplari(1);
+
+        foreach($kasaHesaplari as $kht){
+
+            $khtKasaToplami = KasaModel::kasaGelirGiderToplami($kht->id);
+            $kToplam[$kht->id] = $khtKasaToplami->gelir-$khtKasaToplami->gider;
+        }
+
+     
         $bankaHesaplari     = KasaModel::turHesaplari(2);
+        foreach($bankaHesaplari as $bht){
+
+            $bhtKasaToplami = KasaModel::kasaGelirGiderToplami($bht->id);
+            $kToplam[$bht->id] = $bhtKasaToplami->gelir-$bhtKasaToplami->gider;
+        }
         $posHesaplari       = KasaModel::turHesaplari(3);
+
+        foreach($posHesaplari as $pht){
+
+            $phtKasaToplami = KasaModel::kasaGelirGiderToplami($pht->id);
+            $kToplam[$pht->id] = $phtKasaToplami->gelir-$phtKasaToplami->gider;
+        }
+
         $kkartiHesaplari    = KasaModel::turHesaplari(4);
+        foreach($kkartiHesaplari as $kkht){
+
+            $kkhtKasaToplami = KasaModel::kasaGelirGiderToplami($kkht->id);
+            $kToplam[$kkht->id] = $kkhtKasaToplami->gelir-$kkhtKasaToplami->gider;
+        }
         $veresiyeHesaplari  = KasaModel::turHesaplari(5);
+
+        foreach($veresiyeHesaplari as $vht){
+
+            $vhtKasaToplami = KasaModel::kasaGelirGiderToplami($vht->id);
+            $kToplam[$vht->id] = $vhtKasaToplami->gelir-$vhtKasaToplami->gider;
+        }
+
         $digerHesaplar      = KasaModel::turHesaplari(6);
 
+        foreach($digerHesaplar as $dht){
 
+            $dhtKasaToplami = KasaModel::kasaGelirGiderToplami($dht->id);
+            $kToplam[$dht->id] = $dhtKasaToplami->gelir-$dhtKasaToplami->gider;
+        }
+
+
+        View::kToplam($kToplam);
         View::kasaHesaplari($kasaHesaplari);
         View::bankaHesaplari($bankaHesaplari);
         View::posHesaplari($posHesaplari);
@@ -423,6 +462,7 @@ class Kasa extends Controller
         Pagination::url('kasa/kayitlar/'.$id.'/')->create();
 
         $kasa = KasaModel::hesapBilgi($id);
+        $kasaToplamlari = KasaModel::kasaGelirGiderToplami($id);
 
         $kayitlar = KasaModel::kayitlar($id,$sayfa);
 
@@ -430,6 +470,7 @@ class Kasa extends Controller
 
 
         View::detay($kasa);
+        View::kasaToplamlari($kasaToplamlari);
         View::kayitlar($kayitlar);
 
     }
@@ -440,9 +481,11 @@ class Kasa extends Controller
 
         $kayitlar = KasaModel::tumKayitlar();
         $kasaToplami = KasaModel::kasaToplami();
+        $gelirGiderToplami = KasaModel::gelirGiderToplami();
 
         //AyarModel::nelerOluyor($user->isim,'kasa/tumKayitlar','Kasa defterini inceliyor.');
         
+        View::gelirGiderToplami($gelirGiderToplami);
         View::kasaToplami($kasaToplami);
         View::kayitlar($kayitlar);
 
@@ -530,6 +573,28 @@ class Kasa extends Controller
 
 
                 break;
+
+                case "kayitSil":
+    
+                    $sil = KasaModel::kayitSil($dataId);
+    
+                    $data['title'] = "Kasa Kayıt Silme İşlemi";
+    
+                    if($sil){
+    
+                        $data['success'] = 'Kasa Kayıt silme işlemi başarı ile yapıldı!';
+                        $data['redirect'] = URL::prev();
+                        //$data['redirect'] = '';
+    
+                    }else{
+    
+                        $data['error'] = "Kasa Kayıt  silme işlemi yapılamadı!";
+    
+                    }
+    
+                    echo Json::encode($data);
+    
+                    break;
 
         }
 

@@ -240,12 +240,12 @@
                                                     <h6 class="transaction-title">{{$kh->adi}}</h6>
                                                 </div>
                                             </div>
-                                            @if($kh->tutar<0)
-                                            <div class="fw-bolder text-danger">{{number_format($kh->tutar,2)}} ₺</div>
+                                            @if($kToplam[$kh->id]<0)
+                                            <div class="fw-bolder text-danger">{{number_format($kToplam[$kh->id],2)}} ₺</div>
                                             @else
-                                            <div class="fw-bolder text-success">{{number_format($kh->tutar,2)}} ₺</div>
+                                            <div class="fw-bolder text-success">{{number_format($kToplam[$kh->id],2)}} ₺</div>
                                             @endif
-                                        </div>
+                                        </div>  
                                     @endforeach
 
                                 </div>

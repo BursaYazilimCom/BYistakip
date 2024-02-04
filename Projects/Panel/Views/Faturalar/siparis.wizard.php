@@ -111,16 +111,16 @@
                                                             <div class="d-flex align-items-center col-actions">
                                                                 <div class="dropdown">
                                                                     <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
-                                                                        <i data-feather="more-vertical"></i>
+                                                                    <i data-feather="chevron-down"></i> İşlemler
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-end">
                                                                         <a href="{{URL::site('siparisler/urunler')}}/{{$fatura->siparis_id}}" class="dropdown-item">
                                                                             <i data-feather="send" class="me-50"></i>
                                                                             <span>Sipariş Ürünleri</span>
                                                                         </a>
-                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="bildirimGonder" class="dropdown-item">
+                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="bildirimGonder" class="dropdown-item text-warning">
                                                                             <i data-feather="send" class="me-50"></i>
-                                                                            <span class="text-success">Bildirim Gönder</span>
+                                                                            <span>Ödeme Hatırlat</span>
                                                                         </a>
                                                                         <a href="{{URL::site()}}../faturalar/detay/{{$fatura->id}}" target="_blank" class="dropdown-item">
                                                                             <i data-feather="eye" class="me-50"></i>
@@ -139,7 +139,7 @@
 
                                                                         <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaOdendiYap" class="dropdown-item">
                                                                             <i data-feather="edit-2" class="me-50"></i>
-                                                                            <span class="text-success">Ödenme EKle</span>
+                                                                            <span class="text-success">Ödeme EKle</span>
                                                                         </a>
 
                                                                         @if($fatura->odeme=="1")
@@ -148,7 +148,11 @@
                                                                                 <i data-feather="edit-2" class="me-50"></i>
                                                                                 <span class="text-danger">ÖdenMEdi Yap</span>
                                                                             </a>
-
+                                                                        @else
+                                                                            <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturayiOdendiYap" class="dropdown-item">
+                                                                                <i data-feather="edit-2" class="me-50"></i>
+                                                                                <span class="text-danger">Sadece Ödendi Yap</span>
+                                                                            </a>
                                                                         @endif
 
                                                                         <a class="dropdown-item confirm" href="{{URL::site()}}faturalar/sil/{{$fatura->id}}">

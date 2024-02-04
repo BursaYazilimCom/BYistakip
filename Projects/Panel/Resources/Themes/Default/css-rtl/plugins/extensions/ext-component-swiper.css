@@ -1,14 +1,4 @@
-/*=========================================================================================
-    File Name: ext-component-swiper.scss
-    Description: swiper plugin scss.
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-/* Swiper css */
-/* ---------- */
-/* swiper slide shadow */
+
 .swiper-container .swiper-shadow {
   box-shadow : -2px 8px 10px 0 rgba(25, 42, 70, 0.13) !important;
 }

@@ -380,7 +380,10 @@ class Ayarlar extends Controller
     public function siparisDurumlari(){
 
         $veri = AyarModel::siparisDurumlari();
+        $siralamaYeri = "siparisDurumlari";
+        
 
+        View::siralamaYeri($siralamaYeri);
         View::siparisDurumlari($veri);
 
     }

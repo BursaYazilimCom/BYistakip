@@ -27,6 +27,15 @@ class Home extends Controller
         $siparisurunleri = SiparisModel::siparisUrunleriAdet();
         $odenmeyenFaturalar = FaturaModel::faturaListele('odenmeyen');
         $kasaHesaplari = KasaModel::kasaHesaplari();
+
+
+        foreach($kasaHesaplari as $kkht){
+
+            $kkhtKasaToplami = KasaModel::kasaGelirGiderToplami($kkht->id);
+            $kToplam[$kkht->id] = $kkhtKasaToplami->gelir-$kkhtKasaToplami->gider;
+        }
+
+
         $siparisler     = SiparisModel::liste();
         $hatirlatmalar  = PlanlamaModel::hatirlatmalar(1);
 
@@ -37,6 +46,7 @@ class Home extends Controller
         View::projeSayisi($projeler['adet']);
         View::siparisurunleri($siparisurunleri['adet']);
         View::kasaHesaplari($kasaHesaplari);
+        View::kToplam($kToplam);
 
         Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
 

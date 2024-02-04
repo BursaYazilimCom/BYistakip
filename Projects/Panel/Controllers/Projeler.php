@@ -164,7 +164,9 @@ class Projeler extends Controller
     {
         $projeDetay = ProjeModel::detay($id);
         $listeData = ProjeModel::yolHaritasi($id);
+        $siralamaYeri = "yolHaritasi";
 
+        View::siralamaYeri($siralamaYeri);
         View::listele($listeData);
         View::detay($projeDetay);
 

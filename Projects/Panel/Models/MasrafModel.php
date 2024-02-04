@@ -146,7 +146,7 @@ class InternalMasrafModel extends Model
             'odeme_tarihi'  =>$data['odeme_tarihi']
         ]);
         //echo DB::stringQuery();
-        return $ekle;
+        return DB::insertId();
     }
 
     public function giderSil($id){

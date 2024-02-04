@@ -119,6 +119,10 @@
                                                                         <i data-feather="chevron-down"></i> İşlemler
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                                        <a href="{{URL::site('siparisler/urunler')}}/{{$fatura->siparis_id}}" class="dropdown-item">
+                                                                            <i data-feather="send" class="me-50"></i>
+                                                                            <span>Sipariş Ürünleri</span>
+                                                                        </a>
 
                                                                         <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="bildirimGonder" class="dropdown-item text-warning">
                                                                             <i data-feather="send" class="me-50"></i>Ödeme Hatırlat
@@ -157,10 +161,12 @@
                                                                             </a>
                                                                         @endif
 
-                                                                        <a class="dropdown-item" onclick="deleteAction('{{$fatura->id}}','{{URL::site('siparisler/ajax')}}','siparisSil')">
+                                                                    
+                                                                        <a class="dropdown-item confirm" href="{{URL::site()}}faturalar/sil/{{$fatura->id}}">
                                                                             <i data-feather="trash" class="me-50"></i>
                                                                             <span>Sil</span>
                                                                         </a>
+
                                                                     </div>
                                                                 </div>
                                                             </div>

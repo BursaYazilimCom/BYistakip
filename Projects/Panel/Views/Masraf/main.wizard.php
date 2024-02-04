@@ -18,19 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="content-header-right text-md-end col-md-2 col-12 d-md-block d-none">
-                <div class="mb-1 breadcrumb-right">
-                    <div class="dropdown">
-                        <a class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i data-feather="grid"  data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="İşlemler"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="{{URL::site('cari/form')}}"><i class="me-1" data-feather="plus"></i><span class="align-middle">Cari Ekle</span></a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+          
         </div>
         <div class="content-body">
             <!-- Hoverable rows start -->
@@ -67,7 +55,7 @@
                                     <div class="dropdown chart-dropdown">
                                         <i data-feather="more-vertical" class="font-medium-3 cursor-pointer" data-bs-toggle="dropdown"></i>
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item anaKalemDuzenle"  data-action="anaKalemDuzenle" data-names="{{$anaKalem->adi}}" data-color="{{$anaKalem->renk}}" data-id="{{$anaKalem->id}}" href="#">Güncelle</a>
+                                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#openModal" data-action="anaMasrafKalemDuzenle" data-id="{{$anaKalem->id}}" href="#">Güncelle</a>
                                             <a href="{{URL::site('masraf/kalemSil/')}}{{$anaKalem->id}}" class="dropdown-item confirm"><i data-feather="trash" class="me-50"></i><span>Sil</span></a>
 
                                         </div>
@@ -76,24 +64,25 @@
                                 </div>
                                 <div class="card-body">
                                     @foreach($masrafKalemleri['altKalemler'] as $altKalem)
-                                    @if($altKalem->ust==$anaKalem->id)
-                                    <div class="btn-group" >
-                                        <a  data-toggle="tooltip" title="{{$altKalem->adi}} Kayıtlarını Gör" href="{{URL::site('masraf/kayitlar/')}}{{$altKalem->id}}" class="btn btn-{{$altKalem->renk}}">{{$altKalem->adi}}</a>
-                                        <button type="button" class="btn btn-{{$altKalem->renk}} dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="visually-hidden">{{$altKalem->adi}}</span>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item altKalemDuzenle"  data-action="altKalemDuzenle" data-names="{{$altKalem->adi}}" data-parent="{{$anaKalem->id}}" data-color="{{$altKalem->renk}}" data-id="{{$altKalem->id}}" href="#">Güncelle</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{{URL::site('masraf/kalemSil/')}}{{$altKalem->id}}">
-                                                <i data-feather="trash" class="me-50"></i>
-                                                <span>Sil</span>
-                                            </a>
+                                        @if($altKalem->ust==$anaKalem->id)
+                                        <div class="btn-group" >
+                                            <a  data-toggle="tooltip" title="{{$altKalem->adi}} Kayıtlarını Gör" href="{{URL::site('masraf/kayitlar/')}}{{$altKalem->id}}" class="btn btn-{{$altKalem->renk}}">{{$altKalem->adi}}</a>
+                                            <button type="button" class="btn btn-{{$altKalem->renk}} dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span class="visually-hidden">{{$altKalem->adi}}</span>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#openModal" data-action="altMasrafKalemDuzenle" data-id="{{$altKalem->id}}" href="#">Güncelle</a>
+
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="{{URL::site('masraf/kalemSil/')}}{{$altKalem->id}}">
+                                                    <i data-feather="trash" class="me-50"></i>
+                                                    <span>Sil</span>
+                                                </a>
+                                            </div>
+
                                         </div>
 
-                                    </div>
-
-                                    @endif
+                                        @endif
                                     @endforeach
 
                                 </div>
@@ -117,6 +106,22 @@
 
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
+
+<div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1 class="text-center mb-1" id="modalTitle">Gider İşlemleri</h1>
+
+                <div class="fetched-data"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="anaKalemEkle" tabindex="-1" aria-labelledby="myModalLabel17" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -168,7 +173,6 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form action="{{URL::site('masraf/altKalemEkle')}}" id="altKalemEkleForm" method="post">
-                <input type="hidden" name="update_id" id="update_id" value="">
                 <input type="hidden" name="dataAction" id="dataAction" value="altKalemEkle">
                 <div class="modal-header">
                     <h4 class="modal-title">Alt Masraf Grubu Ekle</h4>

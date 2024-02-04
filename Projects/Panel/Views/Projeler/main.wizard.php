@@ -75,7 +75,7 @@
                                             <td>
                                                 <a class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Yol Haritası" href="{{URL::site('projeler/yolHaritasi/'.$u->id)}}"><i data-feather="activity" class="me-50"></i></a>
 
-                                                <a class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Yapılan Çalışmalar" href="{{URL::site('projeler/yapilanlar/'.$u->id)}}"><i data-feather="activity" class="me-50"></i></a>
+                                                <a class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Yapılan Çalışmalar" href="{{URL::site('projeler/yapilanlar/'.$u->id)}}"><i data-feather="tool" class="me-50"></i></a>
 
                                                 <a class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Geri Bildirimler" href="{{URL::site('projeler/geriBildirimler/'.$u->id)}}"><i data-feather="alert-triangle" class="me-50"></i></a>
 

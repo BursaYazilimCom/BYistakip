@@ -894,15 +894,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
   }
 }
 
-/* ===============================================================================================
-    File Name: navbar.scss
-    Description: Contain header navigation bar, vertical main navigation bar and
-    horiznotal main navigation bar related SCSS.
-    ----------------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-================================================================================================*/
 .header-navbar {
   padding : 0;
   min-height : 4.45rem;
@@ -1402,7 +1393,8 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 
 @media (max-width: 767.98px) {
   .header-navbar.floating-nav {
-    width : calc(    100vw - (100vw - 100%) - calc(2rem + 0.4rem)) !important;
+    width : calc(
+    100vw - (100vw - 100%) - calc(2rem + 0.4rem)) !important;
     margin-right : calc(2rem - 0.8rem);
     margin-left : calc(2rem - 0.8rem);
   }
@@ -2449,15 +2441,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
   box-shadow : rgba(75, 75, 75, 0.4) 0 6px 15px -7px;
 }
 
-/*=========================================================================================
-  File Name: progress.scss
-  Description: Extended bootstrap progress bar scss.
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: PIXINVENT
-  Author URL: http://www.themeforest.net/user/pixinvent
-  ----------------------------------------------------------------------------------------
-==========================================================================================*/
 .progress .progress-bar + .progress-bar:not(:last-child) {
   border-radius : 0;
 }
@@ -2467,14 +2450,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
   border-bottom-left-radius : 5rem;
 }
 
-/* ===============================================================================================
-  File Name: list-group.scss
-  Description: Contain list item, list group related extended SCSS.
-  ----------------------------------------------------------------------------------------------
-  Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: PIXINVENT
-  Author URL: http://www.themeforest.net/user/pixinvent
-================================================================================================*/
 ul.list-inline li {
   display : inline-block;
 }

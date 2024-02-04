@@ -163,7 +163,9 @@ class Urun extends Controller
     public function gruplar()
     {
         $listeData = UrunModel::urunGrupListe();
+        $siralamaYeri = "urunGuruplari";
 
+        View::siralamaYeri($siralamaYeri);
         View::listele($listeData);
 
 

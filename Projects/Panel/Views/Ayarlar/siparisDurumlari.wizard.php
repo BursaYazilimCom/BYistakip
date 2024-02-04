@@ -14,6 +14,7 @@
                                 <li class="breadcrumb-item"><a href="{{URL::site('Ayarlar')}}">Ayarlar</a>
                                 <li class="breadcrumb-item"><a href="#">Sipariş Durumları</a>
                                 </li>
+                                <li class="breadcrumb-item"><span id="resultJS"></span></li>
                             </ol>
                         </div>
                     </div>
@@ -49,6 +50,7 @@
                                         </tr>
                                         </thead>
                                         <tbody id="addDataTable">
+                                            <tfoot id="sort">
                                         @foreach($siparisDurumlari as $sd)
                                         <tr id="row-{{$sd->id}}">
                                             <td>{{$sd->id}}</td>
@@ -69,7 +71,7 @@
                                             </td>
                                         </tr>
                                         @endforeach
-
+                                            </tfoot>
                                         </tbody>
                                     </table>
                                 </div>

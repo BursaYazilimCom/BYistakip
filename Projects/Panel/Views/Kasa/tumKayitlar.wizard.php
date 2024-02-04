@@ -22,14 +22,12 @@
             </div>
             <div class="content-header-right text-md-end col-md-2 col-12 d-md-block d-none">
                 <div class="mb-1 breadcrumb-right">
-                    <div class="dropdown">
-                        <a class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i data-feather="grid"  data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="İşlemler"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="{{URL::site('kasa')}}"><i class="me-1" data-feather="plus"></i><span class="align-middle">Kayıt Ekle</span></a>
-                        </div>
-                    </div>
+                   
+                      
+                   
+                            <a class="btn btn-info" href="{{URL::site('kasa')}}"><i class="me-1" data-feather="plus"></i><span class="align-middle">Kayıt Ekle</span></a>
+                       
+                  
                 </div>
             </div>
         </div>
@@ -39,8 +37,11 @@
                 <div class="col-12">
                     <div class="card">
                         {{ Redirect::select('bilgi',true) }}
-                        <div class="card-header">
-                            <h4 class="card-title">Kasa Kayıtları | Toplam: <strong>{{$kasaToplami}}</strong></h4>
+                        <div class="card-header text-center">
+                            <h4 class="card-title" style="margin: 0 auto;">
+                            Gelirler: <span class="text-success">{{number_format($gelirGiderToplami->gelir,2)}}</span> 
+                            Giderler: <span class="text-danger">{{number_format($gelirGiderToplami->gider,2)}}</span> 
+                            Kasa Bakiyesi: <strong>{{number_format($gelirGiderToplami->gelir-$gelirGiderToplami->gider,2)}} ₺</strong></h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -53,13 +54,13 @@
                                         <th>Açıklama</th>
                                         <th>Gelir</th>
                                         <th>Gider</th>
-                                        <th>Bakiye</th>
+                                    
                                         <th>#</th>
                                     </tr>
 
                                     @foreach($kayitlar['liste'] as $kayit)
 
-                                    <tr>
+                                    <tr id="row-{{$kayit->id}}">
                                         <td>{{Date::convert($kayit->tarih, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                         <td class="text-{{$kayit->islem=='o'?'danger':'success'}}">{{$kayit->islem=="o"?"Ödeme":"Tahsilat"}}</td>
                                         <td>{{$kayit->KasaAdi}}</td>
@@ -67,9 +68,12 @@
                                         <td>{{$kayit->aciklama}}</td>
                                         <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format($kayit->gelir,2)}}</td>
                                         <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format($kayit->gider,2)}} </td>
-                                        <td>{{number_format($kayit->mevcut_kasa_toplami,2)}}</td>
+                                 
                                         <td>
-                                            <a href="" data-toggle="tooltip" title="Kayıt Sil" class="btn btn-danger btn-sm"><i data-feather="trash"></i></a>
+                                           
+                                            <a class="btn btn-danger btn-sm" onclick="deleteAction('{{$kayit->id}}','{{URL::site('kasa/ajax')}}','kayitSil')">
+                                                        <i data-feather="trash" class="me-50"></i>
+                                                    </a>
                                         </td>
 
                                     </tr>

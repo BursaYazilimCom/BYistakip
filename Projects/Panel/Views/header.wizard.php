@@ -118,10 +118,20 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="shopping-bag"></i><span data-i18n="Misc">Sipariş Ürünleri</span></a>
+                    <li class="dropdown nav-item" data-menu="dropdown">
+                        
+                        <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="shopping-bag"></i><span data-i18n="Misc">Sipariş Ürünleri</span>
+                        @if($islemGerekenSiparisler['adet']>0)
+                        <span class="badge bg-danger" data-bs-toggle="tooltip" title="İşlem Bekleyen Siparişler var!">{{$islemGerekenSiparisler['adet']}}</span>
+                        @endif
+                    </a>
                         <ul class="dropdown-menu" data-bs-popper="none">
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/urunler')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support" class="text-success">Tüm Sipariş Ürünleri</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/urunler')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support" class="text-success">Tüm Sipariş Ürünleri</span>
+                                @if($islemGerekenSiparisler['adet']>0)
+                                <span class="badge bg-danger" data-bs-toggle="tooltip" title="İşlem Bekleyen Siparişler var!">{{$islemGerekenSiparisler['adet']}}</span>
+                                @endif
+                            </a>
                             </li>
                             @foreach($urunGruplari as $ug)
                             <li data-menu="">

@@ -491,6 +491,18 @@ class InternalAyarModel extends Model
 
     }
 
+    static function siparisDurumSiraGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('siparis_durumlari',[
+                'sira'      =>$data["sira"]
+            ]);
+
+
+        return $guncelle;
+
+    }
+
     static function siparisDurumEkle($data){
 
         $ekle = DB::insert('siparis_durumlari',[

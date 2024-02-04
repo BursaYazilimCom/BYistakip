@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-use Method, Post, Redirect,Date,User,Pagination,AyarModel,MasrafModel,KasaModel,Upload;
+use Method, Post, Redirect,Date,User,URL,Json,Pagination,AyarModel,MasrafModel,KasaModel,Upload;
 
 class Masraf extends Controller
 {
@@ -122,7 +122,7 @@ class Masraf extends Controller
                     'islem'         =>'o',
                     'hesap'         =>'Masraf:'.$masrafKalemi->adi,
                     'islem_turu'    =>'masraf',
-                    'islem_tur_id'  =>$masrafKalemi->id,
+                    'islem_tur_id'  =>$ekle,
                     'aciklama'      =>Post::aciklama(),
                     'gelir'         =>'0.0000',
                     'gider'         =>$tutar,
@@ -222,61 +222,91 @@ class Masraf extends Controller
 
     }
 
+    public function anaKalemGuncelle($id){
+
+        if (!empty(Post::adi()) and $id==Post::id()){
+
+            $data = [
+                'id'       => Post::id(),
+                'adi'       => Post::adi(),
+                'renk'      => Post::renk()
+            ];
+
+            $kalemEkle = MasrafModel::anaKalemGuncelle($data);
+
+
+            if($kalemEkle){
+                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Güncelleme İşlemi Yapıldı !.</div></div>'])->action('masraf');
+            }else{
+
+                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());
+
+            }
+
+        }else{
+
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Gerekli alanları doldurunuz!.</div></div>'])->action(URL::prev());
+
+        }
+
+    }
+
     public function altKalemEkle()
     {
-        if (Post::dataAction()=="altKalemGuncelle"){
+        if (!empty(Post::adi())) {
+
             if (!empty(Post::adi())){
 
                 $data = [
-                    'id'       => Post::update_id(),
                     'ust'       => Post::ust(),
                     'adi'       => Post::adi(),
                     'renk'      => Post::renk()
                 ];
 
-                $kalemEkle = MasrafModel::altKalemGuncelle($data);
-
+                $kalemEkle = MasrafModel::altKalemEkle($data);
 
                 if($kalemEkle){
-                    Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Güncelleme İşlemi Yapıldı !.</div></div>'])->action('masraf');
+                    Redirect::insert(['bilgi'=>'<div class="callout callout-success">Masraf Kalemi başarı ile eklendi!</div>'])->action('masraf');
                 }else{
-
-                    Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());
-
+                    Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Masraf Kalemi ekleme işlemi yapılamadı!</div>'])->action('masraf');
                 }
 
             }else{
-
-                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Gerekli alanları doldurunuz!.</div></div>'])->action(URL::prev());
-
+                Redirect::insert(['bilgi'=>'<div class="callout callout-warning">Gerekli alanları doldurunuz!</div>'])->action('masraf');
             }
-        }else {
-            if (!empty(Post::adi())) {
 
-                if (!empty(Post::adi())){
-
-                    $data = [
-                        'ust'       => Post::ust(),
-                        'adi'       => Post::adi(),
-                        'renk'      => Post::renk()
-                    ];
-
-                    $kalemEkle = MasrafModel::altKalemEkle($data);
-
-                    if($kalemEkle){
-                        Redirect::insert(['bilgi'=>'<div class="callout callout-success">Masraf Kalemi başarı ile eklendi!</div>'])->action('masraf');
-                    }else{
-                        Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Masraf Kalemi ekleme işlemi yapılamadı!</div>'])->action('masraf');
-                    }
-
-                }else{
-                    Redirect::insert(['bilgi'=>'<div class="callout callout-warning">Gerekli alanları doldurunuz!</div>'])->action('masraf');
-                }
-
-            }
         }
 
 
+    }
+
+    public function altKalemGuncelle($id){
+
+        if (!empty(Post::adi()) and $id==Post::id()){
+
+            $data = [
+                'id'       => Post::id(),
+                'ust'       => Post::ust(),
+                'adi'       => Post::adi(),
+                'renk'      => Post::renk()
+            ];
+
+            $kalemEkle = MasrafModel::altKalemGuncelle($data);
+
+
+            if($kalemEkle){
+                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Güncelleme İşlemi Yapıldı !.</div></div>'])->action('masraf');
+            }else{
+
+                Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());
+
+            }
+
+        }else{
+
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Gerekli alanları doldurunuz!.</div></div>'])->action(URL::prev());
+
+        }
 
     }
 
@@ -313,8 +343,10 @@ class Masraf extends Controller
 
                 if($sil){
 
+                    $kasaKaydinikaldir = KasaModel::odemeKaldir("masraf",$dataId);
+
                     $data['success'] = 'Silme işlemi başarı ile yapıldı!';
-                    $data['redirect'] = 'masraf/tumKayitlar';
+                    $data['redirect'] = URL::site('masraf/tumKayitlar');
 
                 }else{
 

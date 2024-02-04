@@ -130,11 +130,20 @@ class InternalProjeModel extends Model
         return $sil;
     }
 
+    static function yolharitasiSiraDegistir($data) {
+        
+        $guncelle = DB::where('id',$data["id"])
+            ->update('proje_yol_haritasi',[
+                'sira'                  =>$data['sira']
+            ]);
+        return $guncelle;
+    }
+
     /***************/
 
     /*****************************************************/
     static function yapilanlar($id){
-        $veri = DB::where('proje_id',$id)->orderby('tarih','DESC')->proje_yapilanlar();
+        $veri = DB::where('proje_id',$id)->orderby('id','DESC')->proje_yapilanlar();
 
 
         return ['liste'=>$veri->result()];

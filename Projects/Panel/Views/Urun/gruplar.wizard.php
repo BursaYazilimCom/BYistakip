@@ -15,6 +15,7 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Ürün Grupları</a>
                                 </li>
+                                <li class="breadcrumb-item"><span id="resultJS"></span></li>
                             </ol>
                         </div>
                     </div>
@@ -50,9 +51,10 @@
                                         </tr>
                                         </thead>
                                         <tbody id="addDataTable">
+                                            <tfoot id="sort">
                                         @foreach($listele as $item)
                                         <tr id="row-{{$item->id}}">
-                                            <td>{{$item->id}}</td>
+                                            <td style="cursor:move;">{{$item->id}}</td>
                                             <td>{{$item->sira}}</td>
                                             <td>{{$item->adi}}</td>
                                             <td class="table-{{$item->durum=='1'?'success':'danger'}}">{{$item->durum=="1"?"Aktif":"Pasif"}}</span></td>
@@ -70,7 +72,7 @@
                                             </td>
                                         </tr>
                                         @endforeach
-
+                                            </tfoot>
                                         </tbody>
                                     </table>
                                 </div>

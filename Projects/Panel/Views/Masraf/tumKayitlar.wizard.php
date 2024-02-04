@@ -79,7 +79,7 @@
                                     <td class="text-{{$kayit->odeme_durumu=='1'?'success':'danger'}}">
                                         {{$kayit->odeme_durumu=="1"?"Ödeme Yapıldı":"Ödeme Yapılmadı"}}
                                     </td>
-                                    <td>{{number_format($kayit->tutar,2)}}</td>
+                                    <td class="text-danger">{{number_format($kayit->tutar,2)}}</td>
                                     <td>{{Date::convert($kayit->odeme_tarihi, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td>{{Date::convert($kayit->islem_tarihi, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td>
@@ -97,6 +97,10 @@
                             </table>
                         </div>
                         <div class="card-footer">
+                            <div class="alert alert-warning">
+                                <div class="alert-heading">DİKKAT !</div>
+                                <div class="alert-body">Gider kayıtlarından bir veri sildiğinizde, İlgili kayda ait kasa defteri kaydıda silinir.</div>
+                            </div>
                             <nav aria-label="Page navigation">
                             {{$kayitlar['sayfalama']}}
                             </nav>

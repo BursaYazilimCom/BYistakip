@@ -85,6 +85,11 @@ class InternalKasaModel extends Model
         return $toplam;
     }
 
+    public function kasaGelirGiderToplami($id){
+        $toplam = DB::select('SUM(gelir) as gelir','SUM(gider) as gider')->where('kasa',$id)->kasa_defteri()->row();
+        return $toplam;
+    }
+
     public function sil($id){
         return DB::whereId($id)->delete('kasa_hesaplari');
     }
@@ -121,6 +126,7 @@ class InternalKasaModel extends Model
 
         $kayitlar = DB::select(
             'kasa_hesaplari.adi as KasaAdi',
+            'kasa_defteri.id as id',
             'kasa_defteri.kasa as kasa',
             'kasa_defteri.islem as islem',
             'kasa_defteri.hesap as hesap',
@@ -150,6 +156,7 @@ class InternalKasaModel extends Model
 
         $kayitlar = DB::select(
             'kasa_hesaplari.adi as KasaAdi',
+            'kasa_defteri.id as id',
             'kasa_defteri.kasa as kasa',
             'kasa_defteri.islem as islem',
             'kasa_defteri.hesap as hesap',
@@ -197,6 +204,12 @@ class InternalKasaModel extends Model
     public function odemeKaldir($tur,$id){
 
         $kaldır = DB::where('islem_turu',$tur)->where('islem_tur_id',$id)->delete('kasa_defteri');
+
+        return $kaldır;
+    }
+    public function kayitSil($id){
+
+        $kaldır = DB::where('id',$id)->delete('kasa_defteri');
 
         return $kaldır;
     }

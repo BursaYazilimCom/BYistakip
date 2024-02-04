@@ -3,6 +3,7 @@
 Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
 Use AjaxModel,KasaModel,AyarModel, InternalFaturaModel as FaturaModel,InternalPlanlamaModel as PlanlamaModel;
 Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel,InternalCariModel as CariModel,SiparisModel;
+use MasrafModel;
 
 
 
@@ -19,8 +20,70 @@ class Ajax extends Controller
 
     }
 
+    public function sort() {
+        
+        if(!Http::isajax()){
+            redirect("Login");
+            exit;
+        }
+
+        $veri = Post::row();
+
+        if(Post::action()=="yolHaritasi"){
+
+            foreach ($veri as $key => $value) {
+                
+              
+                $degistir = ProjeModel::yolharitasiSiraDegistir(['id'=>$value,'sira'=>$key+1]);
+                
+            }
+            if($degistir){
+                echo "success";
+            }
+
+        }
+
+        if(Post::action()=="siparisDurumlari"){
+
+            foreach ($veri as $key => $value) {
+                
+              
+                $degistir = AyarModel::siparisDurumSiraGuncelle(['id'=>$value,'sira'=>$key+1]);
+                
+            }
+            if($degistir){
+                echo "success";
+            }
+
+        }
+        if(Post::action()=="urunGuruplari"){
+
+            foreach ($veri as $key => $value) {
+                
+              
+                $degistir = UrunModel::urunGrupSiraGuncelle(['id'=>$value,'sira'=>$key+1]);
+                
+            }
+            if($degistir){
+                echo "success";
+            }
+
+        }
+        
+
+        
+
+
+
+    }
+
 
     public function modal(){
+
+        if(!Http::isajax()){
+            redirect("Login");
+            exit;
+        }
 
         $kasaHesaplari      = KasaModel::turHesaplari(1);
         $bankaHesaplari     = KasaModel::turHesaplari(2);
@@ -48,7 +111,7 @@ class Ajax extends Controller
                         <tr>
                             <td><strong>Hesap No:</strong></td>
                             <td>
-                                <input type="text" class="form-control" name="hesapNo" required id="hesapNo" placeholder="Adı" value="<?=$hesap->hesap_no?>">
+                                <input type="text" class="form-control" name="hesapNo" id="hesapNo" placeholder="Adı" value="<?=$hesap->hesap_no?>">
                             </td>
                         </tr>
                         <tr>
@@ -2120,6 +2183,106 @@ class Ajax extends Controller
 
 
 
+        }
+
+        if(Post::action()=="altMasrafKalemDuzenle"){
+
+            $id                 = Post::rowid();
+            $detay              = MasrafModel::bilgi($id);
+            $masrafKalemleri    = MasrafModel::masrafKalemleri();
+
+
+            echo  Form::csrf()->method('post')->action('masraf/altKalemGuncelle/'.$id)->open('altKalemGuncelle'); ?>
+
+                <input type="hidden" name="id" id="id" value="<?=$id?>">
+                <div class="modal-header">
+                    <h4 class="modal-title">Alt Masraf Grubu Düzenle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    <div class="input-group input-group-merge">
+                        <label class="form-label">Ana Kalemler</label>
+                        <div class="input-group input-group-merge">
+                            <select class="form-control" id="ust" name="ust" required >
+                                <option value="">--Seçiniz--</option>
+                                <?php
+                                foreach($masrafKalemleri['anaKalemler'] as $ust){ ?>
+                                    <option value="<?=$ust->id?>" <?=$ust->id==$detay->ust?"selected":""?>><?=$ust->adi?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Adı:</label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" class="form-control" value="<?=$detay->adi?>" id="adis" name="adi" placeholder="Adı" required>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Renk</label>
+                        <div class="input-group input-group-merge">
+                            <select class="form-control" name="renk" id="renk" required >
+                                <option value="success" <?=$detay->renk=="success"?"selected":""?>>Yeşil</option>
+                                <option value="info" <?=$detay->renk=="info"?"selected":""?>>Açık Mavi</option>
+                                <option value="primary" <?=$detay->renk=="primary"?"selected":""?>>Koyu Mavi</option>
+                                <option value="warning" <?=$detay->renk=="warning"?"selected":""?>>Sarı</option>
+                                <option value="dark" <?=$detay->renk=="dark"?"selected":""?>>Siyah</option>
+                                <option value="danger" <?=$detay->renk=="danger"?"selected":""?>>Kırmızı</option>
+                            </select>
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+
+    
+            <?php echo Form::close(); ?>
+
+            <?php
+        }
+
+        if(Post::action()=="anaMasrafKalemDuzenle"){
+
+            $id                 = Post::rowid();
+            $detay              = MasrafModel::bilgi($id);
+
+
+            echo  Form::csrf()->method('post')->action('masraf/anaKalemGuncelle/'.$id)->open('anaKalemGuncelle'); ?>
+
+                <input type="hidden" name="id" id="id" value="<?=$id?>">
+                <div class="modal-header">
+                    <h4 class="modal-title">Alt Masraf Grubu Düzenle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                    <div class="col-12">
+                        <label class="form-label">Adı:</label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" class="form-control" value="<?=$detay->adi?>" id="adis" name="adi" placeholder="Adı" required>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+
+    
+            <?php echo Form::close(); ?>
+
+            <?php
         }
 
 

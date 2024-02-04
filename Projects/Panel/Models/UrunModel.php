@@ -242,6 +242,16 @@ class InternalUrunModel extends Model
         return $guncelle;
     }
 
+    static function urunGrupSiraGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('urun_gruplari',[
+                'sira'      =>$data['sira']
+            ]);
+
+        return $guncelle;
+    }
+
     static function urunGrupSil($id){
         return DB::whereId($id)->delete('urun_gruplari');
     }

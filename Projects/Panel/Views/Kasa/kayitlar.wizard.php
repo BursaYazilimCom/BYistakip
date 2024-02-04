@@ -39,11 +39,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Gider Kayıtları</h4>
+                            <h4 class="card-title">{{$detay->adi}} Kasası Kayıtları</h4>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">
-                                Kasa Defteri Kayıtları ({{$detay->adi}} : {{$detay->tutar}})
+                            <p class="card-text text-center">
+                            Gelirler: <span class="text-success">{{number_format($kasaToplamlari->gelir,2)}}</span> Giderler: <span class="text-danger">{{number_format($kasaToplamlari->gider,2)}}</span> Kasa Bakiyesi: <strong>{{number_format($kasaToplamlari->gelir-$kasaToplamlari->gider,2)}} ₺</strong>
                             </p>
                             {{ Redirect::select('bilgi',true) }}
                         </div>
@@ -56,7 +56,7 @@
                                     <th>Açıklama</th>
                                     <th>Gelir</th>
                                     <th>Gider</th>
-                                    <th>Tutar</th>
+                                   
                                     <th>#</th>
                                 </tr>
                                 {[
@@ -64,16 +64,19 @@
                                 ]}
                                 @foreach($kayitlar['liste'] as $kayit)
 
-                                <tr>
+                                <tr id="row-{{$kayit->id}}">
                                     <td>{{Date::convert($kayit->tarih, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td class="text-{{$kayit->islem=='o'?'danger':'success'}}">{{$kayit->islem=="o"?"Ödeme":"Tahsilat"}}</td>
                                     <td>{{$kayit->hesap}}</td>
                                     <td>{{$kayit->aciklama}}</td>
                                     <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format($kayit->gelir,2)}}</td>
                                     <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format($kayit->gider,2)}} </td>
-                                    <td>{{number_format($guncelTutar,2)}}</td>
+                                  
                                     <td>
-                                        <a href="" data-toggle="tooltip" title="Kayıt Sil" class="btn btn-danger btn-sm"><i data-feather="trash"></i></a>
+                                        
+                                        <a class="btn btn-danger btn-sm" onclick="deleteAction('{{$kayit->id}}','{{URL::site('kasa/ajax')}}','kayitSil')">
+                                                        <i data-feather="trash" class="me-50"></i>
+                                                    </a>
                                     </td>
 
                                 </tr>

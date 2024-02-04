@@ -23,6 +23,10 @@
 <script src="vendors/js/forms/repeater/jquery.repeater.min.js"></script>
 <!-- END: Page Vendor JS-->
 
+<script src="js/scripts/jquery-ui.min.js"></script> <!-- jquery kütüphanelerimizi ekliyoruz -->
+<script src="js/scripts/jquery.ui.touch-punch.min.js"></script> 
+<!-- Bu JS dosyası ile Mobil cihazlar ve tabletlerde sürükle bıark özelliğini aktif ediyoruz-->
+
     <!-- BEGIN: Theme JS-->
     <script src="js/core/app-menu.js"></script>
     <script src="js/core/app.js"></script>
@@ -190,43 +194,8 @@
                 $('#durum').val(durum);
 
             }
-            else if(action=="sektorDuzenle")    {
-
-                $('#dataAction').val('sektorGuncelle');
-                $('#update_id').val(data[0]);
-                $('#sektor_adi').val(data[1]);
-                if (data[3]=="Aktif"){
-                    var durum = "1";
-                }else {
-                    var durum = "0";
-                }
-                $('#durum').val(durum);
-
-
-            }
-            else if(action=="ulkeDuzenle")    {
-
-                $('#dataAction').val('ulkeGuncelle');
-                $('#update_id').val(data[0]);
-                $('#isim').val(data[1]);
-                $('#iso_code_2').val(data[2]);
-                $('#iso_code_3').val(data[3]);
-                if (data[5]=="Aktif"){
-                    var durum = "1";
-                }else {
-                    var durum = "0";
-                }
-                $('#durum').val(durum);
-
-                if (data[4]=="Gerekli"){
-                    var pk = "1";
-                }else {
-                    var pk = "0";
-                }
-                $('#posta_kodu_gerekliligi').val(pk);
-
-
-            }
+          
+           
             else if(action=="sehirDuzenle")    {
 
                 $('#dataAction').val('sehirGuncelle');
@@ -249,30 +218,8 @@
 
 
             }
-            else if(action=="ilceDuzenle")    {
-
-                $('#dataAction').val('ilceGuncelle');
-                $('#update_id').val(data[0]);
-                $('#ilce').val(data[1]);
-
-
-            }
-            else if(action=="mahalleDuzenle")    {
-
-                $('#dataAction').val('mahalleGuncelle');
-                $('#update_id').val(data[0]);
-                $('#mahalle_adi').val(data[1]);
-                $('#mahalle_key').val(data[2]);
-                $('#ilce_key').val(data[3]);
-                if (data[4]=="Veriliyor"){
-                    var hizmet = "1";
-                }else {
-                    var hizmet = "0";
-                }
-                $('#hizmet').val(hizmet);
-
-
-            }  else{}
+          
+             else{}
 
         })
 
@@ -340,53 +287,9 @@
             $('#update_id').val('');
         });
 
-        $('.altKalemDuzenle').on('click',function () {
-
-            var action       =   $(this).attr('data-action');
-            var parent       =   $(this).attr('data-parent');
-            var color       =   $(this).attr('data-color');
-            var names       =   $(this).attr('data-names');
-            var id       =   $(this).attr('data-id');
-
-
-            $('#altKalemEkle').modal('show');
-
-            if(action=="altKalemDuzenle")    {
-                $('#dataAction').val('altKalemGuncelle');
-                $('#update_id').val(id);
-                $('#ust').val(parent);
-                $('#adis').val(names);
-                $('#renk').val(color);
-
-
-            }else{}
-
-        });
-
         $("#anaKalemEkle").on('hide.bs.modal', function(){
             $('#dataAction').val('anaKalemEkle');
             $('#update_id').val('');
-        });
-
-        $('.anaKalemDuzenle').on('click',function () {
-
-            var action       =   $(this).attr('data-action');
-            var color       =   $(this).attr('data-color');
-            var names       =   $(this).attr('data-names');
-            var id       =   $(this).attr('data-id');
-
-
-            $('#anaKalemEkle').modal('show');
-
-            if(action=="anaKalemDuzenle")    {
-                $('#dataAction').val('anaKalemGuncelle');
-                $('#update_id').val(id);
-                $('#adia').val(names);
-                $('#renk').val(color);
-
-
-            }else{}
-
         });
 
     });
@@ -462,4 +365,35 @@
 
 
 
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    $("#sort").sortable({  // sıralamanın yapılacağı ul nin id si
+        axis: 'y',   // sadece dikine sıralama yapmak için y eksenini seçiyoruz
+        revert: true, // sürükle bırak yaparken yavaş ve estetik olması için
+        stop: function (event, ui) {
+            var data = $(this).sortable('serialize'); // sıralama verisini oluşturuyoruz
+            $.ajax({
+                type: "POST", // post metodunu kullanıyoruz
+                data: data+"&action={{$siralamaYeri}}", // data verisini yolluyoruz
+                url: "{{URL::site('Ajax/sort')}}",  // post edeceğimiz sayfamızın yolu
+                success: function (data) { // veri işlendikten sonra sonucu alıyoruz.
+                    if (data == "success") {
+                        $('#resultJS').html("<strong class='text-success'> Sonuç: Sıra Değişikliği Başarılı</strong>"); 
+                        // span da işlem sonucu başarılı ise belirtiyoruz
+                        window.location.reload();
+                    }
+                    else {
+                        $('#resultJS').html("<strong class='text-danger'>  Sonuç: Sıra Değişikliği  Başarısız</strong>");
+                        // span da işlem sonucu başarısız ise belirtiyoruz
+                    }
+                }
+            });
+        }
+    });
+});
+
+$('#widget').draggable();  
+//Bu kod ile mobil cihazlarda ve tabletlerde sürükle bırak özelliği çalışacaktır.
 </script>
