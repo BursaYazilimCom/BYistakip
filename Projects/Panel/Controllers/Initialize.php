@@ -29,12 +29,14 @@ class Initialize extends Controller
         $veresiyeHesaplari  = KasaModel::turHesaplari(5);
         $digerHesaplar      = KasaModel::turHesaplari(6);
         $paraBirimleri      = AyarModel::paraBirimleri();
+        $odemeperiyodlari   = AyarModel::odemePeriyodlari();
 
         $islemGerekenSiparisler = SiparisModel::islemGerekenSiparisler();
 
         //AyarModel::nelerOluyor($user->isim,'masraf', 'Masraf Yönetimini inceliyor');
 
 
+        View::odemeperiyodlari($odemeperiyodlari);
         View::islemGerekenSiparisler($islemGerekenSiparisler);
         View::urunGruplari($urunGruplari);
         View::kasaHesaplari($kasaHesaplari);

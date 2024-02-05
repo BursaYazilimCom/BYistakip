@@ -8,6 +8,11 @@ class InternalFaturaModel extends Model
         return DB::where('id',$id)->faturalar()->row();
     }
 
+    static function siparisFaturaDetay($id)
+    {
+        return DB::where('siparis_id',$id)->where('satis_turu','1')->faturalar()->row();
+    }
+
     static function bengeNoDetay($no)
     {
         return DB::where('belge_no',$no)->faturalar()->row();
@@ -260,6 +265,7 @@ class InternalFaturaModel extends Model
 
     }
 
+
     static function faturaUrunGuncelle($data){
 
         $guncelle = DB::where('id',$data["id"])
@@ -271,6 +277,19 @@ class InternalFaturaModel extends Model
                 'kdv'       => $data["kdv"],
                 'kdv_tutari'       => $data["kdv_tutari"],
                 'tutar'     => $data["tutar"]
+            ]);
+
+        return $guncelle;
+
+    }
+
+    static function siparisFaturaUrunFiyatGuncelle($data){
+
+        $guncelle = DB::where('fatura',$data["fatura_id"])->where('siparis_urun_id',$data["siparis_urun_id"])
+            ->update('fatura_urunleri',[
+                'fiyat'         => $data["fiyat"],
+                'kdv_tutari'    => $data["kdv_tutari"],
+                'tutar'         => $data["tutar"]
             ]);
 
         return $guncelle;

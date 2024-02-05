@@ -369,24 +369,24 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-    $("#sort").sortable({  // sıralamanın yapılacağı ul nin id si
-        axis: 'y',   // sadece dikine sıralama yapmak için y eksenini seçiyoruz
-        revert: true, // sürükle bırak yaparken yavaş ve estetik olması için
+    $("#sort").sortable({ 
+        axis: 'y', 
+        revert: true, 
         stop: function (event, ui) {
-            var data = $(this).sortable('serialize'); // sıralama verisini oluşturuyoruz
+            var data = $(this).sortable('serialize');
             $.ajax({
-                type: "POST", // post metodunu kullanıyoruz
-                data: data+"&action={{$siralamaYeri}}", // data verisini yolluyoruz
-                url: "{{URL::site('Ajax/sort')}}",  // post edeceğimiz sayfamızın yolu
-                success: function (data) { // veri işlendikten sonra sonucu alıyoruz.
+                type: "POST", 
+                data: data+"&action={{$siralamaYeri}}",
+                url: "{{URL::site('Ajax/sort')}}",
+                success: function (data) { 
                     if (data == "success") {
                         $('#resultJS').html("<strong class='text-success'> Sonuç: Sıra Değişikliği Başarılı</strong>"); 
-                        // span da işlem sonucu başarılı ise belirtiyoruz
+                      
                         window.location.reload();
                     }
                     else {
                         $('#resultJS').html("<strong class='text-danger'>  Sonuç: Sıra Değişikliği  Başarısız</strong>");
-                        // span da işlem sonucu başarısız ise belirtiyoruz
+                   
                     }
                 }
             });
@@ -395,5 +395,19 @@
 });
 
 $('#widget').draggable();  
-//Bu kod ile mobil cihazlarda ve tabletlerde sürükle bırak özelliği çalışacaktır.
+
+</script>
+<script type="text/javascript">
+    $('#select-all').click(function(event) {   
+    if(this.checked) {
+        // Iterate each checkbox
+        $(':checkbox').each(function() {
+            this.checked = true;                        
+        });
+    } else {
+        $(':checkbox').each(function() {
+            this.checked = false;                       
+        });
+    }
+}); 
 </script>

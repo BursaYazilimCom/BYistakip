@@ -59,8 +59,40 @@
                                                         <label class="col-form-label" for="odeme_periyodu">Ödeme Priyodu</label>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        {{AyarModel::odemePeriyodu($urunDetay->odeme_periyodu)}}
+                                            
+                                                        <select name="odeme_periyodu" class="form-select">
 
+                                                            <option value="0" {{$urunDetay->odeme_periyodu=="0"?"selected":"";}}>Ücretsiz</option>
+                                                            {[
+                                                            if ($anaUrunDetay->fiyat >0) {
+                                                                $selected = $urunDetay->odeme_periyodu=="T"?"selected":"";
+                                                                echo '<option value="T" '.$selected.'>Tek Seferlik ('.$anaUrunDetay->fiyat.' '.$anaUrunDetay->fiyat_birim.')</option>';
+                                                            }
+
+                                                            if ($anaUrunDetay->aylik_fiyat >0) {
+                                                                $selected = $urunDetay->odeme_periyodu=="A"?"selected":"";
+                                                                echo '<option value="A" '.$selected.'>Aylık ('.$anaUrunDetay->aylik_fiyat.' '.$anaUrunDetay->fiyat_birim.')</option>';
+                                                            }
+
+                                                            if ($anaUrunDetay->uc_aylik_fiyat >0) {
+                                                                $selected = $urunDetay->odeme_periyodu=="3A"?"selected":"";
+                                                                echo '<option value="3A" '.$selected.'>3 Aylık ('.$anaUrunDetay->uc_aylik_fiyat.' '.$anaUrunDetay->fiyat_birim.')</option>';
+                                                            }
+
+                                                            if ($anaUrunDetay->alti_aylik_fiyat >0) {
+                                                                $selected = $urunDetay->odeme_periyodu=="6A"?"selected":"";
+                                                                echo '<option value="6A" '.$selected.'>6 Aylık ('.$anaUrunDetay->alti_aylik_fiyat.' '.$anaUrunDetay->fiyat_birim.')</option>';
+                                                            }
+
+                                                            if ($anaUrunDetay->yillik_fiyat >0) {
+                                                                $selected = $urunDetay->odeme_periyodu=="Y"?"selected":"";
+                                                                echo '<option value="Y" '.$selected.'>Yıllık ('.$anaUrunDetay->yillik_fiyat.' '.$anaUrunDetay->fiyat_birim.')</option>';
+                                                            }
+
+                                                            ]}
+                                                             
+
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,6 +107,15 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-12">
+                                            <div class="alert alert-warning">
+                                                <div class="alert-body">
+                                                    Dikkat ! Burada yapacağınız fiyatı etkileyen değişiklikler sadece ilk satış faturasının fiyatlarını günceller. Diğer yenileme faturalarını güncellemek için fatura düzenleme sayfasını kullanın.
+                                                </div>
+                                            </div>
+                                        </div>
                                         </div>
 
                                         <div class="row">

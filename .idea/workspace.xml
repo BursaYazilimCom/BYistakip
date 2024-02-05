@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="Yenileme faturası oluşturma işlemleri yapılıyor">
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Ajax.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Siparisler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Siparisler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/siparis.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/siparis.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/AyarModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/AyarModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Ayarlar/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/form.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/form.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/urunler.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/urunler.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,6 +181,7 @@
       <workItem from="1706848588573" duration="2015000" />
       <workItem from="1706895164930" duration="4153000" />
       <workItem from="1706920962929" duration="31000" />
+      <workItem from="1707083568459" duration="596000" />
     </task>
     <task id="LOCAL-00001" summary="Projeler geliştirildi&#10;Projelere Yapılanlan çalışmaların listelendiği bir bölüm eklandi&#10;Müşteri tarafında çalışmaları görebileceği bir sayfa eklendi, &#10;Mail göndermeme sorunu giderildi">
       <option name="closed" value="true" />

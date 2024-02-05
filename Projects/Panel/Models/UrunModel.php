@@ -30,7 +30,7 @@ class InternalUrunModel extends Model
             ->urunler()
             ->row();
 
-        //AyarModel::sqlHataEkle(DB::stringQuery());
+        DB::stringQuery();
 
         return $veri;
 

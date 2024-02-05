@@ -608,13 +608,55 @@ class Siparisler extends Controller
             $degisim = $degisim."<br>Ürün'ün tedarikcisi ".TedarikciModel::tedarikciAdi($tedarikci)." olarak değiştirildi";
         }
 
+        $odeme_periyodu = Post::odeme_periyodu();
 
+        if($siparisUrunDetay->odeme_periyodu!=$odeme_periyodu){
+
+            $degisim = $degisim."<br>Ürün'ün ödeme Periyodu : ".Ayarmodel::odemePeriyodu($odeme_periyodu)." olarak değiştirildi";
+            $eklencekGunSayisi = AyarModel::odemePeriyoduEklenecekGun($odeme_periyodu);
+
+            $bitis_tarihi = Date::addDay($baslangic_tarihi,$eklencekGunSayisi);
+
+            /***
+             * yeni ödeme periyoduna göre fiyat güncellemesi
+             */
+            $urunDetay = UrunModel::detay($siparisUrunDetay->urun);
+
+            if($odeme_periyodu=="0"){
+                $birimFiyat = 0;
+            }elseif($odeme_periyodu=="T"){
+                $birimFiyat = $urunDetay->fiyat;
+            }elseif($odeme_periyodu== "A"){
+                $birimFiyat = $urunDetay->aylik_fiyat;
+            }elseif($odeme_periyodu== "3A"){
+                $birimFiyat = $urunDetay->uc_aylik_fiyat;
+            }elseif($odeme_periyodu== "6A"){
+                $birimFiyat = $urunDetay->alti_aylik_fiyat;
+            }else{
+                $birimFiyat = $urunDetay->yillik_fiyat;
+            }
+        
+            $siparisBirimFiyat  = AyarModel::tlCevir($birimFiyat,$urunDetay->fiyat_birim);
+            $kdvTutari          = (($siparisBirimFiyat*$urunDetay->kdv)/100)*$siparisUrunDetay->adet;
+            $toplamFiyat        = ($siparisBirimFiyat*$siparisUrunDetay->adet)+$kdvTutari;
+
+        }else{
+
+            $siparisBirimFiyat  = $siparisUrunDetay->birim_fiyat;
+            $kdvTutari          = $siparisUrunDetay->kdv_tutari;
+            $toplamFiyat        = $siparisUrunDetay->toplam_fiyat;
+
+        }
 
         $siparisUrunData = [
             'id'                =>$urun,
+            'odeme_periyodu'    =>$odeme_periyodu,
             'baslangic_tarihi'  =>$baslangic_tarihi,
             'bitis_tarihi'      =>$bitis_tarihi,
             'fiyat_sabitle'     =>$fiyat_sabitle,
+            'birim_fiyat'       =>$siparisBirimFiyat,
+            'kdv_tutari'        =>$kdvTutari,
+            'toplam_fiyat'      =>$toplamFiyat,
             'tedarikci'         =>$tedarikci,
             'durum'             =>$durum,
             'siparis_notu'      =>$siparis_notu
@@ -623,6 +665,63 @@ class Siparisler extends Controller
         $guncelle = SiparisModel::siparisUrunGuncelle($siparisUrunData);
 
         if ($guncelle){
+
+            
+
+            //Siparis ürününde fiyat değişikliği oluysa sipariş ürünlerine göre sipariş toplam fiyatları güncelleniyor
+            $siparisUrunleri = SiparisModel::siparisUrunleri($siparisUrunDetay->siparis);
+
+            foreach($siparisUrunleri as $su){
+
+                $siparisToplamTutar = $siparisToplamTutar+$su->birim_fiyat;
+                $siparisKdvToplami = $siparisKdvToplami+$su->kdv_tutari;
+                $siparisGenelToplam = $siparisGenelToplam+$su->toplam_fiyat;
+
+            }
+
+            $siparisToplamData = [
+                'id'                    =>$siparisUrunDetay->siparis,
+                'toplam_tutar'          =>$siparisToplamTutar,
+                'kdv_tutari'            =>$siparisKdvToplami,
+                'genel_toplam_tutari'   =>$siparisGenelToplam
+            ];
+
+            $siparisToplamTutarGuncelle = SiparisModel::siparisToplamTutarGuncelle($siparisToplamData);
+
+
+            //Ürünün faturasında da güncelliyoruz
+
+            $faturaDetay = FaturaModel::siparisFaturaDetay($siparisUrunDetay->siparis);
+
+            $faturaUrunData = [
+                'siparis_urun_id'   => $siparisUrunDetay->id,
+                'fatura_id'         => $faturaDetay->id,
+                'fiyat'             => $siparisBirimFiyat,
+                'kdv_tutari'        => $kdvTutari,
+                'tutar'             => $toplamFiyat
+            ];
+
+            $faturaUrunGuncelle = FaturaModel::siparisFaturaUrunFiyatGuncelle($faturaUrunData);
+
+            $faturaurunleri = FaturaModel::faturaUrunleri($faturaDetay->id);
+
+            foreach($faturaurunleri as $fu){
+
+                $faturaToplamTutar = $faturaToplamTutar+$fu->fiyat;
+                $faturaKdvToplami = $faturaKdvToplami+$fu->kdv_tutari;
+                $faturaGenelToplam = $faturaGenelToplam+$fu->tutar;
+
+            }
+
+            $siparisToplamData = [
+                'id'                    =>$faturaDetay->id,
+                'toplam_tutar'          =>$faturaToplamTutar,
+                'kdv_toplami'           =>$faturaKdvToplami,
+                'genel_toplam'          =>$faturaGenelToplam
+            ];
+
+            $faturaToplamTutarGuncelle = FaturaModel::urunDuzenlemeSonrasiGuncelleme($siparisToplamData);
+            
 
             $gecmisData = [
                 'cari'          =>$siparisUrunDetay->cari,
@@ -771,12 +870,14 @@ class Siparisler extends Controller
     public function urunDuzenle($id){
 
         $siparisUrunDetay   = SiparisModel::siparisUrunBilgi($id);
+        $urunDetay          = UrunModel::detay($siparisUrunDetay->urun);
         $siparisDetay       = SiparisModel::detay($siparisUrunDetay->siparis);
         $cariBilgi          = CariModel::detay($siparisDetay->cari);
         $siparisDurumlari   = AyarModel::siparisDurumlari();
         $tedarikciler       = TedarikciModel::tumListe();
 
 
+        View::anaUrunDetay($urunDetay);
         View::tedarikciler($tedarikciler);
         View::urunDetay($siparisUrunDetay);
         View::siparisDurumlari($siparisDurumlari);
@@ -987,6 +1088,67 @@ class Siparisler extends Controller
         }
     }
 
+    public function topluIslemler($yer){
+        if($yer=="urunler"){
+
+            if(Post::islem()=="islemYapildi"){
+
+                $sec = Post::sec();
+
+                for($s=0;$s<=count($sec);$s++){
+
+                    $siparisUrunData = [
+                        'id'                =>$sec[$s],
+                        'islem_gerekiyor'   =>'0',
+                        'yapilacak_islem'   =>'-'
+                    ];
+            
+                    $guncelle = SiparisModel::siparisUrunKontrolEdildi($siparisUrunData);
+
+                }
+
+                if($guncelle){
+
+                    AyarModel::basarili('İşlem Yapıldı','Seçili ürünler İşlem Yapıldı olarak işaretlendir',URL::site('siparisler/urunler'));
+
+                }else{
+                    AyarModel::basarili('İşlem YapılaMAdı','Seçili ürünler İşlem Yapıldı olarak işaretlendir',URL::site('siparisler/urunler'));
+                }
+
+            }elseif(Post::islem()=="teslimEdildi"){
+
+
+                $sec = Post::sec();
+
+                for($s=0;$s<=count($sec);$s++){
+
+                    $guncelle = SiparisModel::urunDurumDegistir($sec[$s],AyarModel::defaultAyarlar('teslimEdildiDurumu'));
+
+                }
+
+                if($guncelle){
+
+                    AyarModel::basarili('İşlem Yapıldı','Seçili ürünler Teslim Edildi olarak işaretlendir',URL::site('siparisler/urunler'));
+
+                }else{
+                    AyarModel::basarili('İşlem YapılaMAdı','Seçili ürünler Teslim Edildi olarak işaretlendir',URL::site('siparisler/urunler'));
+                }
+
+
+            }elseif(Post::islem()=="sil"){
+
+            }else{}
+
+
+            print_r(Post::all());
+
+        }else{
+
+            redirect("siparisler/urunler");
+
+        }
+    }
+
 
     /*****************SİPARİŞ DURUMLARI*******************
 
@@ -1057,7 +1219,7 @@ class Siparisler extends Controller
                 }else{
                     $urunDetay = UrunModel::detay(Post::urun());
 
-                    if (empty(Post::fiyat()) or Post::fiyat() == 0) {
+                    if (empty(Post::fiyat()) and Post::fiyat()!="0") {
 
                         if (Post::odeme_periyodu() == "0") {
                             $fiyat = "0.00";
@@ -1104,7 +1266,7 @@ class Siparisler extends Controller
                         'urunKdv'                   =>Post::kdv(),
                         'siparis_notu'              =>Post::siparis_notu(),
                         'fiyat_sabitle'             =>Post::fiyat_sabitle()==""?"0":Post::fiyat_sabitle(),
-                        'baslangic_tarihi'          =>$baslangicTarihi,
+                        'baslangic_tarihi'          =>AyarModel::tarihGoster($baslangicTarihi),
                         'fiyat'                     =>$fiyat,
                         'fiyat_birim'               =>$urunDetay->fiyat_birim
                     ];
@@ -1122,7 +1284,7 @@ class Siparisler extends Controller
                                                 <td>'.AyarModel::odemePeriyodu(Post::odeme_periyodu()).'</td>
                                                 <td>'.Post::adet().'</td>
                                                 <td>'.Post::siparis_notu().'</td>
-                                                <td>'.$baslangicTarihi.'</td>
+                                                <td>'.AyarModel::tarihGoster($baslangicTarihi).'</td>
                                                 <td>'.$fiyat." ".$urunDetay->fiyat_birim.'</td>
                                                 <td>'.Post::kdv().'</td>
                                                 <td>

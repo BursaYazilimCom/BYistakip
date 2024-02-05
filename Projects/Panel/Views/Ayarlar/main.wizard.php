@@ -85,6 +85,17 @@
                                             <option value="{{$deger->value}}" {{$ayar->deger==$deger->value?"selected":""}}>{{$deger->name}}</option>
                                             @endforeach
                                         </select>
+                                        @elseif($ayar->tur=="sql")
+
+                                        <select name="deger[{{$ayar->anahtar}}]"  class="form-select">
+                                            <option>--Seçiniz--</option>
+                                            @foreach(AyarModel::sqlAyarGetir($ayar->tum_degerler) as $deger)
+
+                                            <option value="{{$deger->id}}" {{$ayar->deger==$deger->id?"selected":""}}>{{$deger->baslik}}</option>
+
+                                            @endforeach
+
+                                        </select>
                                         @else
                                         <input type="text" name="deger[{{$ayar->anahtar}}]" class="form-control" value="{{$ayar->deger}}">
                                         @endif

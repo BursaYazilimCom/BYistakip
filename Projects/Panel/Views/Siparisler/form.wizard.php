@@ -202,6 +202,7 @@
                                                 <div class="col-sm-12">
                                                     <button type="submit" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> KAYDET</span></button>
                                                 </div>
+                                             
 
                                             </div>
                                         </div>
@@ -342,7 +343,7 @@
                                 <div class="col-12">
                                     <label class="form-label" for="baslangic_tarihi">Ürün/Hizmet Başlangıç Tarihi <span class="text-danger">(Boş bırakırsanız bugünün tarihini alır)</span></label>
                                     <div class="input-group input-group-merge">
-                                        @Form::id('baslangic_tarihi')->placeholder(Date::current())->date('baslangic_tarihi','',['class'=>'form-control date-picker'])
+                                        @Form::id('baslangic_tarihi')->placeholder(Date::current())->date('baslangic_tarihi','',['class'=>'form-control'])
                                     </div>
                                 </div>
                             </div>
@@ -367,12 +368,18 @@
                                             <label class="col-form-label" for="fiyat">Fiyat</label>
                                         </div>
                                         <div class="col-sm-3">
-                                            @Form::id('fiyat')->number('fiyat','0',['class'=>'form-control'])
+                                            @Form::id('fiyat')->number('fiyat','',['class'=>'form-control'])
                                         </div>
                                         <div class="col-sm-9">
                                             Eğer farklı fiyat vermek istiyorsanız buradan geçerli fiyatı giriniz. Eğer boş bırakırsanız ürünün geçerli fiyatı alınır.
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                <div class="alert alert-info"><div class="alert-body">Ayarlarda Ürünün başlangıç tarihi <strong>Ödemeden Sonra</strong> olarak ayarlanmışsa ürün seçerken giriş yaptığınız başlangıç tarihi geçersiz olur, Müşteri ödeme yaptıktan sonra sistem tarafından başlangıç tarihi kaydedilir. </div>
+                                                    </div>
                                 </div>
                             </div>
 

@@ -63,6 +63,22 @@ class InternalAyarModel extends Model
 
     }
 
+    static function sqlAyarGetir($sql){
+
+        if($sql=="siparis_durumlari"){
+
+            $veri = DB::select('id','adi as baslik',)->orderby('sira','ASC')->siparis_durumlari()->result();
+        }
+        return $veri;
+    }
+
+    public function odemePeriyodlari(){
+        $veri = DB::odeme_periyodlari()->result();
+
+        return $veri;
+
+    }
+
     public function odemePeriyodu($id){
         $periyodlar = [
             '0' => 'Ücretsiz',

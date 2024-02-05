@@ -299,9 +299,13 @@ class InternalSiparisModel extends Model
     public function siparisUrunGuncelle($data){
 
         $guncelle = DB::where('id',$data['id'])->update('siparis_urunleri',[
+            'odeme_periyodu'        => $data['odeme_periyodu'],
             'notu'                  => $data['siparis_notu'],
             'tedarikci'             => $data['tedarikci'],
             'fiyat_sabitle'         => $data['fiyat_sabitle'],
+            'birim_fiyat'           => $data['birim_fiyat'],
+            'kdv_tutari'            => $data['kdv_tutari'],
+            'toplam_fiyat'          => $data['toplam_fiyat'],
             'baslangic_tarihi'      => $data['baslangic_tarihi'],
             'bitis_tarihi'          => $data['bitis_tarihi'],
             'durum'                 => $data['durum']
@@ -401,10 +405,10 @@ class InternalSiparisModel extends Model
 
         if ($gurup=="") {
 
-            $veri = DB::orderby('bitis_tarihi','ASC')->siparis_urunleri();
+            $veri = DB::orderby('bitis_tarihi','ASC')->limit(null,25)->siparis_urunleri();
 
         }else{
-            $veri = DB::select('siparis_urunleri.*')->innerjoin('urunler.id','siparis_urunleri.urun')->where('urunler.grup',$gurup)->orderby('bitis_tarihi','ASC')->siparis_urunleri();
+            $veri = DB::select('siparis_urunleri.*')->innerjoin('urunler.id','siparis_urunleri.urun')->where('urunler.grup',$gurup)->orderby('bitis_tarihi','ASC')->limit(null,25)->siparis_urunleri();
         }
 
         return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
