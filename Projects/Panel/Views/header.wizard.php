@@ -113,7 +113,7 @@
                                 <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/form')}}"><i data-feather="plus"></i><span data-i18n="Raise Support">Sipariş Ekle</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/teklifler')}}"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support">Teklifler</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('teklifler')}}"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support">Teklifler</span></a>
                             </li>
 
                         </ul>
