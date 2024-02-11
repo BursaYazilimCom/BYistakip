@@ -96,12 +96,10 @@
                                                     <select class="select2 form-select" name="durum" id="durum">
 
                                                         <option value="">--Seçiniz--</option>
-                                                       
                                                         <option value="0" {{$detay->durum=='0' ? 'selected' : ''}}>Değerlendirmede</option>
                                                         <option value="1" {{$detay->durum=='1' ? 'selected' : ''}}>Siparişe Dönüştü</option>
                                                         <option value="2" {{$detay->durum=='2' ? 'selected' : ''}}>Siparişe Dönüşmedi</option>
                                                       
-
                                                     </select>
                                                 </div>
                                             </div>
