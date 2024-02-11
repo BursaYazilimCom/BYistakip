@@ -31,9 +31,9 @@
                                     <h4 class="card-title">Faturalar</h4>
                                 </div>
                                 <div class="dt-action-buttons text-end">
-                                    <a href="{{URL::site('siparisler/form')}}"
+                                    <a href="{{URL::site('faturalar/olustur')}}"
                                        class="dt-button create-new btn btn-primary" tabindex="0"><span><i
-                                                    data-feather="plus"></i>EKLE</span></a>
+                                                    data-feather="plus"></i>Fatura Oluştur</span></a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -86,14 +86,20 @@
                                                         </td>
                                                         <td>
                                                             <div class="d-flex justify-content-left align-items-center">
-                                                                <div class="d-flex flex-column"><h6 class="user-name text-truncate mb-0">({{$fatura->musteri!=""?"Cari":"Tedarikçi"}}) {{$fatura->musteri!=""?CariModel::cariAdi($fatura->musteri):$fatura->tedarikci}}</h6>
+                                                                <div class="d-flex flex-column">
+                                                                    <h6 class="user-name text-truncate mb-0">
+                                                                        <strong>
+                                                                        ({{$fatura->musteri!=""?"Cari":"Tedarikçi"}}) 
+                                                                        {{$fatura->musteri!=""?CariModel::cariAdi($fatura->musteri):$fatura->tedarikci}}
+                                                                        </strong>
+                                                                    </h6>
                                                                     <small>Firma: {{$fatura->fatura_adi}}</small>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
                                                         <td>{{number_format($fatura->alinan_odeme,2)}} ₺</td>
-                                                        <td>{{Date::convert($fatura->belge_tarihi,'d.m.Y')}}</td>
+                                                        <td><strong>{{Date::convert($fatura->belge_tarihi,'d.m.Y')}}</strong></td>
                                                         <td>
                                                             @if($fatura->durum=="0")
                                                                 <span class="badge rounded-pill badge-light-danger"> İptal </span>

@@ -49,6 +49,7 @@
       <sourceFolder url="file://$MODULE_DIR$/UpgradeBackups/8.0.3/Internal/package-zerocore" isTestSource="false" packagePrefix="ZN" />
       <sourceFolder url="file://$MODULE_DIR$/UpgradeBackups/8.4.0/Internal/package-zerocore" isTestSource="false" packagePrefix="ZN" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Internal/package-composer/sebastian/type/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/Internal/package-composer/composer" />
       <excludeFolder url="file://$MODULE_DIR$/Internal/package-composer/doctrine/instantiator" />

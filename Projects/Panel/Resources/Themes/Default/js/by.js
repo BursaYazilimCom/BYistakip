@@ -194,7 +194,13 @@ $(".date-picker").flatpickr({
 });
 
 
-
+var elems = document.getElementsByClassName('confirm');
+    var confirmIt = function (e) {
+        if (!confirm('Bunu yapmak istediğinize EMİN MİSİNİZ ? \nBu işlemin geri dönüşü yoktur, \nİlişkisel bir veri siliyorsanız bu veriye bağlı diğer verilerin görünmemesine sebep olabilir!')) e.preventDefault();
+    };
+    for (var i = 0, l = elems.length; i < l; i++) {
+        elems[i].addEventListener('click', confirmIt, false);
+    }
 
 
 

@@ -79,12 +79,12 @@
                 <!-- include ../../../includes/mixins-->
                 <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="{{URL::site()}}"><i data-feather="home"></i><span data-i18n="Dashboards">Panel</span></a>
+                        <a class="nav-link d-flex align-items-center" href="{{URL::site()}}"><i data-feather="home"></i><span>Panel</span></a>
                     </li>
 
-                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('cari')}}"><i data-feather="users"></i><span data-i18n="Misc">Müşteriler</span></a>
-                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('tedarikci')}}"><i data-feather="archive"></i><span data-i18n="Misc">Tedarikciler</span></a>
-                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('projeler')}}"><i data-feather="check-square"></i><span data-i18n="Misc">Projeler</span></a>
+                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('cari')}}"><i data-feather="users"></i><span>Müşteriler</span></a>
+                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('tedarikci')}}"><i data-feather="archive"></i><span>Tedarikciler</span></a>
+                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="{{URL::site('projeler')}}"><i data-feather="check-square"></i><span>Projeler</span></a>
                     </li>
 
 
@@ -92,13 +92,13 @@
                         <ul class="dropdown-menu" data-bs-popper="none">
 
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('urun')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-cart"></i><span data-i18n="Raise Support">Ürünler</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('urun')}}"><i data-feather="shopping-cart"></i><span data-i18n="Raise Support">Ürünler</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('urun/form')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="plus"></i><span data-i18n="Raise Support">Ürün Ekle</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('urun/form')}}"><i data-feather="plus"></i><span data-i18n="Raise Support">Ürün Ekle</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('urun/gruplar')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support">Ürün Grupları</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('urun/gruplar')}}"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support">Ürün Grupları</span></a>
                             </li>
 
                         </ul>
@@ -107,27 +107,27 @@
                         <ul class="dropdown-menu" data-bs-popper="none">
 
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-cart"></i><span data-i18n="Raise Support">Siparişler</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler')}}"><i data-feather="shopping-cart"></i><span data-i18n="Raise Support">Siparişler</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/form')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="plus"></i><span data-i18n="Raise Support">Sipariş Ekle</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/form')}}"><i data-feather="plus"></i><span data-i18n="Raise Support">Sipariş Ekle</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/teklifler')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support">Teklifler</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/teklifler')}}"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support">Teklifler</span></a>
                             </li>
 
                         </ul>
                     </li>
                     <li class="dropdown nav-item" data-menu="dropdown">
                         
-                        <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="shopping-bag"></i><span data-i18n="Misc">Sipariş Ürünleri</span>
+                        <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="shopping-bag"></i><span>Sipariş Ürünleri</span>
                         @if($islemGerekenSiparisler['adet']>0)
                         <span class="badge bg-danger" data-bs-toggle="tooltip" title="İşlem Bekleyen Siparişler var!">{{$islemGerekenSiparisler['adet']}}</span>
                         @endif
                     </a>
                         <ul class="dropdown-menu" data-bs-popper="none">
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/urunler')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support" class="text-success">Tüm Sipariş Ürünleri</span>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/urunler')}}"><i data-feather="shopping-bag"></i><span class="text-success">Tüm Sipariş Ürünleri</span>
                                 @if($islemGerekenSiparisler['adet']>0)
                                 <span class="badge bg-danger" data-bs-toggle="tooltip" title="İşlem Bekleyen Siparişler var!">{{$islemGerekenSiparisler['adet']}}</span>
                                 @endif
@@ -135,72 +135,76 @@
                             </li>
                             @foreach($urunGruplari as $ug)
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/gruplar/'.$ug->id)}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="{{$ug->adi}}">{{$ug->adi}}</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/gruplar/'.$ug->id)}}"><i data-feather="shopping-bag"></i><span data-i18n="{{$ug->adi}}">{{$ug->adi}}</span></a>
                             </li>
                             @endforeach
 
                         </ul>
                     </li>
-                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="edit-2"></i><span data-i18n="Misc">Muhasebe</span></a>
+                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="edit-2"></i><span>Muhasebe</span></a>
                         <ul class="dropdown-menu" data-bs-popper="none">
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('faturalar')}}"><i data-feather="layout"></i><span>Faturalar</span></a>
+                            </li>
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('faturalar/olustur')}}"><i data-feather="plus"></i><span>Fatura Oluştur</span></a>
+                            </li>
 
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('Masraf')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="aperture"></i><span data-i18n="Raise Support">Gider Kayıtları</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('Masraf')}}" ><i data-feather="aperture"></i><span>Gider Kayıtları</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('kasa')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="clock"></i><span data-i18n="Raise Support">Kasa Hesapları</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('kasa')}}"><i data-feather="clock"></i><span>Kasa Hesapları</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('kasa/tumKayitlar')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="clock"></i><span data-i18n="Raise Support">Kasa Defteri</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('kasa/tumKayitlar')}}"><i data-feather="clock"></i><span>Kasa Defteri</span></a>
                             </li>
+                            
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('faturalar')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="layout"></i><span data-i18n="Raise Support">Faturalar</span></a>
-                            </li>
-                            <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('rapor')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="bar-chart-2"></i><span data-i18n="Misc">Gelir & Gider Grafiği</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('rapor')}}"><i data-feather="bar-chart-2"></i><span>Gelir & Gider Grafiği</span></a>
                             </li>
 
                         </ul>
                     </li>
 
-                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="settings"></i><span data-i18n="Misc">Ayarlar</span></a>
+                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="settings"></i><span>Ayarlar</span></a>
                         <ul class="dropdown-menu" data-bs-popper="none">
                             <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
-                                <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown" data-i18n="Kullanıcı Yönetimi"><i data-feather="user"></i><span data-i18n="Kullanıcı Yönetimi">Personel Yönetimi</span></a>
+                                <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown"><i data-feather="user"></i><span data-i18n="Kullanıcı Yönetimi">Personel Yönetimi</span></a>
                                 <ul class="dropdown-menu" data-bs-popper="none">
-                                    <li data-menu=""><a class="dropdown-item d-flex align-items-center" href="{{URL::site('Personel')}}" data-bs-toggle="" data-i18n="Second Level"><i data-feather="user"></i><span data-i18n="Second Level">Personel Yönetimi</span></a>
+                                    <li data-menu=""><a class="dropdown-item d-flex align-items-center" href="{{URL::site('Personel')}}"><i data-feather="user"></i><span data-i18n="Second Level">Personel Yönetimi</span></a>
                                     </li>
                                     <li class="dropdown" data-menu="dropdown-submenu">
-                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('Ayarlar/yetkiAlanlari')}}" data-bs-toggle="" data-i18n="Second Level"><i data-feather="key"></i><span data-i18n="Second Level">Yetki Alanları</span></a>
+                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('Ayarlar/yetkiAlanlari')}}"><i data-feather="key"></i><span data-i18n="Second Level">Yetki Alanları</span></a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
-                                <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="{{URL::site('BolgeselAyarlar')}}" data-bs-toggle="dropdown" data-i18n="Kullanıcı Yönetimi"><i data-feather="user"></i><span data-i18n="Kullanıcı Yönetimi">Bölgesel Ayarlar</span></a>
+                                <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="{{URL::site('BolgeselAyarlar')}}" data-bs-toggle="dropdown"><i data-feather="user"></i><span data-i18n="Kullanıcı Yönetimi">Bölgesel Ayarlar</span></a>
                                 <ul class="dropdown-menu" data-bs-popper="none">
 
                                     <li class="dropdown" data-menu="dropdown-submenu">
-                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('BolgeselAyarlar/sehirler')}}" data-bs-toggle="" data-i18n="Second Level"><i data-feather='map'></i><span data-i18n="Second Level">Şehirler</span></a>
+                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('BolgeselAyarlar/sehirler')}}"><i data-feather='map'></i><span>Şehirler</span></a>
                                     </li>
                                     <li class="dropdown" data-menu="dropdown-submenu">
-                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('BolgeselAyarlar/paraBirimleri')}}" data-bs-toggle="" data-i18n="Second Level"><i data-feather='dollar-sign'></i><span data-i18n="Second Level">ParaBirimleri</span></a>
+                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('BolgeselAyarlar/paraBirimleri')}}"><i data-feather='dollar-sign'></i><span>ParaBirimleri</span></a>
                                     </li>
 
 
                                 </ul>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('ayarlar/odemeYontemleri')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="dollar-sign"></i><span data-i18n="Raise Support">Ödeme Yöntemleri</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('ayarlar/odemeYontemleri')}}"><i data-feather="dollar-sign"></i><span>Ödeme Yöntemleri</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('ayarlar/siparisDurumlari')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="shopping-bag"></i><span data-i18n="Raise Support">Sipariş Durumları</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('ayarlar/siparisDurumlari')}}"><i data-feather="shopping-bag"></i><span>Sipariş Durumları</span></a>
                             </li>
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('ayarlar')}}" data-bs-toggle="" data-i18n="Raise Support"><i data-feather="settings"></i><span data-i18n="Raise Support">Site Ayarları</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('ayarlar')}}"><i data-feather="settings"></i><span>Site Ayarları</span></a>
                             </li>
 
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="https://www.bursayazilim.com" data-bs-toggle="" data-i18n="Documentation"><i target="_blank" data-feather="folder"></i><span data-i18n="Yardım Destek">Yardım</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="https://www.bursayazilim.com"><i target="_blank" data-feather="folder"></i><span>Yardım</span></a>
                             </li>
 
 

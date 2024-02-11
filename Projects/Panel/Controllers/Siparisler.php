@@ -76,14 +76,6 @@ class Siparisler extends Controller
 
     }
 
-    public function teklifler(){
-
-        $siparisler     = SiparisModel::teklifler();
-
-        View::siparisler($siparisler);
-
-    }
-
     public function detay($id){
 
         $user = User::data();

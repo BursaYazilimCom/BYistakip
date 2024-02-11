@@ -26,7 +26,7 @@
 
                 <div class="row">
                     <div class="col-md-12 col-12">
-                        @Form::csrf()->action("faturalar/guncelle")->open('submitForm',['class'=>'form form-horizontal'])
+                        @Form::csrf()->action("faturalar/faturaKaydet")->open('submitForm',['class'=>'form form-horizontal'])
 
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
@@ -42,8 +42,12 @@
                                                     <label class="col-form-label" for="cari">Müşteri</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <strong>{{ CariModel::cariAdi($detay->musteri)}}</strong>
-
+                                                    <select class="form-select select2 form-select-sm" name="musteri" id="musteri">
+                                                        <option value="">Seciniz</option>
+                                                        @foreach($musteriler as $cari)
+                                                        <option value="{{ $cari->id }}">{{$cari->adi}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -63,17 +67,17 @@
                                                     <label class="col-form-label" for="cari">Fatura Tarihi</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <input type="text" name="belge_tarihi" class="form-control form-control-sm date-picker" id="belge_tarihi" value="{{$detay->belge_tarihi}}" placeholder="Fatura Tarihi" />
+                                                    <input type="date" name="belge_tarihi" class="form-control form-control-sm" id="belge_tarihi" placeholder="Fatura Tarihi" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-12">
-                                                    <label class="col-form-label" for="vade_tarihi">Ödeme Tarihi</label>
+                                                    <label class="col-form-label" for="vade_tarihi">Vade Tarihi</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <input type="text" class="form-control form-control-sm date-picker" name="vade_tarihi" value="{{$detay->vade_tarihi}}" id="vade_tarihi" placeholder="Ödeme Tarihi" />
+                                                    <input type="date" class="form-control form-control-sm" name="vade_tarihi" placeholder="Ödeme Tarihi" />
                                                 </div>
                                             </div>
                                         </div>
@@ -86,11 +90,11 @@
                                                     <label class="col-form-label" for="odeme_yontemi">Ödeme Yöntemi</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <select class="select2 form-select" name="odeme_yontemi" id="odeme_yontemi">
+                                                    <select class="select2 form-select" required name="odeme_yontemi" id="odeme_yontemi">
 
                                                         <option value="">--Seçiniz--</option>
                                                         @foreach($odemeYontemleri as $oy)
-                                                        <option value="{{$oy->id}}" {{$oy->id == $detay->odeme_yontemi ? 'selected' : ''}}>{{$oy->baslik}}</option>
+                                                        <option value="{{$oy->id}}">{{$oy->baslik}}</option>
                                                         @endforeach
 
                                                     </select>
@@ -101,15 +105,15 @@
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-12">
-                                                    <label class="col-form-label" for="tur">Fatura Türü Durumları</label>
+                                                    <label class="col-form-label" for="tur">Fatura Türü</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <select class="select2 form-select" name="tur" id="tur">
+                                                    <select class="select2 form-select" required name="tur" id="tur">
 
                                                         <option value="">--Seçiniz--</option>
-                                                        <option  value="1" {{$detay->tur == "1" ? 'selected' : ''}}>Alış Faturası</option>
-                                                        <option  value="2" {{$detay->tur == "2" ? 'selected' : ''}}>Satış Faturası</option>
-                                                        <option  value="3" {{$detay->tur == "3" ? 'selected' : ''}}>İade Faturası</option>
+                                                        <option  value="1">Alış Faturası</option>
+                                                        <option  value="2" selected>Satış Faturası</option>
+                                                        <option  value="3">İade Faturası</option>
 
                                                     </select>
                                                 </div>
@@ -117,9 +121,43 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <label class="form-label" for="siparis_notu">Sipairş Notu</label>
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="tur">Ödeme Durumu</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <select class="select2 form-select" required name="odeme" id="odeme">
+
+                                                        <option value="">--Seçiniz--</option>
+                                                        <option  value="0" selected>Yapılmadı</option>
+                                                        <option  value="0">Yapıldı</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="tur">Fatura Durumu</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <select class="select2 form-select" required name="durum" id="durum">
+
+                                                        <option value="">--Seçiniz--</option>
+                                                        <option  value="2">Resmileşmiş Fatura</option>
+                                                        <option  value="1" selected>Resmileşmemiş Fatura</option>
+                                                        <option  value="0">İptal</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label" for="notu">Fatura Notu</label>
                                             <div class="input-group input-group-merge">
-                                                @Form::id('siparis_notu')->placeholder('Sipariş Notu')->textarea('siparis_notu',$detay->aciklama,['class'=>'form-control'])
+                                                @Form::id('notu')->placeholder('Fatura Notu')->textarea('notu','',['class'=>'form-control'])
                                             </div>
                                         </div>
 
@@ -131,48 +169,15 @@
                             <div class="col-lg-10 col-md-12 col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title">Fatura Detayları
-                                            @if($detay->odeme=="0")
-                                            <span class="badge rounded-pill badge-light-warning">Ödeme Yapılmadı</span>
-                                            @elseif($detay->odeme=="1")
-                                            <span class="badge rounded-pill badge-light-success">Ödeme Yapıldı olarak işaretlendi</span>
-                                            @endif
-                                        </h4>
-                                        @if($detay->durum=="2")
-                                            <span class="badge rounded-pill badge-light-success">Resmi Fatura <a href="{{URL::site()}}../Uploads/faturalar/{{ $detay->resmi_fatura_dosyasi }}" target="_blank" class="badge rounded-pill badge-light-info">Yüklenmiş Faturayı İndir</a></span>
-
-                                        @elseif($detay->durum=="1")
-                                            <span class="badge rounded-pill badge-light-warning">Resmileşmemiş</span>
-                                        @else
-                                            <span class="badge rounded-pill badge-light-danger">İptal Edilmiş</span>
-                                        @endif
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h5 class="card-title">Firma Detayları</h5>
-                                                    <p class="card-text mb-25"><strong>{{AyarModel::defaultAyarlar('firmaAdi')}}</strong></p>
-                                                    <p class="card-text mb-25">{{AyarModel::defaultAyarlar('firmaAdresi')}}</p>
-                                                    <p class="card-text mb-0">Vergi D.: {{AyarModel::defaultAyarlar('vergiDairesi')}}<br>Vergi No: {{AyarModel::defaultAyarlar('vergiNo')}}</p>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h5 class="card-title">Cari Detayları</h5>
-                                                    <p class="card-text mb-25"><strong>{{$detay->cariDetay->firma_adi}}</strong> <a href="{{URL::site('cari/detay/').$detay->cariDetay->id}}" class="btn btn-primary btn-sm" target="_blank"><i data-feather="external-link"></i> </a> </p>
-                                                    <p class="card-text mb-25">{{$detay->cariDetay->fatura_adresi}}</p>
-                                                    <p class="card-text mb-0">Vergi D.: {{$detay->cariDetay->vergi_dairesi}}<br>Vergi No: {{$detay->cariDetay->vergi_no}}</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <h4 class="card-title">Fatura Detayları</h4>
                                     </div>
                                     <hr>
                                         <div class="table-responsive">
                                             <table class="table table-hover table-responsive">
                                                 <thead>
                                                 <tr>
-                                                    <th>Ürün</th>
-                                                    <th>Not</th>
+                                                    <th>Ürün Adı</th>
+                                                    <th>Açıklama</th>
                                                     <th>Adet</th>
                                                     <th>Birim Fiyat</th>
                                                     <th>Kdv</th>
@@ -182,129 +187,63 @@
                                                 </thead>
                                                 <tbody id="addDataTable">
 
-                                                {[
-                                                $kdv10 = 0;
-                                                $kdv20 = 0;
-                                                $toplamTutar = 0;
-                                                $araToplamTutar = 0;
-                                                ]}
+                                                    <tr id="row0">
 
-                                                @foreach($faturaUrunleri as $furun)
+                                                        <td>
+                                                            <input style="min-width: 300px" type="text" name="urun[]" id="urun" class="form-control">
+                                                        </td>
 
-                                                    {[
-                                                        $araToplamTutar = $araToplamTutar+($furun->fiyat*$furun->miktar);
-                                                        $toplamTutar    = $toplamTutar+$furun->tutar;
-                                                    ]}
+                                                        <td style="min-width: 400px">
+                                                            <input type="text" name="aciklama[]" id="aciklama" class="form-control">
+                                                        </td>
 
-                                                    @if($furun->kdv=="10")
-                                                    {[
-                                                        $kdv10 = $kdv10+$furun->kdv_tutari;
-                                                    ]}
-                                                    @endif
+                                                        <td>
+                                                            <input type="number" name="miktar[]" id="miktar_0" value="1" class="form-control miktar">
+                                                        </td>
 
-                                                    @if($furun->kdv=="20")
-                                                    {[
-                                                        $kdv20 = $kdv20+$furun->kdv_tutari;
-                                                    ]}
-                                                    @endif
+                                                        <td>
+                                                            <div class="input-group"><input type="text" name="fiyat[]" id="fiyat_0" class="form-control fiyat"><span class="input-group-text">₺</span></div>
+                                                        </td>
 
-                                                <tr id="row-{{$furun->id}}">
-                                                    <td>
-                                                        <input type="hidden" name="id[]" id="id" value="{{$furun->id}}">
-                                                        {{$furun->urun_adi}}
-                                                    </td>
-                                                    <td style="min-width: 400px">
-                                                        <input type="text" name="aciklama[]" id="aciklama" value="{{$furun->aciklama}}" class="form-control">
-                                                    </td>
-                                                    <td>
-                                                        @if($detay->durum=="2")
-                                                        {{$furun->miktar}}
-                                                        @else
-                                                        <input type="number" name="miktar[]" id="miktar" value="{{$furun->miktar}}" class="form-control">
-                                                        @endif
+                                                        <td>
+                                                            <select name="kdv[]" id="kdv_0" class="kdv form-control">
+                                                                <option value="">--Seçiniz--</option>
+                                                                <option value="0">%0</option>
+                                                                <option value="10">%10</option>
+                                                                <option value="20" selected>%20</option>
+                                                            </select>
+                                                        </td>
 
-                                                    </td>
-                                                    <td>
-                                                        @if($detay->durum=="2")
-                                                        {{number_format($furun->fiyat,2)}}
-                                                        @else
-                                                        <div class="input-group">
-                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{number_format($furun->fiyat,2)}}" class="form-control">
-                                                            <span class="input-group-text">₺</span>
-                                                        </div>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <input type="text" name="tutar[]" readonly id="tutar_0" class="tutar form-control">
+                                                                <span class="input-group-text">₺</span>
+                                                            </div>
+                                                        </td>
 
-                                                        @endif
+                                                        <td>
+                                                            <a class="text-danger btn_remove" id="0" data-bs-toggle="tooltip" data-bs-title="Sil">
+                                                                <i data-feather="trash" class="me-50"></i>
+                                                            </a>
+                                                        </td>
 
-
-                                                    </td>
-                                                    <td>
-                                                        @if($detay->durum=="2")
-                                                        %{{$furun->kdv}}
-                                                        @else
-                                                        <select name="kdv[]" id="kdv" class="form-control">
-                                                            <option value="">--Seçiniz--</option>
-                                                            <option value="0" {{$furun->kdv == "0" ? 'selected' : ''}}>%0</option>
-                                                            <option value="10" {{$furun->kdv == "10" ? 'selected' : ''}}>%10</option>
-                                                            <option value="20" {{$furun->kdv == "20" ? 'selected' : ''}}>%20</option>
-                                                        </select>
-                                                        @endif
-
-                                                    </td>
-                                                    <td>
-
-                                                        @if($detay->durum=="2")
-                                                        {{number_format($furun->tutar,2)}}
-                                                        @else
-                                                        <div class="input-group">
-                                                            <input type="text" name="tutar[]" id="tutar" value="{{number_format($furun->tutar,2)}}" class="form-control">
-                                                            <span class="input-group-text">₺</span>
-                                                        </div>
-                                                        @endif
-
-                                                    </td>
-
-                                                    <td>
-                                                        <a class="text-danger" data-bs-toggle="tooltip" data-bs-title="Fatura Kalemini Sil" onclick="deleteAction('{{$furun->id}}','{{URL::site('faturalar/ajax')}}','faturaUrunSil')">
-                                                            <i data-feather="trash" class="me-50"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-
-                                                @endforeach
+                                                    </tr>
 
                                                 </tbody>
                                                 <tfoot>
                                                 <tr>
-                                                    <th colspan="4"></th>
+                                                    <th colspan="4"><button type="button" id="addRow" class="btn btn-primary"><i data-feather="plus"></i> Ekle</button></th>
 
-                                                    <th>Tanımlama</th>
                                                     <th></th>
                                                     <th></th>
+                                                    <th></th>
                                                 </tr>
+                                              
+                                                
                                                 <tr>
                                                     <td colspan="4"></td>
-                                                    <td>Ara Toplam</td>
-                                                    <td>{{$araToplamTutar}} ₺</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4"></td>
-                                                    <td>KDV %10</td>
-                                                    <td>{{$kdv10}} ₺</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4"></td>
-                                                    <td>KDV %20</td>
-                                                    <td>{{$kdv20}} ₺</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4"></td>
-                                                    <td>KDV Toplamı</td>
-                                                    <td>{{$kdv20+$kdv10}} ₺</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4"></td>
-                                                    <td>Genel Toplam</td>
-                                                    <td>{{$toplamTutar}} ₺</td>
+                                                    <td>Toplam</td>
+                                                    <td class="genel_toplam">0 ₺</td>
                                                 </tr>
                                                 </tfoot>
                                             </table>
@@ -316,130 +255,63 @@
                                     <div class="card-body">
                                         <div class="row">
 
-                                            <div class="col-sm-6">
-                                                <button type="submit" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> DEĞİŞİKLİKLERİ KAYDET</span></button>
+                                            <div class="col-sm-12">
+                                                <button type="submit" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> FATURAYI KAYDET</span></button>
                                             </div>
 
-                                            <div class="col-sm-6">
-                                                @if($detay->durum!="2")
-                                                <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="faturayaUrunEkle" class="dt-button create-new btn btn-success">
-                                                    <i data-feather="shopping-cart" class="me-50"></i>
-                                                    Fatura Kalemi EKle
-                                                </a>
-                                                @else
-                                                <small>Resmileştirilmiş faturaya yeni bir ürün kalemi ekleyemezsiniz. Bunun için yeni bir şipariş oluşturmalısınız </small><br><br>
-                                                @endif
-                                                <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="faturaOdendiYap" class="dt-button create-new btn btn-info">
-                                                    <i data-feather="plus" class="me-50"></i>
-                                                    Ödeme EKle
-                                                </a>
-                                                @if($detay->durum=="1")
-                                                <a  data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="faturaResmilestir"  href="#" class="dt-button create-new btn btn-warning"><span><i data-feather="airplay"></i> Faturayı Resmileştir</span></a>
-
-                                                </a>
-                                                @else
-                                                <a href="#" class="dt-button create-new btn btn-danger"><span><i data-feather="x-circle"></i> Faturayı İptal Et</span></a>
-                                                @endif
-
-                                                @if($detay->odeme=="0")
-                                                <a href="#" class="dt-button create-new btn btn-success"><span><i data-feather="save"></i> Faturayı Ödendi Yap</span></a>
-                                                @endif
-                                            </div>
+                                           
 
                                         </div>
                                     </div>
 
                                 </div>
 
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Faturaya Ait Muhasebe Kayıtları</h4>
-                                    </div>
-
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-responsive">
-                                            <thead>
-                                            <tr>
-                                                <th>Tarih</th>
-                                                <th>Kasa</th>
-                                                <th>İşlem</th>
-                                                <th>Açıklama</th>
-                                                <th>Tutar</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="addDataTable">
-
-                                            @foreach($maliIslemler as $mi)
-
-                                            <tr id="row-{{$mi->id}}">
-                                                <td>{{Date::convert($mi->tarih,'d.m.Y')}}</td>
-                                                <td>{{KasaModel::hesapAdi($mi->kasa)}}</td>
-                                                <td>{{$mi->islem=="t"?"<span class='text-success'>Tahsilat</span> ":"<span class='text-danger'>Ödeme Yapıldı</span>"}}</td>
-                                                <td>{{$mi->aciklama}}</td>
-                                                <td>{{$mi->gelir}}</td>
-                                            </tr>
-
-                                            @endforeach
-
-                                            </tbody>
-                                            <tfoot>
-                                            <tr>
-                                                <th colspan="3"></th>
-
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3"></td>
-                                                <td style="text-align: right">Toplam Tahsilat :</td>
-                                                <td>10000 ₺</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3"></td>
-                                                <td style="text-align: right">Toplam İade :</td>
-                                                <td>100 ₺</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3"></td>
-                                                <td style="text-align: right">Toplam Alınan :</td>
-                                                <td>900 ₺</td>
-                                            </tr>
-
-                                            </tfoot>
-                                        </table>
-                                    </div>
-
-
-                                </div>
 
                             </div>
                         </div>
 
                         @Form::close()
 
+                        <script>
+                        // Function to calculate and update the total
+                        function calculateTotal(rowId) {
+                            // Get values from respective input fields
+                            var miktar = parseFloat(document.getElementById('miktar_' + rowId).value);
+                            var fiyat = parseFloat(document.getElementById('fiyat_' + rowId).value);
+                            var kdv = parseFloat(document.getElementById('kdv_' + rowId).value);
+
+                            // Calculate the total amount
+                            var tutar = miktar * fiyat * (1 + kdv / 100);
+
+                            // Update the total amount field
+                            document.getElementById('tutar_' + rowId).value = tutar.toFixed(2);
+                        }
+
+                        // Add event listeners to inputs for automatic calculation
+                        document.addEventListener('input', function(event) {
+                            var element = event.target;
+                            // Check if the input element belongs to the rows
+                            if (element.classList.contains('miktar') || element.classList.contains('fiyat') || element.classList.contains('kdv')) {
+                                var rowId = element.closest('tr').id.substr(3); // Extract row id from 'rowX'
+                                calculateTotal(rowId);
+                            }
+                        });
+
+
+
+
+                    </script>
+
+                        
+
                     </div>
 
                 </div>
             </section>
 
+            
 
 
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-transparent">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h1 class="text-center mb-1" id="modalTitle">Fatura İşlemleri</h1>
-
-                <div class="fetched-data"></div>
-
-            </div>
         </div>
     </div>
 </div>

@@ -51,7 +51,6 @@
                                     <th>Telefon</th>
                                     <th>Firma Adı</th>
                                     <th>Veri D./No</th>
-                                    <th>Bakiye</th>
                                     <th>Notlar</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
@@ -66,7 +65,6 @@
                                     <td>{{$cari->gsm}}</td>
                                     <td>{{$cari->firma_adi}}</td>
                                     <td>{{$cari->vergi_dairesi}} / {{$cari->vergi_no}}</td>
-                                    <td>{{$cari->bakiye}}</td>
                                     <td>{{$cari->yonetim_notu}}</td>
                                     <td>
                                         @if($cari->durum=="1")

@@ -11,7 +11,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">Siparişler</a>
+                                <li class="breadcrumb-item"><a href="#">Teklifler</a>
                                 </li>
                             </ol>
                         </div>
@@ -28,7 +28,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="head-label">
-                                    <h4 class="card-title">Siparişler</h4>
+                                    <h4 class="card-title">Teklifler</h4>
                                 </div>
                                 <div class="dt-action-buttons text-end">
                                     <a href="{{URL::site('siparisler/form')}}" class="dt-button create-new btn btn-primary" tabindex="0" ><span><i data-feather="plus"></i>EKLE</span></a>
@@ -42,11 +42,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Müşteri</th>
-                                            <th>Ödeme Yöntemi</th>
-                                            <th>Ödeme Durumu</th>
                                             <th>Toplam Tutar</th>
-                                            <th>Sipariş Tarihi</th>
-                                            <th>Sipariş Durumu</th>
+                                            <th>Teklif Tarihi</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -55,17 +52,11 @@
                                         <tr id="row-{{$s->id}}">
                                             <td><a href="{{URL::site('siparisler/duzenle')}}/{{$s->id}}">{{$s->id}}</a></td>
                                             <td><a href="{{URL::site('cari/detay/')}}/{{$s->cari}}"><strong>{{CariModel::cariAdi($s->cari)}}</strong></a></td>
-                                            <td>{{AyarModel::odemeYontemiAdi($s->odeme_yontemi)}}</td>
-                                            <td>{{$s->odeme_durumu=="1"?"<span class='text text-success'>Ödendi</span>":"<span class='text text-danger'>Ödeme Bekliyor</span>"}}</td>
                                             <td>{{number_format($s->genel_toplam_tutari,2)}} ₺</td>
                                             <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
-                                            <td>{{AyarModel::durum($s->durum)}}</td>
+                                    
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-
-                                                    <a href="{{URL::site('faturalar/siparis')}}/{{$s->id}}" data-bs-toggle="tooltip" title="Siparişin Faturaları" class="btn btn-info btn-sm">
-                                                        <i data-feather="send" class="me-50"></i>
-                                                    </a>
                                                     <a href="{{URL::site('siparisler/duzenle')}}/{{$s->id}}" data-bs-toggle="tooltip" title="Düzenle" class="btn btn-warning btn-sm">
                                                         <i data-feather="edit-2" class="me-50"></i>
                                                     </a>

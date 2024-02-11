@@ -23,6 +23,98 @@ class Faturalar extends Controller
 
     }
 
+    public function faturaKaydet(){
+
+       /* echo "<pre>";
+
+        print_r(Post::all());
+        echo "</pre>";*/
+
+        /**FATURA OLUŞTUR**/
+        
+        $cariDetay = CariModel::detay(Post::musteri());
+
+        $faturaData = [
+            'tur'               =>"2",
+            'satis_turu'        =>"1",
+            'belge_no'          =>Post::belge_no(),
+            'fatura_adi'        =>$cariDetay->firma_adi,
+            'fatura_adresi'     =>$cariDetay->fatura_adresi,
+            'vergi_dairesi'     =>$cariDetay->vergi_dairesi,
+            'vergi_no'          =>$cariDetay->vergi_no,
+            'tedarikci'         =>"0",
+            'musteri'           =>$cariDetay->id,
+            'siparis_id'        =>"0",
+            'toplam_tutar'      =>0,
+            'kdv_toplami'       =>0,
+            'genel_toplam'      =>0,
+            'belge_tarihi'      =>Post::belge_tarihi(),
+            'vade_tarihi'       =>Post::vade_tarihi(),
+            'durum'             =>Post::durum(),
+            'odeme'             =>Post::odeme(),
+            'odeme_yontemi'     =>Post::odeme_yontemi(),
+            'aciklama'          =>Post::notu()
+        ];
+
+        $faturaOlustur = FaturaModel::ekle($faturaData);
+
+        if ($faturaOlustur){
+            $urun       = Post::urun();
+            $miktar     = Post::miktar();
+            $fiyat      = Post::fiyat();
+            $kdv        = Post::kdv();
+            $tutar      = Post::tutar();
+            $aciklama      = Post::aciklama();
+
+            for($fu=0;$fu<count(Post::urun());$fu++){
+
+                $urunToplam = $urunToplam+($fiyat[$fu]*$miktar[$fu]);
+
+                $kdvTutari = $kdvTutari+((($fiyat[$fu]*$kdv[$fu])/100)*$miktar[$fu]);
+
+
+                $urunKdvTutari = (($fiyat[$fu]*$kdv[$fu])/100)*$miktar[$fu];
+
+                $fUrun = [
+                    'fatura'                =>$faturaOlustur,
+                    'urun'                  =>"0",
+                    'siparis_urun_id'       =>"0",
+                    'eklenecek_gun_sayisi'  =>"0",
+                    'urun_adi'              =>$urun[$fu],
+                    'aciklama'              =>$aciklama[$fu],
+                    'miktar'                =>$miktar[$fu],
+                    'fiyat'                 =>$fiyat[$fu],
+                    'kdv'                   =>$kdv[$fu],
+                    'kdv_tutari'            =>$urunKdvTutari,
+                    'tutar'                 =>$urunKdvTutari+($fiyat[$fu]*$miktar[$fu]),
+                ];
+
+                $faturaUrunEkle = FaturaModel::urunEkle($fUrun);
+
+            }
+
+            $fData = [
+                'id'  => $faturaOlustur,
+                'toplam_tutar'  => $urunToplam,
+                'kdv_toplami'   => $kdvTutari,
+                'genel_toplam'  => $urunToplam+$kdvTutari
+            ];
+            $faturaTutarGuncelle = FaturaModel::urunDuzenlemeSonrasiGuncelleme($fData);
+
+        } 
+
+        if($faturaOlustur){
+            AyarModel::basarili("Fatura Oluşturuldu","Fatura oluşturmak işlemi başarı ile gerçekleştirildi",URL::site('faturalar/duzenle/'.$faturaOlustur));
+        }else{
+            AyarModel::basarisiz("Fatura Oluşturuma Hatası","Fatura oluşturmak işlemi GERÇEKLEŞTİRİLEMEDİ",URL::site('faturalar'));
+        }
+
+        
+
+        /**FATURA OLUŞTUR**/
+
+    }
+
     public function ajax():void
     {
         $user       = User::data();
@@ -334,6 +426,19 @@ class Faturalar extends Controller
             ];
 
         }
+
+        View::urunler($urunler);
+        View::musteriler($musteriler);
+        View::odemeYontemleri($odemeYontemi);
+
+    }
+
+    public function olustur(){
+
+        $user = User::data();
+        $musteriler = CariModel::tumListe();
+        $odemeYontemi = AyarModel::odemeYontemleri();
+        $urunler = UrunModel::tumListe();
 
         View::urunler($urunler);
         View::musteriler($musteriler);

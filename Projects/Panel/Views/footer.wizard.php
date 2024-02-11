@@ -3,7 +3,7 @@
 
     <!-- BEGIN: Footer-->
     <footer class="footer footer-light">
-        <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2022<a class="ms-25" href="https://www.bursayazilim.com" target="_blank">Bursa Yazılım</a><span class="d-none d-sm-inline-block">, Tüm Hakları Saklıdır</span></span><span class="float-md-end d-none d-md-block">Yazılım Gücü<i data-feather="heart" data-toogle="tooltip" title="Yürekten geliyor"></i></span></p>
+        <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; {{date('Y')}}<a class="ms-25" href="https://www.bursayazilim.com" target="_blank">Bursa Yazılım</a><span class="d-none d-sm-inline-block">, Tüm Hakları Saklıdır</span></span><span class="float-md-end d-none d-md-block">Yazılım Gücü<i data-feather="heart" data-toogle="tooltip" title="Yürekten geliyor"></i></span></p>
     </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
@@ -42,6 +42,7 @@
 <script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
 
 
+@if(CURRENT_CONTROLLER=='Rapor')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <script type="text/javascript">
@@ -133,7 +134,7 @@
         
     </script>
 
-
+@endif
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -411,3 +412,85 @@ $('#widget').draggable();
     }
 }); 
 </script>
+<script type="text/javascript">
+                $(document).ready(function(){
+                var i=1;
+                $('#addRow').click(function(){
+
+                    formHtml = '<tr id="row'+i+'">';
+                    formHtml += '<td><input style="min-width: 300px" type="text" name="urun[]" id="urun" class="form-control">';
+      
+                    formHtml += '<td style="min-width: 400px"><input type="text" name="aciklama[]" id="aciklama" class="form-control"></td>';
+             
+                    formHtml += '<td><input type="number" name="miktar[]" id="miktar_'+i+'" value="1" class="miktar form-control"></td>';
+
+                    formHtml += '<td><div class="input-group"><input type="text" name="fiyat[]" id="fiyat_'+i+'" class="fiyat form-control"><span class="input-group-text">₺</span></div></td>';
+                    formHtml += '<td><select name="kdv[]" id="kdv_'+i+'" class="kdv form-control"><option value="">--Seçiniz--</option><option value="0">%0</option><option value="10">%10</option><option value="20" selected>%20</option></select></td>';
+                    formHtml += '<td><div class="input-group"><input type="text" name="tutar[]" readonly id="tutar_'+i+'" class="tutar form-control"><span class="input-group-text">₺</span></div></td>';
+                    formHtml += '<td><a name="remove" id="'+i+'" class="text-danger btn_remove"><i data-feather="trash" class="me-50"></i></a></td>';
+
+                    formHtml += '</tr>';
+
+                    i++;
+                    $('#addDataTable').append(formHtml);
+                    feather.replace();
+
+                    // Tüm tr satırlarını seç
+                    var satirlar = document.querySelectorAll("#addDataTable tr");
+
+                    // Her satırdaki input alanlarını bul
+                    satirlar.forEach(function(satir, index) {
+                        var miktarInput = satir.querySelector(".miktar");
+                        var fiyatInput = satir.querySelector(".fiyat");
+                        var tutarInput = satir.querySelector(".tutar");
+
+                        // Her miktar veya fiyat değiştiğinde hesaplama yap
+                        miktarInput.addEventListener("input", hesaplaTutar);
+                        fiyatInput.addEventListener("input", hesaplaTutar);
+
+                        function hesaplaTutar() {
+                            var miktar = miktarInput.value;
+                            var fiyat = fiyatInput.value;
+                            var kdv = satir.querySelector(".kdv").value;
+
+                            // Hesaplama yap
+                            var tutar = (miktar * fiyat) * (1 + kdv / 100);
+                            
+                            // Tutar alanını güncelle
+                            tutarInput.value = tutar.toFixed(2);
+
+                            // Genel toplamı hesapla
+                            genelToplamHesapla();
+                        }
+                    });
+
+                });
+
+                $(document).on('click', '.btn_remove', function(){
+                    var button_id = $(this).attr("id");
+                    $('#row'+button_id+'').remove();
+                });
+                $(document).on('click', '.btn_addText', function(){
+                    var button_id = $(this).attr("id");
+                    $('#uyariText'+button_id+'').html('<input type="text" name="uyari[]" class="form-control">');
+                });
+                
+            });
+
+
+            
+                        
+
+                        // Genel toplamı hesapla
+                        function genelToplamHesapla() {
+                            var tutarlar = document.querySelectorAll(".tutar");
+                            var genelToplam = 0;
+                            tutarlar.forEach(function(tutarInput) {
+                                genelToplam += parseFloat(tutarInput.value);
+                            });
+
+                            // Genel toplam alanını güncelle
+                            document.querySelector(".genel_toplam").textContent = genelToplam.toFixed(2) + " ₺";
+                        }
+            
+            </script>

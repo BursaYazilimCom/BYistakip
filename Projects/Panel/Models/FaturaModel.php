@@ -88,8 +88,7 @@ class InternalFaturaModel extends Model
 
     }
 
-    public function faturaTekrarKonrolu($baslangic,$bitis,$urun)
-    {
+    static function faturaTekrarKonrolu($baslangic,$bitis,$urun){
         $veri = DB::where('donem_baslangic_tarihi',$baslangic)
             ->where('donem_bitis_tarihi',$bitis)
             ->where('siparis_urun_id',$urun)->orderby('id','DESC')->limit(1)->fatura_urunleri();
@@ -103,8 +102,7 @@ class InternalFaturaModel extends Model
         return $data;
     }
 
-    static function ekle($data)
-    {
+    static function ekle($data){
 
         $ekle = DB::insert('faturalar',[
             'tur'               =>$data['tur'],
@@ -132,7 +130,7 @@ class InternalFaturaModel extends Model
 
         //AyarModel::sqlHataEkle(DB::stringQuery());
 
-        //echo DB::stringQuery();
+        echo DB::stringQuery();
 
         return $eklenenId;
 

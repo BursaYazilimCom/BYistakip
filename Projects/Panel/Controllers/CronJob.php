@@ -278,7 +278,7 @@ class CronJob extends Controller
                             'kdv_toplami'       =>AyarModel::tlCevir($kdvToplami,$su->para_birimi),
                             'genel_toplam'      =>AyarModel::tlCevir($toplamTutar,$su->para_birimi),
                             'belge_tarihi'      =>date("Y-m-d"),
-                            'vade_tarihi'       =>$donemBitisTarihi,
+                            'vade_tarihi'       =>date("Y-m-d", strtotime("+7 days", strtotime(date("Y-m-d")))),
                             'durum'             =>"1",
                             'odeme'             =>"0",
                             'odeme_yontemi'     =>$siparis->odeme_yontemi,
