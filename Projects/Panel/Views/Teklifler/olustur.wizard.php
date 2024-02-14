@@ -31,7 +31,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-lg-2 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-info">
                                     <div class="card-header">
                                         <h4 class="card-title">Teklif Detayları</h4>
                                     </div>
@@ -112,12 +112,12 @@
                             </div>
 
                             <div class="col-lg-10 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-info">
                                     <div class="card-header">
                                         <h4 class="card-title">Teklif Detayları</h4>
                                     </div>
                                     <hr>
-                                        <div class="table-responsive">
+                                        <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                                             <table class="table table-hover table-responsive">
                                                 <thead>
                                                 <tr>

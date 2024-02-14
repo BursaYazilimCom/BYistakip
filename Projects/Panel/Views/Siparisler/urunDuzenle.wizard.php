@@ -34,7 +34,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-md-6 col-12">
-                                <div class="card">
+                                <div class="card brdt-danger">
                                     <div class="card-header">
                                         <h4 class="card-title">{{$urunDetay->urun_adi}} Detayları (#{{$urunDetay->id}})</h4>
                                     </div>
@@ -211,7 +211,7 @@
 
                             </div>
                             <div class="col-md-6 col-12">
-                                <div class="card">
+                                <div class="card brdt-danger">
                                     <div class="card-header">
                                         <h4 class="card-title">{{$urunDetay->urun_adi}}</h4>
                                     </div>

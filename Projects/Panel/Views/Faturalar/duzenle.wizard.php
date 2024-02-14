@@ -32,7 +32,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-lg-2 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-pink">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Detayları</h4>
                                     </div>
@@ -112,7 +112,7 @@
                             </div>
 
                             <div class="col-lg-10 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-pink">
                                     <div class="card-header">
                                         <h4 class="card-title">Fatura Detayları
                                             @if($detay->odeme=="0")

@@ -19,7 +19,7 @@
                                 </style>
                               
                                         <div class="col-xl-4 col-md-4 col-sm-6">
-                                            <div class="card text-center">
+                                            <div class="card text-center brdt-success">
                                                 <div class="card-body">
                                                     <div class="avatar bg-light-success p-50 mb-1">
                                                         <div class="avatar-content">
@@ -32,7 +32,7 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4 col-sm-6">
-                                            <div class="card text-center">
+                                            <div class="card text-center brdt-danger">
                                                 <div class="card-body">
                                                     <div class="avatar bg-light-danger p-50 mb-1">
                                                         <div class="avatar-content">
@@ -45,7 +45,7 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4 col-sm-6">
-                                            <div class="card text-center">
+                                            <div class="card text-center brdt-info">
                                                 <div class="card-body">
                                                     <div class="avatar bg-light-info p-50 mb-1">
                                                         <div class="avatar-content">
@@ -65,67 +65,62 @@
 
                         <!-- Statistics Card -->
                         <div class="col-xl-6 col-md-6 col-12">
-                            <div class="card card-statistics">
-                                <div class="card-header">
-                                    <h4 class="card-title">İstatistikler</h4>
-                                </div>
-                                <div class="card-body statistics-body">
-                                    <div class="row">
-                                        <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                                            <div class="d-flex flex-row">
-                                                <div class="avatar bg-light-primary me-2">
-                                                    <div class="avatar-content">
-                                                        <i data-feather="trending-up" class="avatar-icon"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="my-auto">
-                                                    <h4 class="fw-bolder mb-0">{{$siparisurunleri}} Adet</h4>
-                                                    <p class="card-text font-small-3 mb-0">Satış Yapılan Ürün</p>
+                            <div class="row">
+                                <div class="col-xl-3 col-md-3 col-sm-6">
+                                    <div class="card text-center brdt-primary">
+                                        <div class="card-body">
+                                            <div class="avatar bg-light-primary p-50 mb-1">
+                                                <div class="avatar-content">
+                                                <i data-feather="trending-up" class="avatar-icon"></i>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                                            <div class="d-flex flex-row">
-                                                <div class="avatar bg-light-info me-2">
-                                                    <div class="avatar-content">
-                                                        <i data-feather="user" class="avatar-icon"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="my-auto">
-                                                    <h4 class="fw-bolder mb-0">{{$musteriSayisi}} Adet</h4>
-                                                    <p class="card-text font-small-3 mb-0">Müşteri</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
-                                            <div class="d-flex flex-row">
-                                                <div class="avatar bg-light-danger me-2">
-                                                    <div class="avatar-content">
-                                                        <i data-feather="box" class="avatar-icon"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="my-auto">
-                                                    <h4 class="fw-bolder mb-0">{{$projeSayisi}} Adet</h4>
-                                                    <p class="card-text font-small-3 mb-0">Proje</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-sm-6 col-12">
-                                            <div class="d-flex flex-row">
-                                                <div class="avatar bg-light-success me-2">
-                                                    <div class="avatar-content">
-                                                        <i data-feather="dollar-sign" class="avatar-icon"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="my-auto">
-                                                    <h4 class="fw-bolder mb-0">{{$odenmeyenFaturaSayisi}} Adet</h4>
-                                                    <p class="card-text font-small-3 mb-0">Açık Fatura</p>
-                                                </div>
-                                            </div>
+                                            <h2 class="fw-bolder">{{$siparisurunleri}} Adet</h2>
+                                            <p class="card-text">Satılan Ürün</p>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xl-3 col-md-3 col-sm-6">
+                                    <div class="card text-center brdt-success">
+                                        <div class="card-body">
+                                            <div class="avatar bg-light-success p-50 mb-1">
+                                                <div class="avatar-content">
+                                                <i data-feather="user" class="avatar-icon"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder">{{$musteriSayisi}} Adet</h2>
+                                            <p class="card-text">Müşteri</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3 col-sm-6">
+                                    <div class="card text-center brdt-info">
+                                        <div class="card-body">
+                                            <div class="avatar bg-light-info p-50 mb-1">
+                                                <div class="avatar-content">
+                                                <i data-feather="box" class="avatar-icon"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder">{{$projeSayisi}} Adet</h2>
+                                            <p class="card-text">Proje</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3 col-sm-6">
+                                    <div class="card text-center brdt-danger">
+                                        <div class="card-body">
+                                            <div class="avatar bg-light-danger p-50 mb-1">
+                                                <div class="avatar-content">
+                                                <i data-feather="dollar-sign" class="avatar-icon"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder">{{$odenmeyenFaturaSayisi}} Adet</h2>
+                                            <p class="card-text">Ödenmemiş Fatura</p>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+                           
                         </div>
                         <!--/ Statistics Card -->
                     </div>
@@ -133,9 +128,9 @@
                     <div class="row match-height">
                         <!-- Company Table Card -->
                         <div class="col-lg-6 col-12">
-                            <div class="card card-company-table">
+                            <div class="card card-company-table brdt-success">
                                 <div class="card-body p-0">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive-sm table-responsive-md table-responsive-l">
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -190,7 +185,7 @@
 
                         <!-- Transaction Card -->
                         <div class="col-lg-3 col-md-6 col-12">
-                            <div class="card card-user-timeline">
+                            <div class="card card-user-timeline brdt-warning">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
                                         <i data-feather="list" class="user-timeline-title-icon"></i>
@@ -222,7 +217,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 col-12">
-                            <div class="card card-transaction">
+                            <div class="card card-transaction brdt-pink">
                                 <div class="card-header">
                                     <h4 class="card-title">Kasa Hesapları</h4>
                                 </div>

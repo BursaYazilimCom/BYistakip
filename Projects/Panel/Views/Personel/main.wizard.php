@@ -32,7 +32,7 @@
             <!-- Hoverable rows start -->
             <div class="row" id="table-hover-row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card brdt-primary">
                         <div class="card-header">
                             <h4 class="card-title">Kullanıcılar</h4>
                         </div>
@@ -42,7 +42,7 @@
                             </p>
                             {{ Redirect::select('bilgi',true) }}
                         </div>
-                        <div class="table-responsive">
+                        <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                             <table class="table table-hover  table-bordered">
                                 <thead>
                                 <tr>

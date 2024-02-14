@@ -11,7 +11,7 @@
                     <!-- Register basic -->
                     <div class="card mb-0">
                         <div class="card-body">
-                            <a href="index.html" class="brand-logo">
+                            <a href="/" class="brand-logo">
                                 <img src="images/logo/by_logo.png">
                             </a>
 

@@ -27,7 +27,7 @@
                 <div class="row">
                     <!-- Invoice repeater -->
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card brdt-navy">
                             <div class="card-header">
                                 <div class="head-label">
                                     <h4 class="card-title">Sipariş Durumları</h4>
@@ -38,8 +38,8 @@
                             </div>
                             <div class="card-body">
                                 {{ Redirect::select('bilgi',true) }}
-                                <div class="table-responsive">
-                                    <table class="table table-hover  table-bordered">
+                                <div class="table-responsive table-responsive-sm table-responsive-md table-responsive-xl">
+                                    <table class="table table-hover  table-bordered ">
                                         <thead>
                                         <tr>
                                             <th>#</th>

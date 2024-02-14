@@ -51,7 +51,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-md-6 col-12">
-                                <div class="card">
+                                <div class="card brdt-navy">
                                     <div class="card-header">
                                         <h4 class="card-title">Tedarikçi Bilgileri</h4>
                                     </div>

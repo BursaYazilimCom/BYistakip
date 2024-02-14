@@ -50,7 +50,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-md-3 col-12">
-                                <div class="card">
+                                <div class="card brdt-danger">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Detayları</h4>
                                     </div>
@@ -136,13 +136,13 @@
                             </div>
 
                             <div class="col-md-9 col-12">
-                                <div class="card">
+                                <div class="card brdt-danger">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Ürünleri</h4>
                                         <a class="dt-button create-new btn btn-primary" tabindex="0" data-bs-toggle="modal" data-bs-target="#modals-add"><span><i data-feather="plus"></i>ÜRÜN EKLE</span></a>
                                     </div>
                                         <div class="card-body">
-                                            <div class="table-responsive">
+                                            <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>

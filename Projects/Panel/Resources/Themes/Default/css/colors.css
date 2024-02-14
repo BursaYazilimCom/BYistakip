@@ -1807,3 +1807,30 @@ input:focus ~ .bg-danger {
 .btn-gradient-danger:focus {
   background-image: linear-gradient(47deg, #e42728, #ea5455);
   background-repeat: repeat; }
+
+  .brdt-danger{
+    border-top: solid 2px #e42728;
+  }
+  .brdt-info{
+    border-top: solid 2px #00a1b5;
+  }
+
+  .brdt-primary{
+    border-top: solid 2px #4839eb;
+  }
+  .brdt-warning{
+    border-top: solid 2px #ff8510;
+  }
+  .brdt-success{
+    border-top: solid 2px #1f9d57;
+  }
+  .brdt-navy{
+    border-top: solid 2px #09123c;
+  }
+
+  .brdt-pink{
+    border-top: solid 2px #f304c0;
+  } 
+  .brdt-grey{
+    border-top: solid 2px #696d71;
+  }

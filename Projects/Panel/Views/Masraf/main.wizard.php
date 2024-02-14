@@ -47,7 +47,7 @@
 
                     @foreach($masrafKalemleri['anaKalemler'] as $anaKalem)
                         <div class="col-6">
-                            <div class="card">
+                            <div class="card brdt-danger">
                                 <div class="card-header">
                                     <div>
                                         <h4 class="card-title">{{$anaKalem->adi}}</h4>

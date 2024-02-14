@@ -2,9 +2,9 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-    <footer class="footer footer-light">
+    <!--<footer class="footer footer-light">
         <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; {{date('Y')}}<a class="ms-25" href="https://www.bursayazilim.com" target="_blank">Bursa Yazılım</a><span class="d-none d-sm-inline-block">, Tüm Hakları Saklıdır</span></span><span class="float-md-end d-none d-md-block">Yazılım Gücü<i data-feather="heart" data-toogle="tooltip" title="Yürekten geliyor"></i></span></p>
-    </footer>
+    </footer>-->
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
 

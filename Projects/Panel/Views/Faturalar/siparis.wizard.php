@@ -25,7 +25,7 @@
                 <div class="row">
                     <!-- Invoice repeater -->
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card brdt-pink">
                             <div class="card-header">
                                 <div class="head-label">
                                     <h4 class="card-title">Faturalar</h4>
@@ -42,7 +42,7 @@
 
                                 <section class="invoice-list-wrapper">
                                     <div class="card">
-                                        <div class="card-datatable table-responsive">
+                                        <div class="card-datatable table-responsive table-responsive-sm table-responsive-md table-responsive-xl">
                                             <div id="DataTables_Table_0_wrapper"
                                                  class="dataTables_wrapper dt-bootstrap5 no-footer">
 

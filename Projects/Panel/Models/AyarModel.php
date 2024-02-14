@@ -3,19 +3,19 @@
 class InternalAyarModel extends Model
 {
 
-    function basarili($baslik,$aciklama,$url){
+    static function basarili($baslik,$aciklama,$url){
 
        return Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">'.$baslik.'</h4><div class="alert-body">'.$aciklama.'</div></div>'])->action($url);
     }
 
-    function basarisiz($baslik,$aciklama,$url){
+    static function basarisiz($baslik,$aciklama,$url){
 
        return  Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">'.$baslik.'</h4><div class="alert-body">'.$aciklama.'</div></div>'])->action($url);
 
     }
 
 
-    function bilgilendir($baslik,$aciklama,$url){
+    static function bilgilendir($baslik,$aciklama,$url){
 
         return  Redirect::insert(['bilgi'=>'<div class="alert alert-warning" role="alert"><h4 class="alert-heading">'.$baslik.'</h4><div class="alert-body">'.$aciklama.'</div></div>'])->action($url);
  
@@ -58,16 +58,21 @@ class InternalAyarModel extends Model
 
     static function defaultAyarListe(){
 
-        $liste = DB::where('duzenleme_izni','1')->orderby('sira','ASC')->limit(1000)->ayarlar()->result();
+        $liste = DB::where('duzenleme_izni','1')->orderby('sira','ASC')->ayarlar()->result();
         return $liste;
 
     }
+    
 
     static function sqlAyarGetir($sql){
 
         if($sql=="siparis_durumlari"){
 
             $veri = DB::select('id','adi as baslik',)->orderby('sira','ASC')->siparis_durumlari()->result();
+        }
+        if($sql=="kasa_hesaplari"){
+
+            $veri = DB::select('id','adi as baslik',)->orderby('adi','ASC')->kasa_hesaplari()->result();
         }
         return $veri;
     }

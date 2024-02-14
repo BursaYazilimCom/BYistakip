@@ -33,7 +33,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-md-3 col-12">
-                                <div class="card">
+                                <div class="card brdt-danger">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Detayları (#{{$detay->id}})</h4>
                                     </div>
@@ -172,7 +172,7 @@
                             </div>
 
                             <div class="col-md-9 col-12">
-                                <div class="card">
+                                <div class="card brdt-danger">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Ürünleri <small>Bu listedeki fiyatlar KDV dahil fiyatlardır. Fiyat değişikliği için faturayı düzenleyin</small></h4>
                                         <div class="btn-group" role="group" aria-label="Basic example">
@@ -182,7 +182,7 @@
                                         </div>
                                     </div>
                                         <div class="card-body">
-                                            <div class="table-responsive">
+                                            <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>

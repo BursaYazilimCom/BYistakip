@@ -84,7 +84,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-md-6 col-12">
-                                <div class="card">
+                                <div class="card brdt-info">
                                     <div class="card-header">
                                         <h4 class="card-title">Proje Bilgileri</h4>
                                     </div>
@@ -149,7 +149,7 @@
                             </div>
 
                             <div class="col-md-6 col-12">
-                                <div class="card">
+                                <div class="card brdt-info">
                                     <div class="card-header">
                                         <h4 class="card-title">Detaylar</h4>
                                     </div>

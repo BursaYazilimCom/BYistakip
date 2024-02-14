@@ -10,7 +10,7 @@
                     <!-- User Sidebar -->
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <!-- User Card -->
-                        <div class="card">
+                        <div class="card brdt-success">
                             <div class="card-body">
                                 <div class="user-avatar-section">
                                     <div class="d-flex align-items-center flex-column">

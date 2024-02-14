@@ -115,7 +115,9 @@ body.dark-layout {
 
 .dark-layout .header-navbar .navbar-container .nav .nav-item .nav-link {
   color: #d0d2d6;
-  background-color: transparent; }
+  background-color: transparent; 
+  background-color: #161d31;
+}
 
 .dark-layout .header-navbar .navbar-container .nav .nav-item .nav-link i,
 .dark-layout .header-navbar .navbar-container .nav .nav-item .nav-link svg {

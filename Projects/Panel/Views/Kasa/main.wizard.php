@@ -43,7 +43,7 @@
                         {{ Redirect::select('bilgi',true) }}
 
                         <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card card-transaction">
+                            <div class="card card-transaction brdt-pink">
                                 <div class="card-header">
                                     <h4 class="card-title">Kasa Hesapları</h4>
                                 </div>
@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card card-transaction">
+                            <div class="card card-transaction brdt-success">
                                 <div class="card-header">
                                     <h4 class="card-title">Banka Hesapları</h4>
                                 </div>
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card card-transaction">
+                            <div class="card card-transaction brdt-danger">
                                 <div class="card-header">
                                     <h4 class="card-title">Kredi Kartı Hesapları</h4>
                                 </div>
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card card-transaction">
+                            <div class="card card-transaction brdt-navy">
                                 <div class="card-header">
                                     <h4 class="card-title">Pos Hesapları</h4>
                                 </div>
@@ -153,7 +153,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card card-transaction">
+                            <div class="card card-transaction brdt-info">
                                 <div class="card-header">
                                     <h4 class="card-title">Veresiye Hesapları</h4>
                                 </div>
@@ -180,7 +180,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card card-transaction">
+                            <div class="card card-transaction brdt-primary">
                                 <div class="card-header">
                                     <h4 class="card-title">Diğer Hesaplar</h4>
                                 </div>

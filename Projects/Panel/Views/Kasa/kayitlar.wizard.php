@@ -37,7 +37,7 @@
             <!-- Hoverable rows start -->
             <div class="row" id="table-hover-row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card brdt-pink">
                         <div class="card-header">
                             <h4 class="card-title">{{$detay->adi}} Kasası Kayıtları</h4>
                         </div>
@@ -47,7 +47,7 @@
                             </p>
                             {{ Redirect::select('bilgi',true) }}
                         </div>
-                        <div class="table-responsive">
+                        <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                             <table class="table table-hover table-bordered">
                                 <tr>
                                     <th>Tarih</th>
