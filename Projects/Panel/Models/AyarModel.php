@@ -598,6 +598,22 @@ class InternalAyarModel extends Model
 
     }
 
+    static function odemeDurumu($id)
+    {
+        $durumlar = [
+            '0'=>'Ödeme Bekleniyor',
+            '1'=>'Ödendi',
+            '2'=>'Kısmi Ödeme Alındı'
+        ];
+        $renk = [
+            '0'=>'danger',
+            '1'=>'success',
+            '2'=>'warning'
+        ];
+
+        return ['renk'=>$renk[$id],'durum'=>$durumlar[$id]];
+    }
+
     /****************/
 
 

@@ -88,6 +88,7 @@
                                                         <option value="">--Seçiniz--</option>
                                                         <option  value="0" {{$detay->odeme_durumu=="0"?'selected':''}}>Ödeme Bekleniyor</option>
                                                         <option  value="1" {{$detay->odeme_durumu=="1"?'selected':''}}>Ödeme Yapıldı</option>
+                                                        <option  value="2" {{$detay->odeme_durumu=="2"?'selected':''}}>Kısmi Ödeme Alındı</option>
 
                                                     </select>
                                                 </div>

@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 use User,Method,DB,Post,Get,Date,XML,CURL,Json,Time,Email,URL,Masterpage;
-use AyarModel,PersonelModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalCariModel as CariModel,UrunModel;
+use AyarModel,PersonelModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalCariModel as CariModel,UrunModel,InternalSmsModel as SmsModel;
 
 class CronJob extends Controller
 {
@@ -60,7 +60,7 @@ class CronJob extends Controller
                 ->to($uyeBilgi->email, 'To')
                 ->bcc(AyarModel::defaultAyarlar('iletisimEposta'), 'To 1')
                 ->subject($pu->urun_adi.' '.$urunTipi.' Ürününüzün son kullanım tarihi yaklaşıyor')
-                ->template('general', [
+                ->template('by', [
                     'name'          => $uyeBilgi->adi_soyadi,
                     'subject'       => $pu->urun_adi.' '.$urunTipi.' Ürününüzün son kullanım tarihi yaklaşıyor',
                     'content'       => $pu->urun_adi.' '.$urunTipi.' Ürününüz '.Date::convert($pu->bitis_tarihi,'{dayNumber0}.{monthNumber0}.{year}').' tarihinde ödemesi yapılmadığı taktirde kullanım süresi dolacaktır.<br>Bu süre geçtikten sonra ürününüzün durumuna göre kurtarma ücreti yansıtılabilir. <br>Aşağıdaki bulunan linkten Panelinize girerek gerekli süre uzatma işlemlerini gerçekleştirebilirsiniz<br><br> Eğer ödeme yaptıysanız lütfen dikkate almayınız. ',
@@ -108,6 +108,19 @@ class CronJob extends Controller
                 'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
                 'telefon' => AyarModel::defaultAyarlar('firmaTel'),
             ])->send();
+
+            //SMS GÖNDERİMİ
+            if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+                $smsData = [
+                    'mesaj'=>Date::convert($fatura->vade_tarihi,'{dayNumber0}.{monthNumber0}.{year}').' son ödeme tarihli faturanız bulunmaktadır.Ürünlerinizin yada projelerinizin kesintiye uğramaması için ödeme yapmanız gerekmektedir. Ödeme yaptıysanız uyarıyı dikkate almayınız.',
+                    'numara'=>$cariBilgi->gsm
+                ];
+
+                $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+            }
+            //SMS GÖNDERİMİ
             
 
         }

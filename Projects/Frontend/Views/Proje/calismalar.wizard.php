@@ -28,6 +28,8 @@
     <!--begin::Post-->
     <div class="content flex-row-fluid" id="kt_content">
         <!--begin::Invoice-->
+
+        
         <div class="card">
             <!--begin::Body-->
             <div class="card-header align-items-center border-0 mt-5">
@@ -40,19 +42,21 @@
                 <!--begin::Layout-->
                 <div class="row">
                     <!--begin::Content-->
+                    
                     <div class="col-xl-12">
 
-                            <table class="table table-borderless">
-                            <!--begin::Item-->
-                                {[
+                            {[
                                 $tarih = "";
                                 $i = 1;
                                 ]}
 
                             @foreach($calismalar['liste'] as $yol)
+
                                 {[
 
                                 if($yol->tarih != $tarih){
+
+                                    echo "</div>";
 
                                 $tarih = $yol->tarih;
 
@@ -60,43 +64,56 @@
 
                                 }
 
-
                                 if($i==1){
 
                                 ]}
 
-                                <tr>
-                                    <th colspan="2" style="border-bottom: solid 1px #7BB8F5; padding-left: 10px" class="bg-primary"><h3>{{Date::convert($yol->tarih,"d.m.Y")}}</h3></th>
-                                </tr>
-
+                               
+                                <div class="my-3 p-4 bg-body rounded shadow-sm">
+                                <h6 class="border-bottom pb-2 mb-0">{{Date::convert($yol->tarih,"d.m.Y")}}</h6><br>
 
                                 {[ } ]}
 
-                                <tr>
-                                    <td style="border-left: solid 1px #7BB8F5">
-                                        @if($yol->tur=="1")
-                                        <span class="badge badge-light-info rounded-pill fs-7 fw-boldest">Değişiklik</span>
-                                        @elseif($yol->tur=="2")
-                                        <span class="badge badge-light-danger rounded-pill fs-7 fw-boldest">Hata Çözümü</span>
-                                        @elseif($yol->tur=="3")
-                                        <span class="badge badge-light-success rounded-pill fs-7 fw-boldest">Yenilik</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div class="ps-1 mb-1">
-                                            <div class="text-black">{{$yol->islem}}</div>
+                                        <div class="d-flex text-body-secondary p-2 border-bottom" data-toogle="tooltips" 
+                                                @if($yol->tur=="1")
+                                                title="Değişiklik" 
+                                                style="background-color: #E4E4FD; border-bottom: 1px solid #d4d4f3 !important;"
+                                                
+                                                @elseif($yol->tur=="2")
+                                                title="Hata Çözümü" 
+                                                style="background-color: #FFE2D0; border-bottom: 1px solid #FFA07A !important;"
+                                               
+                                                @elseif($yol->tur=="3")
+                                                title="Yenilik" 
+                                                style="background-color: #DDFFDD; border-bottom: 1px solid #c9f3c9  !important;"
+                                            
+                                                @endif
+                                        style="background-color: antiquewhite;"
+                                        >
+                                           
+                                            <p class="p-1 mb-0 lh-sm">
+                                                @if($yol->tur=="1")
+                                                <span class="badge badge-info"><i style="color:#fff" class="fa-solid fa-repeat"></i></span>
+                                                @elseif($yol->tur=="2")
+                                                <span class="badge badge-danger"><i style="color:#fff" class="fa-solid fa-circle-exclamation"></i></span>
+                                                @elseif($yol->tur=="3")
+                                                <span class="badge badge-success"><i style="color:#fff" class="fa-solid fa-plus"></i></span>
+                                                @endif
+
+                                                &nbsp;&nbsp; {{$yol->islem}}
+                                                @if($yol->link!="")
+                                               <a style="background-color: dimgrey; padding: 4px; border-radius: 10px; color: #fff;font-size: 11px;" target="_blank" href="{{$yol->link}}">İncele</a>
+                                               @endif
+                                            </p>
                                         </div>
 
-                                    </td>
 
-                                </tr>
-
-
+                                  
 
                             {[ $i++; ]}
                             @endforeach
 
-                            </table>
+                           
                             <div class="rounded border border-primary bg-light-primary border-dashed px-6 py-5">
                                 <a href="#" class="link-primary fw-bolder fs-6 me-1">Önemli Not</a><br>
                                 <span class="text-gray-800 fw-bold fs-6">Bu sayfa; Projenizin ilerleyişi için detaylı bilgilendirme ve gelişmelerden haberdar olmanız için yapılan çalışmaları içermektedir.</span>

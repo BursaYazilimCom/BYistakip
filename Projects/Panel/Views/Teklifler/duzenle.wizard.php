@@ -68,6 +68,17 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="gecerlilik_suresi_gun">Kaç Gün Geçerli</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <input type="number" class="form-control form-control-sm" name="gecerlilik_suresi_gun" id="gecerlilik_suresi_gun" value="{{$detay->gecerlilik_suresi_gun}}" placeholder="Kaç Gün Geçerli" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     
                                         <div class="col-12">
                                             <div class="mb-1 row">
@@ -75,7 +86,7 @@
                                                     <label class="col-form-label" for="odeme_yontemi">Ödeme Yöntemi</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <select class="select2 form-select" name="odeme_yontemi" id="odeme_yontemi">
+                                                    <select class="select2 form-select" required name="odeme_yontemi" id="odeme_yontemi">
 
                                                         <option value="">--Seçiniz--</option>
                                                         @foreach($odemeYontemleri as $oy)
@@ -104,6 +115,8 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                       
 
                                         <div class="col-12">
                                             <label class="form-label" for="siparis_notu">Teklif Notu (Müşteri Görmez)</label>
@@ -190,8 +203,8 @@
 
                                                     </td>
                                                     <td style="min-width: 400px">
-                                                        <input type="text" name="aciklama[]" id="aciklama" value="{{$turun->aciklama}}" class="form-control">
-
+                                                        <textarea name="aciklama[]" id="aciklama" class="form-control" rows="1">{{str_replace('<br />',"\n",$turun->aciklama)}}</textarea>
+                                                       
                                                     </td>
                                                     <td>
                                                         @if($detay->durum=="2")
@@ -206,7 +219,7 @@
                                                         {{number_format($turun->fiyat,2)}}
                                                         @else
                                                         <div class="input-group">
-                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{number_format($turun->fiyat,2)}}" class="fiyat form-control">
+                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{str_replace(',','',number_format($turun->fiyat,2))}}" class="fiyat form-control">
                                                             <span class="input-group-text">₺</span>
                                                         </div>
 

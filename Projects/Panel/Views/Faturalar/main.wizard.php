@@ -52,7 +52,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>İlgili</th>
+
                                                         <th>Tür</th>
                                                         <th>Cari</th>
                                                         <th>Tutar</th>
@@ -66,8 +66,7 @@
                                                     <tbody>
                                                     @foreach($faturalar['liste'] as $fatura)
                                                     <tr class="odd">
-                                                        <td class=""><a class="fw-bold" href="{{URL::site('faturalar/duzenle')}}/{{$fatura->id}}">#Fatura-{{$fatura->id}}</a></td>
-                                                        <td class=""><a class="fw-bold" href="{{URL::site('siparisler/duzenle/'.$fatura->siparis_id)}}">#{{$fatura->siparis_id}}</a></td>
+                                                        <td class=""><a class="fw-bold" href="{{URL::site('faturalar/duzenle')}}/{{$fatura->id}}">#{{$fatura->id}}</a></td>
                                                         <td>
                                                             @if($fatura->tur=="1")
                                                             <span class="badge rounded-pill badge-light-info"> Alış </span>
@@ -125,9 +124,9 @@
                                                                         <i data-feather="chevron-down"></i> İşlemler
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-end">
-                                                                        <a href="{{URL::site('siparisler/urunler')}}/{{$fatura->siparis_id}}" class="dropdown-item">
+                                                                        <a href="{{URL::site('siparisler/duzenle')}}/{{$fatura->siparis_id}}" class="dropdown-item">
                                                                             <i data-feather="send" class="me-50"></i>
-                                                                            <span>Sipariş Ürünleri</span>
+                                                                            <span>Siparişe git</span>
                                                                         </a>
 
                                                                         <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="bildirimGonder" class="dropdown-item text-warning">

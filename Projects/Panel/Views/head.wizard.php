@@ -36,20 +36,18 @@
     <link rel="stylesheet" type="text/css" href="css/pages/dashboard-ecommerce.css">
     <link rel="stylesheet" type="text/css" href="css/plugins/charts/chart-apex.css">
     <link rel="stylesheet" type="text/css" href="css/plugins/extensions/ext-component-toastr.css">
-        <link rel="stylesheet" type="text/css" href="css/pages/modal-create-app.css">
-        <link rel="stylesheet" type="text/css" href="vendors/css/pickers/flatpickr/flatpickr.min.css">
-
-
+    <link rel="stylesheet" type="text/css" href="css/pages/modal-create-app.css">
+    <link rel="stylesheet" type="text/css" href="vendors/css/pickers/flatpickr/flatpickr.min.css">
 
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <!-- END: Custom CSS-->
-    @if(CURRENT_CONTROLLER=='Login')
+@if(CURRENT_CONTROLLER=='Login')
 
-        <style>
-            * {
+<style>
+* {
   box-sizing: border-box;
 }
 
@@ -73,6 +71,27 @@ body {
   }
 }
 
+@keyframes moveTop{
+  0%{
+    top: -50vmin;
+  }
+  100%{
+    top: 50vmin;
+  }
+}
+
+@keyframes moveBottom{
+  0%{
+    bottom: -65vmin;
+
+  }
+  100%{
+    bottom: 65vmin;
+  }
+}
+
+
+
 .background {
   position: fixed;
   top: -50vmin;
@@ -81,17 +100,28 @@ body {
   height: 100vmin;
   border-radius: 47% 53% 61% 39% / 45% 51% 49% 55%;
   background: #65c8ff;
+  animation-name: moveTop;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+
+
 }
 
 .background::after {
   content: "";
   position: inherit;
-  right: -50vmin;
-  bottom: -55vmin;
+  right: -60vmin;
+  bottom: -65vmin;
   width: inherit;
   height: inherit;
-  border-radius: inherit;
+  border-radius: 47% 53% 61% 39% / 45% 51% 49% 55%;
   background: #143d81;
+  animation-name: moveBottom;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+
 }
 
 .card {

@@ -63,13 +63,13 @@ class Siparisler extends Controller
 
     }
 
-    public function gruplar($id){
+    public function gruplar($id,$sayfa=0){
 
-        $grupDetay = UrunModel::urunGrupDetay($id);
+        $grupDetay = UrunModel::urunGrupDetay($id,$sayfa);
 
         $user = User::data();
 
-        $siparisUrunleri     = SiparisModel::siparisUrunleriListe($id);
+        $siparisUrunleri     = SiparisModel::siparisUrunleriListe($id,$sayfa);
 
         View::listele($siparisUrunleri);
         View::grupDetay($grupDetay);

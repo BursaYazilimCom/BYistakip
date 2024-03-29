@@ -97,6 +97,17 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="gecerlilik_suresi_gun">Kaç Gün Geçerli</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <input type="number" class="form-control form-control-sm" name="gecerlilik_suresi_gun" id="gecerlilik_suresi_gun" value="{{$detay->gecerlilik_suresi_gun}}" placeholder="Kaç Gün Geçerli" />
+                                                </div>
+                                            </div>
+                                        </div>
+
                                       
                                        
                                         <div class="col-12">
@@ -139,7 +150,8 @@
                                                         </td>
 
                                                         <td style="min-width: 400px">
-                                                            <input type="text" name="aciklama[]" id="aciklama" class="form-control">
+                                                    
+                                                            <textarea name="aciklama[]" id="aciklama" class="form-control" rows="1"></textarea>
                                                         </td>
 
                                                         <td>

@@ -1,6 +1,7 @@
 <?php namespace Project\Controllers;
 
-Use User,URL,AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel;
+Use User,URL;
+Use AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel;
 
 class Home extends Controller
 {
@@ -12,6 +13,9 @@ class Home extends Controller
      */
     public function main(string ...$parameters)
     {
+
+        
+
         $cariHesaplar = CariModel::liste();
         $projeler = ProjeModel::liste();
         $devamEdenProjeler = ProjeModel::devamEden();
@@ -23,6 +27,27 @@ class Home extends Controller
         View::siparisurunleri($siparisurunleri['adet']);
 
         Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
+    }
+
+    public function login(){
+
+        if(!Validation::check()){
+
+            $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
+
+        }else{
+
+            $status = User::login(Post::username(),Post::password());
+
+            if( $status === true ) {
+                AyarModel::basarili('Giriş işleminiz başarılı', 'Hoşgeldiniz', URL::site('home'));
+
+            }else{
+               AyarModel::basarisiz('Başarısız Giriş','Giriş Sırasında bir hata oluştu:<br>'.User::error(), URL::site('login'));
+            }
+
+        }
+
     }
 
 

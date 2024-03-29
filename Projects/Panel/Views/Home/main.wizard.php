@@ -3,6 +3,26 @@
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
             <div class="content-header row">
+                <div class="row only-xl">
+                    <div class="com-md-12">
+                    
+                    <a  class="btn btn-warning mb-2"   data-bs-toggle="modal" data-bs-target="#openModal" data-action="masrafEkle">
+                                    <i data-feather="plus"></i>
+                                <span class="fw-bold">Gider Ekle</span>
+                    </a>
+                    <a  data-bs-toggle="modal" data-bs-target="#openModal" data-action="tahsilatEkle"  class="btn btn-success mb-2">
+                        <i data-feather="plus"></i>
+                        <span class="fw-bold">Tahsilat Ekle</span>
+                    </a>
+
+                    <a  class="btn btn-info mb-2" href="{{URL::site('siparisler/form')}}">
+                                    <i data-feather="plus" ></i>
+                                <span class="fw-bold">Sipariş Ekle</span>
+                    </a>
+
+                  
+                    </div>
+                </div>
             </div>
             <div class="content-body">
                 <!-- Dashboard Ecommerce Starts -->
@@ -255,3 +275,15 @@
         </div>
     </div>
     <!-- END: Content-->
+    <div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="fetched-data"></div>
+            </div>
+        </div>
+    </div>
+</div>

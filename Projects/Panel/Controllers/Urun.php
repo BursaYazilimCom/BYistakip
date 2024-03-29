@@ -28,6 +28,19 @@ class Urun extends Controller
 
     }
 
+    public function grup($id,$sayfa=0)
+    {
+        if(!is_numeric($id)){
+            redirect('urun');
+        } 
+
+        $listeData = UrunModel::grupListe($id,$sayfa=0);
+
+        View::listele($listeData);
+
+
+    }
+
 
     public function form($id=""){
         $gruplar = UrunModel::urunGrupListe();

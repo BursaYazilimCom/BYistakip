@@ -116,7 +116,7 @@ class InternalKasaModel extends Model
 
         ]);
 
-        echo  DB::stringQuery();
+        //echo  DB::stringQuery();
 
         return $ekle;
 

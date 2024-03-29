@@ -32,6 +32,8 @@ class InternalTeklifModel extends Model
             'fatura_adresi'     =>$data['fatura_adresi'],
             'musteri'           =>$data['musteri'],
             'durum'             =>$data['durum'],
+            'odeme_yontemi'             =>$data['odeme_yontemi'],
+            'gecerlilik_suresi_gun'             =>$data['gecerlilik_suresi_gun'],
             'aciklama'          =>$data['aciklama']
         ]);
 
@@ -54,8 +56,10 @@ class InternalTeklifModel extends Model
                 'fatura_adresi'     =>$data["fatura_adresi"],
                 'durum'             =>$data['durum'],
                 'odeme_yontemi'     =>$data["odeme_yontemi"],
+                'gecerlilik_suresi_gun'     =>$data["gecerlilik_suresi_gun"],
                 'aciklama'          =>$data["aciklama"]
         ]);
+        //echo DB::stringQuery();
         return $guncelle;
     }
 

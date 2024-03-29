@@ -163,7 +163,7 @@
 <tr>
 <td class="pad" style="width:100%;">
 <div align="center" class="alignment" style="line-height:10px">
-<div style="max-width: 193.33333333333331px;"><a href="{{$firma_link}}" style="outline:none" tabindex="-1" target="_blank"><img alt="{{$firma}}" src="{{$firma_link}}/images/email_logo.png" style="display: block; height: auto; border: 0; width: 100%;" title="your logo" width="193.33333333333331"/></a></div>
+<div style="max-width: 193.33333333333331px;"><a href="{{URL::site()}}" style="outline:none" tabindex="-1" target="_blank"><img alt="{{$firma}}" src="{{URL::site()}}../Uploads/site-img/{{AyarModel::defaultAyarlar('mailLogo')}}" style="display: block; height: auto; border: 0; width: 100%;" title="{{AyarModel::defaultAyarlar('siteAdi')}}" width="193.33333333333331"/></a></div>
 </div>
 </td>
 </tr>
@@ -266,7 +266,7 @@
 <tr>
 <td class="pad">
 <div align="center" class="alignment" style="line-height:10px">
-<div style="max-width: 153.33333333333331px;"><a href="{{$firma_link}}" style="outline:none" tabindex="-1" target="_blank"><img src="{{$firma_link}}/images/email_logo.png" style="display: block; height: auto; border: 0; width: 100%;" title="teacher" width="153.33333333333331"/></a></div>
+<div style="max-width: 153.33333333333331px;"><a href="{{$firma_link}}" style="outline:none" tabindex="-1" target="_blank"><img src="{{URL::site()}}../Uploads/site-img/{{AyarModel::defaultAyarlar('mailLogo')}}" style="display: block; height: auto; border: 0; width: 100%;" title="teacher" width="153.33333333333331"/></a></div>
 </div>
 </td>
 </tr>

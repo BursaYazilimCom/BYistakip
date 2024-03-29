@@ -13,7 +13,7 @@
                         <div class="d-flex flex-stack mb-10 mb-lg-15">
                             <!--begin::Logo-->
                             <a href="#">
-                                <img alt="Logo" class="h-40px" src="{{URL::site()}}Uploads/firma-logo/{{AyarModel::defaultAyarlar('firmaLogo')}}" />
+                                <img alt="Logo" class="h-40px" src="{{URL::site()}}Uploads/site-img/{{AyarModel::defaultAyarlar('firmaLogo')}}" />
                             </a>
 
                         </div>

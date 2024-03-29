@@ -78,6 +78,7 @@ class Teklif extends Controller
             'durum'         => $teklifDetay->durum,
             'ekleme_tarihi' => $teklifDetay->ekleme_tarihi,
             'odeme_yontemi' => $teklifDetay->odeme_yontemi,
+            'gecerlilik_suresi_gun' => $teklifDetay->gecerlilik_suresi_gun,
             'cariDetay'     => $cariDetay
         ];
 

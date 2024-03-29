@@ -11,15 +11,15 @@
     </div>
     <!--end::Footer-->
 </div>
+
 <!--begin::Javascript-->
 <!--begin::Global Javascript Bundle(used by all pages)-->
 <script src="plugins/global/plugins.bundle.js"></script>
 <script src="js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
-<!--begin::Page Vendors Javascript(used by this page)-->
-<script src="plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-<!--end::Page Vendors Javascript-->
 <!--begin::Page Custom Javascript(used by this page)-->
 <script src="js/custom/widgets.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/by.js"></script>
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->

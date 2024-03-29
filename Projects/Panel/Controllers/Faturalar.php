@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email,Json;
-use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel;
+use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel,InternalSmsModel as SmsModel;
 use InternalMalzemeModel as MalzemeModel, TedarikciModel,InternalCariModel as CariModel;
 
 
@@ -649,18 +649,32 @@ class Faturalar extends Controller
                         'telefon' => AyarModel::defaultAyarlar('firmaTel'),
                     ])->send();
 
+                    //SMS GÖNDERİMİ
+                    if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+                        $smsData = [
+                            'mesaj'=>$faturaDetay->id.' faturanız resmileştirilmiştir. '.number_format($faturaDetay->genel_toplam,2).' TL Tutarında ki faturanızın; Resmi faturanız E-Posta olarak iletilmiştir.',
+                            'numara'=>$cariDetay->gsm
+                        ];
+
+                        $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+                    }
+                    //SMS GÖNDERİMİ
+
                     if ($mailgonder) {
                         $ekMailBilgi = "<br>Müşteriye Bilgilendirme Maili Gönderildi !";
                     }else{
                         $ekMailBilgi = "<br><span class='text-danger'>Müşteriye Bilgilendirme Maili Gönderilemedi !</span>".Email::error();
+
                     }
 
                 }
 
-                AyarModel::basarili("Başarılı işlem","Resmişleştirme işlemi başarı ile yapıldı!".$ekMailBilgi,URL::site("faturalar"));
+                AyarModel::basarili("Başarılı işlem","Resmişleştirme işlemi başarı ile yapıldı!".$ekMailBilgi.$smsGonder,URL::site("faturalar"));
 
             }else{
-                AyarModel::basarili("Başarısız işlem","Resmişleştirme işlemi YAPILAMADI!".$ekMailBilgi,URL::site("faturalar"));
+                AyarModel::basarili("Başarısız işlem","Resmişleştirme işlemi YAPILAMADI!".$ekMailBilgi ,URL::site("faturalar"));
             }
 
         }
@@ -904,12 +918,27 @@ class Faturalar extends Controller
             'telefon' => AyarModel::defaultAyarlar('firmaTel'),
         ])->send();
 
+        //SMS GÖNDERİMİ
+        if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+            $smsData = [
+                'mesaj'=>'Bu sms Fatura ödemenizi hatırlatmak için gönderilmiştir.'.AyarModel::tarihGoster($faturaDetay->vade_tarihi).' ödeme tarihli '.number_format($faturaDetay->genel_toplam,2).'TL faturanız bulunmaktadır. Hizmetinizin kesitiye uğramaması için ödeme yapmanız gerekmektedir. ',
+                'numara'=>$cariDetay->gsm
+            ];
+
+            $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+        }
+        //SMS GÖNDERİMİ
+
         if ($mailgonder) {
             AyarModel::basarili('Başarılı İşlem','Fatura hatırlatma işlemi gerçekleştirildi.',URL::site('faturalar'));
         }else{
             AyarModel::basarisiz('Başarısız İşlem','Fatura hatırlatma işlemi gerçekleştirilemedi.',URL::site('faturalar'));
 
         }
+
+        
 
 
     }

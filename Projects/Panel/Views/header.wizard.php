@@ -91,8 +91,17 @@
                     <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="shopping-bag"></i><span data-i18n="Misc">Ürünler</span></a>
                         <ul class="dropdown-menu" data-bs-popper="none">
 
-                            <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('urun')}}"><i data-feather="shopping-cart"></i><span data-i18n="Raise Support">Ürünler</span></a>
+                            <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                                <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="{{URL::site('urun')}}" data-bs-toggle="dropdown"><i data-feather="shopping-cart"></i><span data-i18n="Kullanıcı Yönetimi">Ürünler</span></a>
+                                <ul class="dropdown-menu" data-bs-popper="none">
+                                    <li data-menu=""><a class="dropdown-item d-flex align-items-center" href="{{URL::site('urun')}}"><i data-feather="shopping-cart"></i><span data-i18n="Second Level">Tüm Ürünler</span></a>
+                                    </li>
+                                    @foreach($urunGruplari as $ugl)
+                                    <li class="dropdown" data-menu="dropdown-submenu">
+                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('urun')}}/grup/{{$ugl->id}}"><i data-feather="corner-down-right"></i><span data-i18n="Second Level">{{$ugl->adi}}</span></a>
+                                    </li>
+                                    @endforeach
+                                </ul>
                             </li>
                             <li data-menu="">
                                 <a class="dropdown-item d-flex align-items-center" href="{{URL::site('urun/form')}}"><i data-feather="plus"></i><span data-i18n="Raise Support">Ürün Ekle</span></a>

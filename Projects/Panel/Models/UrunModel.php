@@ -67,6 +67,38 @@ class InternalUrunModel extends Model
 
     }
 
+    static function grupListe($id,$sayfa){
+        $veri = DB::select(
+            'urunler.id as id',
+            'urunler.tedarikci as tedarikci',
+            'urunler.urun_kodu as urun_kodu',
+            'urunler.adi as adi',
+            'urunler.fiyat as fiyat',
+            'urunler.aylik_fiyat as aylik_fiyat',
+            'urunler.uc_aylik_fiyat as uc_aylik_fiyat',
+            'urunler.alti_aylik_fiyat as alti_aylik_fiyat',
+            'urunler.yillik_fiyat as yillik_fiyat',
+            'urunler.fiyat_birim as fiyat_birim',
+            'urunler.kdv as kdv',
+            'urunler.odeme_turu as odeme_turu',
+            'urunler.aciklama as aciklama',
+            'urunler.detay as detay',
+            'urunler.durum as durum',
+            'urunler.guncel_stok as guncel_stok',
+            'urunler.stoklu_urun as stoklu_urun',
+            'urun_gruplari.id as grupId',
+            'urun_gruplari.adi as grupAdi'
+            )
+            ->innerjoin('urun_gruplari.id','urunler.grup')
+            ->where('urunler.grup',$id)
+            ->limit($sayfa,25)
+            ->orderby('id','DESC')->urunler();
+
+
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
+
+    }
+
     static function urunAdi($id){
         $veri =  DB::select(
             'urunler.adi as adi'

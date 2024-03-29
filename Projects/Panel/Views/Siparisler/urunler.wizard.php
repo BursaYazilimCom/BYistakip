@@ -59,13 +59,12 @@
                                         <thead>
                                         <tr>
                                             <th><input class="form-check-input" type="checkbox" id="select-all" name="hepsi" value="1" /></th>
-                                            <th>#</th>
                                             <th>Ürün</th>
                                             <th>Cari</th>
-                                            <th>Not</th>
+                                            <th>Detay</th>
                                             <th>Periyod</th>
                                             <th>Başlanıç Tarihi</th>
-                                            <th>Bitiş Tarihi</th>
+                                            <th>Sonraki Ödeme</th>
                                             <th>Adet</th>
                                             <th>Toplam</th>
                                             <th>Durum</th>
@@ -77,9 +76,8 @@
                                         @foreach($listele['liste'] as $s)
                                         <tr id="row-{{$s->id}}">
                                             <td><input class="form-check-input" type="checkbox" id="hepsi" name="sec[]" value="{{$s->id}}" /></td>
-                                            <td><a href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}">{{$s->id}}</a></td>
                                             <td><a href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}">{{$s->urun_adi}}</a></td>
-                                            <td>{{CariModel::cariAdi($s->cari)}}</td>
+                                            <td><a href="{{URL::site('cari/detay')}}/{{$s->cari}}">{{CariModel::cariAdi($s->cari)}}</a></td>
                                             <td>{{$s->notu}}</td>
                                             <td>{{AyarModel::odemePeriyodu($s->odeme_periyodu)}}</td>
                                             <td>{{Date::convert($s->baslangic_tarihi,'d.m.Y')}}</td>
@@ -91,10 +89,14 @@
                                                 @if($s->islem_gerekiyor=='1')
                                                 {{$s->yapilacak_islem}}
                                                 @endif
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Ürünü Düzenle" href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}"><i data-feather="edit"></i></a>
+                                                <a class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="İlgili Siparişi Görüntüle" href="{{URL::site('siparisler/duzenle')}}/{{$s->siparis}}"><i data-feather="edit-2" ></i></a>
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach
-                                            </form>
+                                          
 
                                         </tbody>
                                     </table>

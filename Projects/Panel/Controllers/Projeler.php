@@ -247,9 +247,9 @@ class Projeler extends Controller
     public function yapilanIslemEkle($id){
         $user = User::data();
 
-        if(!Validation::check()){
+        if(Post::islem()==""){
 
-            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !. Lütfen gerekli alanları doldurunuz.</div></div>'])->action(URL::prev());
 
         }else {
 
@@ -257,7 +257,8 @@ class Projeler extends Controller
                 'proje_id'  => $id,
                 'tur'       => Post::tur(),
                 'islem'     => Post::islem(),
-                'ekleyen'     => $user->id
+                'link'      => Post::link(),
+                'ekleyen'   => $user->id
             ];
 
             $ekle = ProjeModel::yapilanIslemEkle($ekleData);
@@ -269,7 +270,9 @@ class Projeler extends Controller
                 Redirect::insert(['bilgi' => '<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.'.$ekle.'</div></div>'])->action(URL::prev());
 
             }
+
         }
+        
 
     }
 

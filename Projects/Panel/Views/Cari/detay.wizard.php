@@ -22,21 +22,17 @@
                                 </div>
                                 <div class="d-flex justify-content-around my-2 pt-75">
                                     <div class="d-flex align-items-start me-2">
-                                            <span class="badge bg-light-primary p-75 rounded">
-                                                <i data-feather="check" class="font-medium-2"></i>
-                                            </span>
+                                      
                                         <div class="ms-75">
                                             <h4 class="mb-0 text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Hesaplamalar Faturalar üzerinden yapılmaktadır. Ödeme yapıldı olarak işaretlenmiş faturaların toplamıdır.">{{$cariFaturaToplamlari['odenen']}} ₺</h4>
-                                            <small>Ödemeler</small>
+                                            <small>Ödenen</small>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-start">
-                                            <span class="badge bg-light-primary p-75 rounded">
-                                                <i data-feather="briefcase" class="font-medium-2"></i>
-                                            </span>
+                                        
                                         <div class="ms-75">
                                             <h4 class="mb-0 text-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Hesaplamalar Faturalar üzerinden yapılmaktadır. ÖDENMEDİ olarak işaretlenmiş olan faturaların toplamıdır.">{{$cariFaturaToplamlari['odenmeyen']}} ₺</h4>
-                                            <small>Borçlar</small>
+                                            <small>Alacak</small>
                                         </div>
                                     </div>
                                 </div>
@@ -95,23 +91,7 @@
 
                     <!-- User Content -->
                     <div class="col-xl-9 col-lg-8 col-md-6">
-                        <!-- User Pills -->
-                        <ul class="nav nav-pills mb-2">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{{URL::site('cari/detay/'.$cariDetay->id)}}">
-                                    <i data-feather="user" class="font-medium-3 me-50"></i>
-                                    <span class="fw-bold">Detay</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{URL::site('cari/form/'.$cariDetay->id)}}">
-                                    <i data-feather="lock" class="font-medium-3 me-50"></i>
-                                    <span class="fw-bold">Düzenle</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                        <!--/ User Pills -->
-
+                    
                         <!-- Project table -->
                         <div class="card">
                             <h4 class="card-header">Ürünleri</h4>
@@ -144,33 +124,6 @@
                                 </table>
                             </div>
                         </div>
-
-                        <div class="card">
-                            <h4 class="card-header">Projeleri</h4>
-                            <div class="table-responsive">
-                                <table class="table datatable-project">
-                                    <thead>
-                                    <tr>
-                                        <th>Proje Adı</th>
-                                        <th>Başlangıç</th>
-                                        <th>Termin</th>
-                                        <th>Durum</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($cariProjeleri['liste'] as $proje)
-                                            <tr>
-                                                <td>{{$proje->proje_adi}}</td>
-                                                <td>{{Date::convert($proje->proje_baslangic_tarihi,'d.m.Y')}}</td>
-                                                <td>{{Date::convert($proje->tahmini_bitis_tarihi,'d.m.Y')}}</td>
-                                                <td>{{$proje->durum==1?'Aktif':'Pasif'}}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
                         <div class="card">
                             <h4 class="card-header">Faturaları</h4>
                             <div class="table-responsive">
@@ -216,6 +169,33 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="card">
+                            <h4 class="card-header">Projeleri</h4>
+                            <div class="table-responsive">
+                                <table class="table datatable-project">
+                                    <thead>
+                                    <tr>
+                                        <th>Proje Adı</th>
+                                        <th>Başlangıç</th>
+                                        <th>Termin</th>
+                                        <th>Durum</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($cariProjeleri['liste'] as $proje)
+                                            <tr>
+                                                <td>{{$proje->proje_adi}}</td>
+                                                <td>{{Date::convert($proje->proje_baslangic_tarihi,'d.m.Y')}}</td>
+                                                <td>{{Date::convert($proje->tahmini_bitis_tarihi,'d.m.Y')}}</td>
+                                                <td>{{$proje->durum==1?'Aktif':'Pasif'}}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        
 
 
                     </div>

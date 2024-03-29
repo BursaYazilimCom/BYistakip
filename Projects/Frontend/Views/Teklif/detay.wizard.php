@@ -35,7 +35,7 @@
 
                             <div class="row g-5 mb-12">
                                 <!--end::Col-->
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <!--end::Label-->
                                     <div class="fw-bold fs-7 text-gray-600 mb-1">Teklif Gönderen:</div>
                                     <!--end::Label-->
@@ -49,7 +49,7 @@
                                 </div>
                                 <!--end::Col-->
                                 <!--end::Col-->
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <!--end::Label-->
                                     <div class="fw-bold fs-7 text-gray-600 mb-1">Fatura Sahibi:</div>
                                     <!--end::Label-->
@@ -62,10 +62,16 @@
                                     <!--end::Description-->
                                 </div>
                                 <div class="col-sm-2">
-                                <div class="fw-bold fs-7 text-gray-600 mb-1">Teklif Tarihi:</div>
+                                    <div class="fw-bold fs-7 text-gray-600 mb-1">Teklif Tarihi:</div>
                                     <!--end::Label-->
                                     <!--end::Col-->
                                     <div class="fw-bolder fs-6 text-gray-800">{{Date::convert($detay->ekleme_tarihi,"d.m.Y")}}</div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="fw-bold fs-7 text-gray-600 mb-1">Son Geçerlilik Tarihi:</div>
+                                    <!--end::Label-->
+                                    <!--end::Col-->
+                                    <div class="fw-bolder fs-6 text-gray-800">{{Date::convert( Date::addDay($detay->ekleme_tarihi, $detay->gecerlilik_suresi_gun),"d.m.Y")}}</div>
                                 </div>
                                 <!--end::Col-->
                             </div>
@@ -112,13 +118,23 @@
                                             @endif
 
 
-                                        <tr class="fw-bolder text-gray-700 fs-5 text-end">
+                                        <tr class="text-gray-700 fs-5">
                                             <td class="d-flex align-items-center pt-6">
-                                                {{$furun->urun_adi}}</td>
-                                            <td class="pt-6">{{$furun->miktar}}</td>
-                                            <td class="pt-6">{{number_format($furun->fiyat,2)}}</td>
-                                            <td class="pt-6">%{{$furun->kdv}}</td>
-                                            <td class="pt-6 text-dark fw-boldest">{{number_format($furun->fiyat*$furun->miktar,2)}} ₺</td>
+                                                
+                                                <table class="text-left">
+                                                    <tr>
+                                                        <td class="fw-bolder ">{{$furun->urun_adi}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding-left: 20px">
+                                                            <small>{{str_replace('\n','<br>',$furun->aciklama)}}</small>
+                                                        </td>
+                                                    </tr>
+                                                </table></td>
+                                            <td class="pt-6 text-end fw-bolder ">{{$furun->miktar}}</td>
+                                            <td class="pt-6 text-end fw-bolder ">{{number_format($furun->fiyat,2)}}</td>
+                                            <td class="pt-6 text-end fw-bolder ">%{{$furun->kdv}}</td>
+                                            <td class="pt-6 text-dark text-end fw-boldest">{{number_format($furun->fiyat*$furun->miktar,2)}} ₺</td>
                                         </tr>
                                         @endforeach
 

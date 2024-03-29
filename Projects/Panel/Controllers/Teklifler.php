@@ -4,8 +4,6 @@ use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email,Json;
 use InternalTeklifModel as TeklifModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel;
 use InternalMalzemeModel as MalzemeModel, TedarikciModel,InternalCariModel as CariModel;
 
-
-
 class Teklifler extends Controller
 {
 
@@ -35,6 +33,7 @@ class Teklifler extends Controller
             'fatura_adresi'     =>$cariDetay->fatura_adresi,
             'durum'             =>Post::durum(),
             'odeme_yontemi'     =>Post::odeme_yontemi(),
+            'gecerlilik_suresi_gun'     =>Post::gecerlilik_suresi_gun(),
             'aciklama'          =>Post::notu()
         ];
 
@@ -60,7 +59,7 @@ class Teklifler extends Controller
                 $fUrun = [
                     'teklif'                =>$teklifOlustur,
                     'urun_adi'              =>$urun[$fu],
-                    'aciklama'              =>$aciklama[$fu],
+                    'aciklama'              =>nl2br($aciklama[$fu]),
                     'miktar'                =>$miktar[$fu],
                     'fiyat'                 =>$fiyat[$fu],
                     'kdv'                   =>$kdv[$fu],
@@ -151,27 +150,28 @@ class Teklifler extends Controller
 
     public function guncelle($id){
 
-        $teklifDetay    = TeklifModel::detay($id);
-        $cariDetay      = CariModel::detay($teklifDetay->musteri);
-        $belge_no       = Post::belge_no();
-        $odeme_yontemi  = Post::odeme_yontemi();
-        $aciklama       = Post::siparis_notu();
-        $durum          = Post::durum();
+        $teklifDetay            = TeklifModel::detay($id);
+        $cariDetay              = CariModel::detay($teklifDetay->musteri);
+        $belge_no               = Post::belge_no();
+        $odeme_yontemi          = Post::odeme_yontemi();
+        $aciklama               = Post::siparis_notu();
+        $durum                  = Post::durum();
+        $gecerlilik_suresi_gun  = Post::gecerlilik_suresi_gun();
 
         $data = [
-            'id'                => $id,
-            'belge_no'          => $belge_no,
-            'fatura_adi'        => $cariDetay->firma_adi,
-            'fatura_adresi'     => $cariDetay->fatura_adresi,
-            'odeme_yontemi'     => $odeme_yontemi,
-            'durum'             => $durum,
-            'aciklama'          => $aciklama
+            'id'                        => $id,
+            'belge_no'                  => $belge_no,
+            'fatura_adi'                => $cariDetay->firma_adi,
+            'fatura_adresi'             => $cariDetay->fatura_adresi,
+            'odeme_yontemi'             => $odeme_yontemi,
+            'durum'                     => $durum,
+            'gecerlilik_suresi_gun'     => $gecerlilik_suresi_gun,
+            'aciklama'                  => $aciklama
         ];
 
         $teklifGuncelle = TeklifModel::guncelle($data);
 
-
-        if ($teklifGuncelle){
+        if($teklifGuncelle){
 
             $say = count(Post::id());
 
@@ -190,7 +190,7 @@ class Teklifler extends Controller
                 $urunData = [
                     'id'            => $urunId[$i],
                     'urun_adi'      => $urun_adi[$i],
-                    'aciklama'      => $aciklama[$i],
+                    'aciklama'      => nl2br($aciklama[$i]),
                     'miktar'        => $miktar[$i],
                     'fiyat'         => $fiyati,
                     'kdv'           => $kdv[$i],
@@ -250,6 +250,7 @@ class Teklifler extends Controller
                 'durum'             => $teklifDetay->durum,
                 'ekleme_tarihi'     => $teklifDetay->ekleme_tarihi,
                 'odeme_yontemi'     => $teklifDetay->odeme_yontemi,
+                'gecerlilik_suresi_gun'     => $teklifDetay->gecerlilik_suresi_gun,
                 'cariDetay'         => $cariDetay
             ];
 
@@ -297,7 +298,7 @@ class Teklifler extends Controller
                 'teklif'    => $id,
                 'urun'  => '0',
                 'urun_adi'  => $urunadi,
-                'aciklama'  => $aciklama,
+                'aciklama'  => nl2br($aciklama),
                 'miktar'    => $miktar,
                 'kdv'       => $kdv,
                 'fiyat'     => $fiyat,
@@ -327,11 +328,10 @@ class Teklifler extends Controller
 
         if ($sil) {
 
-            Redirect::insert(['bilgi' => '<div class="callout callout-success">Silme işlemi başarı ile yapıldı!</div>'])->action('teklifler');
+            AyarModel::basarili("Başarılı işlem","Teklif Silme işlemi başarı ile yapıldı!",URL::site("teklifler"));
 
         } else {
-
-            Redirect::insert(['bilgi' => '<div class="callout callout-danger">Silme işlemi yapılamadı!</div>'])->action('teklifler');
+            AyarModel::basarisiz("Başarısız işlem","Teklif Silme işlemi YAPILAMADI!",URL::site("teklifler"));
 
         }
 //test

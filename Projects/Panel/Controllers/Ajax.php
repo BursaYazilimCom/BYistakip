@@ -977,12 +977,27 @@ class Ajax extends Controller
                     <div class="row">
 
                         <div class="col-12">
-                            <div class="col-12">
-                                <label class="form-label" for="modalAddCardNumber">Ödenmesi Gereken Tutar:</label>
-                                <div class="input-group input-group-merge">
-                                    <?=$faturaDetay->genel_toplam?> ₺
+                            <div class="row">
+                                <div class="col-4">
+                                    <label class="form-label" for="modalAddCardNumber">Fatura Tutarı:</label>
+                                    <div class="input-group input-group-merge">
+                                        <?=number_format($faturaDetay->genel_toplam,2)?> ₺
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label" for="modalAddCardNumber">Daha Önce Alınan Ödeme:</label>
+                                    <div class="input-group input-group-merge">
+                                        <?=number_format($faturaDetay->alinan_odeme,2)?> ₺
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label" for="modalAddCardNumber">Kalan Ödeme:</label>
+                                    <div class="input-group input-group-merge">
+                                        <?=number_format($faturaDetay->genel_toplam-$faturaDetay->alinan_odeme,2)?> ₺
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <label class="form-label" for="modalAddCardNumber">Ödeme Hesabı:</label>
                                 <div class="input-group input-group-merge">
@@ -1047,14 +1062,16 @@ class Ajax extends Controller
                                         <label class="col-form-label" for="odendi">Ödendi Yap</label>
                                     </div>
                                     <div class="col-sm-12">
+
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="odendi" id="odendi" value="1" />
-                                            <label class="form-check-label" for="odendi">Faturayı <strong>Ödendi</strong> olarak işaretle !</label>
+                                            <label class="form-check-label" for="odendi">Faturayı <strong>Ödendi</strong> olarak işaretle ! <br><small>(Fatura tam oalrak ödenmese bile faturayı ödendi yapmak istemeniz durumunda kullanabilirsiniz)</small></label>
                                         </div>
-                                        <div class="form-check form-check-inline">
+
+                                        <!--<div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="siparisOdendi" id="siparisOdendi" value="1" />
                                             <label class="form-check-label" for="siparisOdendi">İlgili Siparişi <strong>Ödendi</strong> olarak işaretle !</label>
-                                        </div>
+                                        </div>-->
 
                                     </div>
                                 </div>
@@ -1069,6 +1086,11 @@ class Ajax extends Controller
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="bildirim" id="bildirim" value="1" />
                                             <label class="form-check-label" for="bildirim">Müşteriye E-Posta ile bildir</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="uzat" id="uzat" value="1" />
+                                            <label class="form-check-label" for="uzat">Fatura Ürününün Süresini Uzat</label>
                                         </div>
 
                                     </div>
@@ -1110,7 +1132,7 @@ class Ajax extends Controller
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 text-danger">
-                            DİKKAT: Bu işlem sadece fatura ve siparişin durumunu değiştirir. Kasa defterine herhangi bir veri işlemez, Eğer bu fatura ile iglili gelir gider kaydı daha önceden yapmadıysanız hesaplarda hata oluşabilir.<br> Eğer kasa defterine işlensin istiyorsanız "ÖDEME EKLE" seçeneğini kullanın
+                            DİKKAT: <strong>Bu işlem sadece fatura ve siparişin durumunu değiştirir, Kasa defterine herhangi bir veri işlemez.</strong>  <br>Eğer bu fatura ile iglili gelir gider kaydı daha önceden yapmadıysanız bu fatura ile ilgili tahsilatı daha sonra manuel eklemeniz gerekir.<br> Eğer kasa defterine işlensin istiyorsanız "ÖDEME EKLE" seçeneğini kullanın
                         </div>
 
                         <div class="col-12">
@@ -1796,6 +1818,15 @@ class Ajax extends Controller
                         </div>
                     </div>
 
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="link">Link:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::id('link')->placeholder('Göstermek istediğiniz birşey varsa URL ekleyin')->text('link','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -2283,6 +2314,162 @@ class Ajax extends Controller
             <?php echo Form::close(); ?>
 
             <?php
+        }
+
+        if(Post::action()=="masrafEkle") {
+
+            $masrafKalemleri    = MasrafModel::masrafKalemleri();
+
+            $kasaHesaplari      = KasaModel::turHesaplari(1);
+            $bankaHesaplari     = KasaModel::turHesaplari(2);
+            $posHesaplari       = KasaModel::turHesaplari(3);
+            $kkartiHesaplari    = KasaModel::turHesaplari(4);
+            $veresiyeHesaplari  = KasaModel::turHesaplari(5);
+            $digerHesaplar      = KasaModel::turHesaplari(6);
+
+
+            ?>
+                            <form action="<?=URL::site('masraf/masrafEkle')?>" method="post">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Masraf Ekle</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+
+                                        <div class="col-6">
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Masraf K.</label>
+                                                <div class="input-group input-group-merge">
+                                                    <select class="form-control" name="kalem" required >
+                                                        <option value="">--Seçiniz--</option>
+                                                        <?php
+                                                        foreach($masrafKalemleri['anaKalemler'] as $ustList){ ?>
+                                                        <optgroup label="<?=$ustList->adi?>">
+                                                            <?php
+                                                            foreach($masrafKalemleri['altKalemler'] as $altKalemList){
+                                                            
+
+                                                                if($altKalemList->ust==$ustList->id){
+
+                                                                ?>
+
+                                                                <option value="<?=$altKalemList->id?>"><?=$altKalemList->adi?></option>
+                                                                <?php
+                                                                }
+
+                                                            } ?>
+                                                        </optgroup>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Belge No:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <input type="text" class="form-control" name="belge_no" id="belge_no" placeholder="Fiş / Fatura No" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Açıklama:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <textarea class="form-control" name="aciklama" placeholder="Açıklama"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Dosya:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <label class="input-group-btn">
+                                                                    <span class="btn btn-primary">
+                                                                        <i class="fa fa-upload"></i> Masraf Belgesi Seç <input type="file" name="belge_dosya" style="display: none;">
+                                                                    </span>
+                                                    </label>
+                                                    <input type="text" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Ödeme:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <select name="odeme_durumu" id="gizleGoster" data-name="kasalar" required class="form-control">
+                                                        <option value="1">Ödendi</option>
+                                                        <option value="0">Ödenmedi</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Ödeme Hesabı:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <select name="kasa" required class="form-control">
+                                                        <option value="0">--Seçiniz--</option>
+                                                        <optgroup label="Kasa Hesapları">
+                                                            <?php foreach($kasaHesaplari as $kh){ ?>
+                                                            <option value="<?=$kh->id?>"><?=$kh->adi?></option>
+                                                            <?php }?>
+                                                        </optgroup>
+                                                        <optgroup label="Banka Hesapları">
+                                                            <?php foreach($bankaHesaplari as $bh){ ?>
+                                                            <option value="<?=$bh->id?>"><?=$bh->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+                                                        <optgroup label="POS Hesapları">
+                                                            <?php foreach($posHesaplari as $ph){ ?>
+                                                            <option value="<?=$ph->id?>"><?=$ph->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+                                                        <optgroup label="Kredi Kartı Hesapları">
+                                                            <?php foreach($kkartiHesaplari as $kkh) { ?>
+                                                            <option value="<?=$kkh->id?>"><?=$kkh->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+                                                        <optgroup label="Veresiye Hesapları">
+                                                            <?php foreach($veresiyeHesaplari as $vh){ ?>
+                                                            <option value="<?=$vh->id?>"><?=$vh->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+                                                        <optgroup label="Diğer Hesaplar">
+                                                            <?php foreach($digerHesaplar as $dh){ ?>
+                                                            <option value="<?=$dh->id?>"><?=$dh->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Ödeme Tarihi:Güm.Ay.Yıl</label>
+                                                <div class="input-group input-group-merge">
+                                                    <input type="text" name="odeme_tarihi" class="form-control" placeholder="24.10.2023"onkeyup="
+                                                    var v = this.value;
+                                                    if (v.match(/^\d{2}$/) !== null) {
+                                                        this.value = v + '.';
+                                                    } else if (v.match(/^\d{2}\.\d{2}$/) !== null) {
+                                                        this.value = v + '.';
+                                                    }" maxlength="10" value="<?=Date::current()?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Tutar (TL):</label>
+                                                <div class="input-group input-group-merge">
+                                                    <input type="text" class="form-control" onkeyup="$(this).val($(this).val().replace(/,/g, '.'));" name="tutar" id="belge_no" placeholder="Ödenen tutar" value="">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                                </div>
+                            </form>
+
+        <?php
         }
 
         if(Post::action()=="teklifeUrunEkle") {
