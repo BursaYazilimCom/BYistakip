@@ -592,5 +592,29 @@ class InternalAyarModel extends Model
     }
 
 
+    public function bilgilendirmeEkle($data){
+        
+        $ekle = DB::insert('gonderilen_bilgilendirmeler',[
+            'tur'               =>$data['tur'],
+            'cari'              =>$data['cari'],
+            'ilgili_tur'        =>$data['ilgili_tur'],
+            'gonderilen_adres'  =>$data['gonderilen_adres'],
+            'gonderilen_icerik' =>$data['gonderilen_icerik']
+        ]);
+
+        return $ekle;
+    }
+
+    public function girisEkle($cari,$ip){
+        
+        $ekle = DB::insert('giris_kayitlari',[
+            'cari'      => $cari,
+            'ip'        => $ip
+        ]);
+
+        return $ekle;
+    }
+
+
 
 }

@@ -35,20 +35,20 @@
 
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                @Form::csrf()->action('Ajax/login')->open('submitForm',['id'=>'submitForm'])
+                                @Form::csrf()->action('Login/enter')->open('submitForm',['id'=>'submitForm'])
 
                                         <div class="mb-5">
-                                            <label class="form-label">Kullanıcı Adı / E-Mail Adresi</label>
-                                            <input type="text" class="form-control" required placeholder="Kullanıcı Adı">
+                                            <label class="form-label">E-Posta Adresi</label>
+                                            @Form::vRequired()->id('email')->placeholder('E-Posta Adresiniz')->text('email','',['class'=>'form-control'])
                                         </div>
 
                                         <div class="mb-5">
                                             <label class="form-label">Şifre</label>
-                                            <input type="password" class="form-control" required placeholder="Şifreniz">
+                                            @Form::vRequired()->id('password')->placeholder('Şifreniz')->password('password','',['class'=>'form-control'])
                                         </div>
                                         <div class="mb-5">
                                             <button href="#" class="btn btn-primary" style="width: 49%">Giriş Yap</button>
-                                            <button href="#" class="btn btn-warning" style="width: 49%">Şifremi Unuttum</button>
+                                            <a href="{{URL::site('Login/password')}}" class="btn btn-warning" style="width: 49%">Şifremi Unuttum</a>
                                         </div>
                                 @Form::close()
                             </div>

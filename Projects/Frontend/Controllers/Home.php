@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 Use User,URL;
-Use AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel;
+Use AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel,InternalFaturaModel as FaturaModel;
 
 class Home extends Controller
 {
@@ -13,41 +13,25 @@ class Home extends Controller
      */
     public function main(string ...$parameters)
     {
+        $user = User::data();
 
-        
+        $cariDetay = CariModel::detay($user->id);
+        $uyeUrunleri = SiparisModel::uyeSiparisUrunleri($user->id,'0');
+        $cariProjeleri = ProjeModel::CariProjeleri($user->id,0);
+        $faturalar = FaturaModel::cariFaturalari($user->id);
+        $odenenler = FaturaModel::cariFaturaToplamlari($user->id,'1');
+        $odenmeyenler = FaturaModel::cariFaturaToplamlari($user->id,'0');
 
-        $cariHesaplar = CariModel::liste();
-        $projeler = ProjeModel::liste();
-        $devamEdenProjeler = ProjeModel::devamEden();
-        $siparisurunleri = SiparisModel::siparisUrunleriAdet();
 
-        View::musteriSayisi($cariHesaplar['adet']);
-        View::projeSayisi($projeler['adet']);
-        View::devamEdenProjeler($devamEdenProjeler['adet']);
-        View::siparisurunleri($siparisurunleri['adet']);
+
+        View::cariFaturaToplamlari(['odenen'=>number_format($odenenler->toplam,2),'odenmeyen'=>number_format($odenmeyenler->toplam,2)]);
+        View::cariDetay($cariDetay);
+        View::faturalar($faturalar);
+        View::uyeUrunleri($uyeUrunleri);
+        View::cariProjeleri($cariProjeleri);
+
 
         Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
-    }
-
-    public function login(){
-
-        if(!Validation::check()){
-
-            $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
-
-        }else{
-
-            $status = User::login(Post::username(),Post::password());
-
-            if( $status === true ) {
-                AyarModel::basarili('Giriş işleminiz başarılı', 'Hoşgeldiniz', URL::site('home'));
-
-            }else{
-               AyarModel::basarisiz('Başarısız Giriş','Giriş Sırasında bir hata oluştu:<br>'.User::error(), URL::site('login'));
-            }
-
-        }
-
     }
 
 

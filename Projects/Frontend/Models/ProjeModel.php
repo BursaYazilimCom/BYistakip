@@ -59,5 +59,14 @@ class InternalProjeModel extends Model
         return DB::insertID();
     }
 
+    static function CariProjeleri($id,$sayfa){
+        $veri = DB::where('musteri',$id)->limit($sayfa,25)
+            ->orderby('id','DESC')->projeler();
+
+
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
+
+    }
+
 
 }

@@ -55,8 +55,8 @@
         ],
         'general' =>
         [
-            'senderMail'    => '',                  # Default Sender E-mail Address.
-            'senderName'    => '',                  # Default Sender Name.
+            'senderMail'    => 'info@bursayazilim.com',                  # Default Sender E-mail Address.
+            'senderName'    => 'Bursa Yazılım',                  # Default Sender Name.
             'priority'      => 3,                   # 1, 2, 3, 4, 5
             'charset'       => 'UTF-8',             # Charset Type
             'contentType'   => 'html',              # plain, html
@@ -64,7 +64,7 @@
             'xMailer'       => 'ZN',
             'encoding'      => '8bit',              # 8bit, 7bit
             'mimeVersion'   => '1.0',               # MIME Version
-            'mailPath'      => '/var/qmail/bin/sendmail' # Default Mail Path
+            'mailPath'      => '/usr/sbin/sendmail' # Default Mail Path
         ]
     ],
 
