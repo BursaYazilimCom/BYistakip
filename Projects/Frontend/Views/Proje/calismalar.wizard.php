@@ -27,9 +27,7 @@
 <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
     <!--begin::Post-->
     <div class="content flex-row-fluid" id="kt_content">
-        <!--begin::Invoice-->
 
-        
         <div class="card">
             <!--begin::Body-->
             <div class="card-header align-items-center border-0 mt-5">
@@ -74,7 +72,7 @@
 
                                 {[ } ]}
 
-                                        <div class="d-flex text-body-secondary p-2 border-bottom" data-toogle="tooltips" 
+                                        <div class="d-flex text-body-secondary p-2 border-bottom" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top"
                                                 @if($yol->tur=="1")
                                                 title="Değişiklik" 
                                                 style="background-color: #E4E4FD; border-bottom: 1px solid #d4d4f3 !important;"

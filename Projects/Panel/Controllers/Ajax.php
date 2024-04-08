@@ -3,7 +3,7 @@
 Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
 Use AjaxModel,KasaModel,AyarModel, InternalFaturaModel as FaturaModel,InternalPlanlamaModel as PlanlamaModel;
 Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel,InternalCariModel as CariModel,SiparisModel;
-use MasrafModel;
+use MasrafModel,InternalDestekModel as DestekModel;
 
 
 
@@ -2101,7 +2101,7 @@ class Ajax extends Controller
             <?php echo  Form::csrf()->method('post')->action('planlama/hatirlatmaGuncelle/'.$id)->open('hatirlatmaGuncelle'); ?>
 
             <div class="modal-header">
-                <h4 class="modal-title">Hatırlatma Ekle</h4>
+                <h4 class="modal-title">Hatırlatma Düzenle</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -2555,6 +2555,141 @@ class Ajax extends Controller
 
         }
 
+        if(Post::action()=="destekDepartmanEkle"){
+
+            $id = Post::rowid();
+            $personeller = PersonelModel::tumListe();
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('destek/departmanEkle/')->open('departmanEkle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Destek Departmanı Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="yetkili_personel">Yetkili Personel</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="yetkili_personel" id="yetkili_personel">
+                                    <option value="">--Seçiniz--</option>
+                                    <?php foreach($personeller as $personel){ ?>
+                                    <option value="<?=$personel->id?>"><?=$personel->isim?></option>
+                                    <?php }?>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="adi">Departman Adı:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('adi')->placeholder('Departman Adı')->text('adi','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="durum">Durum</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="durum" id="durum">
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Pasif</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+        if(Post::action()=="destekDepartmanDuzenle"){
+
+            $id = Post::rowid();
+            $personeller = PersonelModel::tumListe();
+            $detay = DestekModel::deparmanDetay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('destek/departmanGuncelle/'.$id)->open('departmanGuncelle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Destek Departmanı Düzenle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="yetkili_personel">Yetkili Personel</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="yetkili_personel" id="yetkili_personel">
+                                    <option value="">--Seçiniz--</option>
+                                    <?php foreach($personeller as $personel){ ?>
+                                    <option value="<?=$personel->id?>" <?=$detay->yetkili_personel == $personel->id ? 'selected' : ''?>><?=$personel->isim?></option>
+                                    <?php }?>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="adi">Departman Adı:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('adi')->placeholder('Departman Adı')->text('adi',$detay->adi,['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="durum">Durum</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="durum" id="durum">
+                                    <option value="1" <?=$detay->durum == '1' ? 'selected' : ''?>>Aktif</option>
+                                    <option value="0" <?=$detay->durum == '0' ? 'selected' : ''?>>Pasif</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
 
     }
 

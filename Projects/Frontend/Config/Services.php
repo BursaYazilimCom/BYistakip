@@ -49,7 +49,7 @@
             'host'      => 'mail.kurumsaleposta.com',
             'user'      => 'info@bursayazilim.com',
             'password'  => 'HMyk*963,*963,',
-            'port'      => 995,
+            'port'      => 465,
             'flags'     => [],
             'mailbox'   => 'INBOX'
         ],

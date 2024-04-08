@@ -18,10 +18,16 @@ class Home extends Controller
         $cariDetay = CariModel::detay($user->id);
         $uyeUrunleri = SiparisModel::uyeSiparisUrunleri($user->id,'0');
         $cariProjeleri = ProjeModel::CariProjeleri($user->id,0);
-        $faturalar = FaturaModel::cariFaturalari($user->id);
+        $faturalar = FaturaModel::cariFaturalari($user->id,"0");
         $odenenler = FaturaModel::cariFaturaToplamlari($user->id,'1');
         $odenmeyenler = FaturaModel::cariFaturaToplamlari($user->id,'0');
 
+        $toplamlar = [
+            'uyeUrunAdet' => SiparisModel::uyeUrunAdet($user->id),
+            'talepler' => 5,
+            'odenmemisFaturaToplami' => number_format(FaturaModel::cariFaturaToplamlari($user->id,'0')->toplam,2),
+            'odenenFaturaToplami' => number_format(FaturaModel::cariFaturaToplamlari($user->id,'1')->toplam,2)
+        ];
 
 
         View::cariFaturaToplamlari(['odenen'=>number_format($odenenler->toplam,2),'odenmeyen'=>number_format($odenmeyenler->toplam,2)]);
@@ -29,6 +35,7 @@ class Home extends Controller
         View::faturalar($faturalar);
         View::uyeUrunleri($uyeUrunleri);
         View::cariProjeleri($cariProjeleri);
+        View::toplamlar($toplamlar);
 
 
         Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));

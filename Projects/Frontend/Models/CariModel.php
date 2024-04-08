@@ -68,7 +68,6 @@ class InternalCariModel extends Model
 
         $guncelle = DB::where('id',$data["id"])
             ->update('cari',[
-                'email'         =>$data['email'],
                 'adi'           =>$data['adi'],
                 'gsm'           =>$data['gsm'],
                 'il'            =>$data['il'],
@@ -76,17 +75,10 @@ class InternalCariModel extends Model
                 'firma_adi'     =>$data['firma_adi'],
                 'fatura_adresi' =>$data['fatura_adresi'],
                 'vergi_dairesi' =>$data['vergi_dairesi'],
-                'vergi_no'      =>$data['vergi_no'],
-                'bakiye'        =>$data['bakiye'],
-                'yonetim_notu'        =>$data['yonetim_notu'],
-                'durum'         =>$data['durum']
+                'vergi_no'      =>$data['vergi_no']
             ]);
 
         return $guncelle;
-    }
-
-    static function delete($id){
-        return DB::whereId($id)->delete('cari');
     }
 
     /**********************/

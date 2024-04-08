@@ -52,11 +52,14 @@ class Faturalar extends Controller
 
     }
 
-    public function main()
+    public function main($sayfa="")
     {
 
-        AyarModel::basarisiz('Hatalı İşlem','Tanımsız bir faturaya ulaşmaya çalışıyorsunuz.',URL::site());
-        exit();
+        $user = User::data();
+        $faturalar = FaturaModel::cariFaturalari($user->id,"",$sayfa);
+
+        View::user($user);
+        View::faturalar($faturalar);
 
     }
 

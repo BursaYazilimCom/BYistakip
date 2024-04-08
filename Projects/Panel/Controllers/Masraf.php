@@ -83,10 +83,9 @@ class Masraf extends Controller
 
         if(Upload::isFile('belge_dosya')) {
 
-            Upload:
-            convertName()
+            Upload::convertName()
                 ->source('belge_dosya')
-                ->target(UPLOADS_DIR . 'masraf_belgeleri/')
+                ->target(REAL_BASE_DIR . 'masraf_belgeleri/')
                 ->start();
             $dosyaBilgi = Upload::info();
 

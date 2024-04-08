@@ -104,6 +104,13 @@ class InternalSiparisModel extends Model
 
     }
 
+    public function uyeUrunAdet($uye){
+
+        $adet = DB::where('cari',$uye)->siparis_urunleri();
+
+        return $adet->totalRows();
+    }
+
     public function uyeDurumSiparisleri($id,$durum){
 
             $liste = DB::select(

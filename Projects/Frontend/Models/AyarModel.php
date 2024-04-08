@@ -454,7 +454,7 @@ class InternalAyarModel extends Model
 
         $veri = DB::where('id',$id)->siparis_durumlari()->row();
 
-        return $veri->adi;
+        return "<span class='text text-".$veri->uyari."'>".$veri->adi."</span> ";
     }
 
     static function siparisDurumGuncelle($data){

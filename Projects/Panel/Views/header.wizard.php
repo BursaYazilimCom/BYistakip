@@ -175,6 +175,17 @@
 
                         </ul>
                     </li>
+                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="headphones"></i><span>Destek</span></a>
+                        <ul class="dropdown-menu" data-bs-popper="none">
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('destek')}}"><i data-feather="align-justify"></i><span>Talepler</span></a>
+                            </li>
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('destek/departmanlar')}}"><i data-feather="layout"></i><span>Departmanlar</span></a>
+                            </li>
+                            
+                        </ul>
+                    </li>
 
                     <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="settings"></i><span>Ayarlar</span></a>
                         <ul class="dropdown-menu" data-bs-popper="none">

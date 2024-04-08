@@ -14,86 +14,315 @@
 <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
     <!--begin::Post-->
     <div class="content flex-row-fluid" id="kt_content">
-
-    {{ Redirect::select('bilgi',true) }}
         <!--begin::Index-->
         <div class="card card-page">
 
-            <div class="card-body">
+            <div class="card-body" style="padding:20px !important">
                 {{ Redirect::select('bilgi',true) }}
+                
+                <div class="row g-5 g-xl-8">
+                            <!--begin::Col-->
+                            <div class="col-xxl-3">
+                                <!--begin::Statistics Widget 1-->
+                                <div class="card card-l-stretch-50 pb-5 mb-xl-8">
+                                    <!--begin::Body-->
+                                    <div class="card-body d-flex flex-column justify-content-between p-0">
+                                        <!--begin::Hidden-->
+                                        <div class="d-flex flex-column px-9 pt-5">
+                                            <!--begin::Number-->
+                                            <div class="text-success fw-boldest fs-2hx">{{$toplamlar['uyeUrunAdet']}}</div>
+                                            <!--end::Number-->
+                                            <!--begin::Description-->
+                                            <span class="text-gray-400 fw-bold fs-6">Toplam Ürün</span>
+                                            <!--end::Description-->
+                                        </div>
+                                        <!--end::Hidden-->
 
-                <div class="row gy-5 g-xl-8">
-
-                    <div class="col-xxl-12">
-
-                    <div class="card card-xl-stretch mb-5 mb-xl-8">
-												<!--begin::Header-->
-                        <div class="card-header align-items-center border-0 mt-5">
-                            <h3 class="card-title align-items-start flex-column">
-                                <span class="fw-bolder text-dark fs-2">Ödeme Bekleyen Ürünlerim</span>
-
-                            </h3>
-                            <div class="card-toolbar">
-                                <!--begin::Menu-->
-                                <button type="button" class="btn btn-sm btn-icon btn-icon-primary btn-active-light-primary me-n3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000" />
-                                                <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
-                                                <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
-                                                <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
-                                            </g>
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </button>
-                                <!--begin::Menu 3-->
-                                <!--end::Menu-->
-                            </div>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
-                        <div class="card-body pt-1">
-                            <!--begin::Item-->
-                            @foreach($uyeUrunleri['liste'] as $uu)
-                            <div class="d-flex flex-stack item-border-hover px-3 py-2 ms-n4 mb-3">
-                                <!--begin::Section-->
-                                <div class="d-flex align-items-center">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-40px symbol-circle me-4">
-                                        <span class="symbol-label bg-light-primary">
-                                            <!--begin::Svg Icon | path: icons/duotune/technology/teh008.svg-->
-                                            <span class="svg-icon svg-icon-1 svg-icon-primary">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path opacity="0.3" d="M11 6.5C11 9 9 11 6.5 11C4 11 2 9 2 6.5C2 4 4 2 6.5 2C9 2 11 4 11 6.5ZM17.5 2C15 2 13 4 13 6.5C13 9 15 11 17.5 11C20 11 22 9 22 6.5C22 4 20 2 17.5 2ZM6.5 13C4 13 2 15 2 17.5C2 20 4 22 6.5 22C9 22 11 20 11 17.5C11 15 9 13 6.5 13ZM17.5 13C15 13 13 15 13 17.5C13 20 15 22 17.5 22C20 22 22 20 22 17.5C22 15 20 13 17.5 13Z" fill="black" />
-                                                    <path d="M17.5 16C17.5 16 17.4 16 17.5 16L16.7 15.3C16.1 14.7 15.7 13.9 15.6 13.1C15.5 12.4 15.5 11.6 15.6 10.8C15.7 9.99999 16.1 9.19998 16.7 8.59998L17.4 7.90002H17.5C18.3 7.90002 19 7.20002 19 6.40002C19 5.60002 18.3 4.90002 17.5 4.90002C16.7 4.90002 16 5.60002 16 6.40002V6.5L15.3 7.20001C14.7 7.80001 13.9 8.19999 13.1 8.29999C12.4 8.39999 11.6 8.39999 10.8 8.29999C9.99999 8.19999 9.20001 7.80001 8.60001 7.20001L7.89999 6.5V6.40002C7.89999 5.60002 7.19999 4.90002 6.39999 4.90002C5.59999 4.90002 4.89999 5.60002 4.89999 6.40002C4.89999 7.20002 5.59999 7.90002 6.39999 7.90002H6.5L7.20001 8.59998C7.80001 9.19998 8.19999 9.99999 8.29999 10.8C8.39999 11.5 8.39999 12.3 8.29999 13.1C8.19999 13.9 7.80001 14.7 7.20001 15.3L6.5 16H6.39999C5.59999 16 4.89999 16.7 4.89999 17.5C4.89999 18.3 5.59999 19 6.39999 19C7.19999 19 7.89999 18.3 7.89999 17.5V17.4L8.60001 16.7C9.20001 16.1 9.99999 15.7 10.8 15.6C11.5 15.5 12.3 15.5 13.1 15.6C13.9 15.7 14.7 16.1 15.3 16.7L16 17.4V17.5C16 18.3 16.7 19 17.5 19C18.3 19 19 18.3 19 17.5C19 16.7 18.3 16 17.5 16Z" fill="black" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </span>
                                     </div>
-                                    <!--end::Symbol-->
-                                    <!--begin::Title-->
-                                    <div class="ps-1 mb-1">
-                                        <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-boldest">{{$uu->notu}}</a>
-                                        <div class="text-gray-400 fw-bold">{{$uu->urun_adi}}</div>
-                                    </div>
-                                    <!--end::Title-->
+                                    <!--end::Body-->
                                 </div>
-                                <!--end::Section-->
-                                <!--begin::Label-->
-                                <span class="badge badge-light rounded-pill fs-7 fw-boldest">{{Date::convert($uu->bitis_tarihi,'d.m.Y')}}</span>
-                                <!--end::Label-->
                             </div>
-                            @endforeach
+                            <!--end::Col-->
+                            
+                            <div class="col-xxl-3">
+                                <!--begin::Statistics Widget 1-->
+                                <div class="card pb-5  mb-xl-8">
+                                    <!--begin::Body-->
+                                    <div class="card-body d-flex flex-column justify-content-between p-0">
+                                        <!--begin::Hidden-->
+                                        <div class="d-flex flex-column px-9 pt-5">
+                                            <!--begin::Number-->
+                                            <div class="text-success fw-boldest fs-2hx">{{$toplamlar['talepler']}}</div>
+                                            <!--end::Number-->
+                                            <!--begin::Description-->
+                                            <span class="text-gray-400 fw-bold fs-6">Destek Talepleri</span>
+                                            <!--end::Description-->
+                                        </div>
+                                        <!--end::Hidden-->
 
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                            </div>
+                            <!--begin::Col-->
+                            <div class="col-xxl-3">
+                                <!--begin::Mixed Widget 2-->
+                                <div class="card pb-5 mb-xl-8">
+                                    <!--begin::Body-->
+                                    <div class="card-body d-flex flex-column justify-content-between p-0">
+                                        <!--begin::Hidden-->
+                                        <div class="d-flex flex-column px-9 pt-5">
+                                            <!--begin::Number-->
+                                            <span class="text-danger fw-boldest fs-2hx">{{$toplamlar['odenmemisFaturaToplami']}} ₺</span>
+                                            <!--end::Number-->
+                                            <!--begin::Description-->
+                                            <span class="text-gray-400 fw-bold fs-6">Ödenmemiş Fatura</span>
+                                            <!--end::Description-->
+                                        </div>
+                                        <!--end::Hidden-->
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-xxl-3">
+                                <!--begin::Mixed Widget 2-->
+                                <div class="card pb-5  mb-xl-8">
+                                    <!--begin::Body-->
+                                    <div class="card-body d-flex flex-column justify-content-between p-0">
+                                        <!--begin::Hidden-->
+                                        <div class="d-flex flex-column px-9 pt-5">
+                                            <!--begin::Number-->
+                                            <span class="text-primary fw-boldest fs-2hx">{{$toplamlar['odenenFaturaToplami']}} ₺</span>
+                                            <!--end::Number-->
+                                            <!--begin::Description-->
+                                            <span class="text-gray-400 fw-bold fs-6">Toplam Ödemeniz</span>
+                                            <!--end::Description-->
+                                        </div>
+                                        <!--end::Hidden-->
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--end::Col-->
                         </div>
-                        <!--end::Body-->
-                    </div>
+
+                <div class="row">
+
+                    <div class="col-xxl-6">
+
+                        <div class="card mb-5 mb-xl-8">
+                                                    <!--begin::Header-->
+                            <div class="card-header align-items-center border-0 mt-5">
+                                <h3 class="card-title align-items-start flex-column">
+                                    <span class="fw-bolder text-dark fs-3">Tarihi Yaklaşan Ürünleriniz</span>
+                                </h3>
+                                <div class="card-toolbar"><a class="badge badge-primary" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Tüm Ürünlerimi Göster" href="{{URL::site('siparisler')}}"><strong>Tüm Ürünlerim</strong></a>
+                                </div>
+                            </div>  
+                            <!--end::Header-->
+                            <!--begin::Body-->
+                            <div class="card-body pt-1 p-1">
+                                <table class="table table-hover table-rounded table-striped border gy-3 gs-3">
+                                    <thead>
+                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                            <th>Ürün</th>
+                                            <th>Fiyat</th>
+                                            <th>Son Ödeme</th>
+                                            <th class="text-center">Durum</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--begin::Item-->
+                                        {[ $u++; ]}
+                                        @foreach($uyeUrunleri['liste'] as $uu)
+                                        <tr>
+                                            <td><strong>{{$uu->notu}}</strong><br><small>{{$uu->urun_adi}}</small></td>
+                                            <td>{{number_format($uu->genel_toplam_tutari,2)}}</td>
+                                            <td>{{Date::convert($uu->bitis_tarihi,'d.m.Y')}}</td>
+                                            <td class="text-center">{{AyarModel::siparisDurumAdi($uu->durum)}}</td>
+                                            <td>
+                                            <a href="{{URL::site('siparisler/urunDetay/'.$uu->id)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Ürün Görüntüle"><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
+                                            </td>
+                                        </tr>
+                                        
+                                        {[ $u++;
+                                            if($u==6){break;}
+                                            ]}
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Body-->
+                        </div>
 
                     </div>
+
+                    <div class="col-xxl-6">
+
+                        <div class="card card-xl-stretch mb-5 mb-xl-8">
+                                                    <!--begin::Header-->
+                            <div class="card-header align-items-center border-0 mt-5">
+                                <h3 class="card-title align-items-start flex-column">
+                                    <span class="fw-bolder text-dark fs-2">Ödenmemiş Faturalarınız</span>
+                                </h3>
+                                <div class="card-toolbar"><a class="badge badge-primary" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Tüm Faturalarımı Göster" href="{{URL::site('faturalarim')}}"><strong>Tüm Faturalarınız</strong></a>
+                                </div>
+                            </div>  
+                            <!--end::Header-->
+                            <!--begin::Body-->
+                            <div class="card-body pt-1 p-1">
+                                <table class="table table-hover table-rounded table-striped border gy-3 gs-3">
+                                    <thead>
+                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                         
+                                            <th>Oluşturma</th>
+                                            <th>Son Ödeme</th>
+                                            <th>Tutar</th>
+                                            <th>Durum</th>
+                                            <th>Ödeme</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--begin::Item-->
+                                        @foreach($faturalar['liste'] as $fatura)
+                                        <tr>
+                                        <td>{{Date::convert($fatura->belge_tarihi,"d.m.Y")}}</td>
+                                        <td>{{Date::convert($fatura->vade_tarihi,"d.m.Y")}}</td>
+                                        <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
+
+                                        <td>
+                                            @if($fatura->durum=="0")
+                                            <span class="badge rounded-pill badge-danger"> İptal </span>
+                                            @elseif($fatura->durum=="1")
+                                            <span class="badge rounded-pill badge-warning"> Resmileşmemiş </span>
+                                            @elseif($fatura->durum=="2")
+                                            <span class="badge rounded-pill badge-success"> Resmi Faturalı </span>
+                                            @else
+                                            <span class="badge rounded-pill badge-primary"> Tanımsız </span>
+                                            @endif
+                                        </td>
+                                        <td>@if($fatura->odeme=="1")
+                                            <span class="badge rounded-pill badge-success"> Ödendi </span>
+                                            @else
+                                            <span class="badge rounded-pill badge-danger"> Ödenmedi </span>
+                                            @endif</td>
+                                            <td>
+                                            <a href="{{URL::site('faturalar/detay/'.$fatura->id)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Fatura Görüntüle" target="_blank" ><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
+                                            </td>
+                                    </tr>
+                                        
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+
+                    </div>
+
+                    <div class="col-xxl-6">
+
+                        <div class="card card-xl-stretch mb-5 mb-xl-8">
+                                                    <!--begin::Header-->
+                            <div class="card-header align-items-center border-0 mt-5">
+                                <h3 class="card-title align-items-start flex-column">
+                                    <span class="fw-bolder text-dark fs-2">Projeleriniz</span>
+                                </h3>
+                                <div class="card-toolbar"><a class="badge badge-primary" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Tüm Faturalarımı Göster" href="{{URL::site('proje/liste')}}"><strong>Tüm Projeleriniz</strong></a>
+                                </div>
+                            </div>  
+                            <!--end::Header-->
+                            <!--begin::Body-->
+                            <div class="card-body pt-1 p-1">
+                                <table class="table table-hover table-rounded table-striped border gy-3 gs-3">
+                                    <thead>
+                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                            <th>Proje Adı</th>
+                                            <th>Başlangıç</th>
+                                            <th>Termin</th>
+                                            <th class="text-end">Durum</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--begin::Item-->
+                                        @foreach($cariProjeleri['liste'] as $proje)
+                                            <tr>
+                                                <td>{{$proje->proje_adi}}</td>
+                                                <td>{{Date::convert($proje->proje_baslangic_tarihi,'d.m.Y')}}</td>
+                                                <td>{{Date::convert($proje->tahmini_bitis_tarihi,'d.m.Y')}}</td>
+                                                <td>
+                                                    <span class="badge badge-{{$proje->durum==1?'success':'primary'}}">{{$proje->durum==1?'Teslim Edildi':'Devam Ediyor'}}</span>
+                                                </td>
+                                               
+                                                <td>
+                                                    <a href="{{URL::site('proje/'.$proje->sef)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Proje Görüntüle" target="_blank" ><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+
+                    </div>
+
+                    <div class="col-xxl-6">
+
+                        <div class="card card-xl-stretch mb-5 mb-xl-8">
+                                                    <!--begin::Header-->
+                            <div class="card-header align-items-center border-0 mt-5">
+                                <h3 class="card-title align-items-start flex-column">
+                                    <span class="fw-bolder text-dark fs-2">Destek Taleplerim</span>
+                                </h3>
+                                <div class="card-toolbar">
+                                    <a class="badge badge-danger" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Tüm Faturalarımı Göster" href="{{URL::site('destek/olustur')}}"><strong>Talep Oluştur</strong></a> 
+                                    <a class="badge badge-primary" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Tüm Faturalarımı Göster" href="{{URL::site('destek')}}"><strong>Taleplerim</strong></a>
+                                </div>
+                            </div>  
+                            <!--end::Header-->
+                            <!--begin::Body-->
+                            <div class="card-body pt-1 p-1">
+                                <table class="table table-hover table-rounded table-striped border gy-3 gs-3">
+                                    <thead>
+                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                            <th>Konu</th>
+                                            <th>Talep Tarihi</th>
+                                            <th class="text-center">Durum</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--begin::Item-->
+                                        
+                                            <tr>
+                                                <td>Ödeme Hakkında Destek</td>
+                                                <td>05.04.2024 15:25</td>
+                                                <td>
+                                                    <span class="badge badge-primary">Devam Ediyor</span>
+                                                </td>
+                                               
+                                                <td class="text-center">
+                                                    <a href="{{URL::site('destek/detay/'.$proje->sef)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Talep Görüntüle" target="_blank" ><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
+                                                </td>
+                                            </tr>
+                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+
+                    </div>
+
+                    
 
                 </div>
 

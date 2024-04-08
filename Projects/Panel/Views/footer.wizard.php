@@ -143,6 +143,11 @@
             tabsize: 2,
             height: 200
         });
+        $('#summernote2').summernote({
+            placeholder: 'Müşterilerinize Göstereceğiniz Cevabı Girin',
+            tabsize: 2,
+            height: 200
+        });
         let buttons = $('.note-editor button[data-toggle="dropdown"]');
 
         buttons.each((key, value)=>{

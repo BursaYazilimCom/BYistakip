@@ -1,39 +1,33 @@
-<!--end::Header-->
-<!--begin::Toolbar-->
 <div class="toolbar py-5 py-lg-15" id="kt_toolbar">
-    <!--begin::Container-->
+
     <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
-        <!--begin::Title-->
+
         <h3 class="text-white fw-bolder fs-2qx me-5">{{AyarModel::defaultAyarlar('siteAdi')}}</h3>
-        <!--begin::Title-->
+
     </div>
-    <!--end::Container-->
+
 </div>
-<!--end::Toolbar-->
-<!--begin::Container-->
+
 <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
-    <!--begin::Post-->
+
     <div class="content flex-row-fluid" id="kt_content">
 
     {{ Redirect::select('bilgi',true) }}
-        <!--begin::Index-->
+
         <div class="card card-page">
-            <!--begin::Card body-->
+
             <div class="card-body">
                 {{ Redirect::select('bilgi',true) }}
-                <!--begin::Row-->
+
                 <div class="row gy-5 g-xl-8">
-                    <!--begin::Col-->
    
                     <div class="col-xxl-6">
 
-
                     @if(AyarModel::defaultAyarlar('uyeGirisi')=='1')
-
 
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                @Form::csrf()->action('Login/renevPassword')->open('submitForm',['id'=>'submitForm'])
+                                @Form::csrf()->action('Login/renevPassword')->open('submitForm',['class'=>'form-control'])
 
                                         <div class="mb-5">
                                             <label class="form-label">E-Mail Adresiniz</label>
@@ -47,7 +41,7 @@
                                                 @Form::vCaptcha()->id('username')->placeholder('Resimdeki Kodu Giriniz')->text('text','',['class'=>'form-control'])
                                         </div>
                                         <div class="mb-5">
-                                            <button href="#" class="btn btn-primary" style="width: 100%">Giriş Yap</button>
+                                            <button type="submit" class="btn btn-primary" style="width: 100%">Sıfırlama Maili Gönder</button>
                                         </div>
                                 @Form::close()
                             </div>

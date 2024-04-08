@@ -30,62 +30,31 @@
                 <div class="header-menu align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
                     <!--begin::Menu-->
                     <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
-                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item here show menu-lg-down-accordion me-lg-1">
-                            <span class="menu-link py-3">
+                        <div data-kt-menu-placement="bottom-start" class="menu-item {{CURRENT_CONTROLLER=="Home"?"here":""}} menu-lg-down-accordion me-lg-1">
+                            <a href="{{URl::site()}}" class="menu-link py-3">
                                 <span class="menu-title">Anasayfa</span>
-                                <span class="menu-arrow d-lg-none"></span>
-                            </span>
+                            </a>
                         </div>
                         @if($user->id!="")
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
-                                <span class="menu-link py-3">
-                                    <span class="menu-title">Pages</span>
-                                    <span class="menu-arrow d-lg-none"></span>
-                                </span>
-                                <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
-                                    <div class="menu-item">
-                                        <a class="menu-link py-3" href="../dist/general/about.html">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">About Us</span>
-                                        </a>
-                                    </div>
-                                    <div class="menu-item">
-                                        <a class="menu-link py-3" href="../dist/general/invoice.html">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Invoice</span>
-                                        </a>
-                                    </div>
-                                    <div class="menu-item">
-                                        <a class="menu-link py-3" href="../dist/general/faq.html">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">FAQ</span>
-                                        </a>
-                                    </div>
-                                    <div class="menu-item">
-                                        <a class="menu-link py-3" href="#" data-kt-page="pro">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Wizard
-                                            <span class="badge badge-pro badge-light-danger fw-bold fs-9 px-2 py-1 ms-1">Pro</span></span>
-                                        </a>
-                                    </div>
-                                    <div class="menu-item">
-                                        <a class="menu-link py-3" href="#" data-kt-page="pro">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Pricing
-                                            <span class="badge badge-pro badge-light-danger fw-bold fs-9 px-2 py-1 ms-1">Pro</span></span>
-                                        </a>
-                                    </div>
-                                </div>
+                            <div data-kt-menu-placement="bottom-start" class="menu-item {{CURRENT_CONTROLLER=="Siparisler"?"here":""}} menu-lg-down-accordion me-lg-1">
+                                <a href="{{URL::site('siparisler')}}" class="menu-link py-3">
+                                    <span class="menu-title">Siparişlerim</span>
+                                </a>
+                            </div>
+                            <div data-kt-menu-placement="bottom-start" class="menu-item {{CURRENT_CONTROLLER=="Faturalar"?"here":""}} menu-lg-down-accordion me-lg-1">
+                                <a href="{{URL::site('faturalar')}}" class="menu-link py-3">
+                                    <span class="menu-title">Faturalarım</span>
+                                </a>
+                            </div>
+                            <div data-kt-menu-placement="bottom-start" class="menu-item {{CURRENT_CONTROLLER=="Proje"?"here":""}} menu-lg-down-accordion me-lg-1">
+                                <a href="{{URL::site('proje/liste')}}" class="menu-link py-3">
+                                    <span class="menu-title">Projelerim</span>
+                                </a>
+                            </div>
+                            <div data-kt-menu-placement="bottom-start" class="menu-item {{CURRENT_CONTROLLER=="Destek"?"here":""}} menu-lg-down-accordion me-lg-1">
+                                <a href="{{URL::site('destek')}}" class="menu-link py-3">
+                                    <span class="menu-title">Taleplerim</span>
+                                </a>
                             </div>
                         @endif
                     </div>
@@ -114,13 +83,10 @@
                                 </div>
                                 <div class="separator my-2"></div>
                                 <div class="menu-item px-5">
-                                    <a href="{{URL::site('profil')}}" class="menu-link px-5">Hesabım</a>
+                                    <a href="{{URL::site('profil')}}" class="menu-link px-5">Bilgilerim</a>
                                 </div>
                                 <div class="menu-item px-5">
-                                    <a href="#" class="menu-link px-5">Giriş Kayıtlarım</a>
-                                </div>
-                                <div class="menu-item px-5">
-                                    <a href="#" class="menu-link px-5">Bakiye Yükle</a>
+                                    <a href="{{URL::site('profil/sifre')}}" class="menu-link px-5">Şifre Değiştir</a>
                                 </div>
                                 <div class="separator my-2"></div>
                                 <div class="menu-item px-5">

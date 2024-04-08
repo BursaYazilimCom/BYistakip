@@ -212,7 +212,7 @@ class InternalUrunModel extends Model
     
     /*****************************************************/
 
-    public function stokluUrunStokGuncelle($urun,$miktar){
+    static function stokluUrunStokGuncelle($urun,$miktar){
 
         $guncelle = DB::where('id',$urun)
             ->update('urunler',[
