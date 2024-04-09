@@ -162,13 +162,15 @@
                                             @endif
 
 
-                                        <tr class="fw-bolder text-gray-700 fs-5 text-end">
-                                            <td class="d-flex align-items-center pt-6">
-                                                {{$furun->urun_adi}}</td>
-                                            <td class="pt-6">{{$furun->miktar}}</td>
-                                            <td class="pt-6">{{number_format($furun->fiyat,2)}}</td>
-                                            <td class="pt-6">%{{$furun->kdv}}</td>
-                                            <td class="pt-6 text-dark fw-boldest">{{number_format($furun->fiyat*$furun->miktar,2)}} ₺</td>
+                                        <tr class="fw-bolder text-gray-700 fs-5">
+                                            <td class="align-right pt-6">
+                                            {{$furun->aciklama}}<br>
+                                                <small>{{$furun->urun_adi}}</small>
+                                            </td>
+                                            <td class="pt-6  text-end">{{$furun->miktar}}</td>
+                                            <td class="pt-6 text-end">{{number_format($furun->fiyat,2)}}</td>
+                                            <td class="pt-6 text-end">%{{$furun->kdv}}</td>
+                                            <td class="pt-6 text-end text-dark fw-boldest">{{number_format($furun->fiyat*$furun->miktar,2)}} ₺</td>
                                         </tr>
                                         @endforeach
 

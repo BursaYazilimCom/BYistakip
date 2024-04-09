@@ -25,7 +25,7 @@ class Home extends Controller
 
         $toplamlar = [
             'uyeUrunAdet' => SiparisModel::uyeUrunAdet($user->id),
-            'talepler' => 5,
+            'talepler' => $talepler['toplam'],
             'odenmemisFaturaToplami' => number_format(FaturaModel::cariFaturaToplamlari($user->id,'0')->toplam,2),
             'odenenFaturaToplami' => number_format(FaturaModel::cariFaturaToplamlari($user->id,'1')->toplam,2)
         ];

@@ -22,7 +22,7 @@
                 
                 <div class="row g-5 g-xl-8">
                             <!--begin::Col-->
-                            <div class="col-xxl-3">
+                            <div class="col-xxl-3 col-sm-6">
                                 <!--begin::Statistics Widget 1-->
                                 <div class="card card-l-stretch-50 pb-5 mb-xl-8">
                                     <!--begin::Body-->
@@ -44,7 +44,7 @@
                             </div>
                             <!--end::Col-->
                             
-                            <div class="col-xxl-3">
+                            <div class="col-xxl-3 col-sm-6">
                                 <!--begin::Statistics Widget 1-->
                                 <div class="card pb-5  mb-xl-8">
                                     <!--begin::Body-->
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <!--begin::Col-->
-                            <div class="col-xxl-3">
+                            <div class="col-xxl-3 col-sm-6">
                                 <!--begin::Mixed Widget 2-->
                                 <div class="card pb-5 mb-xl-8">
                                     <!--begin::Body-->
@@ -86,8 +86,7 @@
 
                             </div>
 
-
-                            <div class="col-xxl-3">
+                            <div class="col-xxl-3 col-sm-6">
                                 <!--begin::Mixed Widget 2-->
                                 <div class="card pb-5  mb-xl-8">
                                     <!--begin::Body-->
@@ -130,9 +129,9 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                             <th>Ürün</th>
-                                            <th>Fiyat</th>
+                                            <th class="d-none d-sm-block">Fiyat</th>
                                             <th>Son Ödeme</th>
-                                            <th class="text-center">Durum</th>
+                                            <th class="text-center d-none d-sm-block">Durum</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -142,9 +141,9 @@
                                         @foreach($uyeUrunleri['liste'] as $uu)
                                         <tr>
                                             <td><strong>{{$uu->notu}}</strong><br><small>{{$uu->urun_adi}}</small></td>
-                                            <td>{{number_format($uu->genel_toplam_tutari,2)}}</td>
+                                            <td class="d-none d-sm-block">{{number_format($uu->genel_toplam_tutari,2)}}</td>
                                             <td>{{Date::convert($uu->bitis_tarihi,'d.m.Y')}}</td>
-                                            <td class="text-center">{{AyarModel::siparisDurumAdi($uu->durum)}}</td>
+                                            <td class="text-center d-none d-sm-block">{{AyarModel::siparisDurumAdi($uu->durum)}}</td>
                                             <td>
                                             <a href="{{URL::site('siparisler/urunDetay/'.$uu->id)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Ürün Görüntüle"><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
                                             </td>
@@ -180,10 +179,10 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                          
-                                            <th>Oluşturma</th>
+                                            <th class="d-none d-sm-block">Oluşturma</th>
                                             <th>Son Ödeme</th>
                                             <th>Tutar</th>
-                                            <th>Durum</th>
+                                            <th class="d-none d-sm-block">Durum</th>
                                             <th>Ödeme</th>
                                             <th></th>
                                         </tr>
@@ -192,11 +191,11 @@
                                         <!--begin::Item-->
                                         @foreach($faturalar['liste'] as $fatura)
                                         <tr>
-                                        <td>{{Date::convert($fatura->belge_tarihi,"d.m.Y")}}</td>
+                                        <td class="d-none d-sm-block">{{Date::convert($fatura->belge_tarihi,"d.m.Y")}}</td>
                                         <td>{{Date::convert($fatura->vade_tarihi,"d.m.Y")}}</td>
                                         <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
 
-                                        <td>
+                                        <td class="d-none d-sm-block">
                                             @if($fatura->durum=="0")
                                             <span class="badge rounded-pill badge-danger"> İptal </span>
                                             @elseif($fatura->durum=="1")
@@ -244,9 +243,9 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                             <th>Proje Adı</th>
-                                            <th>Başlangıç</th>
-                                            <th>Termin</th>
-                                            <th class="text-end">Durum</th>
+                                            <th class="d-none d-sm-block">Başlangıç</th>
+                                            <th class="d-none d-sm-block">Termin</th>
+                                            <th>Durum</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -255,8 +254,8 @@
                                         @foreach($cariProjeleri['liste'] as $proje)
                                             <tr>
                                                 <td>{{$proje->proje_adi}}</td>
-                                                <td>{{Date::convert($proje->proje_baslangic_tarihi,'d.m.Y')}}</td>
-                                                <td>{{Date::convert($proje->tahmini_bitis_tarihi,'d.m.Y')}}</td>
+                                                <td class="d-none d-sm-block">{{Date::convert($proje->proje_baslangic_tarihi,'d.m.Y')}}</td>
+                                                <td class="d-none d-sm-block">{{Date::convert($proje->tahmini_bitis_tarihi,'d.m.Y')}}</td>
                                                 <td>
                                                     <span class="badge badge-{{$proje->durum==1?'success':'primary'}}">{{$proje->durum==1?'Teslim Edildi':'Devam Ediyor'}}</span>
                                                 </td>
@@ -294,7 +293,7 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                             <th>Konu</th>
-                                            <th>Güncelleme Tarihi</th>
+                                            <th class="d-none d-sm-block">Güncelleme Tarihi</th>
                                             <th>Durum</th>
                                             <th></th>
                                         </tr>
@@ -304,7 +303,7 @@
                                         @foreach($talepler['liste'] as $talep)
                                             <tr>
                                                 <td>{{$talep->konu}}</td>
-                                                <td>{{Date::convert($talep->guncelleme_tarihi,'d.m.Y H:i')}}</td>
+                                                <td class="d-none d-sm-block">{{Date::convert($talep->guncelleme_tarihi,'d.m.Y H:i')}}</td>
                                                 <td>
                                                     @if($talep->durum=="0")
                                                         <span class="badge bg-primary">Kapandı</span>

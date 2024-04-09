@@ -30,7 +30,7 @@
                                                     <!--begin::Header-->
                             <div class="card-header align-items-center border-0 mt-5">
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="fw-bolder text-dark fs-2">Ödenmemiş Faturalarınız</span>
+                                    <span class="fw-bolder text-dark fs-2">Faturalarınız</span>
                                 </h3>
                                 <div class="card-toolbar"><a class="badge badge-primary" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Tüm Faturalarımı Göster" href="{{URL::site('faturalarim')}}"><strong>Tüm Faturalarınız</strong></a>
                                 </div>
@@ -42,10 +42,10 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                          
-                                            <th>Oluşturma</th>
+                                            <th class="d-none d-sm-block">Oluşturma</th>
                                             <th>Son Ödeme</th>
                                             <th>Tutar</th>
-                                            <th>Durum</th>
+                                            <th class="d-none d-sm-block">Durum</th>
                                             <th>Ödeme</th>
                                             <th></th>
                                         </tr>
@@ -54,11 +54,11 @@
                                         <!--begin::Item-->
                                         @foreach($faturalar["liste"] as $fatura)
                                         <tr>
-                                        <td>{{Date::convert($fatura->belge_tarihi,"d.m.Y")}}</td>
+                                        <td class="d-none d-sm-block">{{Date::convert($fatura->belge_tarihi,"d.m.Y")}}</td>
                                         <td>{{Date::convert($fatura->vade_tarihi,"d.m.Y")}}</td>
                                         <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
 
-                                        <td>
+                                        <td class="d-none d-sm-block">
                                             @if($fatura->durum=="0")
                                             <span class="badge rounded-pill badge-danger"> İptal </span>
                                             @elseif($fatura->durum=="1")

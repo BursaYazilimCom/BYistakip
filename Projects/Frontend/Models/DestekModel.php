@@ -16,7 +16,7 @@ class InternalDestekModel extends Model
             ->limit($sayfa,25)
             ->orderby('id','DESC')->destek_talepleri();
 
-        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'toplam'=>$veri->totalRows(true)];
     }
 
     static function ekle($data){

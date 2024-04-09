@@ -44,7 +44,7 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                             <th>Konu</th>
-                                            <th>Oluşturma Tarihi</th>
+                                            <th class="d-none d-sm-block">Oluşturma Tarihi</th>
                                             <th>Gücelleme Tariih</th>
                                             <th>Durum</th>
                                             <th></th>
@@ -55,7 +55,7 @@
                                         @foreach($listele['liste'] as $tlp)
                                             <tr>
                                                 <td>{{$tlp->konu}}</td>
-                                                <td>{{Date::convert($tlp->tarih,'d.m.Y H:i')}}</td>
+                                                <td class="d-none d-sm-block">{{Date::convert($tlp->tarih,'d.m.Y H:i')}}</td>
                                                 <td>
                                                     @if($tlp->guncelleme_tarihi!="" or $tlp->guncelleme_tarihi!="Null")
                                                         {{Date::convert($tlp->guncelleme_tarihi,'d.m.Y H:i')}}

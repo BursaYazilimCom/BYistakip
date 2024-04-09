@@ -47,8 +47,8 @@
                                             @Form::vRequired()->id('password')->placeholder('Şifreniz')->password('password','',['class'=>'form-control'])
                                         </div>
                                         <div class="mb-5">
-                                            <button href="#" class="btn btn-primary" style="width: 49%">Giriş Yap</button>
-                                            <a href="{{URL::site('Login/password')}}" class="btn btn-warning" style="width: 49%">Şifremi Unuttum</a>
+                                            <button href="#" class="btn btn-primary" style="width: 38%">Giriş Yap</button>
+                                            <a href="{{URL::site('Login/password')}}" class="btn btn-warning" style="width: 60%">Şifremi Unuttum</a>
                                         </div>
                                 @Form::close()
                             </div>
