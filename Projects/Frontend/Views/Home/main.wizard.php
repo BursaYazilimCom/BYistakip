@@ -283,8 +283,8 @@
                                     <span class="fw-bolder text-dark fs-2">Destek Taleplerim</span>
                                 </h3>
                                 <div class="card-toolbar">
-                                    <a class="badge badge-danger" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Tüm Faturalarımı Göster" href="{{URL::site('destek/olustur')}}"><strong>Talep Oluştur</strong></a> 
-                                    <a class="badge badge-primary" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Tüm Faturalarımı Göster" href="{{URL::site('destek')}}"><strong>Taleplerim</strong></a>
+                                    <a class="badge badge-danger" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Yeni Destek Talebi Oluştur" href="{{URL::site('destek/form')}}"><strong>Talep Oluştur</strong></a> 
+                                    <a class="badge badge-primary" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Tüm Destek Taleplerimi Göster" href="{{URL::site('destek')}}"><strong>Taleplerim</strong></a>
                                 </div>
                             </div>  
                             <!--end::Header-->
@@ -294,25 +294,36 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                             <th>Konu</th>
-                                            <th>Talep Tarihi</th>
-                                            <th class="text-center">Durum</th>
+                                            <th>Güncelleme Tarihi</th>
+                                            <th>Durum</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <!--begin::Item-->
-                                        
+                                        @foreach($talepler['liste'] as $talep)
                                             <tr>
-                                                <td>Ödeme Hakkında Destek</td>
-                                                <td>05.04.2024 15:25</td>
+                                                <td>{{$talep->konu}}</td>
+                                                <td>{{Date::convert($talep->guncelleme_tarihi,'d.m.Y H:i')}}</td>
                                                 <td>
-                                                    <span class="badge badge-primary">Devam Ediyor</span>
+                                                    @if($talep->durum=="0")
+                                                        <span class="badge bg-primary">Kapandı</span>
+                                                    @elseif($talep->durum=="1")
+                                                        <span class="badge bg-danger">Yeni</span>
+                                                    @elseif($talep->durum=="2")
+                                                        <span class="badge bg-info">Yanıtlandı</span>
+                                                    @elseif($talep->durum=="3")
+                                                        <span class="badge bg-warning">Müşteri Cevapladı</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Tanımsız</span>
+                                                    @endif
                                                 </td>
                                                
                                                 <td class="text-center">
-                                                    <a href="{{URL::site('destek/detay/'.$proje->sef)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Talep Görüntüle" target="_blank" ><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
+                                                    <a href="{{URL::site('destek/detay/'.$talep->id)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Talep Görüntüle" target="_blank" ><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
                                                 </td>
                                             </tr>
+                                        @endforeach
                                       
                                     </tbody>
                                 </table>

@@ -48,8 +48,8 @@ class Destek extends Controller
         $destekMesajlari    = DestekModel::mesajlar($id);
 
         if($id){
-            $data = DestekModel::detay($id);
 
+            $data = DestekModel::detay($id);
             View::detay($data);
             View::action("destek/update/".$id);
 
@@ -106,10 +106,9 @@ class Destek extends Controller
 
     public function update($id){
 
-        if(!Validation::check()){
+        if(!is_numeric(Post::musteri()) or !is_numeric(Post::departman()) or !is_numeric(Post::durum())){
 
-
-            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
+            Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());
 
         }else{
 

@@ -175,10 +175,18 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="headphones"></i><span>Destek</span></a>
+                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="headphones"></i><span>Destek</span> 
+                        @if($bekleyenTalepler>0) 
+                            <span class="badge bg-danger">{{$bekleyenTalepler}}</span> 
+                        @endif 
+                    </a>
                         <ul class="dropdown-menu" data-bs-popper="none">
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('destek')}}"><i data-feather="align-justify"></i><span>Talepler</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('destek')}}"><i data-feather="align-justify"></i><span>Talepler</span>
+                                @if($bekleyenTalepler>0)
+                                    <span class="badge bg-danger">{{$bekleyenTalepler}}</span>
+                                @endif
+                            </a>
                             </li>
                             <li data-menu="">
                                 <a class="dropdown-item d-flex align-items-center" href="{{URL::site('destek/departmanlar')}}"><i data-feather="layout"></i><span>Departmanlar</span></a>

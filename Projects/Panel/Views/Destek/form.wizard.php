@@ -41,9 +41,8 @@
                             {{ Redirect::select('bilgi',true) }}
                            
                             <div class="col-md-6 col-12">
-                                 @Form::csrf()->action($action)->open('submitForm',['class'=>'form form-horizontal'])
+                                 
 
-                            @Form::hidden('id',$detay->id,['class'=>'form-control'])
                                 <div class="card brdt-warning">
                                     <div class="card-header">
                                         <h4 class="card-title">Destek Talep Detayları</h4>
@@ -58,7 +57,6 @@
                                                 </div>
                                                 <div class="col-sm-12">
                                                     {{$detay->konu}}
-                                                
                                                 </div>
                                             </div>
                                         </div>
@@ -74,6 +72,8 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        @Form::csrf()->action($action)->open('talepForm',['class'=>'form form-horizontal'])
 
                                         <div class="row">
                                             <div class="col-12">
@@ -134,16 +134,16 @@
                                                 <div class="col-sm-12">
                                                    <button type="submit" class="btn btn-primary me-1 mt-1" style="width: 100%">Kaydet</button>
                                                 </div>
-
+                                        @Form::close()
                                     </div>
                                 </div>
-                                @Form::close()
+                                
                             </div>
 
                             
 
                                 <div class="col-md-6 col-12">
-                                @Form::csrf()->action('destek/cevapla/'.$detay->id)->open('submitForm',['class'=>'form form-horizontal','enctype'=>'multipart/form-data'])
+                                @Form::csrf()->action('destek/cevapla/'.$detay->id)->open('cevapForm',['class'=>'form form-horizontal','enctype'=>'multipart/form-data'])
                                     <div class="card">
                                     <h4 class="card-header">Mesajlar</h4>
                                     <div class="card-body pt-1">

@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-Use User,KasaModel,AyarModel,InternalUrunModel as UrunModel,SiparisModel;
+Use User,KasaModel,AyarModel,InternalUrunModel as UrunModel,SiparisModel,InternalDestekModel as DestekModel;
 
 class Initialize extends Controller
 {
@@ -19,7 +19,7 @@ class Initialize extends Controller
             View::user($user);
 
         }
-
+        $bekleyenTalepler  = DestekModel::bekleyenTalepler();
         $urunGruplari       = UrunModel::urunGrupListe();
 
         $kasaHesaplari      = KasaModel::turHesaplari(1);
@@ -36,6 +36,7 @@ class Initialize extends Controller
         //AyarModel::nelerOluyor($user->isim,'masraf', 'Masraf Yönetimini inceliyor');
 
 
+        View::bekleyenTalepler($bekleyenTalepler);
         View::odemeperiyodlari($odemeperiyodlari);
         View::islemGerekenSiparisler($islemGerekenSiparisler);
         View::urunGruplari($urunGruplari);

@@ -121,8 +121,6 @@ class InternalDestekModel extends Model
                 'durum'                 =>$data['durum']
             ]);
 
-            echo DB::stringQuery();
-
         return $guncelle;
     }
 
@@ -137,6 +135,14 @@ class InternalDestekModel extends Model
         $veri = DB::where('talep_id',$id)->orderby('id','ASC')->destek_mesajlari()->result();
 
         return $veri;
+
+    }
+
+    static function bekleyenTalepler(){
+
+        $veri = DB::where('durum','1','or')->where('durum','3')->destek_talepleri();
+
+        return $veri->totalRows();
 
     }
 

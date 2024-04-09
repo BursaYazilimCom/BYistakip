@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
-Use User,URL;
-Use AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel,InternalFaturaModel as FaturaModel;
+Use User,URL,Date;
+Use AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalDestekModel as DestekModel;
 
 class Home extends Controller
 {
@@ -15,12 +15,13 @@ class Home extends Controller
     {
         $user = User::data();
 
-        $cariDetay = CariModel::detay($user->id);
-        $uyeUrunleri = SiparisModel::uyeSiparisUrunleri($user->id,'0');
-        $cariProjeleri = ProjeModel::CariProjeleri($user->id,0);
-        $faturalar = FaturaModel::cariFaturalari($user->id,"0");
-        $odenenler = FaturaModel::cariFaturaToplamlari($user->id,'1');
-        $odenmeyenler = FaturaModel::cariFaturaToplamlari($user->id,'0');
+        $cariDetay      = CariModel::detay($user->id);
+        $uyeUrunleri    = SiparisModel::uyeSiparisUrunleri($user->id,'0');
+        $cariProjeleri  = ProjeModel::CariProjeleri($user->id,0);
+        $faturalar      = FaturaModel::cariFaturalari($user->id,"0");
+        $odenenler      = FaturaModel::cariFaturaToplamlari($user->id,'1');
+        $odenmeyenler   = FaturaModel::cariFaturaToplamlari($user->id,'0');
+        $talepler       = DestekModel::liste($user->id,"");
 
         $toplamlar = [
             'uyeUrunAdet' => SiparisModel::uyeUrunAdet($user->id),
@@ -36,6 +37,7 @@ class Home extends Controller
         View::uyeUrunleri($uyeUrunleri);
         View::cariProjeleri($cariProjeleri);
         View::toplamlar($toplamlar);
+        View::talepler($talepler);
 
 
         Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
