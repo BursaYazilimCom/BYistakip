@@ -62,6 +62,42 @@ class InternalAyarModel extends Model
         return $liste;
 
     }
+
+    public function haftaninGunleri($year, $week,$mount) {
+        $weekDaysArray = array();
+        $dto = new \DateTime();
+        $dto->setISODate($year, $week);
+        
+        for($i = 0; $i < 7; $i++) {
+
+            if($dto->format('D')!="Sat" and $dto->format('D')!="Sun" ){
+
+                array_push($weekDaysArray, $dto->format('Y-m-d'));
+         
+            }
+                //array_push($weekDaysArray, $dto->format('Y-m-d'));
+
+            $dto->modify("+1 days");
+
+            $haftaninAyniAydakiGunleri =[];
+
+            for($g=0;$g<count($weekDaysArray);$g++){
+
+                $gunStrTime = strtotime($weekDaysArray[$g]);
+
+                if(date("m",$gunStrTime)==$mount){
+                    array_push($haftaninAyniAydakiGunleri, $weekDaysArray[$g]);
+                }
+
+            }
+
+        }
+            //print_r($haftaninAyniAydakiGunleri);
+            //print_r($weekDaysArray);
+
+        return $haftaninAyniAydakiGunleri;
+            
+    }
     
 
     static function sqlAyarGetir($sql){

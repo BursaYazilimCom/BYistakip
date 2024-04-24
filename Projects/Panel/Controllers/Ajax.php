@@ -2691,6 +2691,196 @@ class Ajax extends Controller
 
         }
 
+        if(Post::action()=="mesaiSaatiEkle"){
+
+            $personelDetay = PersonelModel::detay(Post::rowid());
+            $personelListe          = PersonelModel::calisanlar();
+            ?>
+
+                <form class="form-horizontal" action="<?=URL::site('personel/mesaiEkle')?>" method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><?=$personelDetay->isim?> Mesai Ekle<Masraf Ekle</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                    
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Personel</label>
+                            <div class="input-group input-group-merge">
+                                <select name="personel" required class="form-control select2"  style="width: 100%;">
+                                <?php 
+                                    foreach($personelListe as $prsnl){
+                                    ?>
+                                            <option value="<?=$prsnl->id?>" <?=$prsnl->id==$personelDetay->id?'selected':''?> >
+                                            <?=$prsnl->isim?>
+                                        </option>
+
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label" for="modalAddCardNumber">Giriş Tarihi</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="date" class="form-control" required name="giris_tarihi" value="<?=date("Y-m-d",strtotime('-1 day',strtotime(date("Y-m-d"))))?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="modalAddCardNumber">Giriş Saati</label>
+                                <div class="input-group input-group-merge">
+                                <input type="time" class="form-control" value="<?=AyarModel::defaultAyarlar('gunlukCalismaBaslangicSaati')?>" required name="giris_saati">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="modalAddCardNumber">Çıkış Tarihi</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="date" class="form-control" required name="cikis_tarihi" value="<?=date("Y-m-d",strtotime('-1 day',strtotime(date("Y-m-d"))))?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="modalAddCardNumber">Çıkış Saati</label>
+                                <div class="input-group input-group-merge">
+                                <input type="time" class="form-control" value="<?=AyarModel::defaultAyarlar('gunlukCalismaBitisSaati')?>" required name="cikis_saati">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Fazla Mesai Sebebi</label>
+                            <div class="input-group input-group-merge">
+                                <input type="text" class="form-control" name="fazla_mesai_sebebi">
+                            </div>
+                        </div>
+
+                        <div class="row custom-options-checkable g-1 mb-1 mt-1">
+
+                            <div class="col-md-4">
+                                <input class="custom-option-item-check" type="radio" name="izin_durumu" id="izin_durumu1" value="1" checked />
+                                <label class="custom-option-item p-1" for="izin_durumu1">
+                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                    <span class="fw-bolder">Çalışıyor</span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <input class="custom-option-item-check" type="radio" value="1" name="izin_durumu" id="izin_durumu2" />
+                                <label class="custom-option-item p-1" for="izin_durumu2">
+                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                    <span class="fw-bolder">Ücretsiz İzinli</span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <input class="custom-option-item-check" type="radio" value="2" name="izin_durumu" id="izin_durumu3" />
+                                <label class="custom-option-item p-1" for="izin_durumu3">
+                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                    <span class="fw-bolder">Ücretli İzinli</span>
+                            </div>
+
+                            
+                        </div>
+
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Kayıt Türü</label>
+                            <div class="input-group input-group-merge">
+                                    <select class="form-control select2" style="width: 100%" name="kayit_turu">
+                                        <option value="N">Normal Çalışma</option>
+                                        <option value="HT">Hafta Tatili</option>
+                                        <option value="R">Raporlu</option>
+                                        <option value="I">Ücretli İzinli</option>
+                                        <option value="UI">Ücretsiz İzinli</option>
+                                        <option value="T">Resmi Tatil</option>
+                                        <option value="SI">Saatlik İzin</option>
+                                        <option value="YI">Yıllık İzinli</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="row custom-options-checkable g-1 mb-1 mt-1">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <label class="form-label" for="ise_gelis_yol_ucreti1">İşe Geliş Yol Ücreti</label>
+                                            <div class="col-md-6">
+                                                <input class="custom-option-item-check" type="radio" name="ise_gelis_yol_ucreti" id="ise_gelis_yol_ucreti1" value="1" checked />
+                                                <label class="custom-option-item p-1" for="ise_gelis_yol_ucreti1">
+                                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                    <span class="fw-bolder">Verilecek</span>
+                                                </span></label>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input class="custom-option-item-check" type="radio" value="0" name="ise_gelis_yol_ucreti" id="ise_gelis_yol_ucreti2" />
+                                                <label class="custom-option-item p-1" for="ise_gelis_yol_ucreti2">
+                                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                    <span class="fw-bolder">Verilmeyecek</span>
+                                                    </span></label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                        <label class="form-label" for="isten_cikis_yol_ucreti1">İşten Çıkış Yol Ücreti</label>
+                                            <div class="col-md-6">
+                                                <input class="custom-option-item-check" type="radio" name="isten_cikis_yol_ucreti" id="isten_cikis_yol_ucreti1" value="1" checked />
+                                                <label class="custom-option-item p-1" for="isten_cikis_yol_ucreti1">
+                                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                    <span class="fw-bolder">Verilecek</span>
+                                                    </span></label>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input class="custom-option-item-check" type="radio" value="0" name="isten_cikis_yol_ucreti" id="isten_cikis_yol_ucreti2" />
+                                                <label class="custom-option-item p-1" for="isten_cikis_yol_ucreti2">
+                                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                    <span class="fw-bolder">Verilmeyecek</span>
+                                                    </span></label>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Yemek Hakediş Adedi</label>
+                            <div class="input-group input-group-merge">
+                                <input type="number" class="form-control" value="1" name="yemek_hakedis">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Günlük Not</label>
+                            <div class="input-group input-group-merge">
+                                <input type="number" class="form-control" name="gunluk_not">
+                            </div>
+                        </div>
+            
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+
+
+
+        
+                </form>
+            <?php
+
+        }
+
+
     }
 
 

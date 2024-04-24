@@ -76,6 +76,12 @@
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Maaş Bordrosu" href="{{URL::site('Personel/maasBordrosu/')}}{{$personel->id}}">
+                                                    <i data-feather="file-text" class="me-50"></i>
+                                            </a>
+                                            <a class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Mesai Saatleri" href="{{URL::site('Personel/mesaiSaatleri/')}}{{$personel->id}}">
+                                                    <i data-feather="briefcase" class="me-50"></i>
+                                            </a>
                                             <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Düzenle" href="{{URL::site('Personel/form/')}}{{$personel->id}}">
                                                 <i data-feather="edit-2" class="me-50"></i>
                                             </a>

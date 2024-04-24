@@ -147,7 +147,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h1 class="text-center mb-1" id="modalTitle">Fatura İşlemleri</h1>
+                <h1 class="text-center mb-1" id="modalTitle">Telif İşlemleri</h1>
 
                 <div class="fetched-data"></div>
 

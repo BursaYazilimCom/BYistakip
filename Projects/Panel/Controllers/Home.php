@@ -13,7 +13,7 @@ class Home extends Controller
      */
     public function main(string ...$parameters)
     {
-        $kasaToplami = KasaModel::gelirGiderToplami();
+        $kasaToplami = KasaModel::gelirGiderToplami();-+
         $gelir = $kasaToplami->gelir;
         $gider = $kasaToplami->gider;
         $kasa = [
