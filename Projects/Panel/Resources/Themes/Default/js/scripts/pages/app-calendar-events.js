@@ -27,8 +27,8 @@ var events = [
     id: 2,
     url: '',
     title: 'Meeting With Client',
-    start: new Date(date.getFullYear(), date.getMonth() + 1, -11),
-    end: new Date(date.getFullYear(), date.getMonth() + 1, -10),
+    start: new Date(date.getFullYear(), date.getMonth() + 1, -12),
+    end: new Date(date.getFullYear(), date.getMonth() + 1, -9),
     allDay: true,
     extendedProps: {
       calendar: 'Business'

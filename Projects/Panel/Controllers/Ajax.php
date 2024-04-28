@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
+Use Http,Post,Get,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
 Use AjaxModel,KasaModel,AyarModel, InternalFaturaModel as FaturaModel,InternalPlanlamaModel as PlanlamaModel;
 Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel,InternalCariModel as CariModel,SiparisModel;
 use MasrafModel,InternalDestekModel as DestekModel;
@@ -77,8 +77,68 @@ class Ajax extends Controller
 
     }
 
+    public function etkinlikListe(){
 
-    public function modal(){
+        $start = Get::start();
+        $end = Get::end();
+
+        /*if(!Http::isajax()){
+            redirect("Login");
+            exit;
+        }*/
+
+        $etkinlikListe = PlanlamaModel::etkinlikListe();
+        $etkinlikler = [];
+        foreach ($etkinlikListe['liste'] as $etkinlik) {
+            $turDetay = PlanlamaModel::etkinlikTurDetay($etkinlik->tur);
+            $katilimcilar = json_decode($etkinlik->katilimcilar);
+            $users ="";
+            if(count($katilimcilar)>0){
+                for($k=0;$k<count($katilimcilar);$k++){
+                    $users = $users."<br>".$katilimcilar[$k];
+                }
+            }else{
+                $users ="Katılımcı Kaydı Yapılmadı";
+            }
+            
+
+            $etkinlikDetay = [
+                'id'            => $etkinlik->id,
+                'title'         => $etkinlik->baslik,//
+                
+                'start'         => $etkinlik->baslangic_tarihi,//
+                'end'           => $etkinlik->bitis_tarihi,//
+                'color'         => $turDetay->renk,
+                'extendedProps' => [
+                    'description'   => $etkinlik->aciklama,//
+                    'tur'           => $turDetay->tur,//
+                    'sTime'         => $etkinlik->baslangic_saati,//
+                    'eTime'         => $etkinlik->bitis_saat,//
+                    'sUrl'          => $etkinlik->url,//
+                    'allUsers'      => $users,//
+                    'lctn'          => $etkinlik->konum,//
+                    'mailInfo'      => $etkinlik->mail_bilgilendirme,
+                    'smsInfo'       => $etkinlik->sms_bilgilendirme
+                ]
+                
+            ];
+
+            array_push($etkinlikler, $etkinlikDetay);
+            $etkinlikDetay = "";
+
+        }
+
+        echo json_encode($etkinlikler);
+
+        exit(); 
+
+        
+
+    }
+
+
+    public function modal()
+    {
 
         if(!Http::isajax()){
             redirect("Login");
@@ -2215,6 +2275,98 @@ class Ajax extends Controller
 
 
         }
+
+        if(Post::action()=="etkinlikTurEkle"){
+
+            // $id = Post::rowid();
+             //$hatirlatmaDetay = PlanlamaModel::hatirlatmaDetay($id);
+ 
+             ?>
+ 
+             <?php echo  Form::csrf()->method('post')->action('planlama/etkinlikTurEkle')->open('etkinlikTurEkle'); ?>
+ 
+             <div class="modal-header">
+                 <h4 class="modal-title">Etkinlik Tür Ekle</h4>
+             </div>
+             <div class="modal-body">
+                 <div class="row">
+ 
+                         <div class="mb-1 row">
+                             <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Hatırlatma Notu</label>
+                             <div class="col-sm-9">
+                                 <?php echo Form::vRequired()->id('tur')->placeholder('Tür Adı')->text('tur','',['class'=>'form-control']); ?>
+                             </div>
+                         </div>
+
+                         <div class="mb-1 row">
+                             <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Uyari Rengi</label>
+                             <div class="col-sm-9">
+                                 <?php echo Form::vRequired()->id('renk')->placeholder('Görüntülenme Rengi')->color('renk','',['class'=>'form-control']); ?>
+                             </div>
+                         </div>
+                 </div>
+ 
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                 <button type="submit" class="btn btn-primary">Kaydet</button>
+             </div>
+
+ 
+             <?php echo Form::close(); ?>
+ 
+             <?php
+ 
+ 
+ 
+         }
+ 
+         if(Post::action()=="etkinlikTurDuzenle"){
+ 
+             $id = Post::rowid();
+             $detay = PlanlamaModel::etkinlikTurDetay($id);
+ 
+             ?>
+ 
+             <?php echo  Form::csrf()->method('post')->action('planlama/etkinlikTurGuncelle/'.$id)->open('etkinlikTurGuncelle'); ?>
+ 
+             <div class="modal-header">
+                 <h4 class="modal-title">Etkinlik Türü Düzenle</h4>
+             </div>
+             <div class="modal-body">
+                 <div class="row">
+ 
+                     <div class="mb-1 row">
+                         <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Başlık</label>
+                         <div class="col-sm-9">
+                             <?php echo Form::vRequired()->id('tur')->placeholder('Başlık')->text('tur',$detay->tur,['class'=>'form-control']); ?>
+                         </div>
+                     </div>
+
+   
+                     <div class="mb-1 row">
+                             <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Uyari Rengi</label>
+                             <div class="col-sm-9">
+                                 <?php echo Form::vRequired()->id('renk')->placeholder('Görüntülenme Rengi')->color('renk',$detay->renk,['class'=>'form-control']); ?>
+                             </div>
+                         </div>
+ 
+                 </div>
+ 
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                 <button type="submit" class="btn btn-primary">Kaydet</button>
+             </div>
+
+ 
+             <?php echo Form::close(); ?>
+ 
+             <?php
+ 
+ 
+ 
+         }
 
         if(Post::action()=="altMasrafKalemDuzenle"){
 

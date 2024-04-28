@@ -12,36 +12,114 @@
     <!-- BEGIN: Vendor JS-->
     <script src="vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-<script src="vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="vendors/js/forms/select/select2.full.min.js"></script>
 
     <!-- BEGIN: Page Vendor JS-->
     <script src="vendors/js/ui/jquery.sticky.js"></script>
-<!-- <script src="vendors/js/charts/apexcharts.min.js"></script> -->
-<script src="vendors/js/extensions/toastr.min.js"></script>
-<script src="vendors/js/forms/repeater/jquery.repeater.min.js"></script>
-<!-- END: Page Vendor JS-->
+    <script src="vendors/js/calendar/fullcalendar.min.js"></script>
+    <!-- <script src="vendors/js/charts/apexcharts.min.js"></script> -->
+    <script src="vendors/js/extensions/toastr.min.js"></script>
+    <script src="vendors/js/forms/repeater/jquery.repeater.min.js"></script>
+    <!-- END: Page Vendor JS-->
 
-<script src="js/scripts/jquery-ui.min.js"></script> <!-- jquery kütüphanelerimizi ekliyoruz -->
-<script src="js/scripts/jquery.ui.touch-punch.min.js"></script> 
-<!-- Bu JS dosyası ile Mobil cihazlar ve tabletlerde sürükle bıark özelliğini aktif ediyoruz-->
+    <script src="js/scripts/jquery-ui.min.js"></script> <!-- jquery kütüphanelerimizi ekliyoruz -->
+    <script src="js/scripts/jquery.ui.touch-punch.min.js"></script> 
+    <!-- Bu JS dosyası ile Mobil cihazlar ve tabletlerde sürükle bıark özelliğini aktif ediyoruz-->
 
     <!-- BEGIN: Theme JS-->
     <script src="js/core/app-menu.js"></script>
     <script src="js/core/app.js"></script>
     <script src="js/scripts/forms/form-repeater.js"></script>
-    <!-- END: Theme JS-->
-    <!-- BEGIN: Page JS-->
 
-<script src="js/scripts/pages/auth-login.js"></script>
-<script src="js/scripts/forms/form-select2.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDizM76Gj0ty8oFWl96MWJ_5y4b9FLvWyw&libraries=places"></script>
-<script type='text/javascript' src='js/scripts/gmap.js'></script>
-<script type='text/javascript' src='vendors/js/pickers/flatpickr/flatpickr.min.js'></script>
-<script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
+    <script src="js/scripts/pages/auth-login.js"></script>
+    <script src="js/scripts/forms/form-select2.js"></script>
+   <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDizM76Gj0ty8oFWl96MWJ_5y4b9FLvWyw&libraries=places"></script>
+    <script type='text/javascript' src='js/scripts/gmap.js'></script>-->
+    <script type='text/javascript' src='vendors/js/pickers/flatpickr/flatpickr.min.js'></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
 
 
+
+@if(CURRENT_CONTROLLER=='Planlama')
+
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        dayMaxEventRows: 3,
+        height: 750,
+        selectable: true,
+        events: '{{URL::site("ajax/etkinlikListe")}}',
+        select: function (start, end, allDay) {
+            $("#add-new-sidebar").modal("show");
+            $("#startDate").val(start.startStr+" 09:00");
+            $("#endDate").val(start.startStr+" 19:00");
+        },
+        eventClick: function(info) {
+            //alert('Event: ' + info.event.extendedProps.tur);
+            //alert('id: ' + info.event.end);
+
+            
+            $("#eventTitle").html(info.event.title);
+
+            var startDateObj = new Date(info.event.start);
+
+            var formattedStartDate = ('0' + startDateObj.getDate()).slice(-2) + '.' + ('0' + (startDateObj.getMonth() + 1)).slice(-2) + '.' + startDateObj.getFullYear();
+
+
+            $("#start").html(formattedStartDate+" - "+info.event.extendedProps.sTime);
+
+            var start = info.event.start;
+            var end = info.event.end || start;
+
+            var endDateObj = new Date(end);
+
+            var formattedendDate = ('0' + endDateObj.getDate()).slice(-2) + '.' + ('0' + (endDateObj.getMonth() + 1)).slice(-2) + '.' + endDateObj.getFullYear();
+
+            $("#end").html(formattedendDate+" - "+info.event.extendedProps.eTime);
+
+            $("#eventTur").html(info.event.extendedProps.tur);
+            $("#location").html(info.event.extendedProps.lctn);
+            $("#description").html(info.event.extendedProps.description);
+            $("#users").html(info.event.extendedProps.allUsers);
+
+            if (info.event.extendedProps.sUrl!="") {
+                $("#url").attr('href',info.event.extendedProps.sUrl);
+            }
+
+            $("#eventDelete").attr('href','{{URL::site("planlama/etkinlikSil")}}/'+info.event.id);
+            $("#eventEdit").attr('href','{{URL::site("planlama/etkinlikDuzenle")}}/'+info.event.id);
+
+            if (info.event.extendedProps.mailInfo=="1") {
+                $("#mailInfo").html('Gönderildi');
+            }else{
+                $("#mailInfo").html('Gönderilmedi');
+            }
+
+
+            if (info.event.extendedProps.smsInfo=="1") {
+                $("#smsInfo").html('Gönderildi');
+            }else{
+                $("#smsInfo").html('Gönderilmedi');
+            }
+            
+
+            $("#eventModal").modal("show");
+
+
+        }
+    });
+
+    calendar.render();
+    });
+    </script>
+
+@endif
 @if(CURRENT_CONTROLLER=='Rapor')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
@@ -255,7 +333,7 @@
                 return $(this).text();
             })
 
-            console.log(data);
+            //console.log(data);
 
             if(action=="sektorDuzenle")    {
 

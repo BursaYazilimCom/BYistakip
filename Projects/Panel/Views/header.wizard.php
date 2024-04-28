@@ -197,6 +197,19 @@
 
                     <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="settings"></i><span>Ayarlar</span></a>
                         <ul class="dropdown-menu" data-bs-popper="none">
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                                <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown"><i data-feather="user"></i><span data-i18n="Kullanıcı Yönetimi">Planlama Yönetimi</span></a>
+                                <ul class="dropdown-menu" data-bs-popper="none">
+                                    <li data-menu=""><a class="dropdown-item d-flex align-items-center" href="{{URL::site('planlama/hatirlatici')}}"><i data-feather="user"></i><span data-i18n="Second Level">Hatirlatıcı</span></a>
+                                    </li>
+                                    <li class="dropdown" data-menu="dropdown-submenu">
+                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('planlama/takvim')}}"><i data-feather="key"></i><span data-i18n="Second Level">Takvim</span></a>
+                                    </li>
+                                    <li class="dropdown" data-menu="dropdown-submenu">
+                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('planlama/etkinlikTurleri')}}"><i data-feather="key"></i><span data-i18n="Second Level">Etkinlik Türleri</span></a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
                                 <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown"><i data-feather="user"></i><span data-i18n="Kullanıcı Yönetimi">Personel Yönetimi</span></a>
                                 <ul class="dropdown-menu" data-bs-popper="none">

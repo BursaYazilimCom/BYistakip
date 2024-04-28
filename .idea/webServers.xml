@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7234e28d-5d49-4c2a-b543-7101a68c7a1a" name="Bursa Yazılım" url="http://bursayazilim.com">
+        <fileTransfer rootFolder="/public_html/client.bursayazilim.com" host="bursayazilim.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
