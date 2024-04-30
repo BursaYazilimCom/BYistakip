@@ -108,7 +108,12 @@ class InternalPlanlamaModel extends Model
 
     static function etkinlikListe($baslangic="",$bitis=""){
 
-        $veri = DB::where('durum','1')->orderby('id','DESC')->etkinlik();
+        if($baslangic!="" and $bitis!=""){
+            $veri = DB::where('durum','1')->where('baslangic_tarih_saat>',$baslangic)->where('baslangic_tarih_saat<',$bitis)->orderby('id','DESC')->etkinlik();
+        }else{
+            $veri = DB::where('durum','1')->orderby('id','DESC')->etkinlik();
+        }
+    
 
         return ['liste'=>$veri->result()];
 
@@ -140,6 +145,8 @@ class InternalPlanlamaModel extends Model
             'mail_bilgilendirme'    =>$data['mail_bilgilendirme'],
             'sms_bilgilendirme'     =>$data['sms_bilgilendirme']
         ]);
+
+        echo DB::stringQuery();
 
         return DB::insertID();
     }

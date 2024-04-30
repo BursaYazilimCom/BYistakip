@@ -78,7 +78,7 @@
 
                                         <div class="mb-1">
                                             <label for="event-url" class="form-label">Etkinik URL</label>
-                                            <input type="url" class="form-control" id="event-url" name="url" placeholder="İnternet Adresi varsa Giriniz" />
+                                            <input type="text" class="form-control" id="event-url" name="url" placeholder="İnternet Adresi varsa Giriniz" />
                                         </div>
                                         <div class="mb-1 select2-primary">
                                             <label for="katilimcilar" class="form-label">Katılımcılar</label>

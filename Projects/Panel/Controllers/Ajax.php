@@ -79,15 +79,27 @@ class Ajax extends Controller
 
     public function etkinlikListe(){
 
-        $start = Get::start();
-        $end = Get::end();
+        $start = Date::convert(Get::start(),"Y-m-d H:i:s");
+        $end = Date::convert(Get::end(),"Y-m-d H:i:s");
+
+        //echo $start." - ".$end;
 
         /*if(!Http::isajax()){
             redirect("Login");
             exit;
         }*/
 
-        $etkinlikListe = PlanlamaModel::etkinlikListe();
+        if($start=="" && $end==""){
+            $buAy = date("m");
+            $ayKacCekiyor = cal_days_in_month(CAL_GREGORIAN, 1, date("Y"));
+            $start = date("Y-".$buAy."-01 H:i:s");
+            $end = date("Y-".$buAy."-".$ayKacCekiyor." H:i:s");
+        }
+
+        $etkinlikListe = PlanlamaModel::etkinlikListe($start,$end);
+        
+
+
         $etkinlikler = [];
         foreach ($etkinlikListe['liste'] as $etkinlik) {
             $turDetay = PlanlamaModel::etkinlikTurDetay($etkinlik->tur);

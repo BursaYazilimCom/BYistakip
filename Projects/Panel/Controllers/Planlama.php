@@ -69,8 +69,8 @@ class Planlama extends Controller
                 'katilimcilar'          => json_encode($katilimcilar, JSON_UNESCAPED_UNICODE),
                 'konum'                 => Post::konum(),
                 'aciklama'              => Post::aciklama(),
-                'mail_bilgilendirme'    => Post::mailBilgilendirme(),
-                'sms_bilgilendirme'     => Post::smsBilgilendirme()
+                'mail_bilgilendirme'    => Post::mailBilgilendirme()=="1" ? "1" : "0",
+                'sms_bilgilendirme'     => Post::smsBilgilendirme()=="1" ? "1" : "0"
             ];
 
             /*echo "<pre>";
