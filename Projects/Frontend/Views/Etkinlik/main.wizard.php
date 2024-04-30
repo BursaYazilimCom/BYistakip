@@ -27,7 +27,13 @@
 										<div class="card-header cursor-pointer">
 											<!--begin::Card title-->
 											<div class="card-title m-0">
-												<h3 class="fw-bolder m-0">{{$etkinlikTur->tur}} Detayları</h3>
+												<h3 class="fw-bolder m-0">{{$etkinlikTur->tur}} Detayları </h3>&nbsp;&nbsp; 
+												@if(date('Y-m-d H:i:s')>$detay->baslangic_tarih_saat)
+													<br><small style="color:red; float:right"> Zamanı Geçmiş</small>
+												@else
+													<br><small class="text-success"> Henüz Gerçekleşmedi</small>
+												@endif
+												
 											</div>
 											<!--end::Card title-->
 										</div>
@@ -76,7 +82,7 @@
 												<div class="col-lg-8 fv-row">
 													<span class="fw-bold fs-6">
 														@if(strstr($detay->konum,"https://") || strstr($detay->konum,"http://"))
-															<a href="{{$detay->konum}}" class="btn btn-primary align-self-center" target="_blank">{{$detay->konum}}</a>
+															<a href="{{$detay->konum}}" class="btn btn-primary btn-sm align-self-center" target="_blank">Tıklayınız</a>
 														@else
 															{{$detay->konum}}
 														@endif
