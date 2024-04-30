@@ -43,9 +43,11 @@
 
 
 
+
 @if(CURRENT_CONTROLLER=='Planlama')
 
     <script type="text/javascript">
+
     document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
@@ -93,7 +95,7 @@
             }
 
             $("#eventDelete").attr('href','{{URL::site("planlama/etkinlikSil")}}/'+info.event.id);
-            $("#eventEdit").attr('href','{{URL::site("planlama/etkinlikDuzenle")}}/'+info.event.id);
+            $("#eventEdit").attr('data-id',info.event.id);
 
             if (info.event.extendedProps.mailInfo=="1") {
                 $("#mailInfo").html('Gönderildi');

@@ -9,7 +9,7 @@ class Initialize extends Controller
      * It enters the circuit before all controllers. 
      * You can change this setting in Config/Starting.php file.
      */
-    const exclude = ["paytr","CronJob"];
+    const exclude = ["paytr","CronJob","Etkinlik"];
 
     public function main()
     {

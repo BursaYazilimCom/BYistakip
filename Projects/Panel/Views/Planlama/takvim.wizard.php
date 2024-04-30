@@ -289,14 +289,28 @@
 
                                     <h6 class="cursor-pointer ms-50 mb-0" id="users"></h6>
                                 </div>
-                                
+
                             </div>
                             <div class="card-footer">
                                 <a href="javascript:void(0)" id="eventDelete" class="btn btn-danger btn-sm confirm">Sil</a>
-                                <a href="javascript:void(0)" id="eventEdit" class="btn btn-warning btn-sm">Düzenle</a>
+                                <a href="javascript:void(0)" id="eventEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#openModal" data-id="" data-action="etkinlikDuzenle">Düzenle</a>
                             </div>
                         </div>
 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <h1 class="text-center mb-1" id="modalTitle">Etkinlik Düzenle</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="fetched-data"></div>
             </div>
         </div>
     </div>

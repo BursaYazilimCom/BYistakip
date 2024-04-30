@@ -99,6 +99,20 @@ class InternalAyarModel extends Model
         return $ekle;
     }
 
+    public function gizle($metin) {
+        // Metnin uzunluğunu kontrol et
+        $uzunluk = strlen($metin);
+        
+        // İlk 4 karakteri al
+        $ilk_kisim = substr($metin, 0, 3);
+        
+        // Geri kalan kısmı * ile doldur
+        $gizli_kisim = str_repeat("*", $uzunluk - 3);
+        
+        // Sonuçları birleştir ve döndür
+        return $ilk_kisim . $gizli_kisim;
+    }
+
     public function sqlHataEkle($hata){
         $ekle = DB::insert('sql_hata_kayitlari',[
             'hata'      =>$hata

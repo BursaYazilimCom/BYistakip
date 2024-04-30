@@ -116,7 +116,26 @@
                         <ul class="dropdown-menu" data-bs-popper="none">
 
                             <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler')}}"><i data-feather="shopping-cart"></i><span data-i18n="Raise Support">Siparişler</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler')}}"><i data-feather="shopping-cart"></i><span data-i18n="Raise Support">Siparişler</span>
+                                @if($islemGerekenSiparisler['adet']>0)
+                                <span class="badge bg-danger" data-bs-toggle="tooltip" title="İşlem Bekleyen Siparişler var!">{{$islemGerekenSiparisler['adet']}}</span>
+                                @endif
+                            </a>
+                            </li>
+                            <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                                <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="{{URL::site('siparisler/urunler')}}" data-bs-toggle="dropdown"><i data-feather="shopping-bag"></i><span data-i18n="Kullanıcı Yönetimi">Sipariş Ürünleri</span>
+                                @if($islemGerekenSiparisler['adet']>0)
+                                <span class="badge bg-danger" data-bs-toggle="tooltip" title="İşlem Bekleyen Siparişler var!">{{$islemGerekenSiparisler['adet']}}</span>
+                                @endif
+                            </a>
+                                <ul class="dropdown-menu" data-bs-popper="none">
+                                    @foreach($urunGruplari as $ug)
+                                    <li data-menu="">
+                                        <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/gruplar/'.$ug->id)}}"><i data-feather="shopping-bag"></i><span data-i18n="{{$ug->adi}}">{{$ug->adi}}</span></a>
+                                    </li>
+                                    @endforeach
+                                   
+                                </ul>
                             </li>
                             <li data-menu="">
                                 <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/form')}}"><i data-feather="plus"></i><span data-i18n="Raise Support">Sipariş Ekle</span></a>
@@ -127,29 +146,7 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown nav-item" data-menu="dropdown">
-                        
-                        <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="shopping-bag"></i><span>Sipariş Ürünleri</span>
-                        @if($islemGerekenSiparisler['adet']>0)
-                        <span class="badge bg-danger" data-bs-toggle="tooltip" title="İşlem Bekleyen Siparişler var!">{{$islemGerekenSiparisler['adet']}}</span>
-                        @endif
-                    </a>
-                        <ul class="dropdown-menu" data-bs-popper="none">
-                            <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/urunler')}}"><i data-feather="shopping-bag"></i><span class="text-success">Tüm Sipariş Ürünleri</span>
-                                @if($islemGerekenSiparisler['adet']>0)
-                                <span class="badge bg-danger" data-bs-toggle="tooltip" title="İşlem Bekleyen Siparişler var!">{{$islemGerekenSiparisler['adet']}}</span>
-                                @endif
-                            </a>
-                            </li>
-                            @foreach($urunGruplari as $ug)
-                            <li data-menu="">
-                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/gruplar/'.$ug->id)}}"><i data-feather="shopping-bag"></i><span data-i18n="{{$ug->adi}}">{{$ug->adi}}</span></a>
-                            </li>
-                            @endforeach
-
-                        </ul>
-                    </li>
+                    
                     <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="edit-2"></i><span>Muhasebe</span></a>
                         <ul class="dropdown-menu" data-bs-popper="none">
                             <li data-menu="">
@@ -195,21 +192,26 @@
                         </ul>
                     </li>
 
+                    <li class="dropdown nav-item" data-menu="dropdown">
+                        <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="headphones"></i><span>Planlama</span> 
+                        </a>
+                        <ul class="dropdown-menu" data-bs-popper="none">
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('planlama/hatirlatici')}}"><i data-feather="align-justify"></i><span>Hatirlatıcı</span>
+                                </a>
+                            </li>
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('planlama/takvim')}}"><i data-feather="layout"></i><span>Takvim</span></a>
+                            </li>
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('planlama/etkinlikTurleri')}}"><i data-feather="layout"></i><span>Etkinlik Türleri</span></a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+
                     <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="settings"></i><span>Ayarlar</span></a>
                         <ul class="dropdown-menu" data-bs-popper="none">
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
-                                <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown"><i data-feather="user"></i><span data-i18n="Kullanıcı Yönetimi">Planlama Yönetimi</span></a>
-                                <ul class="dropdown-menu" data-bs-popper="none">
-                                    <li data-menu=""><a class="dropdown-item d-flex align-items-center" href="{{URL::site('planlama/hatirlatici')}}"><i data-feather="user"></i><span data-i18n="Second Level">Hatirlatıcı</span></a>
-                                    </li>
-                                    <li class="dropdown" data-menu="dropdown-submenu">
-                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('planlama/takvim')}}"><i data-feather="key"></i><span data-i18n="Second Level">Takvim</span></a>
-                                    </li>
-                                    <li class="dropdown" data-menu="dropdown-submenu">
-                                        <a class="dropdown-item d-flex align-items-center " href="{{URL::site('planlama/etkinlikTurleri')}}"><i data-feather="key"></i><span data-i18n="Second Level">Etkinlik Türleri</span></a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
                                 <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown"><i data-feather="user"></i><span data-i18n="Kullanıcı Yönetimi">Personel Yönetimi</span></a>
                                 <ul class="dropdown-menu" data-bs-popper="none">

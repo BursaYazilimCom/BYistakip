@@ -2368,6 +2368,173 @@ class Ajax extends Controller
  
          }
 
+         if(Post::action()=="etkinlikDuzenle"){
+ 
+            $id = Post::rowid();
+            $detay = PlanlamaModel::etkinlikDetay($id);
+            $etkinlikTurleri = PlanlamaModel::etkinlikTurleri();
+
+            ?>
+
+            
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <?php echo  Form::csrf()->method('post')->action('planlama/etkinlikGuncelle/'.$id)->open('etkinlikGuncelle'); ?>
+            
+            <div class="modal-header">
+                <h4 class="modal-title">Etkinlik Türü Düzenle</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="mb-1 row">
+                        <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Başlık</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="title" id="title" class="form-control" value="<?php echo $detay->baslik; ?>">
+                        </div>
+                    </div>
+  
+                    <div class="mb-1 row">
+                        <label for="tur" class="col-sm-3 col-form-label-lg">Tür</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="tur" id="tur">
+                                <?php foreach($etkinlikTurleri['liste'] as $etur){ ?>
+                                    <option value="<?php echo $etur->id; ?>" <?php if($etur->id==$detay->tur){ echo "selected"; } ?> ><?php echo $etur->tur; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <div class="col-xl-6">
+                            <label for="startDate" class="col-sm-12 col-form-label-lg">Başlangıç Tarihi</label>
+                            <input type="datetime-local" name="startDate" id="startDate" class="form-control" value="<?php echo $detay->baslangic_tarih_saat; ?>">
+                        </div>
+                        <div class="col-xl-6">
+                            <label for="endDate" class="col-sm-12 col-form-label-lg">Bitis Tarihi</label>
+                            <input type="datetime-local" name="endDate" id="endDate" class="form-control" value="<?php echo $detay->bitis_tarih_saat; ?>">
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="url" class="col-sm-3 col-form-label-lg">Etkinlik URL</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="url" id="url" class="form-control" placeholder="Etkinlik URL" value="<?php echo $detay->url; ?>">
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="konum" class="col-sm-3 col-form-label-lg">Etkinlik Yeri</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="konum" id="konum" class="form-control" placeholder="Etkinlik Yeri" value="<?php echo $detay->konum; ?>">
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="konum" class="col-sm-3 col-form-label-lg">Açıklama</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="aciklama" id="aciklama" cols="30" rows="5" placeholder="Açıklama Giriniz..."><?php echo $detay->aciklama; ?></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+
+                        <label for="katilimcilar" class="form-label">Katılımcılar (Noktalı virgül ile ayırın)</label>
+                        <div class="row" id="inputContainer">
+                        <?php
+                            $katilimcilar = json_decode($detay->katilimcilar);
+
+                            for ($kl = 0; $kl<count($katilimcilar); $kl++) { 
+                                ?>
+
+                                
+                                    <div class="col-12 inputRow">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="katilimcilar" name="katilimci[]" value="<?=$katilimcilar[$kl]?>" placeholder="Katılımcı Mail Adresi"  />
+                                            <button class="btn btn-outline-danger" type="button" id="deleteInputButton">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                
+
+                            <?php 
+
+                            }
+
+                            ?>
+                                <div class="col-12">
+                                    <div class="input-group">
+                                        <button class="btn btn-outline-success" type="button" id="addInputButton">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <script>
+                            $(document).ready(function() {
+                                // Eklemek için butona tıklandığında bu fonksiyon çalışacak
+                                $("#addInputButton").click(function() {
+                                    // Yeni bir input satırı oluştur ve inputContainer'a ekle
+                                    var inputRow = $('<div class="col-12 inputRow"><div class="input-group"><input type="text" class="form-control" id="katilimcilar" name="katilimci[]" placeholder="Katılımcı Mail Adresi"  /><button class="btn btn-outline-danger" type="button" id="deleteInputButton"><i class="fa fa-times"></i></button></div></div>');
+                                    $("#inputContainer").append(inputRow);
+
+                                    // Silme butonuna tıklandığında bu satırı kaldır
+                                    $("#deleteInputButton", inputRow).click(function() {
+                                        inputRow.remove();
+                                    });
+                                });
+
+                                // Sil düğmelerini seç
+                                var deleteButtons = document.querySelectorAll('#inputContainer .inputRow #deleteInputButton');
+
+                                // Her bir sil düğmesi için bir olay dinleyici ekle
+                                deleteButtons.forEach(function(button) {
+                                    button.addEventListener('click', function() {
+                                        // Sil düğmesinin üst elemanını (inputRow div'ini) bul
+                                        var row = this.closest('.inputRow');
+                                        // Satırı sil
+                                        row.remove();
+                                    });
+                                });
+
+                            });
+                            </script>
+
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="konum" class="col-sm-3 col-form-label-lg">Bilgilendirmeler</label>
+                        <div class="col-sm-9">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="mailBilgilendirme" id="mailBilgilendirme" value="1" />
+                                    <label class="form-label" for="mailBilgilendirme">Katılımcılara Mail Gönder</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="smsBilgilendirme" id="smsBilgilendirme" value="1" />
+                                    <label class="form-label" for="smsBilgilendirme">Katılımcılara SMS Gönder</label>
+                                </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <input type="hidden" name="id" id="id" value="<?=$id?>">
+            <?php echo Form::close(); ?>
+
+            <?php
+
+        }
+
         if(Post::action()=="altMasrafKalemDuzenle"){
 
             $id                 = Post::rowid();

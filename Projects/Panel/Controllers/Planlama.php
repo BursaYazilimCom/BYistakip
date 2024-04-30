@@ -66,7 +66,7 @@ class Planlama extends Controller
                 'bitis_saat'            => $bitis_saat,
                 'bitis_tarih_saat'      => Post::endDate(),
                 'url'                   => Post::url(),
-                'katilimcilar'          => json_encode($katilimcilar),
+                'katilimcilar'          => json_encode($katilimcilar, JSON_UNESCAPED_UNICODE),
                 'konum'                 => Post::konum(),
                 'aciklama'              => Post::aciklama(),
                 'mail_bilgilendirme'    => Post::mailBilgilendirme(),
@@ -88,7 +88,7 @@ class Planlama extends Controller
                         if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
 
                             $smsData = [
-                                'mesaj'=>'Merhaba; '.AyarModel::defaultAyarlar('firmaAdi').' tarafından '.Date::convert(Post::startDate(),"d.m.Y H:i").' tarihinde '.Post::title().' başlıklı etkinliğe davet edildiniz',
+                                'mesaj'=>'Merhaba; '.AyarModel::defaultAyarlar('firmaAdi').' tarafından '.Date::convert(Post::startDate(),"d.m.Y H:i").' tarihinde '.Post::title().' başlıklı etkinliğe davet edildiniz. Etkinlik:'.AyarModel::defaultAyarlar("siteUrl").'/etkinlik/'.$ekle.'/'.$katilimcilar[$i],
                                 'numara'=>$katilimcilar[$i]
                             ];
     
@@ -113,6 +113,8 @@ class Planlama extends Controller
                             Başlangıç Tarih: '.Date::convert(Post::startDate(),"d.m.Y H:i").'<br>',
                             'Bunun bir hata olduğunu düşünüyorsanız, Bu E-Postayı silebilirsiniz yada bizimle iletişime geçebilirsiniz.',
                             'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                            'link' => AyarModel::defaultAyarlar('siteUrl')."/etkinlik/".$ekle."/".$katilimcilar[$i],
+                            'link_baslik' => 'Etkinlik Detayları',
                             'firma_link' => AyarModel::defaultAyarlar('siteUrl'),
                             'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
                             'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
@@ -133,6 +135,106 @@ class Planlama extends Controller
             }
         
 
+    }
+
+    public function etkinlikGuncelle($id){
+
+        if($id!=Post::id()){
+            redirect(URL::prev());
+        }
+
+        
+        $baslangic_tarihi = Date::convert(Post::startDate(),"Y-m-d");
+        $baslangic_saati = Date::convert(Post::startDate(),"H:i:s");
+        $bitis_tarihi = Date::convert(Post::endDate(),"Y-m-d");
+        $bitis_saat = Date::convert(Post::endDate(),"H:i:s");
+
+        $katilimciSayi = count(Post::katilimci());
+        $katilimciListe = Post::katilimci();
+        $katilimcilar = [];
+
+        $etkinlikTuru = Post::etkinlikTurDetay(Post::tur());
+
+        for ($k=0; $k <$katilimciSayi ; $k++) { 
+            array_push($katilimcilar,$katilimciListe[$k]);
+        }
+        /*echo "<pre>";
+        print_r($katilimcilar);
+        echo "</pre>";*/
+
+        $guncellemeData = [
+            'id'                    => $id,
+            'baslik'                => Post::title(),
+            'tur'                   => Post::tur(),
+            'baslangic_tarihi'      => $baslangic_tarihi,
+            'baslangic_saati'       => $baslangic_saati,
+            'baslangic_tarih_saat'  => Post::startDate(),
+            'bitis_tarihi'          => $bitis_tarihi,
+            'bitis_saat'            => $bitis_saat,
+            'bitis_tarih_saat'      => Post::endDate(),
+            'url'                   => Post::url(),
+            'katilimcilar'          => json_encode($katilimcilar, JSON_UNESCAPED_UNICODE),
+            'konum'                 => Post::konum(),
+            'aciklama'              => Post::aciklama()
+
+        ];
+
+        $ekle = PlanlamaModel::etkinlikGuncelle($guncellemeData);
+
+        if ($ekle) {
+
+            for ($i=0; $i < count($katilimcilar) ; $i++) {
+                
+                if(is_numeric($katilimcilar[$i]) and Post::smsBilgilendirme()=="1"){
+
+                    if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+                        $smsData = [
+                            'mesaj'=>'Merhaba; '.AyarModel::defaultAyarlar('firmaAdi').' tarafından '.Date::convert(Post::startDate(),"d.m.Y H:i").' tarihinde '.Post::title().' başlıklı etkinliğe davet edildiniz Etkinlik: '.AyarModel::defaultAyarlar("siteUrl").'/etkinlik/'.$id.'/'.$katilimcilar[$i],
+                            'numara'=>$katilimcilar[$i]
+                        ];
+
+                        $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+                    } 
+
+                }
+                if(filter_var($katilimcilar[$i], FILTER_VALIDATE_EMAIL) and Post::mailBilgilendirme()=="1"){
+
+                    $mailgonder = Email::subject($etkinlikTuru->tur." Etkinliğine Dahil Edildiniz")->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($katilimcilar[$i])->template('by', [
+                        'konu' => $etkinlikTuru->tur." Etkinliğine Dahil Edildiniz",
+                        'mesaj' => 'Merhaba; Bu E-Posta\'yı, '.AyarModel::defaultAyarlar('firmaAdi').' tarafından '.Post::title().' etkinliğine dahil edildiğiniz için aldınız.<br> <hr>
+                        <strong>Etkinlik Detayları:</strong><br>
+                        Başlık: '.Post::title().'<br>
+                        Tür: '.$etkinlikTuru->tur.'<br>
+                        Açıklama: '.Post::aciklama().'<br>
+                        Konum: '.Post::konum().'<br>
+                        URL: '.Post::url().'<br>
+                        Katılımcı Sayısı: '.count($katilimcilar).'<br>
+                        Başlangıç Tarih: '.Date::convert(Post::startDate(),"d.m.Y H:i").'<br>',
+                        'Bunun bir hata olduğunu düşünüyorsanız, Bu E-Postayı silebilirsiniz yada bizimle iletişime geçebilirsiniz.',
+                        'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                        'link' => AyarModel::defaultAyarlar('siteUrl')."/etkinlik/".$id."/".$katilimcilar[$i],
+                        'link_baslik' => 'Etkinlik Detayları',
+                        'firma_link' => AyarModel::defaultAyarlar('siteUrl'),
+                        'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                        'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                        'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+                    ])->send();
+                    
+                }
+
+
+            }
+
+            
+            Redirect::insert(['bilgi' => '<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Ekleme İşlemi Yapıldı !.'.$ekle.'</div></div>'])->action(URL::prev());
+        } else {
+
+            Redirect::insert(['bilgi' => '<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.'.$ekle.'</div></div>'])->action(URL::prev());
+
+        }
+        
     }
 
     public function hatirlatici()

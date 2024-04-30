@@ -141,8 +141,6 @@ class InternalPlanlamaModel extends Model
             'sms_bilgilendirme'     =>$data['sms_bilgilendirme']
         ]);
 
-        echo DB::insertID();
-
         return DB::insertID();
     }
 
