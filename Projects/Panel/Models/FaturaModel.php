@@ -18,9 +18,13 @@ class InternalFaturaModel extends Model
         return DB::where('belge_no',$no)->faturalar()->row();
     }
 
-    static function liste(){
+    static function liste($filtre=""){
+        if ($filtre=="") {
+            $veri = DB::orderby('id','DESC')->limit(NULL,25)->faturalar();
+        }else{
 
-        $veri = DB::orderby('id','DESC')->limit(NULL,10)->faturalar();
+            $veri = DB::where($filtre['filtre'],$filtre['deger'])->orderby('id','DESC')->limit(NULL,25)->faturalar();
+        }
 
         return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
     }

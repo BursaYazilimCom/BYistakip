@@ -46,6 +46,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Adi</th>
+                                    <th>Firma İsmi</th>
+                                    <th>Yetkili</th>
+                                    <th>Telefon</th>
                                     <th>Ek Bilgiler</th>
                                     <th>İşlemler</th>
                                 </tr>
@@ -55,9 +58,15 @@
                                 <tr id="row-{{$cari->id}}">
                                     <td>{{$cari->id}}</td>
                                     <td><a href="{{URL::site('tedarikci/form/')}}{{$cari->id}}"> {{$cari->adi}}</a></td>
+                                    <td>{{$cari->firma_adi}}</td>
+                                    <td>{{$cari->ilgili_kisi}}</td>
+                                    <td>{{$cari->telefon}}</td>
                                     <td>{{$cari->ek_bilgiler}}</td>
 
                                     <td>
+
+                                        <a class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Alım Yap" href="{{URL::site('tedarikci/alimYap/')}}{{$cari->id}}"><i data-feather="log-in" class="me-50"></i></a>
+
                                         <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Düzenle" href="{{URL::site('tedarikci/form/')}}{{$cari->id}}"><i data-feather="edit-2" class="me-50"></i></a>
 
                                         <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$cari->id}}','{{URL::site('Tedarikci/ajax')}}','tedarikciSil')"><i data-feather="trash" class="me-50"></i></a>

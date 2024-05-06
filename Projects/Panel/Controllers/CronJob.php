@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 use User,Method,DB,Post,Get,Date,XML,CURL,Json,Time,Email,URL,Masterpage;
-use AyarModel,PersonelModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalCariModel as CariModel,UrunModel,InternalSmsModel as SmsModel;
+use AyarModel,PersonelModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalCariModel as CariModel,UrunModel,InternalSmsModel as SmsModel,InternalPlanlamaModel as PlanlamaModel;
 
 class CronJob extends Controller
 {
@@ -384,6 +384,78 @@ class CronJob extends Controller
 
         echo "</pre>";
 
+
+
+
+    }
+
+    public function hatirlatmalar(){
+
+        $hatirlatmalar = PlanlamaModel::tumHatirlatmalar('1');
+
+        // Periyod 0 Tek sefer - 1 Yenilenen
+
+        foreach ($hatirlatmalar['liste'] as $yapilacak) {
+
+            $personel = PersonelModel::detay($yapilacak->personel);
+
+            $yapilacakYil = $yapilacak->yil;
+            $yapilacakAy = $yapilacak->ay==0 ? date('m') : $yapilacak->ay;
+            $yapilacakGun = $yapilacak->gun==0 ? date('d') : $yapilacak->gun;
+
+            $yapiacakZaman = $yapilacakYil."-".$yapilacakAy."-".$yapilacakGun." ".$yapilacak->saat;
+            $strYapiacakZaman = strtotime($yapilacakYil."-".$yapilacakAy."-".$yapilacakGun." ".$yapilacak->saat);
+            $uyariZamani = $strYapiacakZaman - (30 * 60);
+
+            $suan = date('Y-m-d H:i');
+            $strSuan = strtotime($suan);
+
+            if($strSuan>$uyariZamani) {
+
+                $mailgonder = Email::subject('Hatırlatma !')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($personel->email)->template('by', [
+
+                    'konu' => 'Hatırlatmanız var !',
+                    'mesaj' => Date::convert($yapiacakZaman,"d.m.Y H:i").' tarihinde yapılması için hatırlamanız gereken aşağıdaki göreviniz var<br><br>'.$yapilacak->aciklama,
+                    'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                    'firma_link' => AyarModel::defaultAyarlar('siteUrl'),
+                    'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                    'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                    'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+                ])->send();
+
+                //SMS GÖNDERİMİ
+                if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+                    $smsData = [
+                        'mesaj'=>'Hatırlatmanız var !'.Date::convert($yapiacakZaman,"d.m.Y H:i").' tarihinde. '.$yapilacak->aciklama,
+                        'numara'=>$personel->telefon
+                    ];
+
+                    $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+                }
+                //SMS GÖNDERİMİ
+                if($mailgonder){
+
+                    echo $yapilacak->id." Hatırlatma Bildirimi Gönderildi<br>";
+
+                    if ($yapilacak->periyod == 0) {
+                        PlanlamaModel::hatirlatmaDurumGuncelle(["id" => $yapilacak->id, "durum" => "0"]);
+                    }else {
+                        PlanlamaModel::hatirlatmaDurumGuncelle(["id" => $yapilacak->id, "durum" => "2"]);
+                    }
+                }
+
+
+
+
+            }else{
+
+                echo $yapilacak->id." -  ".Date::convert($yapiacakZaman,"d.m.Y H:i")." Henüz Zamanı gelmemiş<br>";
+
+            }
+
+        }
 
 
 

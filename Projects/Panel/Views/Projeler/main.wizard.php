@@ -73,7 +73,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Yol Haritası" href="{{URL::site('projeler/yolHaritasi/'.$u->id)}}"><i data-feather="activity" class="me-50"></i></a>
+                                                <a class="btn btn-info btn-sm" data-bs-toggle="tooltiptooltip" title="Yol Haritası" href="{{URL::site('projeler/yolHaritasi/'.$u->id)}}"><i data-feather="activity" class="me-50"></i></a>
 
                                                 <a class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Yapılan Çalışmalar" href="{{URL::site('projeler/yapilanlar/'.$u->id)}}"><i data-feather="tool" class="me-50"></i></a>
 

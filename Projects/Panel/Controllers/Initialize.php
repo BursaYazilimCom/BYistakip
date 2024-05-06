@@ -21,6 +21,7 @@ class Initialize extends Controller
         }
         $bekleyenTalepler  = DestekModel::bekleyenTalepler();
         $urunGruplari       = UrunModel::urunGrupListe();
+        $tumUrunler       = UrunModel::tumListe();
 
         $kasaHesaplari      = KasaModel::turHesaplari(1);
         $bankaHesaplari     = KasaModel::turHesaplari(2);
@@ -36,6 +37,7 @@ class Initialize extends Controller
         //AyarModel::nelerOluyor($user->isim,'masraf', 'Masraf Yönetimini inceliyor');
 
 
+        View::tumUrunler($tumUrunler);
         View::bekleyenTalepler($bekleyenTalepler);
         View::odemeperiyodlari($odemeperiyodlari);
         View::islemGerekenSiparisler($islemGerekenSiparisler);

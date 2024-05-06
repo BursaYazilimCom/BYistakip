@@ -231,7 +231,7 @@
                             @Form::csrf()->prevent()->action('Siparisler/ajax')->open('submitForm',['id'=>'submitForm','class'=>'row gy-1 gx-2 mt-75'])
                             <input type="hidden" name="dataAction" id="dataAction" value="sepeteUrunEkle">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-8">
                                     <div class="mb-1 row">
                                         <div class="col-sm-12">
                                             <label class="col-form-label" for="urun">Ürün / Hizmet</label>
@@ -270,7 +270,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="mb-1 row">
                                         <div class="col-sm-12">
                                             <label class="col-form-label" for="odeme_periyodu">Ödeme Periyodu</label>
@@ -367,11 +367,11 @@
                                         <div class="col-sm-12">
                                             <label class="col-form-label" for="fiyat">Fiyat</label>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-4">
                                             @Form::id('fiyat')->number('fiyat','',['class'=>'form-control'])
                                         </div>
-                                        <div class="col-sm-9">
-                                            Eğer farklı fiyat vermek istiyorsanız buradan geçerli fiyatı giriniz. Eğer boş bırakırsanız ürünün geçerli fiyatı alınır.
+                                        <div class="col-sm-8">
+                                            Farklı fiyat vermek istiyorsanız  geçerli fiyatı giriniz. Boş bırakırsanız ürünün geçerli fiyatı alınır.
                                         </div>
                                     </div>
                                 </div>

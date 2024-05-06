@@ -7,13 +7,12 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-start mb-0">Fatura Yönetimi</h2>
+                        <h2 class="content-header-title float-start mb-0">Tedarikçi Alış Faturası</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="{{URL::site('faturalar')}}">Faturalar</a>
-                                </li>
+                                <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a></li>
+                                <li class="breadcrumb-item"><a href="{{URL::site('tedarikci')}}">Tedarikçiler</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">{{$tedarikciDetay->adi}} Alış Faturası</a></li>
                             </ol>
                         </div>
                     </div>
@@ -26,26 +25,26 @@
 
                 <div class="row">
                     <div class="col-md-12 col-12">
-                        @Form::csrf()->action("faturalar/faturaKaydet")->open('submitForm',['class'=>'form form-horizontal'])
+                        @Form::csrf()->action("faturalar/alisFaturasiKaydet")->open('submitForm',['class'=>'form form-horizontal','enctype'=>'multipart/form-data'])
 
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-lg-2 col-md-12 col-12">
                                 <div class="card brdt-pink">
                                     <div class="card-header">
-                                        <h4 class="card-title">Sipariş Detayları</h4>
+                                        <h4 class="card-title">Alış Fatura Detayları</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-12">
-                                                    <label class="col-form-label" for="cari">Müşteri</label>
+                                                    <label class="col-form-label" for="cari">Tedarikçi</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <select class="form-select select2 form-select-sm" name="musteri" id="musteri">
+                                                    <select class="form-select select2 form-select-sm" name="tedarikci" id="tedarikci">
                                                         <option value="">Seciniz</option>
-                                                        @foreach($musteriler as $cari)
-                                                        <option value="{{ $cari->id }}">{{$cari->adi}}</option>
+                                                        @foreach($tedarikciler as $tedarikci)
+                                                        <option value="{{ $tedarikci->id }}" {{$tedarikci->id == $tedarikciDetay->id ? 'selected' : ''}}>{{$tedarikci->adi}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -82,44 +81,6 @@
                                             </div>
                                         </div>
 
-
-
-                                        <div class="col-12">
-                                            <div class="mb-1 row">
-                                                <div class="col-sm-12">
-                                                    <label class="col-form-label" for="odeme_yontemi">Ödeme Yöntemi</label>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <select class="select2 form-select" required name="odeme_yontemi" id="odeme_yontemi">
-
-                                                        <option value="">--Seçiniz--</option>
-                                                        @foreach($odemeYontemleri as $oy)
-                                                        <option value="{{$oy->id}}">{{$oy->baslik}}</option>
-                                                        @endforeach
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="mb-1 row">
-                                                <div class="col-sm-12">
-                                                    <label class="col-form-label" for="tur">Fatura Türü</label>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <select class="select2 form-select" required name="tur" id="tur">
-
-                                                        <option value="">--Seçiniz--</option>
-                                                        <option  value="1">Alış Faturası</option>
-                                                        <option  value="2" selected>Satış Faturası</option>
-                                                        <option  value="3">İade Faturası</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-12">
@@ -129,8 +90,8 @@
                                                     <select class="select2 form-select" required name="odeme" id="odeme">
 
                                                         <option value="">--Seçiniz--</option>
-                                                        <option  value="0" selected>Yapılmadı</option>
-                                                        <option  value="1">Yapıldı</option>
+                                                        <option  value="0">Yapılmadı</option>
+                                                        <option  value="1" selected>Yapıldı</option>
 
                                                     </select>
                                                 </div>
@@ -154,12 +115,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="mb-1 col-12">
                                             <label class="form-label" for="notu">Fatura Notu</label>
                                             <div class="input-group input-group-merge">
                                                 @Form::id('notu')->placeholder('Fatura Notu')->textarea('notu','',['class'=>'form-control'])
                                             </div>
                                         </div>
+                                        <div class="col-12">
+                                            <label class="form-label" for="notu">Stok Kaydı</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" name="stok_kaydi" checked id="stok_kaydi" value="1" />
+                                                <label class="form-check-label" for="stok_kaydi">İlgili Ürünleri Stoğa Ekle</label>
+                                            </div>
+                                        </div>
+
 
                                     </div>
                                 </div>
@@ -169,7 +138,7 @@
                             <div class="col-lg-10 col-md-12 col-12">
                                 <div class="card brdt-pink">
                                     <div class="card-header">
-                                        <h4 class="card-title">Fatura Detayları</h4>
+                                        <h4 class="card-title">Fatura Ürünleri</h4>
                                     </div>
                                     <hr>
                                         <div class="table-responsive">
@@ -177,6 +146,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Ürün Adı</th>
+                                                    <th>İlgili Ürün</th>
                                                     <th>Açıklama</th>
                                                     <th>Adet</th>
                                                     <th>Birim Fiyat</th>
@@ -185,15 +155,23 @@
                                                     <th></th>
                                                 </tr>
                                                 </thead>
-                                                <tbody id="addDataTable">
+                                                <tbody id="addDataTableSupplierProduct">
 
                                                     <tr id="row0">
 
                                                         <td>
-                                                            <input style="min-width: 300px" type="text" name="urun[]" id="urun" class="form-control">
+                                                            <input style="min-width: 200px" required type="text" name="urun[]" id="urun" class="form-control">
+                                                        </td>
+                                                        <td style="min-width: 300px">
+                                                            <select style="min-width: 200px" class="select2 form-select" name="ilgili_urun[]" id="ilgili_urun">
+                                                                <option value="">--Seçiniz--</option>
+                                                                @foreach($tumUrunler as $urun)
+                                                                    <option value="{{ $urun->id }}">{{ $urun->adi }}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </td>
 
-                                                        <td style="min-width: 400px">
+                                                        <td>
                                                             <input type="text" name="aciklama[]" id="aciklama" class="form-control">
                                                         </td>
 
@@ -232,7 +210,7 @@
                                                 </tbody>
                                                 <tfoot>
                                                 <tr>
-                                                    <th colspan="4"><button type="button" id="addRow" class="btn btn-primary"><i data-feather="plus"></i> Ekle</button></th>
+                                                    <th colspan="5"><button type="button" id="addRowSupplierProduct" class="btn btn-primary"><i data-feather="plus"></i> Ekle</button></th>
 
                                                     <th></th>
                                                     <th></th>
@@ -241,13 +219,120 @@
                                               
                                                 
                                                 <tr>
-                                                    <td colspan="4"></td>
+                                                    <td colspan="5"></td>
                                                     <td>Toplam</td>
                                                     <td class="genel_toplam">0 ₺</td>
                                                 </tr>
                                                 </tfoot>
                                             </table>
                                         </div>
+
+                                    <div class="card" id="masrafGirisi">
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                <div class="col-6">
+                                                    <div class="col-12">
+                                                        <label class="form-label" for="modalAddCardNumber">Masraf Kalemi</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <select class="form-control" name="kalem" required >
+                                                                <option value="">--Seçiniz--</option>
+                                                                {[
+                                                                foreach($masrafKalemleri['anaKalemler'] as $ustList){ ]}
+                                                                <optgroup label="{[=$ustList->adi]}">
+                                                                    {[
+                                                                    foreach($masrafKalemleri['altKalemler'] as $altKalemList){
+
+
+                                                                    if($altKalemList->ust==$ustList->id){
+
+                                                                    ]}
+
+                                                                    <option value="{[=$altKalemList->id]}">{[=$altKalemList->adi]}</option>
+                                                                    {[
+                                                                    }
+
+                                                                    } ]}
+                                                                </optgroup>
+                                                                {[ } ]}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label class="form-label" for="modalAddCardNumber">Açıklama:</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <textarea class="form-control" name="aciklama" placeholder="Açıklama"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label class="form-label" for="modalAddCardNumber">Dosya:</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <label class="input-group-btn">
+                                                                    <span class="btn btn-primary">
+                                                                        <i class="fa fa-upload"></i> Masraf Belgesi Seç <input type="file" name="belge_dosya" style="display: none;">
+                                                                    </span>
+                                                            </label>
+                                                            <input type="text" class="form-control" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="col-12">
+                                                        <label class="form-label" for="modalAddCardNumber">Ödeme Hesabı:</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <select name="kasa" required class="form-control">
+                                                                <option value="0">--Seçiniz--</option>
+                                                                <optgroup label="Kasa Hesapları">
+                                                                    {[ foreach($kasaHesaplari as $kh){ ]}
+                                                                    <option value="{[=$kh->id]}">{[=$kh->adi]}</option>
+                                                                    {[ }]}
+                                                                </optgroup>
+                                                                <optgroup label="Banka Hesapları">
+                                                                    {[ foreach($bankaHesaplari as $bh){ ]}
+                                                                    <option value="{[=$bh->id]}">{[=$bh->adi]}</option>
+                                                                    {[ } ]}
+                                                                </optgroup>
+                                                                <optgroup label="POS Hesapları">
+                                                                    {[ foreach($posHesaplari as $ph){ ]}
+                                                                    <option value="{[=$ph->id]}">{[=$ph->adi]}</option>
+                                                                    {[ } ]}
+                                                                </optgroup>
+                                                                <optgroup label="Kredi Kartı Hesapları">
+                                                                    {[ foreach($kkartiHesaplari as $kkh) { ]}
+                                                                    <option value="{[=$kkh->id]}">{[=$kkh->adi]}</option>
+                                                                    {[ } ]}
+                                                                </optgroup>
+                                                                <optgroup label="Veresiye Hesapları">
+                                                                    {[ foreach($veresiyeHesaplari as $vh){ ]}
+                                                                    <option value="{[=$vh->id]}">{[=$vh->adi]}</option>
+                                                                    {[ } ]}
+                                                                </optgroup>
+                                                                <optgroup label="Diğer Hesaplar">
+                                                                    {[ foreach($digerHesaplar as $dh){ ]}
+                                                                    <option value="{[=$dh->id]}">{[=$dh->adi]}</option>
+                                                                    {[ } ]}
+                                                                </optgroup>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label class="form-label" for="modalAddCardNumber">Ödeme Tarihi:Güm.Ay.Yıl</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="date" name="odeme_tarihi" class="form-control" value="{{Date::current()}}">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
 
 
                                         <hr>
@@ -296,9 +381,6 @@
                                 calculateTotal(rowId);
                             }
                         });
-
-
-
 
                     </script>
 

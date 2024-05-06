@@ -129,6 +129,9 @@
                                 @endif
                             </a>
                                 <ul class="dropdown-menu" data-bs-popper="none">
+                                    <li data-menu="">
+                                        <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/urunler')}}"><i data-feather="shopping-bag"></i><span data-i18n="Tüm Ürünler text-success"><strong>Hepsini Göster</strong></span></a>
+                                    </li>
                                     @foreach($urunGruplari as $ug)
                                     <li data-menu="">
                                         <a class="dropdown-item d-flex align-items-center" href="{{URL::site('siparisler/gruplar/'.$ug->id)}}"><i data-feather="shopping-bag"></i><span data-i18n="{{$ug->adi}}">{{$ug->adi}}</span></a>

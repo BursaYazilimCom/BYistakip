@@ -81,7 +81,7 @@ class Planlama extends Controller
 
             if ($ekle) {
 
-                for ($i=0; $i < count($katilimcilar) ; $i++) {
+                for ($i=0; $i < count($katilimcilar); $i++) {
                     
                     if(is_numeric($katilimcilar[$i]) and Post::smsBilgilendirme()=="1"){
 
@@ -239,8 +239,8 @@ class Planlama extends Controller
 
     public function hatirlatici()
     {
-        
-        $listeData = PlanlamaModel::hatirlatmalar();
+        $user = User::data();
+        $listeData = PlanlamaModel::hatirlatmalar("",$user->id);
 
         View::listele($listeData);
 
@@ -248,6 +248,8 @@ class Planlama extends Controller
     }
 
     public function hatirlatmaEkle(){
+
+        $user = User::data();
 
         if(!Validation::check()){
 
@@ -269,8 +271,8 @@ class Planlama extends Controller
 
             }
 
-
             $ekleData = [
+                'personel'      => $user->id,
                 'aciklama'      => Post::aciklama(),
                 'periyod'       => Post::periyod(),
                 'yil'           => $yil,

@@ -3,9 +3,9 @@
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper ">
         <div class="content-header row">
-            <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="content-header-left col-md-12 col-12 mb-2">
                 <div class="row breadcrumbs-top">
-                    <div class="col-12">
+                    <div class="col-6">
                         <h2 class="content-header-title float-start mb-0">Fatura Yönetimi</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
@@ -15,6 +15,46 @@
                                 </li>
                             </ol>
                         </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="btn-group float-end" role="group" aria-label="Basic example">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm btn-warning dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i data-feather="chevron-down"></i> Filtre
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a href="{{URL::site('faturalar/main/odeme-0')}}" class="dropdown-item text-danger">
+                                        <i class="far fa-thumbs-down me-50"></i>
+                                        <span>Ödenmemiş Faturalar</span>
+                                    </a>
+                                    <a href="{{URL::site('faturalar/main/odeme-1')}}" class="dropdown-item text-success">
+                                        <i class="far fa-thumbs-up me-50"></i>
+                                        <span>Ödenmiş Faturalar</span>
+                                    </a>
+
+                                    <a href="{{URL::site()}}faturalar/main/durum-1" class="dropdown-item text-danger">
+                                        <i class="fas fa-user-secret me-50"></i>
+                                        <span>Resmi Olmayan Faturalar</span>
+                                    </a>
+                                    <a href="{{URL::site('faturalar/main/durum-2')}}" class="dropdown-item text-success">
+                                        <i class="fas fa-file-invoice me-50"></i>
+                                        <span>Resmi Faturalar</span>
+                                    </a>
+                                    <a href="{{URL::site('faturalar/main/durum-0')}}" class="dropdown-item text-active-dark">
+                                        <i class="fas fa-file-invoice me-50"></i>
+                                        <span>İptal Faturalar</span>
+                                    </a>
+
+
+                                </div>
+                            </div>
+                            <a href="{{URL::site('faturalar/olustur')}}"
+                               class="dt-button create-new btn btn-sm btn-info"><span><i
+                                            data-feather="plus"></i>Fatura Oluştur</span></a>
+
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -30,11 +70,7 @@
                                 <div class="head-label">
                                     <h4 class="card-title">Faturalar</h4>
                                 </div>
-                                <div class="dt-action-buttons text-end">
-                                    <a href="{{URL::site('faturalar/olustur')}}"
-                                       class="dt-button create-new btn btn-primary" tabindex="0"><span><i
-                                                    data-feather="plus"></i>Fatura Oluştur</span></a>
-                                </div>
+
                             </div>
                             <div class="card-body">
 
@@ -57,7 +93,7 @@
                                                         <th>Cari</th>
                                                         <th>Tutar</th>
                                                         <th>Ödenen</th>
-                                                        <th>Fatura Tarihi</th>
+                                                        <th>Tarihler</th>
                                                         <th>Durum</th>
                                                         <th>Ödeme</th>
                                                         <th class="cell-fit"></th>
@@ -98,7 +134,11 @@
                                                         </td>
                                                         <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
                                                         <td>{{number_format($fatura->alinan_odeme,2)}} ₺</td>
-                                                        <td><strong>{{Date::convert($fatura->belge_tarihi,'d.m.Y')}}</strong></td>
+                                                        <td>
+                                                            F: <span data-bs-target="tooltip" data-bs-placement="top" title="Fatura Tarihi">{{Date::convert($fatura->belge_tarihi,'d.m.Y')}}</span><br>
+                                                            Ö: <strong data-bs-target="tooltip" data-bs-placement="top" title="Son Ödeme Tarihi">{{Date::convert($fatura->vade_tarihi,'d.m.Y')}}</strong><br>
+
+                                                        </td>
                                                         <td>
                                                             @if($fatura->durum=="0")
                                                                 <span class="badge rounded-pill badge-light-danger"> İptal </span>
@@ -183,6 +223,9 @@
                                                 </table>
 
                                             </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            {{$faturalar['sayfalama']}}
                                         </div>
                                     </div>
                                 </section>

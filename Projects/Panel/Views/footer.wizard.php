@@ -218,6 +218,27 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+        $(document).ready(function(){
+            // Ödeme seçimi her değiştiğinde tetiklenecek olan event listener'ı ekle
+            $("#odeme").change(function(){
+                // Seçili ödeme durumunu al
+                var odemeDurumu = $(this).val();
+                // MasrafGirisi div elementini seç
+                var masrafGirisiDiv = $("#masrafGirisi");
+
+                // Eğer ödeme yapıldı ise masrafGirisi div'ini görünür yap, yapılmadı ise gizle
+                if (odemeDurumu === "1") {
+                    masrafGirisiDiv.slideDown();
+                } else {
+                    masrafGirisiDiv.slideUp();
+                }
+            });
+
+            // Sayfa yüklendiğinde önceki seçimin durumunu kontrol et
+            $("#odeme").trigger("change");
+        });
+
         $('#summernote').summernote({
             placeholder: 'Müşterilerinize Göstereceğiniz Detayları Girin',
             tabsize: 2,
@@ -561,6 +582,77 @@ $('#widget').draggable();
                 });
                 
             });
+
+
+                $(document).ready(function(){
+                    var i=1;
+                    $('#addRowSupplierProduct').click(function(){
+
+                        formHtml = '<tr id="row'+i+'">';
+                        formHtml += '<td><input style="min-width: 200px" type="text" required  name="urun[]" id="urun" class="form-control"></td>';
+                        formHtml += '<td><select style="min-width: 200px" class="select2 form-select" name="ilgili_urun[]" id="ilgili_urun">';
+                        formHtml += '<option value="">--Seçiniz--</option>';
+                        @foreach($tumUrunler as $furun)
+                            formHtml += '<option value="{{ $furun->id }}">{{ $furun->adi }}</option>';
+                        @endforeach
+                        formHtml += '</select></td>';
+
+                        formHtml += '<td><input type="text" name="aciklama[]" id="aciklama" class="form-control"></td>';
+
+                        formHtml += '<td><input type="number" name="miktar[]" id="miktar_'+i+'" value="1" class="miktar form-control"></td>';
+
+                        formHtml += '<td><div class="input-group"><input type="text" name="fiyat[]" id="fiyat_'+i+'" value="0" class="fiyat form-control"><span class="input-group-text">₺</span></div></td>';
+                        formHtml += '<td><select name="kdv[]" id="kdv_'+i+'" class="kdv form-control"><option value="">--Seçiniz--</option><option value="0">%0</option><option value="10">%10</option><option value="20" selected>%20</option></select></td>';
+                        formHtml += '<td><div class="input-group"><input type="text" name="tutar[]" value="0" readonly id="tutar_'+i+'" class="tutar form-control"><span class="input-group-text">₺</span></div></td>';
+                        formHtml += '<td><a name="remove" id="'+i+'" class="text-danger btn_remove"><i data-feather="trash" class="me-50"></i></a></td>';
+
+                        formHtml += '</tr>';
+
+                        i++;
+                        $('#addDataTableSupplierProduct').append(formHtml);
+                        feather.replace();
+
+                        // Tüm tr satırlarını seç
+                        var satirlar = document.querySelectorAll("#addDataTableSupplierProduct tr");
+
+                        // Her satırdaki input alanlarını bul
+                        satirlar.forEach(function(satir, index) {
+                            var miktarInput = satir.querySelector(".miktar");
+                            var fiyatInput = satir.querySelector(".fiyat");
+                            var tutarInput = satir.querySelector(".tutar");
+
+                            // Her miktar veya fiyat değiştiğinde hesaplama yap
+                            miktarInput.addEventListener("input", hesaplaTutar);
+                            fiyatInput.addEventListener("input", hesaplaTutar);
+
+                            function hesaplaTutar() {
+                                var miktar = miktarInput.value;
+                                var fiyat = fiyatInput.value;
+                                var kdv = satir.querySelector(".kdv").value;
+
+                                // Hesaplama yap
+                                var tutar = (miktar * fiyat) * (1 + kdv / 100);
+
+                                // Tutar alanını güncelle
+                                tutarInput.value = tutar.toFixed(2);
+
+                                // Genel toplamı hesapla
+                                genelToplamHesapla();
+                            }
+                        });
+
+                    });
+
+                    $(document).on('click', '.btn_remove', function(){
+                        var button_id = $(this).attr("id");
+                        $('#row'+button_id+'').remove();
+                    });
+                    $(document).on('click', '.btn_addText', function(){
+                        var button_id = $(this).attr("id");
+                        $('#uyariText'+button_id+'').html('<input type="text" name="uyari[]" class="form-control">');
+                    });
+
+                });
 
 
             

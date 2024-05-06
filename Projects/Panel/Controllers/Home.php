@@ -13,6 +13,7 @@ class Home extends Controller
      */
     public function main(string ...$parameters)
     {
+        $user = User::data();
         $kasaToplami = KasaModel::gelirGiderToplami();-+
         $gelir = $kasaToplami->gelir;
         $gider = $kasaToplami->gider;
@@ -37,7 +38,7 @@ class Home extends Controller
 
 
         $siparisler     = SiparisModel::liste();
-        $hatirlatmalar  = PlanlamaModel::hatirlatmalar(1);
+        $hatirlatmalar  = PlanlamaModel::hatirlatmalar(1,$user->id);
 
         View::listele($siparisler);
         View::hatirlatmalar($hatirlatmalar);

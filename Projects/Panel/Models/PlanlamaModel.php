@@ -3,7 +3,19 @@
 class InternalPlanlamaModel extends Model
 {
 
-    static function hatirlatmalar($durum=""){
+    static function hatirlatmalar($durum="",$user){
+
+        if($durum!=""){
+            $veri = DB::where('personel',$user)->where('durum',$durum)->orderby('id','DESC')->hatirlatmalar();
+        }else{
+            $veri = DB::where('personel',$user)->orderby('id','DESC')->hatirlatmalar();
+        }
+
+        return ['liste'=>$veri->result()];
+
+    }
+
+    static function tumHatirlatmalar($durum=""){
 
         if($durum!=""){
             $veri = DB::where('durum',$durum)->orderby('id','DESC')->hatirlatmalar();
@@ -48,6 +60,15 @@ class InternalPlanlamaModel extends Model
                 'ay'        =>$data['ay'],
                 'gun'       =>$data['gun'],
                 'saat'      =>$data['saat'],
+                'durum'     =>$data['durum']
+            ]);
+        return $guncelle;
+    }
+
+    static function hatirlatmaDurumGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('hatirlatmalar',[
                 'durum'     =>$data['durum']
             ]);
         return $guncelle;

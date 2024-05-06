@@ -9,18 +9,14 @@
                         <h2 class="content-header-title float-start mb-0">Sipariş Yönetimi</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="{{URL::site('siparisler')}}">Siparişler</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="#">Sipariş Ürünleri</a>
-                                </li>
+                                <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a></li>
+                                <li class="breadcrumb-item"><a href="{{URL::site('siparisler')}}">Siparişler</a></li>
+                                <li class="breadcrumb-item"><a href="#">Sipariş Ürünleri</a></li>
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="content-body">
             <section class="form-control-repeater">
@@ -65,6 +61,7 @@
                                             <th>Periyod</th>
                                             <th>Başlanıç Tarihi</th>
                                             <th>Sonraki Ödeme</th>
+                                            <th>Kalan Gün</th>
                                             <th>Adet</th>
                                             <th>Toplam</th>
                                             <th>Durum</th>
@@ -81,7 +78,22 @@
                                             <td>{{$s->notu}}</td>
                                             <td>{{AyarModel::odemePeriyodu($s->odeme_periyodu)}}</td>
                                             <td>{{Date::convert($s->baslangic_tarihi,'d.m.Y')}}</td>
-                                            <td>{{Date::convert($s->bitis_tarihi,'d.m.Y')}}</td>
+                                            <td>
+                                                @if($s->odeme_periyodu!="T")
+                                                {{Date::convert($s->bitis_tarihi,'d.m.Y')}}
+                                                @endif
+                                            </td>
+                                            <td>
+
+                                                @if($s->odeme_periyodu!="T")
+                                                    @if(Date::diffDayUp(date('Y-m-d'), $s->bitis_tarihi)<15)
+                                                <span class="text-danger"><strong>{{Date::diffDayUp(date('Y-m-d'), $s->bitis_tarihi)}}</strong></span>
+                                                    @else
+                                                        {{Date::diffDayUp(date('Y-m-d'), $s->bitis_tarihi)}}
+                                                    @endif
+
+                                                @endif
+                                            </td>
                                             <td>{{$s->adet}}</td>
                                             <td>{{number_format($s->toplam_fiyat,2)}}</td>
                                             <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>
