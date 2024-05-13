@@ -85,7 +85,7 @@ class Masraf extends Controller
 
             Upload::convertName()
                 ->source('belge_dosya')
-                ->target(REAL_BASE_DIR . 'masraf_belgeleri/')
+                ->target(REAL_BASE_DIR . 'Uploads/masraf_belgeleri/')
                 ->start();
             $dosyaBilgi = Upload::info();
 

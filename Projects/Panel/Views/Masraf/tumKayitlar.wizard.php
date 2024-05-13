@@ -72,7 +72,7 @@
                                     <td>{{$kayit->kasaHesabi}}</td>
                                     <td>{{$kayit->belge_no}}
                                         @if($kayit->belge_dosya!="")
-                                        <a target="_blank" href="" data-toggle="tooltip" title="Dosya İndir" class="btn btn-primary btn-xs"><i class="fa fa-download"></i></a>
+                                        <a target="_blank" href="{{URL::site()}}../Uploads/masraf_belgeleri/{{$kayit->belge_dosya}}" data-bs-toggle="tooltip" download title="Dosya İndir" class="btn btn-primary btn-sm"><i class="fa fa-download"></i></a>
                                         @endif
                                     </td>
                                     <td>{{$kayit->aciklama}}</td>

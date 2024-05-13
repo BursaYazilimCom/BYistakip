@@ -2,7 +2,7 @@
 
 use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email,Json;
 use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel,InternalSmsModel as SmsModel;
-use InternalMalzemeModel as MalzemeModel, TedarikciModel,InternalCariModel as CariModel,MasrafModel;
+use InternalMalzemeModel as MalzemeModel,InternalTedarikciModel as  TedarikciModel,InternalCariModel as CariModel,MasrafModel;
 
 
 
@@ -122,7 +122,7 @@ class Faturalar extends Controller
 
                     Upload::convertName()
                         ->source('belge_dosya')
-                        ->target(REAL_BASE_DIR . 'masraf_belgeleri/')
+                        ->target(REAL_BASE_DIR . 'Uploads/masraf_belgeleri/')
                         ->start();
                     $dosyaBilgi = Upload::info();
 
@@ -423,18 +423,32 @@ class Faturalar extends Controller
         $belge_no       = Post::belge_no();
         $belge_tarihi   = AyarModel::tarihDuzelt(Post::belge_tarihi());
         $vade_tarihi    = AyarModel::tarihDuzelt(Post::vade_tarihi());
-        $odeme_yontemi  = Post::odeme_yontemi();
+        $odeme_yontemi  = Post::odeme_yontemi()=="" ? "0" : Post::odeme_yontemi();
         $siparis_notu   = Post::siparis_notu();
+
+        if($faturaDetay->tur=="1") {
+
+            $firmaAdi       = "";
+            $fatura_adresi  = "";
+            $vergi_dairesi  = "";
+            $vergi_no       = "";
+
+        }else{
+            $firmaAdi       = $cariDetay->firma_adi;
+            $fatura_adresi  = $cariDetay->fatura_adresi;
+            $vergi_dairesi  = $cariDetay->vergi_dairesi;
+            $vergi_no       = $cariDetay->vergi_no;
+        }
 
         $data = [
             'id'                => $id,
             'belge_no'          => $belge_no,
-            'fatura_adi'        => $cariDetay->firma_adi,
-            'fatura_adresi'     => $cariDetay->fatura_adresi,
-            'vergi_dairesi'     => $cariDetay->vergi_dairesi,
-            'vergi_no'          => $cariDetay->vergi_no,
-            'tedarikci'         => '0',
-            'musteri'           => $cariDetay->id,
+            'fatura_adi'        => $firmaAdi,
+            'fatura_adresi'     => $fatura_adresi,
+            'vergi_dairesi'     => $vergi_dairesi,
+            'vergi_no'          => $vergi_no,
+            'tedarikci'         => $faturaDetay->tedarikci,
+            'musteri'           => "0",
             'belge_tarihi'      => $belge_tarihi,
             'vade_tarihi'       => $vade_tarihi,
             'durum'             => $vade_tarihi,
@@ -565,34 +579,40 @@ class Faturalar extends Controller
         $odemeYontemi = AyarModel::odemeYontemleri();
         $urunler = UrunModel::tumListe();
 
-
         if ($id!=""){
 
             $maliIslemler = KasaModel::maliSorgu('fatura',$id);
 
-            $faturaDetay = FaturaModel::detay($id);
+            $faturaDetay    = FaturaModel::detay($id);
             $faturaUrunleri = FaturaModel::faturaUrunleri($id);
-            $cariDetay = CariModel::detay($faturaDetay->musteri);
+            $cariDetay      = CariModel::detay($faturaDetay->musteri);
+
+            if($faturaDetay->tur=="1" and $faturaDetay->tedarikci!="") {
+
+                $tedarikci = TedarikciModel::detay($faturaDetay->tedarikci);
+
+            }
 
             $detay = (object)[
-                'id'            => $id,
-                'musteri'       => $cariDetay->id,
-                'tur'           => $faturaDetay->tur,
-                'satis_turu'    => $faturaDetay->satis_turu,
-                'aciklama'      => $faturaDetay->aciklama,
-                'belge_no'      => $faturaDetay->belge_no,
-                'odeme'         => $faturaDetay->odeme,
-                'durum'         => $faturaDetay->durum,
-                'resmi_fatura_dosyasi'    => $faturaDetay->resmi_fatura_dosyasi,
-                'belge_tarihi'      => AyarModel::tarihGoster($faturaDetay->belge_tarihi),
-                'vade_tarihi'       => $faturaDetay->vade_tarihi=="0000-00-00" ? '': AyarModel::tarihGoster($faturaDetay->vade_tarihi),
-                'odeme_yontemi'     => $faturaDetay->odeme_yontemi,
-                'cariDetay'         => $cariDetay
+                'id'                    => $id,
+                'musteri'               => $cariDetay->id,
+                'tur'                   => $faturaDetay->tur,
+                'satis_turu'            => $faturaDetay->satis_turu,
+                'aciklama'              => $faturaDetay->aciklama,
+                'belge_no'              => $faturaDetay->belge_no,
+                'odeme'                 => $faturaDetay->odeme,
+                'durum'                 => $faturaDetay->durum,
+                'resmi_fatura_dosyasi'  => $faturaDetay->resmi_fatura_dosyasi,
+                'belge_tarihi'          => AyarModel::tarihGoster($faturaDetay->belge_tarihi),
+                'vade_tarihi'           => $faturaDetay->vade_tarihi=="0000-00-00" ? '': AyarModel::tarihGoster($faturaDetay->vade_tarihi),
+                'odeme_yontemi'         => $faturaDetay->odeme_yontemi,
+                'cariDetay'             => $cariDetay
             ];
 
             $gelir = 0;
             $gider = 0;
             View::detay($detay);
+            View::tedarikci($tedarikci);
             View::gelir($gelir);
             View::gider($gider);
             View::maliIslemler($maliIslemler);
@@ -601,8 +621,8 @@ class Faturalar extends Controller
         }else{
 
             $faturaDetay = [
-               'belge_no'    => '',
-               'belge_tarihi'    => '',
+               'belge_no'       => '',
+               'belge_tarihi'   => '',
                'vade_tarihi'    => '',
             ];
 

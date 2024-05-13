@@ -242,7 +242,7 @@
         $('#summernote').summernote({
             placeholder: 'Müşterilerinize Göstereceğiniz Detayları Girin',
             tabsize: 2,
-            height: 200
+            height: 100
         });
         $('#summernote2').summernote({
             placeholder: 'Müşterilerinize Göstereceğiniz Cevabı Girin',
@@ -409,6 +409,46 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function(){
+        var g=1;
+        $('#addRowOptionProduct').click(function(){
+
+            formHtml1 = '<tr id="row'+g+'">';
+            formHtml1 += '<input type="hidden" name="oid[]" id="oid" value="0" class="form-control">';
+            formHtml1 += '<td style="max-width: 100px"><input type="text" value="'+g+'"  name="sira[]" id="sira" class="form-control"></td>';
+            formHtml1 += '<td><select class="form-select" name="tur[]" id="tur">';
+            formHtml1 += '<option value="">--Seçiniz--</option>';
+            formHtml1 += '<option value="text">Metin</option>';
+            formHtml1 += '<option value="file">Dosya</option>';
+            formHtml1 += '<option value="image">Resim</option>';
+            formHtml1 += '<option value="link">URL</option>';
+            formHtml1 += '<option value="icon">İcon</option>';
+            formHtml1 += '<option value="code">Kod</option>';
+            formHtml1 += '</select></td>';
+            formHtml1 += '<td><input type="text" name="baslik[]" id="baslik" class="form-control"></td>';
+            formHtml1 += '<td><select name="durum[]" id="durum" class="form-select"><option value="0">Her Zaman</option><option value="1">Sipariş Onay Sonrası</option></select></td>';
+            formHtml1 += '<td><select name="yer[]" id="yer" class="form-select"><option value="0">Listeleme</option><option value="1">Ürün Detay</option><option value="2">İkiside</option></select></td>';
+            formHtml1 += '<td><select name="gereklilik[]" id="gereklilik" class="form-select"><option value="1">Zorunlu</option><option value="0">Değil</option></select></td>';
+            formHtml1 += '<td><a name="remove" id="'+g+'" class="text-danger btn_remove"><i data-feather="trash" class="me-50"></i></a></td>';
+            formHtml1 += '</tr>';
+
+            g++;
+            $('#addDataTableOptionProduct').append(formHtml1);
+            feather.replace();
+
+        });
+
+        $(document).on('click', '.btn_remove', function(){
+            var button_id = $(this).attr("id");
+            $('#row'+button_id+'').remove();
+        });
+        $(document).on('click', '.btn_addText', function(){
+            var button_id = $(this).attr("id");
+            $('#uyariText'+button_id+'').html('<input type="text" name="uyari[]" class="form-control">');
+        });
+
+    });
+
     $(document).ready(function (){
 
         $('.editButon').on('click',function () {
@@ -422,25 +462,6 @@
             var data = $tr.children('td').map(function () {
                 return $(this).text();
             })
-
-            console.log(data);
-
-            if(action=="grupDuzenle")    {
-
-                $('#dataAction').val('grupGuncelle');
-                $('#update_id').val(data[0]);
-                $('#sira').val(data[1]);
-                $('#adi').val(data[2]);
-
-                if (data[3]=="Aktif"){
-                    var durum = "1";
-                }else {
-                    var durum = "0";
-                }
-                $('#durum').val(durum);
-
-
-            }else{}
 
         })
 

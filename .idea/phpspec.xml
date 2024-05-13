@@ -29,6 +29,15 @@
       <PhpSpecSuiteConfiguration>
         <option name="myPath" value="$PROJECT_DIR$/Internal/package-composer/phpspec/prophecy" />
       </PhpSpecSuiteConfiguration>
+      <PhpSpecSuiteConfiguration>
+        <option name="myPath" value="$PROJECT_DIR$/Internal/package-composer/phpspec/prophecy" />
+      </PhpSpecSuiteConfiguration>
+      <PhpSpecSuiteConfiguration>
+        <option name="myPath" value="$PROJECT_DIR$/Internal/package-composer/phpspec/prophecy" />
+      </PhpSpecSuiteConfiguration>
+      <PhpSpecSuiteConfiguration>
+        <option name="myPath" value="$PROJECT_DIR$/Internal/package-composer/phpspec/prophecy" />
+      </PhpSpecSuiteConfiguration>
     </suites>
   </component>
 </project>

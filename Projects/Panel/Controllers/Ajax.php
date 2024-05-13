@@ -78,6 +78,10 @@ class Ajax extends Controller
     }
 
     public function etkinlikListe(){
+        if(!Http::isajax()){
+            redirect("Login");
+            exit;
+        }
 
         $start = Date::convert(Get::start(),"Y-m-d H:i:s");
         $end = Date::convert(Get::end(),"Y-m-d H:i:s");
@@ -148,6 +152,46 @@ class Ajax extends Controller
 
     }
 
+    public function urunGrupOzellikGetir($grup,$urun="")
+    {
+        if($urun=="0") {
+            $urunOzellikleri = UrunModel::urunGrupOzellikleri($grup);
+            $detay = (object) [];
+
+        }else{
+            $detay = UrunModel::detay($urun);
+            $urunOzellikleri = UrunModel::urunGrupOzellikleri($grup);
+        }
+
+        foreach($urunOzellikleri as $ozellik){ ?>
+            <div class="col-sm-3">
+                <label class="col-form-label" for="detay"><?=$ozellik->gereklilik=="1"?"<strong class='text-danger'>*</strong>":""?> <?=$ozellik->baslik?> (<?=$ozellik->tur?>)
+                    <?php if(($ozellik->tur=="image" or $ozellik->tur=="file") and UrunModel::urunOzellikDeger($detay->id,$ozellik->id)!="") { ?>
+                    <a href="<?=URL::site()?>..//Uploads/urun-dosyalari/<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>" target="_blank"><strong class="text-success">Yüklenmiş Dosyayı Görüntüle</strong></a>
+                  <?php } ?>
+                </label>
+                <input type="hidden" name="ozellik_id[]" value="<?=$ozellik->id?>">
+                <?php if($ozellik->tur=="text"){ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Gireceğiniz Değer Yazı Olmalıdır" class="form-control" type="text" value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } elseif($ozellik->tur=="file"){ ?>
+                    <input name="file_<?=$ozellik->id?>" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Yükleyeceğiniz Dosya zip,rar,pdf,doc,docx gibi uzantılı dosya olmalıdır" class="form-control" type="file" accept=".zip,.rar,.pdf,.doc,.docx">
+                <?php } elseif($ozellik->tur=="image"){ ?>
+                    <input name="image_<?=$ozellik->id?>" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Yükleyeceğiniz Resim jpg,jpeg,png,webp uzantılı dosya olmalıdır" class="form-control" type="file" accept=".gif,.jpg,.jpeg,.png">
+                <?php } elseif($ozellik->tur=="link"){ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Bağlantı Tam adres olmalıdır" class="form-control" type="text" value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } elseif($ozellik->tur=="icon"){ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="iconlar font-awesome 5.x  desteklemektedir. Örn: fa fa-user olarak girmelisiniz" class="form-control" type="text" value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } elseif($ozellik->tur=="code"){ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Gireceğiniz kodlar HTML kodları olmalıdır. Harici kodlar çalışmayacaktır." class="form-control" type="text"  value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } else{ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Gireceğiniz Değer Yazı Olmalıdır" class="form-control" type="text"  value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } ?>
+            </div>
+
+    <?php
+        }
+
+    }
 
     public function modal()
     {
@@ -2660,7 +2704,7 @@ class Ajax extends Controller
 
 
             ?>
-                            <form action="<?=URL::site('masraf/masrafEkle')?>" method="post">
+                            <form action="<?=URL::site('masraf/masrafEkle')?>" enctype="multipart/form-data" method="post">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Masraf Ekle</h4>
                                 </div>

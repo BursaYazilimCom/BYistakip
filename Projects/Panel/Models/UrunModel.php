@@ -30,7 +30,7 @@ class InternalUrunModel extends Model
             ->urunler()
             ->row();
 
-        DB::stringQuery();
+        //DB::stringQuery();
 
         return $veri;
 
@@ -162,7 +162,7 @@ class InternalUrunModel extends Model
             'guncel_stok'   =>$data['guncel_stok']
         ]);
 
-        echo DB::stringQuery();
+        //echo DB::stringQuery();
 
         return DB::insertID();
     }
@@ -226,22 +226,127 @@ class InternalUrunModel extends Model
 
 
     /*****************************************************/
+    static function urunOzellikKontrol($urun,$ozellik)
+    {
+
+        $veri =  DB::where('urun',$urun)->where('ozellik',$ozellik)->urun_ozellikleri()->row();
+
+        return $veri;
+
+    }
+
+    static function urunOzellikDeger($urun,$ozellik)
+    {
+
+        $veri =  DB::where('urun',$urun)->where('ozellik',$ozellik)->urun_ozellikleri()->row();
+
+        return $veri->deger;
+
+    }
+
+    static function urunOzellikEkle($data){
+
+        $ekle = DB::insert('urun_ozellikleri',[
+            'urun'     =>$data['urun'],
+            'ozellik'  =>$data['ozellik'],
+            'deger'    =>$data['deger']
+        ]);
+
+        //echo DB::stringQuery();
+
+        return DB::insertID();
+    }
+
+    static function urunOzellikGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('urun_ozellikleri',[
+                'deger'    =>$data['deger']
+            ]);
+        // echo DB::stringQuery();
+        return $guncelle;
+    }
+
+
+
+    /*****************************************************/
+
+
 
     static function urunGrupDetay($id)
     {
         return DB::select(
             'urun_gruplari.id as id',
             'urun_gruplari.adi as adi',
+            'urun_gruplari.aciklama as aciklama',
             'urun_gruplari.sira as sira',
             'urun_gruplari.durum as durum'
             )
             ->where('urun_gruplari.id',$id)->urun_gruplari()->row();
     }
 
+    static function urunGrupOzellikDetay($id)
+    {
+        return DB::where('id',$id)->urun_grup_ozellikleri()->row();
+    }
+
+    static function urunGrupOzellikleri($id)
+    {
+        $veri =  DB::where('grup',$id)->urun_grup_ozellikleri()->result();
+
+        //echo DB::stringQuery();
+
+        return $veri;
+    }
+
+    static function urunGrupOzellikEkle($data){
+
+        $ekle = DB::insert('urun_grup_ozellikleri',[
+            'grup'          =>$data['grup'],
+            'sira'          =>$data['sira'],
+            'tur'           =>$data['tur'],
+            'baslik'        =>$data['baslik'],
+            'gereklilik'    =>$data['gereklilik'],
+            'yer'           =>$data['yer'],
+            'durum'         =>$data['durum']
+        ]);
+
+        //echo DB::stringQuery();
+
+        return DB::insertID();
+    }
+
+    static function urunGrupOzellikGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('urun_grup_ozellikleri',[
+                'sira'          =>$data['sira'],
+                'tur'           =>$data['tur'],
+                'baslik'        =>$data['baslik'],
+                'gereklilik'    =>$data['gereklilik'],
+                'yer'           =>$data['yer'],
+                'durum'         =>$data['durum']
+            ]);
+
+        return $guncelle;
+    }
+
+    static function urunGrupOzellikSil($id){
+        return DB::whereId($id)->delete('urun_grup_ozellikleri');
+    }
+
+    static function urunGrupOzellikleriniSil($id){
+        return DB::where('grup',$id)->delete('urun_grup_ozellikleri');
+    }
+    static function urunOzellikleriniSil($id){
+        return DB::where('urun',$id)->delete('urun_ozellikleri');
+    }
+
     static function urunGrupListe(){
         $veri = DB::select(
                            'urun_gruplari.id as id',
                            'urun_gruplari.adi as adi',
+                           'urun_gruplari.aciklama as aciklama',
                            'urun_gruplari.sira as sira',
                            'urun_gruplari.durum as durum'
                             )
@@ -255,9 +360,12 @@ class InternalUrunModel extends Model
 
         $ekle = DB::insert('urun_gruplari',[
             'adi'       =>$data['adi'],
+            'aciklama'       =>$data['aciklama'],
             'sira'      =>$data['sira'],
             'durum'     =>$data['durum']
         ]);
+
+        //echo DB::stringQuery();
 
         return DB::insertID();
     }
@@ -267,6 +375,7 @@ class InternalUrunModel extends Model
         $guncelle = DB::where('id',$data["id"])
             ->update('urun_gruplari',[
                 'adi'       =>$data['adi'],
+                'aciklama'       =>$data['aciklama'],
                 'sira'      =>$data['sira'],
                 'durum'     =>$data['durum']
             ]);

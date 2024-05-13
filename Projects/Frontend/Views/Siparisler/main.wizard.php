@@ -41,12 +41,12 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                             <th>Ürün</th>
-                                            <th class="d-none d-sm-block">Periyod</th>
-                                            <th class="d-none d-sm-block">Adet</th>
-                                            <th class="d-none d-sm-block">Fiyat</th>
-                                            <th class="d-none d-sm-block">Başalangıç Tarihi</th>
+                                            <th>Periyod</th>
+                                            <th>Adet</th>
+                                            <th>Fiyat</th>
+                                            <th>Başalangıç Tarihi</th>
                                             <th>Son Ödeme</th>
-                                            <th  class="d-none d-sm-block">Durum</th>
+                                            <th>Durum</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -54,12 +54,12 @@
                                         @foreach($listele['liste'] as $uu)
                                         <tr>
                                             <td><strong>{{$uu->notu}}</strong><br><small>{{$uu->urun_adi}}</small></td>
-                                            <td class="d-none d-sm-block">{{AyarModel::odemePeriyodu($uu->odeme_periyodu)}}</td>
-                                            <td class="d-none d-sm-block">{{$uu->adet}}</td>
-                                            <td class="d-none d-sm-block">{{number_format($uu->genel_toplam_tutari,2)}}</td>
-                                            <td class="d-none d-sm-block">{{Date::convert($uu->baslangic_tarihi,'d.m.Y')}}</td>
+                                            <td>{{AyarModel::odemePeriyodu($uu->odeme_periyodu)}}</td>
+                                            <td>{{$uu->adet}}</td>
+                                            <td>{{number_format($uu->genel_toplam_tutari,2)}}</td>
+                                            <td>{{Date::convert($uu->baslangic_tarihi,'d.m.Y')}}</td>
                                             <td>{{Date::convert($uu->bitis_tarihi,'d.m.Y')}}</td>
-                                            <td  class="d-none d-sm-block">{{AyarModel::siparisDurumAdi($uu->durum)}}</td>
+                                            <td>{{AyarModel::siparisDurumAdi($uu->durum)}}</td>
                                             <td>
                                             <a href="{{URL::site('siparisler/urunDetay/'.$uu->id)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Ürün Görüntüle"><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
                                             </td>

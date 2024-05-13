@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 
-use User,Method,Post,Redirect,Json,URL,Validation,Converter,Security;
+use User,Method,Post,Redirect,Json,URL,Validation,Converter,Security,Upload;
 use InternalUrunModel as UrunModel,AyarModel,InternalTedarikciModel as TedarikciModel;
 
 class Urun extends Controller
@@ -41,6 +41,38 @@ class Urun extends Controller
 
     }
 
+    public function grupForm($id=""){
+
+        if($id){
+            $data       = UrunModel::urunGrupDetay($id);
+            $ozellikler = UrunModel::urunGrupOzellikleri($id);
+            if (count($ozellikler) == 0) {
+
+                $ozellikler = [];
+            }
+
+            View::detay($data);
+            View::action("urun/grupGuncelle/".$id);
+
+        }else{
+            $data = (object)[
+                'id'            =>'',
+                'adi'           =>'',
+                'aciklama'      =>'',
+                'sira'          =>'',
+                'durum'         =>'1'
+            ];
+
+            $ozellikler =(object) [];
+
+            View::action("urun/grupEkle");
+        }
+
+        View::detay($data);
+        View::ozellikler($ozellikler);
+
+    }
+
 
     public function form($id=""){
         $gruplar = UrunModel::urunGrupListe();
@@ -49,6 +81,8 @@ class Urun extends Controller
 
         if($id){
             $data = UrunModel::detay($id);
+            $urunOzellikleri = UrunModel::urunGrupOzellikleri($data->grupId);
+
 
             View::detay($data);
             View::action("urun/update/".$id);
@@ -76,10 +110,13 @@ class Urun extends Controller
                 'guncel_stok'   =>'0',
 
             ];
+            $urunOzellikleri = (object) [];
             View::detay($data);
 
             View::action("urun/ekle");
         }
+
+        View::urunOzellikleri($urunOzellikleri);
 
         View::tedarikciler($tedarikciler);
         View::gruplar($gruplar);
@@ -117,6 +154,77 @@ class Urun extends Controller
 
             $ekle = UrunModel::ekle($ekleData);
 
+
+            /*echo "<pre>";
+
+            var_dump(Post::all());
+
+            echo "</pre>";*/
+            $ozellikler = Post::ozellik_id();
+            $degerler   = Post::deger();
+
+            for ($o=0; $o < count($ozellikler); $o++) {
+
+                $ozellikId = $ozellikler[$o];
+
+                $deger = $degerler[$ozellikId]==""?"":Security::htmlEncode($degerler[$ozellikId]);
+
+                $ozellikDetay = UrunModel::urunGrupOzellikDetay($ozellikId);
+
+                if($ozellikDetay->tur=="file"){
+
+                    if(Upload::isFile('file_'.$ozellikId)){
+
+                        Upload::mimes('application/pdf','application/zip','application/msword','application/rar','application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+                            ->convertName()
+                            ->encode('sha1')
+                            ->encodeLength(10)
+                            ->source('file_'.$ozellikId)
+                            ->target(REAL_BASE_DIR . 'Uploads/urun-dosyalari/')
+                            ->start();
+                        $dosyaBilgi = Upload::info();
+                        $deger   = $dosyaBilgi->encodeName;
+                    }else{
+
+                        $deger   = "";
+
+                    }
+
+                }
+
+                if($ozellikDetay->tur=="image"){
+
+                    if(Upload::isFile('image_'.$ozellikId)){
+
+                        Upload::mimes('image/jpeg','image/png','image/gif')
+                            ->convertName()
+                            ->encode('sha1')
+                            ->encodeLength(10)
+                            ->source('image_'.$ozellikId)
+                            ->target(REAL_BASE_DIR . 'Uploads/urun-dosyalari/')
+                            ->start();
+                        $dosyaBilgi = Upload::info();
+                        $deger   = $dosyaBilgi->encodeName;
+                    }else{
+
+                        $deger   = "";
+
+                    }
+
+                }
+
+                if($deger!=""){
+                    //Özellike ekle
+                    $ozellikData = [
+                        'urun' => $ekle,
+                        'ozellik' => $ozellikId,
+                        'deger' => $deger
+                    ];
+                    $ozellikEkle = UrunModel::urunOzellikEkle($ozellikData);
+                }
+
+            }
+
             if($ekle){
                 Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Ekleme İşlemi Yapıldı !.</div></div>'])->action('urun');
             }else{
@@ -133,12 +241,11 @@ class Urun extends Controller
 
         if(!Validation::check()){
 
-
             Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.<br>'.str_replace('<br>',EOL,Validation::error('string')).'</div></div>'])->action(URL::prev());
 
         }else{
 
-            $ekleData = [
+            $updateData = [
                 'id'                =>$id,
                 'tedarikci'         =>Post::tedarikci(),
                 'urun_kodu'         =>Post::urun_kodu(),
@@ -159,10 +266,97 @@ class Urun extends Controller
                 'guncel_stok'       =>Post::guncel_stok()
             ];
 
-            $ekle = UrunModel::guncelle($ekleData);
+            $update = UrunModel::guncelle($updateData);
 
-            if($ekle){
+            /*echo "<pre>";
+
+            var_dump(Post::all());
+
+            echo "</pre>";*/
+            $ozellikler = Post::ozellik_id();
+            $degerler   = Post::deger();
+
+            for ($o=0; $o < count($ozellikler); $o++) {
+
+                $ozellikId = $ozellikler[$o];
+                $ozellikKontrolEt = UrunModel::urunOzellikKontrol($id,$ozellikler[$o]);
+
+
+                $deger = $degerler[$ozellikId]==""?"":Security::htmlEncode($degerler[$ozellikId]);
+
+                $ozellikDetay = UrunModel::urunGrupOzellikDetay($ozellikId);
+
+
+
+                if($ozellikDetay->tur=="file"){
+
+                    if(Upload::isFile('file_'.$ozellikId)){
+
+                        Upload::mimes('application/pdf','application/zip','application/msword','application/rar','application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+                            ->convertName()
+                            ->encode('sha1')
+                            ->encodeLength(10)
+                            ->source('file_'.$ozellikId)
+                            ->target(REAL_BASE_DIR . 'Uploads/urun-dosyalari/')
+                            ->start();
+                        $dosyaBilgi = Upload::info();
+                        $deger   = $dosyaBilgi->encodeName;
+                    }else{
+
+                        $deger   = "";
+
+                    }
+
+                }
+
+                if($ozellikDetay->tur=="image"){
+
+                    if(Upload::isFile('image_'.$ozellikId)){
+
+                        Upload::mimes('image/jpeg','image/png','image/gif')
+                            ->convertName()
+                            ->encode('sha1')
+                            ->encodeLength(10)
+                            ->source('image_'.$ozellikId)
+                            ->target(REAL_BASE_DIR . 'Uploads/urun-dosyalari/')
+                            ->start();
+                        $dosyaBilgi = Upload::info();
+                        $deger   = $dosyaBilgi->encodeName;
+                    }else{
+
+                        $deger   = "";
+
+                    }
+
+                }
+
+
+                if ($ozellikKontrolEt->id=="") {
+                    if($deger!=""){
+                        //Özellike ekle
+                        $ozellikData = [
+                            'urun' => $id,
+                            'ozellik' => $ozellikId,
+                            'deger' => $deger
+                        ];
+                        $ozellikEkle = UrunModel::urunOzellikEkle($ozellikData);
+                    }
+
+                }else{
+                    //Özellik güncelle
+                    $ozellikData = [
+                        'id' => $ozellikKontrolEt->id,
+                        'deger' => $deger
+                    ];
+                    $ozellikGuncelle = UrunModel::urunOzellikGuncelle($ozellikData);
+                }
+
+            }
+
+            if($update){
+
                 Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Güncelleme İşlemi Yapıldı !.</div></div>'])->action('urun/form/'.$id);
+
             }else{
 
                 Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Güncelleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());
@@ -184,7 +378,137 @@ class Urun extends Controller
 
     }
 
-        public function ajax():void
+    public function grupEkle ()
+    {
+
+        if(!Validation::check()){
+
+            $hata = str_replace('<br>',EOL,Validation::error('string'));
+            AyarModel::basarisiz('Grup Ekleme İşlemi','Grup Ekleme işlemi sırasında hata oluştu<br>'.$hata,URL::prev());
+
+        }else{
+
+            $ekleData = [
+                'adi'           =>Post::adi(),
+                'aciklama'      =>Security::htmlEncode(Post::aciklama()),
+                'sira'          =>Post::gsira(),
+                'durum'         =>Post::gdurum()
+            ];
+
+            $ekle = UrunModel::urunGrupEkle($ekleData);
+
+            if($ekle){
+
+                $sira           = Post::sira();
+                $tur            = Post::tur();
+                $baslik         = Post::baslik();
+                $gereklilik     = Post::gereklilik();
+                $yer            = Post::yer();
+                $durum          = Post::durum();
+
+                for($i=0;$i<count($baslik);$i++){
+
+                    $ozellikEkle = [
+                        'grup'          => $ekle,
+                        'sira'          => $sira[$i],
+                        'baslik'        => $baslik[$i],
+                        'tur'           => $tur[$i],
+                        'gereklilik'    => $gereklilik[$i]==""?0:1,
+                        'yer'           => $yer[$i],
+                        'durum'         => $durum[$i]
+                    ];
+
+                    $ozellikEkle = UrunModel::urunGrupOzellikEkle($ozellikEkle);
+
+                    $ozellikEkle ="";
+
+                }
+
+                AyarModel::basarili('Grup Ekleme İşlemi','Grup Ekleme işlemi başarı ile gerçekleştirildi',URL::site('urun/grupForm/'.$ekle));
+
+            }else{
+
+                AyarModel::basarisiz('Grup Ekleme İşlemi','Grup Ekleme işlemi sırasında hata oluştu',URL::prev());
+
+            }
+
+        }
+
+    }
+
+    public function grupGuncelle($id)
+    {
+
+        if(!Validation::check()){
+
+            $hata = str_replace('<br>',EOL,Validation::error('string'));
+            AyarModel::basarisiz('Grup Güncelleme İşlemi','Grup Güncelleme işlemi sırasında hata oluştu<br>'.$hata,URL::prev());
+
+        }else{
+
+            if (Post::id()!=$id) {
+                redirect(URL::prev());
+            }
+
+            $guncellemeData = [
+                'id'            =>$id,
+                'adi'           =>Post::adi(),
+                'aciklama'      =>Security::htmlEncode(Post::aciklama()),
+                'sira'          =>Post::gsira(),
+                'durum'         =>Post::gdurum()
+            ];
+
+            $guncelle = UrunModel::urunGrupGuncelle($guncellemeData);
+
+            $oid            = Post::oid();
+            $sira           = Post::sira();
+            $tur            = Post::tur();
+            $baslik         = Post::baslik();
+            $gereklilik     = Post::gereklilik();
+            $yer            = Post::yer();
+            $durum          = Post::durum();
+
+            for($i=0;$i<count($baslik);$i++){
+
+                $ozellikData = [
+                    'id'            => $oid[$i],
+                    'grup'          => $id,
+                    'sira'          => $sira[$i],
+                    'baslik'        => $baslik[$i],
+                    'tur'           => $tur[$i],
+                    'gereklilik'    => $gereklilik[$i],
+                    'yer'           => $yer[$i],
+                    'durum'         => $durum[$i]
+                ];
+
+                if($oid[$i]=="0"){
+
+                    UrunModel::urunGrupOzellikEkle($ozellikData);
+
+                }else{
+
+                    UrunModel::urunGrupOzellikGuncelle($ozellikData);
+                }
+
+                $ozellikData ="";
+
+            }
+
+            if($guncelle){
+
+                AyarModel::basarili('Grup Ekleme İşlemi','Grup Ekleme işlemi başarı ile gerçekleştirildi',URL::site('urun/grupForm/'.$id));
+
+            }else{
+
+                AyarModel::basarisiz('Grup Ekleme İşlemi','Grup Ekleme işlemi sırasında hata oluştu',URL::prev());
+
+            }
+
+        }
+
+    }
+
+    public function ajax():void
     {
         $user       = User::data();
         $dataAction = Post::dataAction();
@@ -194,6 +518,28 @@ class Urun extends Controller
         switch ($dataAction){
 
                 /*********************************************************/
+            case "urunSil":
+
+                $sil = UrunModel::sil($dataId);
+
+                $data['title'] = "Ürün Silme İşlemi";
+
+                if($sil){
+
+                    $ozellikSil = UrunModel::urunOzellikleriniSil($dataId);
+
+                    $data['success'] = 'Ürün silme işlemi başarı ile yapıldı!';
+                    $data['redirect'] = '';
+
+                }else{
+
+                    $data['error'] = "Ürün silme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
 
             case "grupSil":
 
@@ -203,8 +549,10 @@ class Urun extends Controller
 
                 if($sil){
 
+                    $ozellikSil = UrunModel::urunGrupOzellikleriniSil($dataId);
+
                     $data['success'] = 'Grup silme işlemi başarı ile yapıldı!';
-                    $data['redirect'] = '/urun/gruplar';
+                    $data['redirect'] = '';
 
                 }else{
 
@@ -216,102 +564,27 @@ class Urun extends Controller
 
                 break;
 
-            case "grupEkle":
+            case "urunGrupOzellikSil":
 
-                $data['title'] = "Grup Ekleme İşlemi";
+                $ozellikDetay = UrunModel::urunGrupOzellikDetay($dataId);
 
-                if(!Validation::check()){
-
-                    $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
-
-                }else{
-
-                    $ekleData = [
-                        'adi'           =>Post::adi(),
-                        'sira'          =>Post::sira(),
-                        'durum'         =>Post::durum()
-                    ];
-
-                    $ekle = UrunModel::urunGrupEkle($ekleData);
-
-                    $durum = Post::durum()=="1"?"Aktif":"Pasif  ";
-
-                    if($ekle){
-
-                        $data['success'] = 'Ekleme işlemi başarı ile yapıldı!';
-                        $data['redirect'] = '';
-                        $data['addData'] = '<tr id="row-'.$ekle.'">
-                                                <td>'.$ekle.'</td>
-                                                <td>'.Post::sira().'</td>
-                                                <td>'.Post::adi().'</td>
-                                                <td>'.$durum.'</td>
-                                                <td>
-                                                    <a href="javascript:;" onclick="deleteAction(\''.$ekle.'\',\''.URL::site('urun/ajax').'\',\'grupSil\')" class="btn btn-sm btn-danger py-0">Sil</a>
-                                                </td>
-                                            </tr>';
-                        $data['modalClose'] = "modals-add";
-
-                    }else{
-
-                        $data['error'] = "Ekleme işlemi yapılamadı!";
-
-                    }
-
-                }
+                $sil = UrunModel::urunGrupOzellikSil($dataId);
 
 
-                echo Json::encode($data);
+                $data['title'] = "Grup Özellik Silme İşlemi";
 
+                if($sil){
 
-                break;
-
-            case "grupGuncelle":
-
-                $data['title'] = "Grup Guncelleme İşlemi";
-
-                if(!Validation::check()){
-
-                    $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
+                    $data['success'] = 'Grup Özellik silme işlemi başarı ile yapıldı!';
+                    $data['redirect'] = '';
 
                 }else{
-                    $id = Post::update_id();
 
-                    $updateData = [
-                        'id'             =>$id,
-                        'adi'            =>Post::adi(),
-                        'sef'            =>Converter::urlWord(Post::adi()),
-                        'title'          =>Post::title(),
-                        'icon'           =>Post::icon(),
-                        'aciklama'       =>Post::aciklama(),
-                        'sira'           =>Post::sira(),
-                        'anasayfa'       =>Post::anasayfa(),
-                        'durum'          =>Post::durum()
-                    ];
-
-                    $guncelle = UrunModel::urunGrupGuncelle($updateData);
-
-                    if($guncelle){
-
-                        $data['success'] = 'Guncelleme işlemi başarı ile yapıldı!';
-                        $data['redirect'] = URL::site('urun/gruplar');
-                        $data['modalClose'] = "modals-add";
-
-                    }else{
-
-                        $data['error'] = "Guncelleme işlemi yapılamadı!";
-
-                    }
+                    $data['error'] = "Grup Özellik silme işlemi yapılamadı!";
 
                 }
 
                 echo Json::encode($data);
-
-
-                break;
-
-            case "urunOdemePeriodlari":
-
-
 
                 break;
 

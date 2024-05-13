@@ -17,6 +17,16 @@ class InternalTedarikciModel extends Model
         return $data->adi;
     }
 
+    static function tedarikciFirma($id='0')
+    {
+        if($id=='0'){
+            return 'Tedarikci Yok';
+        }
+        $data = DB::where('id',$id)->tedarikci()->row();
+
+        return $data->firma_adi;
+    }
+
     static function liste(){
         $veri= DB::limit(null,25)->tedarikci();
 

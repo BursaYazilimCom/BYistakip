@@ -156,6 +156,7 @@ class InternalFaturaModel extends Model
                 'odeme_yontemi'     =>$data["odeme_yontemi"],
                 'aciklama'          =>$data["aciklama"]
         ]);
+        //echo DB::stringQuery();
         return $guncelle;
     }
 

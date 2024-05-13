@@ -157,7 +157,10 @@ function deleteAction(id,action,dataActions) {
                 }
 
                 if(data.redirect!=""){
-                    window.location = data.redirect;
+                    //window.location = data.redirect;
+                    setTimeout(function() {
+                        window.location = data.redirect;
+                    }, 2000); // 5 saniye (5000 milisaniye)
                 }
 
             }

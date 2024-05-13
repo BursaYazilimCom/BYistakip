@@ -105,7 +105,7 @@
                                                         <td class=""><a class="fw-bold" href="{{URL::site('faturalar/duzenle')}}/{{$fatura->id}}">#{{$fatura->id}}</a></td>
                                                         <td>
                                                             @if($fatura->tur=="1")
-                                                            <span class="badge rounded-pill badge-light-info"> Alış </span>
+                                                            <span class="badge rounded-pill badge-light-warning"> Alış Faturası </span>
                                                             @elseif($fatura->tur=="2")
                                                             <span class="badge rounded-pill badge-light-success"> Satış </span>
                                                             @elseif($fatura->tur=="3")
@@ -113,10 +113,12 @@
                                                             @else
                                                             <span class="badge rounded-pill badge-light-primary"> Tanımsız </span>
                                                             @endif
-                                                            @if($fatura->satis_turu=="1")
-                                                            <span class="badge rounded-pill badge-light-info"> İlk Sipariş Faturası </span>
-                                                            @else
-                                                            <span class="badge rounded-pill badge-light-primary"> Yenileme Faturası </span>
+                                                            @if($fatura->tur!="1")
+                                                                @if($fatura->satis_turu=="1")
+                                                                <span class="badge rounded-pill badge-light-info"> İlk Sipariş Faturası </span>
+                                                                @else
+                                                                <span class="badge rounded-pill badge-light-primary"> Yenileme Faturası </span>
+                                                                @endif
                                                             @endif
                                                         </td>
                                                         <td>
@@ -124,16 +126,29 @@
                                                                 <div class="d-flex flex-column">
                                                                     <h6 class="user-name text-truncate mb-0">
                                                                         <strong>
-                                                                        ({{$fatura->musteri!=""?"Cari":"Tedarikçi"}}) 
-                                                                        {{$fatura->musteri!=""?CariModel::cariAdi($fatura->musteri):$fatura->tedarikci}}
+                                                                        ({{$fatura->musteri!="0"?"Cari":"Tedarikçi"}})
+                                                                        {{$fatura->musteri!="0"?CariModel::cariAdi($fatura->musteri):TedarikciModel::tedarikciAdi($fatura->tedarikci)}}
                                                                         </strong>
                                                                     </h6>
-                                                                    <small>Firma: {{$fatura->fatura_adi}}</small>
+                                                                    @if($fatura->musteri!="0")
+                                                                    <small data-bs-toggle="tooltip" data-bs-placement="top" title="{{$fatura->fatura_adi}}">
+                                                                        Firma: {{mb_substr($fatura->fatura_adi,0,15)}}...</small>
+                                                                    @else
+                                                                    <small data-bs-toggle="tooltip" data-bs-placement="top" title="{{TedarikciModel::tedarikciFirma($fatura->tedarikci)}}">
+                                                                        Firma: {{mb_substr(TedarikciModel::tedarikciFirma($fatura->tedarikci),0,15)}}...</small>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
-                                                        <td>{{number_format($fatura->alinan_odeme,2)}} ₺</td>
+                                                        <td>
+                                                            @if($fatura->tur=="1" and $fatura->odeme=="1")
+                                                            {{number_format($fatura->genel_toplam,2)}} ₺
+                                                            @else
+                                                            {{number_format($fatura->alinan_odeme,2)}} ₺
+                                                            @endif
+
+                                                        </td>
                                                         <td>
                                                             F: <span data-bs-target="tooltip" data-bs-placement="top" title="Fatura Tarihi">{{Date::convert($fatura->belge_tarihi,'d.m.Y')}}</span><br>
                                                             Ö: <strong data-bs-target="tooltip" data-bs-placement="top" title="Son Ödeme Tarihi">{{Date::convert($fatura->vade_tarihi,'d.m.Y')}}</strong><br>

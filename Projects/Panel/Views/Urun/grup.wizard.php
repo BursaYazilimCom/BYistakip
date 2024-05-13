@@ -102,7 +102,7 @@
                                                         <i data-feather="edit-2" class="me-50"></i>
                                                     </a>
 
-                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$u->id}}','{{URL::site('urun/ajax')}}','urunSil')"><i data-feather="trash" class="me-50"></i></a>
+                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$u->id}}','{{URL::site('urun/ajax')}}','grupSil')"><i data-feather="trash" class="me-50"></i></a>
                                                 </div>
 
                                             </td>

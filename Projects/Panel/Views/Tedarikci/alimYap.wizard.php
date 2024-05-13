@@ -41,7 +41,7 @@
                                                     <label class="col-form-label" for="cari">Tedarikçi</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <select class="form-select select2 form-select-sm" name="tedarikci" id="tedarikci">
+                                                    <select class="form-select required select2 form-select-sm" name="tedarikci" id="tedarikci">
                                                         <option value="">Seciniz</option>
                                                         @foreach($tedarikciler as $tedarikci)
                                                         <option value="{{ $tedarikci->id }}" {{$tedarikci->id == $tedarikciDetay->id ? 'selected' : ''}}>{{$tedarikci->adi}}</option>
@@ -228,7 +228,13 @@
                                         </div>
 
                                     <div class="card" id="masrafGirisi">
+
                                         <div class="card-body">
+                                            <div class="alert alert-warning">
+                                                <div class="alert-body">
+                                                    İlgili faturaya tam değil kısmı bir ödeme yapmışsanız; Bunu kayıt altına almak için faturayı ödenmedi olarak işaretleyip ardından, Yapılan ödemeyi masraflara harici olarak eklemelisiniz.<br>Burada yapacağınız işlem faturanın tamamını ödendi olarak kabul eder
+                                                </div>
+                                            </div>
                                             <div class="row">
 
                                                 <div class="col-6">
