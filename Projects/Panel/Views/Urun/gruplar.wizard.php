@@ -46,6 +46,8 @@
                                             <th>#</th>
                                             <th>Sıra</th>
                                             <th>Adı</th>
+                                            <th>Görünüm</th>
+                                            <th>Tür</th>
                                             <th>Durum</th>
                                             <th></th>
                                         </tr>
@@ -57,6 +59,10 @@
                                             <td style="cursor:move;">{{$item->id}}</td>
                                             <td>{{$item->sira}}</td>
                                             <td>{{$item->adi}}</td>
+                                            <td>
+                                                {{$item->urun_gorunumu=='list'?'Liste':'Dikey Blok'}}
+                                            </td>
+                                            <td>{{AyarModel::grupTur($item->tur)}}</td>
                                             <td><span class="badge bg-{{$item->durum=='1'?'success':'danger'}}">{{$item->durum=="1"?"Aktif":"Pasif"}}</span></td>
                                             <td>
 

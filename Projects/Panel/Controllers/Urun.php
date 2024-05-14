@@ -60,6 +60,8 @@ class Urun extends Controller
                 'adi'           =>'',
                 'aciklama'      =>'',
                 'sira'          =>'',
+                'urun_gorunumu' =>'',
+                'tur'           =>'',
                 'durum'         =>'1'
             ];
 
@@ -392,6 +394,8 @@ class Urun extends Controller
                 'adi'           =>Post::adi(),
                 'aciklama'      =>Security::htmlEncode(Post::aciklama()),
                 'sira'          =>Post::gsira(),
+                'tur'           =>Post::turu(),
+                'urun_gorunumu' =>Post::urun_gorunumu(),
                 'durum'         =>Post::gdurum()
             ];
 
@@ -455,6 +459,8 @@ class Urun extends Controller
                 'adi'           =>Post::adi(),
                 'aciklama'      =>Security::htmlEncode(Post::aciklama()),
                 'sira'          =>Post::gsira(),
+                'tur'           =>Post::turu(),
+                'urun_gorunumu' =>Post::urun_gorunumu(),
                 'durum'         =>Post::gdurum()
             ];
 

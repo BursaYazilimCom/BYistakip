@@ -122,6 +122,7 @@ class Siparisler extends Controller
         $musteriler = CariModel::liste();
         $odemeYontemleri = AyarModel::odemeYontemleri();
         $urunler = UrunModel::tumListe();
+        $urunGruplari = UrunModel::urunGrupListe();
         $tedarikciler   = TedarikciModel::tumListe();
 
 
@@ -132,6 +133,7 @@ class Siparisler extends Controller
         View::siparisDurumlari($siparisDurumlari);
         View::odemeYontemleri($odemeYontemleri);
         View::urunler($urunler);
+        View::urunGruplari($urunGruplari);
 
         //AyarModel::nelerOluyor($user->isim,'siparisler','Yeni sipariş oluşturuluyor');
 

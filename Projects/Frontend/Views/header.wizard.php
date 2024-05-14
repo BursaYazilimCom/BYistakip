@@ -57,6 +57,24 @@
                                 </a>
                             </div>
                         @endif
+                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
+                                <span class="menu-link py-3">
+                                    <span class="menu-title">Yeni Sipariş</span>
+                                    <span class="menu-arrow d-lg-none"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
+                                    @foreach($gruplar as $grup)
+                                        <div class="menu-item">
+                                            <a class="menu-link py-3" href="{{URL::site('urunler/grup/'.$grup->id)}}">
+                                                                <span class="menu-bullet">
+                                                                    <span class="bullet bullet-dot"></span>
+                                                                </span>
+                                                <span class="menu-title">{{$grup->adi}}</span>
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                     </div>
 
                 </div>

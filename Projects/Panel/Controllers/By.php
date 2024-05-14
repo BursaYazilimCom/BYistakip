@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 Use User,Validation,Post,Json,Encode,Upload,URL;
-Use PersonelModel,AyarModel,UrunModel;
+Use PersonelModel,AyarModel,UrunModel,TedarikciModel;
 
 class By extends Controller
 {
@@ -107,31 +107,58 @@ class By extends Controller
 
         echo '<select class="select2 form-select" required id="odeme_periyodu" name="odeme_periyodu">';
 
-
-
             if ($urunDetay->fiyat >0) {
-                echo '<option value="T">Tek Seferlik</option>';
+                echo '<option value="T">Tek Seferlik ('.$urunDetay->fiyat.' '.$urunDetay->fiyat_birim.') </option>';
             }
 
             if ($urunDetay->aylik_fiyat >0) {
-                echo '<option value="A">Aylık</option>';
+                echo '<option value="A">Aylık ('.$urunDetay->aylik_fiyat.' '.$urunDetay->fiyat_birim.') </option>';
             }
 
             if ($urunDetay->uc_aylik_fiyat >0) {
-                echo '<option value="3A">3 Aylık</option>';
+                echo '<option value="3A">3 Aylık ('.$urunDetay->uc_aylik_fiyat.' '.$urunDetay->fiyat_birim.') </option>';
             }
 
             if ($urunDetay->alti_aylik_fiyat >0) {
-                echo '<option value="6A">6 Aylık</option>';
+                echo '<option value="6A">6 Aylık ('.$urunDetay->alti_aylik_fiyat.' '.$urunDetay->fiyat_birim.') </option>';
             }
 
             if ($urunDetay->yillik_fiyat >0) {
-                echo '<option value="Y">Yıllık</option>';
+                echo '<option value="Y">Yıllık ('.$urunDetay->yillik_fiyat.' '.$urunDetay->fiyat_birim.') </option>';
             }
         echo '<option value="0">Ücretsiz</option>';
         echo '</select>';
 
     }
+
+    public function grupUrunleri($id): void{
+        $urunler = UrunModel::grupUrunleriTumListe($id);
+
+        ?>
+        <select class="select2 form-select" required id="urun" name="urun" onchange="odemePeriodlari(this.value)">
+                <option value="">--Seçiniz--</option>
+            <?php foreach($urunler["liste"] as $urun){ ?>
+                <option value="<?=$urun->id?>"><?=$urun->adi?></option>
+            <?php } ?>
+        </select>
+
+        <?php
+    }
+    public function uruntedarikcileri($id): void{
+        $urunDetay = UrunModel::detay($id);
+        $tedarikciler   = TedarikciModel::tumListe();
+
+        ?>
+        <select class="select2 form-select" id="tedarikci" name="tedarikci">
+            <option value="0">--Ürünün Tedarikçisi--</option>
+            <?php foreach($tedarikciler as $tedarikci) { ?>
+            <option value="<?=$tedarikci->id?>" <?=$tedarikci->id==$urunDetay->tedarikci?'selected':''?>><?=$tedarikci->adi?></option>
+            <?php } ?>
+        </select>
+
+        <?php
+    }
+
 
     public function main(){
 

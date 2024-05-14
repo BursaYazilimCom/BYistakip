@@ -120,6 +120,22 @@ class InternalAyarModel extends Model
 
     }
 
+    public function grupTur($id){
+        //'diger','lisans','sertifika','indirilebilir','hosting','domain','fiziksel'
+        $turler = [
+            'diger' => 'Diğer',
+            'lisans' => 'Lisans',
+            'sertifika' => 'Sertifika',
+            'indirilebilir' => 'İndirilebilir',
+            'hosting' => 'Hosting',
+            'fiziksel' => 'Fiziksel Ürün',
+            'domain' => 'Domain'
+        ];
+
+        return $turler[$id];
+
+    }
+
     public function odemePeriyodu($id){
         $periyodlar = [
             '0' => 'Ücretsiz',

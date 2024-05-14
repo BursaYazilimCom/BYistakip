@@ -70,12 +70,45 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="mb-1 row">
-                                                        <div class="col-sm-3">
-                                                            <label class="col-form-label" for="gsira">Sıralama</label>
+                                                        <div class="col-md-4">
+                                                            <div class="col-sm-12">
+                                                                <label class="col-form-label" for="gsira">Ürün Türü</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-select" required name="turu" id="turu">
+                                                                    <option value="">--Seçiniz--</option>
+                                                                    <option value="domain" {{$detay->tur=='domain'?'selected':''}}>Domain</option>
+                                                                    <option value="hosting" {{$detay->tur=='hosting'?'selected':''}}>Hosting</option>
+                                                                    <option value="fiziksel" {{$detay->tur=='fiziksel'?'selected':''}}>Fiziksel Ürün</option>
+                                                                    <option value="indirilebilir" {{$detay->tur=='indirilebilir'?'selected':''}}>İndirilebilir</option>
+                                                                    <option value="sertifika" {{$detay->tur=='sertifika'?'selected':''}}>Sertifika</option>
+                                                                    <option value="lisans" {{$detay->tur=='lisans'?'selected':''}}>Lisans</option>
+                                                                    <option value="diger" {{$detay->tur=='diger'?'selected':''}}>Diğer</option>
+                                                                </select>
+
+                                                            </div>
                                                         </div>
-                                                        <div class="col-sm-12">
-                                                            @Form::vRequired()->id('gsira')->placeholder('Grup Sıralaması')->number('gsira',$detay->sira,['class'=>'form-control'])
+                                                        <div class="col-md-4">
+                                                            <div class="col-sm-12">
+                                                                <label class="col-form-label" for="gsira">Ürün Görünümü</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-select" required name="urun_gorunumu" id="urun_gorunumu">
+                                                                    <option value="">--Seçiniz--</option>
+                                                                    <option value="list" {{$detay->urun_gorunumu=='list'?'selected':''}}>Liste Görünümü</option>
+                                                                    <option value="block" {{$detay->urun_gorunumu=='block'?'selected':''}}>Dikey Blok</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
+                                                        <div class="col-md-4">
+                                                            <div class="col-sm-12">
+                                                                <label class="col-form-label" for="gsira">Sıralama</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                @Form::vRequired()->id('gsira')->placeholder('Grup Sıralaması')->number('gsira',$detay->sira,['class'=>'form-control'])
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="row custom-options-checkable g-1">

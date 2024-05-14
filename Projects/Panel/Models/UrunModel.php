@@ -140,6 +140,37 @@ class InternalUrunModel extends Model
 
     }
 
+    static function grupUrunleriTumListe($id){
+        $veri = DB::select(
+            'urunler.id as id',
+            'urunler.tedarikci as tedarikci',
+            'urunler.urun_kodu as urun_kodu',
+            'urunler.adi as adi',
+            'urunler.fiyat as fiyat',
+            'urunler.aylik_fiyat as aylik_fiyat',
+            'urunler.uc_aylik_fiyat as uc_aylik_fiyat',
+            'urunler.alti_aylik_fiyat as alti_aylik_fiyat',
+            'urunler.yillik_fiyat as yillik_fiyat',
+            'urunler.fiyat_birim as fiyat_birim',
+            'urunler.kdv as kdv',
+            'urunler.odeme_turu as odeme_turu',
+            'urunler.aciklama as aciklama',
+            'urunler.detay as detay',
+            'urunler.durum as durum',
+            'urunler.guncel_stok as guncel_stok',
+            'urunler.stoklu_urun as stoklu_urun',
+            'urun_gruplari.id as grupId',
+            'urun_gruplari.adi as grupAdi'
+        )
+            ->innerjoin('urun_gruplari.id','urunler.grup')
+            ->where('urunler.grup',$id)
+            ->orderby('id','DESC')->urunler();
+
+
+        return ['liste'=>$veri->result()];
+
+    }
+
     static function ekle($data){
 
         $ekle = DB::insert('urunler',[
@@ -280,6 +311,8 @@ class InternalUrunModel extends Model
             'urun_gruplari.adi as adi',
             'urun_gruplari.aciklama as aciklama',
             'urun_gruplari.sira as sira',
+            'urun_gruplari.urun_gorunumu as urun_gorunumu',
+            'urun_gruplari.tur as tur',
             'urun_gruplari.durum as durum'
             )
             ->where('urun_gruplari.id',$id)->urun_gruplari()->row();
@@ -348,6 +381,8 @@ class InternalUrunModel extends Model
                            'urun_gruplari.adi as adi',
                            'urun_gruplari.aciklama as aciklama',
                            'urun_gruplari.sira as sira',
+                           'urun_gruplari.urun_gorunumu as urun_gorunumu',
+                           'urun_gruplari.tur as tur',
                            'urun_gruplari.durum as durum'
                             )
                ->orderby('urun_gruplari.sira','ASC')->urun_gruplari()->result();
@@ -359,10 +394,12 @@ class InternalUrunModel extends Model
     static function urunGrupEkle($data){
 
         $ekle = DB::insert('urun_gruplari',[
-            'adi'       =>$data['adi'],
-            'aciklama'       =>$data['aciklama'],
-            'sira'      =>$data['sira'],
-            'durum'     =>$data['durum']
+            'adi'               =>$data['adi'],
+            'aciklama'          =>$data['aciklama'],
+            'sira'              =>$data['sira'],
+            'urun_gorunumu'     =>$data['urun_gorunumu'],
+            'tur'               =>$data['tur'],
+            'durum'             =>$data['durum']
         ]);
 
         //echo DB::stringQuery();
@@ -374,10 +411,12 @@ class InternalUrunModel extends Model
 
         $guncelle = DB::where('id',$data["id"])
             ->update('urun_gruplari',[
-                'adi'       =>$data['adi'],
-                'aciklama'       =>$data['aciklama'],
-                'sira'      =>$data['sira'],
-                'durum'     =>$data['durum']
+                'adi'               =>$data['adi'],
+                'aciklama'          =>$data['aciklama'],
+                'sira'              =>$data['sira'],
+                'urun_gorunumu'     =>$data['urun_gorunumu'],
+                'tur'               =>$data['tur'],
+                'durum'             =>$data['durum']
             ]);
 
         return $guncelle;

@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-Use User;
+Use User, InternalUrunModel as UrunModel;
 
 class Initialize extends Controller
 {
@@ -27,9 +27,11 @@ class Initialize extends Controller
             }
 
         }
+
+        $gruplar = UrunModel::urunGrupListe();
        
 
-
+        View::gruplar($gruplar);
         Theme::active('Default');
 
         Masterpage::headPage('head')

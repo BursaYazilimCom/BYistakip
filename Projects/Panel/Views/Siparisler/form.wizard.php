@@ -231,6 +231,30 @@
                             @Form::csrf()->prevent()->action('Siparisler/ajax')->open('submitForm',['id'=>'submitForm','class'=>'row gy-1 gx-2 mt-75'])
                             <input type="hidden" name="dataAction" id="dataAction" value="sepeteUrunEkle">
                             <div class="row">
+                                <div class="col-4">
+                                    <div class="mb-1 row">
+                                        <div class="col-sm-12">
+                                            <label class="col-form-label" for="urun_grubu">Ürün Grubu</label>
+                                        </div>
+                                        <script type="text/javascript">
+                                            function grupUrunleri(grupId)
+                                            {
+                                                $("#grupUrunleri").load("{{URL::site('By/grupUrunleri')}}/"+grupId);
+                                            }
+
+                                        </script>
+                                        <div class="col-sm-12">
+
+                                            <select class="select2 form-select" id="urun_grubu" name="urun_grubu" onchange="grupUrunleri(this.value)">
+                                                <option value="">--Ürün Grubu Seçiniz--</option>
+                                                @foreach($urunGruplari as $grup)
+                                                    <option value="{{$grup->id}}">{{$grup->adi}}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-8">
                                     <div class="mb-1 row">
                                         <div class="col-sm-12">
@@ -240,50 +264,18 @@
                                             function odemePeriodlari(urunId)
                                             {
                                                 $("#odeme_periyodu").load("{{URL::site('By/urunOdemePeriodlari')}}/"+urunId);
+                                                $("#urunTedarikci").load("{{URL::site('By/uruntedarikcileri')}}/"+urunId);
                                             }
 
                                         </script>
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12" id="grupUrunleri">
                                             <select class="select2 form-select" required id="urun" name="urun" onchange="odemePeriodlari(this.value)">
-                                                <option value="">--Seçiniz--</option>
-                                                @foreach($urunler as $urun)
-                                                    <option value="{{$urun->id}}">{{$urun->adi}} (
-                                                        @if($urun->fiyat>0)
-                                                        Tek Seferlik:{{$urun->fiyat}},
-                                                        @endif
-                                                        @if($urun->aylik_fiyat>0)
-                                                        Aylık:{{$urun->aylik_fiyat}},
-                                                        @endif
-                                                        @if($urun->uc_aylik_fiyat>0)
-                                                        3 Aylık:{{$urun->uc_aylik_fiyat}},
-                                                        @endif
-                                                        @if($urun->alti_aylik_fiyat>0)
-                                                        6 Aylık:{{$urun->alti_aylik_fiyat}},
-                                                        @endif
-                                                        @if($urun->yillik_fiyat>0)
-                                                        Yıllık:{{$urun->yillik_fiyat}}
-                                                        @endif )
-                                                        ({{$urun->fiyat_birim}})
-                                                        </option>
-                                                @endforeach
+                                                <option value="">--Ürün Grubu Seçiniz--</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="mb-1 row">
-                                        <div class="col-sm-12">
-                                            <label class="col-form-label" for="odeme_periyodu">Ödeme Periyodu</label>
-                                        </div>
-                                        <div class="col-sm-12">
 
-                                            <select class="select2 form-select" id="odeme_periyodu" name="odeme_periyodu">
-                                                <option value="">--Önce Ürün Seçiniz--</option>
-                                            </select>
-
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-4">
                                     <div class="mb-1 row">
                                         <div class="col-sm-12">
@@ -310,12 +302,36 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-4">
+                                    <div class="mb-1 row">
+                                        <div class="col-sm-12">
+                                            <label class="col-form-label" for="odeme_periyodu">Ödeme Periyodu</label>
+                                        </div>
+                                        <div class="col-sm-12">
+
+                                            <select class="select2 form-select" id="odeme_periyodu" name="odeme_periyodu">
+                                                <option value="">--Önce Ürün Seçiniz--</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="form-label" for="baslangic_tarihi">Ürün/Hizmet Başlangıç Tarihi <span class="text-danger">(Boş bırakırsanız bugünün tarihini alır)</span></label>
+                                    <div class="input-group input-group-merge">
+                                        @Form::id('baslangic_tarihi')->placeholder(Date::current())->date('baslangic_tarihi','',['class'=>'form-control'])
+                                    </div>
+                                </div>
+                                <div class="col-6">
                                     <div class="mb-1 row">
                                         <div class="col-sm-12">
                                             <label class="col-form-label" for="tedarikci">Tedarikçi</label>
                                         </div>
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12" id="urunTedarikci">
                                             <select class="select2 form-select" id="tedarikci" name="tedarikci">
                                                 <option value="0">--Ürünün Tedarikçisi--</option>
                                                 @foreach($tedarikciler as $tedarikci)
@@ -339,14 +355,7 @@
                                 </div>
                             </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <label class="form-label" for="baslangic_tarihi">Ürün/Hizmet Başlangıç Tarihi <span class="text-danger">(Boş bırakırsanız bugünün tarihini alır)</span></label>
-                                    <div class="input-group input-group-merge">
-                                        @Form::id('baslangic_tarihi')->placeholder(Date::current())->date('baslangic_tarihi','',['class'=>'form-control'])
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-1 row">
