@@ -179,17 +179,22 @@ class CronJob extends Controller
             foreach ($siparisurunleri as $su) {
 
                 $donemBaslamaTarihi = $su->bitis_tarihi;
+                $urunBilgiAna = UrunModel::detay($su->urun);
 
                 //siparis ürünleri bütüş tarihlerine uzatılmış bitiş tarihini ekle
 
                 if ($su->odeme_periyodu == "A") {
                     $donemBitisTarihi = date("Y-m-d", strtotime("+1 month", strtotime($su->bitis_tarihi)));
+                    $urunAnaFiyat = $urunBilgiAna->aylik_fiyat;
                 }elseif ($su->odeme_periyodu == "3A"){
                     $donemBitisTarihi = date("Y-m-d", strtotime("+3 month", strtotime($su->bitis_tarihi)));
+                    $urunAnaFiyat = $urunBilgiAna->uc_aylik_fiyat;
                 }elseif ($su->odeme_periyodu == "6A"){
                     $donemBitisTarihi = date("Y-m-d", strtotime("+6 month", strtotime($su->bitis_tarihi)));
+                    $urunAnaFiyat = $urunBilgiAna->alti_aylik_fiyat;
                 } elseif ($su->odeme_periyodu == "Y") {
                     $donemBitisTarihi = date("Y-m-d", strtotime("+12 month", strtotime($su->bitis_tarihi)));
+                    $urunAnaFiyat = $urunBilgiAna->yillik_fiyat;
                 }else{
                     echo "odeme periyodu bulunamadı";
                     exit();
@@ -245,8 +250,9 @@ class CronJob extends Controller
                 if($faturaTekrarKontrolu2['adet']==0){
 
                     if($faturaID==""){
-                        $toplamFiyat = 0;
-                        $kdvToplami = 0;
+                        $toplamFiyat    = 0;
+                        $kdvToplami     = 0;
+                        $toplamTutar    = 0;
                         //eğer siparişteki ürün adeti 1 den fazla ile fatura oluşturmak için fiyat toplamlarını alıyoruz
                         foreach ($siparisurunleri as $sut) {
                             //fiyat birimine egöre güncel kur alınacak
@@ -261,16 +267,17 @@ class CronJob extends Controller
                                 }elseif ($sut->odeme_periyodu == "6A"){
                                     $urunFiyati = $urunBilgi->alti_aylik_fiyat;
                                 } elseif ($sut->odeme_periyodu == "Y") {
+                                    echo $urunFiyati = $urunBilgi->yillik_fiyat;
+                                }else{
                                     $urunFiyati = $urunBilgi->yillik_fiyat;
                                 }
 
-                                $toplamFiyat = $toplamFiyat+$urunFiyati * $sut->adet;
-                                $kdvToplami = $kdvToplami+($toplamFiyat*$sut->kdv/100);
+                                echo $toplamFiyat = $toplamFiyat+($urunFiyati * $sut->adet);
+                                echo $kdvToplami = $kdvToplami+((($urunFiyati * $sut->adet)*$sut->kdv)/100);
 
                             }else{
-                                $toplamFiyat = $toplamFiyat+$sut->birim_fiyat * $sut->adet;
-                                $kdvToplami = $kdvToplami+($toplamFiyat*$sut->kdv/100);
-                                $urunFiyati = $sut->birim_fiyat;
+                                $toplamFiyat = $toplamFiyat+($sut->birim_fiyat * $sut->adet);
+                                $kdvToplami = $kdvToplami+(($toplamFiyat*$sut->kdv)/100);
                             }
                             $toplamTutar = $toplamFiyat+$kdvToplami;
 
@@ -298,17 +305,29 @@ class CronJob extends Controller
                             'aciklama'          =>$siparis->id." Numaralı sipariş yenileme faturası"
                         ];
 
+                        /*echo "<pre>";
+                        print_r($faturaData);
+                        echo "</pre>";*/
+
                         $faturaID = FaturaModel::ekle($faturaData);
 
                         if ($faturaID) {
+
+                            $toplamTutar = "";
+                            $kdvToplami = "";
+                            $toplamFiyat = "";
+
                             echo $su->id." Numaralı sipariş ürünü için  ".$faturaID." Numaralı yenileme faturası Oluşturuldu<br>";
                         }else{
+                            $toplamTutar = "";
+                            $kdvToplami = "";
+                            $toplamFiyat = "";
                             echo $su->id." Numaralı sipariş ürünü için yenileme faturası oluşturulamadı<br>";
                         }
 
                     }
-                    $urunTLFiyat = AyarModel::tlCevir($urunFiyati,$su->para_birimi);
-                    $urunKdvTutari = $su->kdv*$urunTLFiyat/100;
+                    $urunTLFiyat = AyarModel::tlCevir($urunAnaFiyat,$su->para_birimi);
+                    $urunKdvTutari = ($su->kdv*$urunTLFiyat)/100;
 
                     $urunToplamFiyat = ($urunTLFiyat*$su->adet)+$urunKdvTutari;
 
@@ -334,8 +353,17 @@ class CronJob extends Controller
                     $faturaUrunEkle = FaturaModel::urunEkle($fUrun);
 
                     if ($faturaUrunEkle) {
+
+                        $siparisUrunGUncelle = SiparisModel::urunDurumDegistir($su->id,AyarModel::defaultAyarlar('odemeBekleniyorDurumu'));
+                        $urunKdvTutari = "";
+                        $urunTLFiyat = "";
+                        $urunToplamFiyat = "";
+
                         echo $su->id." Numaralı sipariş ürünü için oluşturulan  ".$faturaID." Numaralı yenileme faturasına fatura ürünü eklendi<br>";
                     }else{
+                        $urunKdvTutari = "";
+                        $urunTLFiyat = "";
+                        $urunToplamFiyat = "";
                         echo $su->id." Numaralı sipariş ürünü için yenileme faturası oluşturulamadı<br>";
                     }
 

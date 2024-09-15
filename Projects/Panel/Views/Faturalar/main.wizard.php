@@ -102,7 +102,9 @@
                                                     <tbody>
                                                     @foreach($faturalar['liste'] as $fatura)
                                                     <tr class="odd">
-                                                        <td class=""><a class="fw-bold" href="{{URL::site('faturalar/duzenle')}}/{{$fatura->id}}">#{{$fatura->id}}</a></td>
+                                                        <td class="">
+                                                            <a href="javascript:viod()" id="viewAction" data-action="faturaDetay" action="{{URL::site('ajax/main')}}" data-id="{{$fatura->id}}" data-view="1" title="Fatura Görüntüle" >#{{$fatura->id}}</a>
+                                                        </td>
                                                         <td>
                                                             @if($fatura->tur=="1")
                                                             <span class="badge rounded-pill badge-light-warning"> Alış Faturası </span>
@@ -197,16 +199,23 @@
                                                                             <span>Düzenle</span>
                                                                         </a>
                                                                         @if($fatura->durum=="1")
+
                                                                             <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaResmilestir" class="dropdown-item">
                                                                                 <i data-feather="edit-2" class="me-50"></i>
                                                                                 <span class="text-success">Faturayı Resmileştir</span>
                                                                             </a>
+
+                                                                            <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="eFatura" class="dropdown-item">
+                                                                                <i data-feather="edit-2" class="me-50"></i>
+                                                                                <span class="text-success">E-Fatura Oluştur</span>
+                                                                            </a>
+
                                                                         @endif
 
-                                                                        <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaOdendiYap" class="dropdown-item">
-                                                                            <i data-feather="edit-2" class="me-50"></i>
-                                                                            <span class="text-success">Ödeme EKle</span>
-                                                                        </a>
+                                                                            <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturaOdendiYap" class="dropdown-item">
+                                                                                <i data-feather="edit-2" class="me-50"></i>
+                                                                                <span class="text-success">Ödeme EKle</span>
+                                                                            </a>
 
                                                                         @if($fatura->odeme=="1")
 
@@ -214,21 +223,30 @@
                                                                                 <i data-feather="edit-2" class="me-50"></i>
                                                                                 <span class="text-danger">ÖdenMEdi Yap</span>
                                                                             </a>
+
                                                                         @else
+
                                                                             <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$fatura->id}}" data-action="faturayiOdendiYap" class="dropdown-item">
                                                                                 <i data-feather="edit-2" class="me-50"></i>
                                                                                 <span class="text-danger">Sadece Ödendi Yap</span>
                                                                             </a>
+
                                                                         @endif
 
-                                                                    
-                                                                        <a class="dropdown-item confirm" href="{{URL::site()}}faturalar/sil/{{$fatura->id}}">
-                                                                            <i data-feather="trash" class="me-50"></i>
-                                                                            <span>Sil</span>
-                                                                        </a>
+                                                                            <a class="dropdown-item confirm" href="{{URL::site()}}faturalar/sil/{{$fatura->id}}">
+                                                                                <i data-feather="trash" class="me-50"></i>
+                                                                                <span>Sil</span>
+                                                                            </a>
 
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="display: none;" id="faturaDetay-view-{{$fatura->id}}">
+                                                        <td colspan="9">
+                                                            <div class="viewDetail-{{$fatura->id}}">
+
                                                             </div>
                                                         </td>
                                                     </tr>

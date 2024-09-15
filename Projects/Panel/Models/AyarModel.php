@@ -139,7 +139,7 @@ class InternalAyarModel extends Model
     public function odemePeriyodu($id){
         $periyodlar = [
             '0' => 'Ücretsiz',
-            'T' => 'Tek Seferlik',
+            'T' => 'Bir Kez',
             'A' => 'Aylık',
             '3A' => '3 Aylık',
             '6A' => '6 Aylık',

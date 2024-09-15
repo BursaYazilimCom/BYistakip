@@ -1,4 +1,11 @@
-
+/*=========================================================================================
+	File Name: ext-component-toastr.js
+	Description: Toastr notifications
+	----------------------------------------------------------------------------------------
+	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+	Author: Pixinvent
+	Author URL: hhttp://www.themeforest.net/user/pixinvent
+==========================================================================================*/
 
 $(function () {
   'use strict';

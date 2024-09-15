@@ -67,7 +67,7 @@
                                             <td>
 
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Sil" href="{{URL::site('urun/grupForm/')}}{{$item->id}}"><i data-feather="edit-2" class="me-50"></i></a>
+                                                    <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Düzenle" href="{{URL::site('urun/grupForm/')}}{{$item->id}}"><i data-feather="edit-2" class="me-50"></i></a>
 
                                                     <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$item->id}}','{{URL::site('urun/ajax')}}','grupSil')"><i data-feather="trash" class="me-50"></i></a>
                                                 </div>

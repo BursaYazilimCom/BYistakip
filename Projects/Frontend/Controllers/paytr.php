@@ -90,9 +90,7 @@ class Paytr extends Controller
                                  'guncelleyen'   => $sur->cari
                              ];
 
-                             if(AyarModel::defaultAyarlar('odemeSonrasiUrunDurumu')!="0"){
-                                 $urunDurumDegistir = SiparisModel::urunDurumDegistir($sur->id,AyarModel::defaultAyarlar('odemeSonrasiUrunDurumu'));
-                             }
+                             $urunDurumDegistir = SiparisModel::urunDurumDegistir($sur->id,AyarModel::defaultAyarlar('odemeSonrasiUrunDurumu'));
 
                              $gecmisEkle = SiparisModel::siparisGesmisEkle($sipariGecmisi);
 

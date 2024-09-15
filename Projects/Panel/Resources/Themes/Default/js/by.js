@@ -1,5 +1,4 @@
-
-$(window).on('load', function() {
+$(window).on('load', function () {
     if (feather) {
         feather.replace({
             width: 14,
@@ -9,33 +8,33 @@ $(window).on('load', function() {
 });
 
 
-
-$(".odeme_turuU").click(function(){
+$(".odeme_turuU").click(function () {
     $("#tek").hide();
     $("#yenilenen").hide();
 });
-$(".odeme_turuT").click(function(){
+$(".odeme_turuT").click(function () {
     $("#tek").show();
     $("#yenilenen").hide();
 });
-$(".odeme_turuY").click(function(){
+$(".odeme_turuY").click(function () {
     $("#tek").hide();
     $("#yenilenen").show();
 });
 
-$( "#submitForm" ).submit(function( event ) {
+
+$("#submitForm").submit(function (event) {
 
     var s_url = $('#submitForm').attr('action');
 
     $.ajax({
-        url:s_url,
-        dataType:"json",
-        data:$('#submitForm').serialize() ,
-        type:"post",
-        success:function(data){
-            if(data.error){
+        url: s_url,
+        dataType: "json",
+        data: $('#submitForm').serialize(),
+        type: "post",
+        success: function (data) {
+            if (data.error) {
 
-                toastr.error(data.error,data.title,
+                toastr.error(data.error, data.title,
                     {
                         closeButton: true,
                         tapToDismiss: false
@@ -43,11 +42,11 @@ $( "#submitForm" ).submit(function( event ) {
 
             }
 
-            if(data.success){
+            if (data.success) {
 
-                if(data.redirect!=""){
+                if (data.redirect != "") {
 
-                    toastr.success(data.success,data.title,
+                    toastr.success(data.success, data.title,
                         {
                             closeButton: true,
                             tapToDismiss: false,
@@ -57,21 +56,21 @@ $( "#submitForm" ).submit(function( event ) {
                             }
                         });
 
-                }else{
+                } else {
 
-                    toastr.success(data.success,data.title,
+                    toastr.success(data.success, data.title,
                         {
                             closeButton: true,
                             tapToDismiss: false,
                             timeOut: 1000
                         });
-                        $('#addDataTable').prepend(data.addData);
+                    $('#addDataTable').prepend(data.addData);
 
                 }
 
-                if (data.modalClose!=""){
+                if (data.modalClose != "") {
 
-                    $('#'+data.modalClose).modal('hide');
+                    $('#' + data.modalClose).modal('hide');
 
                 }
 
@@ -81,20 +80,20 @@ $( "#submitForm" ).submit(function( event ) {
     });
 });
 
-$( "#clickAction" ).click(function( event ) {
+$("#clickAction").click(function (event) {
 
-    var s_url       =   $(this).attr('action');
-    var dataAction  =   $(this).attr('data-action');
-    var dataId      =   $(this).attr('data-id');
+    var s_url = $(this).attr('action');
+    var dataAction = $(this).attr('data-action');
+    var dataId = $(this).attr('data-id');
 
     $.ajax({
-        url:s_url,
-        dataType:"json",
-        data:{"dataAction":dataAction,"dataId":dataId} ,
-        type:"post",
-        success:function(data){
-            if(data.error){
-                toastr.error(data.error,data.title,
+        url: s_url,
+        dataType: "json",
+        data: {"dataAction": dataAction, "dataId": dataId},
+        type: "post",
+        success: function (data) {
+            if (data.error) {
+                toastr.error(data.error, data.title,
                     {
                         closeButton: true,
                         tapToDismiss: false
@@ -102,9 +101,9 @@ $( "#clickAction" ).click(function( event ) {
 
             }
 
-            if(data.success){
+            if (data.success) {
 
-                toastr.success(data.success,data.title,
+                toastr.success(data.success, data.title,
                     {
                         closeButton: true,
                         tapToDismiss: false,
@@ -120,22 +119,62 @@ $( "#clickAction" ).click(function( event ) {
     });
 });
 
-function deleteAction(id,action,dataActions) {
+$(document).on('click', '[id^="viewAction"]', function() {
 
-    var s_url       =  action;
-    var dataAction  =   dataActions;
-    var dataId      =   id;
+    var s_url       =   $(this).attr('action');
+    var dataAction  =   $(this).attr('data-action');
+    var dataId      =   $(this).attr('data-id');
+
+
+    $('.fetched-data').html("data");
+
+    $("#"+dataAction+"-view-"+dataId).toggle();
+
+    $.ajax({
+        url:s_url,
+        data:{"dataAction":dataAction,"dataId":dataId} ,
+        type:"post",
+        beforeSend: function() {
+            // AJAX isteği başlamadan önce "Yükleniyor" yazısını göster
+            $(".viewDetail-"+dataId).html("<span class='efect-text'>Yükleniyor.....</span>");
+        },
+
+        success: function(data) {
+
+            $(".viewDetail-"+dataId).html(data);
+        },
+
+        error: function(xhr, status, error) {
+            // Hata durumunda "Yükleniyor" yazısını gizle
+            $("#loading").hide();
+            //console.error("Hata: " + error);
+        },
+
+        complete: function() {
+            // İstek tamamlandığında "Yükleniyor" yazısını gizle (başarılı veya hatalı olsun)
+            $("#loading").hide();
+        }
+    });
+
+
+});
+
+function deleteAction(id, action, dataActions) {
+
+    var s_url = action;
+    var dataAction = dataActions;
+    var dataId = id;
 
     if (confirm("Silmek istediğinize emin misiniz? Bu İşlemin geri dönüşü yoktur!")) {
 
         $.ajax({
-            url:s_url,
-            dataType:"json",
-            data:{"dataAction":dataAction,"dataId":dataId} ,
-            type:"post",
-            success:function(data){
-                if(data.error){
-                    toastr.error(data.error,data.title,
+            url: s_url,
+            dataType: "json",
+            data: {"dataAction": dataAction, "dataId": dataId},
+            type: "post",
+            success: function (data) {
+                if (data.error) {
+                    toastr.error(data.error, data.title,
                         {
                             closeButton: true,
                             tapToDismiss: false
@@ -143,11 +182,11 @@ function deleteAction(id,action,dataActions) {
 
                 }
 
-                if(data.success){
+                if (data.success) {
 
-                    $("#row-"+dataId).fadeOut();
+                    $("#row-" + dataId).fadeOut();
 
-                    toastr.success(data.success,data.title,
+                    toastr.success(data.success, data.title,
                         {
                             closeButton: true,
                             tapToDismiss: false,
@@ -156,9 +195,9 @@ function deleteAction(id,action,dataActions) {
 
                 }
 
-                if(data.redirect!=""){
+                if (data.redirect != "") {
                     //window.location = data.redirect;
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location = data.redirect;
                     }, 2000); // 5 saniye (5000 milisaniye)
                 }
@@ -171,20 +210,21 @@ function deleteAction(id,action,dataActions) {
 }
 
 //inline edit
-$(function(){
+$(function () {
     //acknowledgement message
     var message_status = $("#status");
-    $("h6[contenteditable=true]").blur(function(){
-        var editId = $(this).attr("data-id") ;
-        var action = $(this).attr("data-action") ;
-        var value = $(this).text() ;
-        $.post('kasa/ajax' , 'id='+editId + "&val=" + value+'&action='+action, function(data){
-            if(data != '')
-            {
+    $("h6[contenteditable=true]").blur(function () {
+        var editId = $(this).attr("data-id");
+        var action = $(this).attr("data-action");
+        var value = $(this).text();
+        $.post('kasa/ajax', 'id=' + editId + "&val=" + value + '&action=' + action, function (data) {
+            if (data != '') {
                 message_status.show();
                 message_status.text(data);
                 //hide the message
-                setTimeout(function(){message_status.hide()},3000);
+                setTimeout(function () {
+                    message_status.hide()
+                }, 3000);
             }
         });
 
@@ -198,12 +238,19 @@ $(".date-picker").flatpickr({
 
 
 var elems = document.getElementsByClassName('confirm');
-    var confirmIt = function (e) {
-        if (!confirm('Bunu yapmak istediğinize EMİN MİSİNİZ ? \nBu işlemin geri dönüşü yoktur, \nİlişkisel bir veri siliyorsanız bu veriye bağlı diğer verilerin görünmemesine sebep olabilir!')) e.preventDefault();
-    };
-    for (var i = 0, l = elems.length; i < l; i++) {
-        elems[i].addEventListener('click', confirmIt, false);
-    }
+var confirmIt = function (e) {
+    if (!confirm('Bunu yapmak istediğinize EMİN MİSİNİZ ? \nBu işlemin geri dönüşü yoktur, \nİlişkisel bir veri siliyorsanız bu veriye bağlı diğer verilerin görünmemesine sebep olabilir!')) e.preventDefault();
+};
+for (var i = 0, l = elems.length; i < l; i++) {
+    elems[i].addEventListener('click', confirmIt, false);
+}
 
+function showButton(row) {
+    $(row).find('.showButton').show();
+}
+
+function hideButton(row) {
+    $(row).find('.showButton').hide();
+}
 
 

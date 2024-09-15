@@ -44,8 +44,7 @@
                                             <button class="dt-button btn btn-primary" style="width: 100%;"><span><i data-feather="save"></i> İşlem Yap</span></button>
                                         </div>
                                     </div>
-                                    
-                                    
+
                                 </div>
                             </div>
                             <div class="card-body">
@@ -58,7 +57,6 @@
                                             <th>Ürün</th>
                                             <th>Cari</th>
                                             <th>Detay</th>
-                                            <th>Periyod</th>
                                             <th>Başlanıç Tarihi</th>
                                             <th>Sonraki Ödeme</th>
                                             <th>Kalan Gün</th>
@@ -73,10 +71,11 @@
                                         @foreach($listele['liste'] as $s)
                                         <tr id="row-{{$s->id}}">
                                             <td><input class="form-check-input" type="checkbox" id="hepsi" name="sec[]" value="{{$s->id}}" /></td>
-                                            <td><a href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}">{{$s->urun_adi}}</a></td>
+                                            <td><a href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}">{{$s->urun_adi}}</a><br>
+                                                <small>{{UrunModel::urunAdi($s->urun)}}</small>
+                                            </td>
                                             <td><a href="{{URL::site('cari/detay')}}/{{$s->cari}}">{{CariModel::cariAdi($s->cari)}}</a></td>
                                             <td>{{$s->notu}}</td>
-                                            <td>{{AyarModel::odemePeriyodu($s->odeme_periyodu)}}</td>
                                             <td>{{Date::convert($s->baslangic_tarihi,'d.m.Y')}}</td>
                                             <td>
                                                 @if($s->odeme_periyodu!="T")
@@ -95,7 +94,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$s->adet}}</td>
-                                            <td>{{number_format($s->toplam_fiyat,2)}}</td>
+                                            <td>{{number_format($s->toplam_fiyat,2)}}<br><small>{{AyarModel::odemePeriyodu($s->odeme_periyodu)}}</small></td>
                                             <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>
                                             <td class="text-danger" style="font-weight: bold">
                                                 @if($s->islem_gerekiyor=='1')

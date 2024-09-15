@@ -134,7 +134,7 @@ class InternalFaturaModel extends Model
 
         //AyarModel::sqlHataEkle(DB::stringQuery());
 
-        echo DB::stringQuery();
+        //echo DB::stringQuery();
 
         return $eklenenId;
 

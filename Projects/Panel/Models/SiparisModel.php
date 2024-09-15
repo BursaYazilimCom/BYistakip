@@ -426,9 +426,7 @@ class InternalSiparisModel extends Model
             $veri = DB::select('siparis_urunleri.*')->innerjoin('urunler.id','siparis_urunleri.urun')->where('urunler.grup',$gurup)->orderby('bitis_tarihi','ASC')->limit($sayfa,25)->siparis_urunleri();
         }
 
-        //echo DB::stringQuery();
-
-        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination('siparisler/gruplar/'.$gurup),'adet'=>$veri->totalRows(true)];
 
     }
 

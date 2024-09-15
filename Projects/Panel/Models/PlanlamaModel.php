@@ -3,7 +3,7 @@
 class InternalPlanlamaModel extends Model
 {
 
-    static function hatirlatmalar($durum="",$user){
+    static function hatirlatmalar($user,$durum="",){
 
         if($durum!=""){
             $veri = DB::where('personel',$user)->where('durum',$durum)->orderby('id','DESC')->hatirlatmalar();

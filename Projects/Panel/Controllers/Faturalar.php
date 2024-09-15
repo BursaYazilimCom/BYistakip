@@ -4,6 +4,13 @@ use Method, Post,User, Redirect,Date,FPDF,URL,Validation,Upload,Email,Json;
 use InternalFaturaModel as FaturaModel,AyarModel,KasaModel,SiparisModel,InternalUrunModel as UrunModel,UyeModel,InternalSmsModel as SmsModel;
 use InternalMalzemeModel as MalzemeModel,InternalTedarikciModel as  TedarikciModel,InternalCariModel as CariModel,MasrafModel;
 
+use furkankadioglu\eFatura\Models\Invoice;
+use furkankadioglu\eFatura\InvoiceManager;
+use furkankadioglu\eFatura\Models\Country;
+use furkankadioglu\eFatura\Models\CurrencyType;
+use furkankadioglu\eFatura\Models\InvoiceType;
+use furkankadioglu\eFatura\Models\UnitType;
+use GuzzleHttp\Client;
 
 
 class Faturalar extends Controller
@@ -20,6 +27,36 @@ class Faturalar extends Controller
             Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Yetkiniz olmayan bir alana ulaşmaya çalışıyorsunuz!</div>'])->action('home');
 
         }
+
+    }
+
+    public function eFatura($id)
+    {
+        $detay = FaturaModel::detay($id);
+
+        $client = new InvoiceManager();
+
+        $client->setUsername("22504612")->setPassword("644788");
+
+        $client->setDebugMode(true)->setTestCredentials();
+
+        echo "<h1>Credentials</h1>";
+        echo "<pre>";
+        print_r($client->getCredentials());
+        echo "</pre>";
+
+        $client->connect();
+
+        echo "<h1>Main Tree Menu</h1>";
+        echo "<pre>";
+        print_r($client->getMainTreeMenuFromAPI());
+        echo "</pre>";
+
+        echo "<h1>Invoices List</h1>";
+        echo "<pre>";
+        print_r($client->getInvoicesFromAPI("08/09/2020", "15/09/2020"));
+        echo "</pre>";
+
 
     }
 

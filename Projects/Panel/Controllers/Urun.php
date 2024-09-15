@@ -97,6 +97,7 @@ class Urun extends Controller
                 'grup'          =>'',
                 'grupId'          =>'',
                 'adi'           =>'',
+                'resim'           =>'',
                 'fiyat'         =>'0.0000',
                 'aylik_fiyat'         =>'0.0000',
                 'uc_aylik_fiyat'         =>'0.0000',
@@ -134,11 +135,26 @@ class Urun extends Controller
 
         }else{
 
+            if(Upload::isFile('resim')) {
+
+                Upload::convertName()
+                    ->source('resim')
+                    ->target(REAL_BASE_DIR . 'Uploads/urun-resimleri/')
+                    ->mimes('image/jpeg', 'image/png')
+                    ->start();
+                $dosyaBilgi = Upload::info();
+
+                $dosya = $dosyaBilgi->encodeName;
+            }else{
+                $dosya = "";
+            }
+
             $ekleData = [
                 'urun_kodu'         =>Post::urun_kodu(),
                 'tedarikci'         =>Post::tedarikci(),
                 'grup'              =>Post::grup(),
                 'adi'               =>Post::adi(),
+                'resim'             =>$dosya,
                 'fiyat'             =>Post::fiyat()==""?"0.0000":Post::fiyat(),
                 'aylik_fiyat'       =>Post::aylik_fiyat()==""?"0.0000":Post::aylik_fiyat(),
                 'uc_aylik_fiyat'    =>Post::uc_aylik_fiyat()==""?"0.0000":Post::uc_aylik_fiyat(),
@@ -247,12 +263,29 @@ class Urun extends Controller
 
         }else{
 
+            $urunDetay = UrunModel::detay($id);
+
+            if(Upload::isFile('resim')) {
+
+                Upload::convertName()
+                    ->source('resim')
+                    ->target(REAL_BASE_DIR . 'Uploads/urun-resimleri/')
+                    ->mimes('image/jpeg', 'image/png')
+                    ->start();
+                $dosyaBilgi = Upload::info();
+
+                $dosya = $dosyaBilgi->encodeName;
+            }else{
+                $dosya = $urunDetay->resim;
+            }
+
             $updateData = [
                 'id'                =>$id,
                 'tedarikci'         =>Post::tedarikci(),
                 'urun_kodu'         =>Post::urun_kodu(),
                 'grup'              =>Post::grup(),
                 'adi'               =>Post::adi(),
+                'resim'             =>$dosya ,
                 'fiyat'             =>Post::fiyat()==""?"0.0000":Post::fiyat(),
                 'aylik_fiyat'       =>Post::aylik_fiyat()==""?"0.0000":Post::aylik_fiyat(),
                 'uc_aylik_fiyat'    =>Post::uc_aylik_fiyat()==""?"0.0000":Post::uc_aylik_fiyat(),
@@ -474,31 +507,37 @@ class Urun extends Controller
             $yer            = Post::yer();
             $durum          = Post::durum();
 
-            for($i=0;$i<count($baslik);$i++){
 
-                $ozellikData = [
-                    'id'            => $oid[$i],
-                    'grup'          => $id,
-                    'sira'          => $sira[$i],
-                    'baslik'        => $baslik[$i],
-                    'tur'           => $tur[$i],
-                    'gereklilik'    => $gereklilik[$i],
-                    'yer'           => $yer[$i],
-                    'durum'         => $durum[$i]
-                ];
+            if($baslik!=""){
 
-                if($oid[$i]=="0"){
+                for($i=0;$i<count($baslik);$i++){
 
-                    UrunModel::urunGrupOzellikEkle($ozellikData);
+                    $ozellikData = [
+                        'id'            => $oid[$i],
+                        'grup'          => $id,
+                        'sira'          => $sira[$i],
+                        'baslik'        => $baslik[$i],
+                        'tur'           => $tur[$i],
+                        'gereklilik'    => $gereklilik[$i],
+                        'yer'           => $yer[$i],
+                        'durum'         => $durum[$i]
+                    ];
 
-                }else{
+                    if($oid[$i]=="0"){
 
-                    UrunModel::urunGrupOzellikGuncelle($ozellikData);
+                        UrunModel::urunGrupOzellikEkle($ozellikData);
+
+                    }else{
+
+                        UrunModel::urunGrupOzellikGuncelle($ozellikData);
+                    }
+
+                    $ozellikData ="";
+
                 }
 
-                $ozellikData ="";
-
             }
+
 
             if($guncelle){
 

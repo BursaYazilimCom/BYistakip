@@ -10,12 +10,66 @@ use MasrafModel,InternalDestekModel as DestekModel;
 
 class Ajax extends Controller
 {
-
-    public function main(){
-
+    public  function __construct()
+    {
         if(!Http::isajax()){
             redirect("Login");
             exit;
+        }
+    }
+
+    public function main(){
+
+        $id = Post::dataId();
+
+        if(Post::dataAction()=="faturaDetay"){
+
+
+            $faturaDetay = FaturaModel::detay($id);
+
+            $faturaUrunleri = FaturaModel::faturaUrunleri($id);
+
+            ?>
+
+            <table class="table table-hover table-rounded table-striped border gy-3 gs-3">
+                <thead>
+                    <tr>
+                        <th> <strong>Ürün</strong> </th>
+                        <th class="text-end"><strong>Fiyat</strong></th>
+                        <th class="text-end"><strong>Adet</strong></th>
+                        <th class="text-end"><strong>Kdv</strong></th>
+                        <th class="text-end"><strong>Toplam</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                <?php foreach($faturaUrunleri as $furun){ ?>
+                    <tr>
+                        <td>
+                            <?=$furun->aciklama?> |
+                            <small><strong>Ürün:</strong> <?=$furun->urun_adi?></small> |
+                            <?php
+                            if($faturaDetay->tur=="2"){
+                                if($faturaDetay->satis_turu=="1"){?>
+                                    <small>İlk Sipariş</small>
+                                <?php }else{ ?>
+                                    <small><strong>Yenilenme Dönemi:</strong> <?=Date::convert($furun->donem_baslangic_tarihi,'d.m.Y')?> <?=Date::convert($furun->donem_bitis_tarihi,'d.m.Y')?></small>
+                                <?php } ?>
+
+                            <?php } ?>
+                        </td>
+                        <td class="text-end"><?=number_format($furun->fiyat,2)?></td>
+                        <td class="text-end"><?=$furun->miktar?></td>
+                        <td class="text-end">
+                            <small>%<?=$furun->kdv?></small> <?=$kdv = number_format((($furun->fiyat*$furun->miktar)/100)*$furun->kdv,2)?>
+                        </td>
+                        <td class="text-end text-dark fw-boldest"><?=number_format(($furun->fiyat*$furun->miktar)+$kdv,2)?> ₺</td>
+                    </tr>
+                <?php } ?>
+
+                </tbody>
+            </table>
+            <?php
         }
 
     }
@@ -1462,6 +1516,55 @@ class Ajax extends Controller
 
 
         }
+
+        if(Post::action()=="eFatura"){
+
+            $id = Post::rowid();
+            $faturaDetay = FaturaModel::detay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->enctype('multipart/form-data')->method('post')->action('faturalar/eFatura/'.$id)->open('eFatura'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">E-Fatura / E-Arşiv</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <div class="mb-1 row">
+                                <div class="col-sm-12">
+                                    <label class="col-form-label" for="bildirim">Bildirim</label>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="bildirim" id="bildirim" checked value="1" />
+                                        <label class="form-check-label" for="bildirim">Müşteriye E-Posta ile bildir !</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+
 
         if(Post::action()=="faturayaUrunEkle") {
             $id = Post::rowid();

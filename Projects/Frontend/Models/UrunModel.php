@@ -232,9 +232,11 @@ class InternalUrunModel extends Model
         return DB::select(
             'urun_gruplari.id as id',
             'urun_gruplari.adi as adi',
+            'urun_gruplari.aciklama as aciklama',
             'urun_gruplari.sira as sira',
-            'urun_gruplari.durum as durum'
-            )
+            'urun_gruplari.urun_gorunumu as urun_gorunumu',
+            'urun_gruplari.tur as tur',
+            'urun_gruplari.durum as durum')
             ->where('urun_gruplari.id',$id)->urun_gruplari()->row();
     }
 

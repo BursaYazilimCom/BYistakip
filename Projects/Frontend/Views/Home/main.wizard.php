@@ -175,7 +175,7 @@
                             <!--end::Header-->
                             <!--begin::Body-->
                             <div class="card-body pt-1 p-1">
-                                <table class="table table-hover table-rounded table-striped border gy-3 gs-3">
+                                <table class="table table-rounded table-striped border gy-3 gs-3">
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                          
@@ -190,32 +190,39 @@
                                     <tbody>
                                         <!--begin::Item-->
                                         @foreach($faturalar['liste'] as $fatura)
-                                        <tr>
-                                        <td class="d-none d-sm-block">{{Date::convert($fatura->belge_tarihi,"d.m.Y")}}</td>
-                                        <td>{{Date::convert($fatura->vade_tarihi,"d.m.Y")}}</td>
-                                        <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
+                                            <tr>
+                                                <td class="d-none d-sm-block"><a href="{{URL::site('faturalar/detay/'.$fatura->id)}}"> {{Date::convert($fatura->belge_tarihi,"d.m.Y")}}</a></td>
+                                                <td>{{Date::convert($fatura->vade_tarihi,"d.m.Y")}}</td>
+                                                <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
+                                                <td class="d-none d-sm-block">
+                                                    @if($fatura->durum=="0")
+                                                    <span class="badge rounded-pill badge-danger"> İptal </span>
+                                                    @elseif($fatura->durum=="1")
+                                                    <span class="badge rounded-pill badge-warning"> Resmileşmemiş </span>
+                                                    @elseif($fatura->durum=="2")
+                                                    <span class="badge rounded-pill badge-success"> Resmi Faturalı </span>
+                                                    @else
+                                                    <span class="badge rounded-pill badge-primary"> Tanımsız </span>
+                                                    @endif
+                                                </td>
+                                                <td>@if($fatura->odeme=="1")
+                                                <span class="badge rounded-pill badge-success"> Ödendi </span>
+                                                @else
+                                                <span class="badge rounded-pill badge-danger"> Ödenmedi </span>
+                                                @endif</td>
+                                                <td>
+                                                    <!--<a href="{{URL::site('faturalar/detay/'.$fatura->id)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Fatura Görüntüle" target="_blank" ><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>-->
 
-                                        <td class="d-none d-sm-block">
-                                            @if($fatura->durum=="0")
-                                            <span class="badge rounded-pill badge-danger"> İptal </span>
-                                            @elseif($fatura->durum=="1")
-                                            <span class="badge rounded-pill badge-warning"> Resmileşmemiş </span>
-                                            @elseif($fatura->durum=="2")
-                                            <span class="badge rounded-pill badge-success"> Resmi Faturalı </span>
-                                            @else
-                                            <span class="badge rounded-pill badge-primary"> Tanımsız </span>
-                                            @endif
-                                        </td>
-                                        <td>@if($fatura->odeme=="1")
-                                            <span class="badge rounded-pill badge-success"> Ödendi </span>
-                                            @else
-                                            <span class="badge rounded-pill badge-danger"> Ödenmedi </span>
-                                            @endif</td>
-                                            <td>
-                                            <a href="{{URL::site('faturalar/detay/'.$fatura->id)}}" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Fatura Görüntüle" target="_blank" ><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
-                                            </td>
-                                    </tr>
-                                        
+                                                    <a href="javascript:viod()" id="viewAction" data-action="faturaDetay" action="{{URL::site('ajax/main')}}" data-id="{{$fatura->id}}" data-view="1" title="Fatura Görüntüle" ><i class="bi bi-eye-fill fs-4 me-2 text-primary"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr style="display: none;" id="faturaDetay-view-{{$fatura->id}}">
+                                                <td colspan="6">
+                                                    <div class="viewDetail-{{$fatura->id}}">
+
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>

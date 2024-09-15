@@ -29,7 +29,6 @@ class Initialize extends Controller
         }
 
         $gruplar = UrunModel::urunGrupListe();
-       
 
         View::gruplar($gruplar);
         Theme::active('Default');

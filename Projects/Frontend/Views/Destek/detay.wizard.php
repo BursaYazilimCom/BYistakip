@@ -160,7 +160,7 @@
 													<small style="color: #969696 !important;">{{Date::convert($mesaj->tarih,'d.m.Y H:i')}}</small>
 													@if($mesaj->dosya_eki!="")
 												
-															<a href="{{URL::site('destek/dosya/'.$mesaj->dosya_eki)}}" target="_blank" class="badge badge-success" style="float: right;">Ekli Dosya İndir</a>
+															<a href="{{URL::site('../Uploads/destek-talep/'.$mesaj->dosya_eki)}}" target="_blank" class="badge badge-success" style="float: right;">Ekli Dosya İndir</a>
 													
 													@endif
 												</div>

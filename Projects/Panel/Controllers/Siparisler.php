@@ -71,6 +71,8 @@ class Siparisler extends Controller
 
         $siparisUrunleri     = SiparisModel::siparisUrunleriListe($id,$sayfa);
 
+        Pagination::url('siparisler/gruplar/'.$id.'/'.$sayfa)->create();
+
         View::listele($siparisUrunleri);
         View::grupDetay($grupDetay);
 
@@ -1212,6 +1214,11 @@ class Siparisler extends Controller
 
                 }else{
                     $urunDetay = UrunModel::detay(Post::urun());
+                    if(Post::urun_adi()==""){
+                        $urunadi = $urunDetay->adi;
+                    }else{
+                        $urunadi = Post::urun_adi();
+                    }
 
                     if (empty(Post::fiyat()) and Post::fiyat()!="0") {
 
@@ -1247,13 +1254,13 @@ class Siparisler extends Controller
 
                     }
 
-                    $baslangicTarihi = Post::baslangic_tarihi()==""?date('d.m.Y'):Post::baslangic_tarihi();
+                    $baslangicTarihi = Post::baslangic_tarihi()==""?date('Y-m-d'):Post::baslangic_tarihi();
 
                     $ekleData = [
                         'serial'                    =>$serial,
                         'urun'                      =>Post::urun(),
                         'tedarikci'                 =>$tedarikci,
-                        'urun_adi'                  =>$urunDetay->adi,
+                        'urun_adi'                  =>$urunadi,
                         'odemePeriyodu'             =>Post::odeme_periyodu(),
                         'odemePeriyoduTanim'        =>AyarModel::odemePeriyodu(Post::odeme_periyodu()),
                         'adet'                      =>Post::adet(),
@@ -1273,7 +1280,7 @@ class Siparisler extends Controller
                         $data['redirect'] = '';
                         $data['addData'] = '<tr id="row-'.$serial.'">
                                                 <td>'.$serial.'</td>
-                                                <td>'.$urunDetay->adi.'</td>
+                                                <td>'.$urunadi.'</td>
                                                 <td>'.TedarikciModel::tedarikciAdi($tedarikci).'</td>
                                                 <td>'.AyarModel::odemePeriyodu(Post::odeme_periyodu()).'</td>
                                                 <td>'.Post::adet().'</td>

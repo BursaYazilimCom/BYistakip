@@ -62,7 +62,7 @@
                                                     <label class="col-form-label" for="cari">Müşteri</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <select class="select2 form-select" id="select2-basic" name="cari">
+                                                    <select class="select2 form-select" required id="select2-basic" name="cari">
                                                         <option value="">--Seçiniz--</option>
                                                         @foreach($musteriler['liste'] as $musteri)
                                                         <option value="{{$musteri->id}}">{{$musteri->adi}}</option>
@@ -81,7 +81,7 @@
                                                     <label class="col-form-label" for="odeme_yontemi">Ödeme Yöntemi</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <select class="select2 form-select" name="odeme_yontemi" id="odeme_yontemi">
+                                                    <select class="select2 form-select" required name="odeme_yontemi" id="odeme_yontemi">
 
                                                         <option value="">--Seçiniz--</option>
                                                         @foreach($odemeYontemleri as $oy)
@@ -99,7 +99,7 @@
                                                     <label class="col-form-label" for="durum">Sipariş Durumları</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <select class="select2 form-select" name="durum" id="durum">
+                                                    <select class="select2 form-select" required name="durum" id="durum">
 
                                                         <option value="">--Seçiniz--</option>
 
@@ -161,7 +161,7 @@
                                                     <tbody id="addDataTable">
                                                     @foreach(Cart::selectAll() as $sUrun)
 
-                                                    <tr>
+                                                    <tr  onmouseover="showButton(this)" onmouseout="hideButton(this)">
                                                         <td>{{$sUrun["serial"]}}</td>
                                                         <td>{{$sUrun["urun_adi"]}}</td>
                                                         <td>{{Tedarikcimodel::tedarikciAdi($sUrun["tedarikci"])}}</td>
@@ -172,17 +172,10 @@
                                                         <td>{{$sUrun["fiyat"]}}{{$sUrun["fiyat_birim"]}}</td>
                                                         <td>{{$sUrun["urunKdv"]}}</td>
                                                         <td>
-                                                            <div class="dropdown">
-                                                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                                    <i data-feather="more-vertical"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" onclick="deleteAction('{{$sUrun['serial']}}','{{URL::site('siparisler/ajax')}}','sepetUrunSil')">
-                                                                        <i data-feather="trash" class="me-50"></i>
-                                                                        <span>Sil</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
+                                                            <a class="text-danger showButton" style="display: none;" onclick="deleteAction('{{$sUrun['serial']}}','{{URL::site('siparisler/ajax')}}','sepetUrunSil')">
+                                                                <i data-feather="trash" class="me-50"></i>
+                                                            </a>
+
                                                         </td>
                                                     </tr>
 
@@ -240,6 +233,7 @@
                                             function grupUrunleri(grupId)
                                             {
                                                 $("#grupUrunleri").load("{{URL::site('By/grupUrunleri')}}/"+grupId);
+                                                $("#urunTanimAciklama").load("{{URL::site('By/urunTanim')}}/"+grupId);
                                             }
 
                                         </script>
@@ -265,6 +259,7 @@
                                             {
                                                 $("#odeme_periyodu").load("{{URL::site('By/urunOdemePeriodlari')}}/"+urunId);
                                                 $("#urunTedarikci").load("{{URL::site('By/uruntedarikcileri')}}/"+urunId);
+
                                             }
 
                                         </script>
@@ -344,6 +339,18 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-1 row" id="urunTanimAciklama">
+                                        <div class="col-sm-3">
+                                            <label class="col-form-label" for="urun_adi">Ürün Tanım</label>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            @Form::id('urun_adi')->placeholder('Ürün Tanım')->text('urun_adi','',['class'=>'form-control'])
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                             <div class="col-12">
                                 <div class="mb-1 row">
                                     <div class="col-sm-3">
@@ -365,7 +372,7 @@
                                         <div class="col-sm-12">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="checkbox" name="fiyat_sabitle" id="fiyat_sabitle" value="1" />
-                                                <label class="form-check-label" for="fiyat_sabitle">Sonraki faturalarda güncel ürün fiyatını önemseme</label>
+                                                <label class="form-check-label" for="fiyat_sabitle" data-bs-toggle="tooltip" data-bs-placement="top" title="Bu seçeneği işaretlerseniz. Siparişiniz yenilenen bir ürün ise sonraki faturalarda ürünün güncel fiyatını önemsemez ve mevcut fiyat ile yenilenmeye devam eder">Güncel ürün fiyatını önemseme</label>
                                             </div>
 
                                         </div>
@@ -379,9 +386,7 @@
                                         <div class="col-sm-4">
                                             @Form::id('fiyat')->number('fiyat','',['class'=>'form-control'])
                                         </div>
-                                        <div class="col-sm-8">
-                                            Farklı fiyat vermek istiyorsanız  geçerli fiyatı giriniz. Boş bırakırsanız ürünün geçerli fiyatı alınır.
-                                        </div>
+                                        <div class="col-sm-8" data-bs-toggle="tooltip" data-bs-placement="top" title="Süpariş ürününe farklı fiyat vermek istiyorsanız  istediğiniz fiyatı giriniz. Boş bırakırsanız ürünün geçerli fiyatı alınır.">Farklı Fiyat Uygula</div>
                                     </div>
                                 </div>
                             </div>

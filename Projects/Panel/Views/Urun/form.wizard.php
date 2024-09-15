@@ -123,10 +123,10 @@
 
                                         </script>
 
-
-                                        <div class="col-12">
+                                        <div class="row">
+                                        <div class="col-6">
                                             <div class="row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-12">
                                                     <label class="col-form-label" for="email">Ürün Grubu</label>
                                                 </div>
                                                 <div class="col-sm-12">
@@ -141,6 +141,28 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="resim">Resim (Sadece .jpg, .png)</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-9">
+                                                           <input type="file" id="resim" accept="image/jpeg, image/png" name="resim" class="form-control" >
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            @if($detay->resim!='')
+                                                            <img id="resim" class="img-thumbnail" style="height: 40px" src="{{URL::site()}}../Uploads/urun-resimleri/{{$detay->resim}}">
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         </div>
 
                                         <div class="col-12">

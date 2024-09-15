@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-Use User,Validation,Post,Json,Encode,Upload,URL;
+Use User,Validation,Post,Json,Encode,Upload,URL,Form;
 Use PersonelModel,AyarModel,UrunModel,TedarikciModel;
 
 class By extends Controller
@@ -155,6 +155,88 @@ class By extends Controller
             <option value="<?=$tedarikci->id?>" <?=$tedarikci->id==$urunDetay->tedarikci?'selected':''?>><?=$tedarikci->adi?></option>
             <?php } ?>
         </select>
+
+        <?php
+    }
+
+    public function urunTanim($id): void{
+
+        $urunGrupDetay = UrunModel::urunGrupDetay($id);
+        if($urunGrupDetay->tur=='diger'){ ?>
+            <div class="col-sm-12">
+                <label class="col-form-label" for="urun_adi"><?=$urunGrupDetay->adi?> Sipariş Ürün Tanımı (Boş bırakırsanız ana ürün ismi yazılır)</label>
+            </div>
+            <div class="col-sm-12">
+                <?=Form::id('urun_adi')->placeholder('Ürün Tanım')->text('urun_adi','',['class'=>'form-control'])?>
+            </div>
+
+        <?php }elseif($urunGrupDetay->tur=='lisans'){ ?>
+
+            <div class="col-sm-12">
+                <label class="col-form-label" for="urun_adi">Lisanlanacak <?=$urunGrupDetay->adi?> Ürün Tanımı (Boş bırakırsanız ana ürün ismi yazılır)</label>
+            </div>
+            <div class="col-sm-12">
+                <?=Form::id('urun_adi')->placeholder('Ürün Tanım')->text('urun_adi','',['class'=>'form-control'])?>
+            </div>
+
+        <?php }elseif($urunGrupDetay->tur=='sertifika'){ ?>
+
+            <div class="col-sm-12">
+                <label class="col-form-label" for="urun_adi"><?=$urunGrupDetay->adi?> Sertifika Ürün Tanımı (Boş bırakırsanız ana ürün ismi kaydedilir)</label>
+            </div>
+            <div class="col-sm-12">
+                <?=Form::id('urun_adi')->placeholder('Ürün Tanım')->text('urun_adi','',['class'=>'form-control'])?>
+            </div>
+
+        <?php }elseif($urunGrupDetay->tur=='indirilebilir'){ ?>
+
+            <div class="col-sm-12">
+                <label class="col-form-label" for="urun_adi">İndirilecek <?=$urunGrupDetay->adi?> Ürün Tanımı (Boş bırakırsanız ana ürün ismi kaydedilir)</label>
+            </div>
+            <div class="col-sm-12">
+                <?=Form::id('urun_adi')->placeholder('Ürün Tanım')->text('urun_adi','',['class'=>'form-control'])?>
+            </div>
+
+        <?php }elseif($urunGrupDetay->tur=='hosting'){ ?>
+
+            <div class="col-sm-12">
+                <label class="col-form-label" for="urun_adi"><?=$urunGrupDetay->adi?> Tanımlanacak Domain (Uzantısı ile birlikte yazınız)</label>
+            </div>
+            <div class="col-sm-12">
+                <?=Form::vRequired()->vMessage('Lütfen xxxx.com şeklinde geçerli bir alanadı giriniz')->id('urun_adi')->placeholder('xxxxx.com')->text('urun_adi','',['class'=>'form-control'])?>
+            </div>
+
+        <?php }elseif($urunGrupDetay->tur=='domain'){ ?>
+
+            <div class="col-sm-12">
+                <label class="col-form-label" for="urun_adi"><?=$urunGrupDetay->adi?> İsmi (Uzantısı ile birlikte yazınız)</label>
+            </div>
+            <div class="col-sm-12">
+                <?=Form::vRequired()->vMessage('Lütfen xxxx.com şeklinde geçerli bir alanadı giriniz')->id('urun_adi')->placeholder('xxxxxx.com')->text('urun_adi','',['class'=>'form-control'])?>
+            </div>
+
+        <?php }elseif($urunGrupDetay->tur=='fiziksel'){ ?>
+
+            <div class="col-sm-12">
+                <label class="col-form-label" for="urun_adi"><?=$urunGrupDetay->adi?> Fiziksel Ürün İsmi (Boş bırakırsanız ana ürün ismi kaydedilir)</label>
+            </div>
+            <div class="col-sm-12">
+                <?=Form::id('urun_adi')->placeholder('Ürün Tanım')->text('urun_adi','',['class'=>'form-control'])?>
+            </div>
+
+        <?php }else{ ?>
+
+            <div class="col-sm-12">
+                    <label class="col-form-label" for="urun_adi"><?=$urunGrupDetay->adi?> Sipariş Ürün Tanımı (Boş bırakırsanız ana ürün ismi yazılır)</label>
+            </div>
+            <div class="col-sm-12">
+                <?=Form::id('urun_adi')->placeholder('Ürün Tanım')->text('urun_adi','',['class'=>'form-control'])?>
+            </div>
+
+        <?php
+        }
+        ?>
+
 
         <?php
     }
