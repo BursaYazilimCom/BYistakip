@@ -142,12 +142,12 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
+                                                        <td>{{number_format((float)$fatura->genel_toplam,2)}} ₺</td>
                                                         <td>
                                                             @if($fatura->tur=="1" and $fatura->odeme=="1")
-                                                            {{number_format($fatura->genel_toplam,2)}} ₺
+                                                            {{number_format((float)$fatura->genel_toplam,2)}} ₺
                                                             @else
-                                                            {{number_format($fatura->alinan_odeme,2)}} ₺
+                                                            {{number_format((float)$fatura->alinan_odeme,2)}} ₺
                                                             @endif
 
                                                         </td>

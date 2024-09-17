@@ -48,6 +48,7 @@ class InternalPlanlamaModel extends Model
         ]);
 
         return DB::insertID();
+
     }
 
     static function hatirlatmaGuncelle($data){
@@ -134,7 +135,6 @@ class InternalPlanlamaModel extends Model
         }else{
             $veri = DB::where('durum','1')->orderby('id','DESC')->etkinlik();
         }
-    
 
         return ['liste'=>$veri->result()];
 
@@ -167,7 +167,7 @@ class InternalPlanlamaModel extends Model
             'sms_bilgilendirme'     =>$data['sms_bilgilendirme']
         ]);
 
-        echo DB::stringQuery();
+        //echo DB::stringQuery();
 
         return DB::insertID();
     }

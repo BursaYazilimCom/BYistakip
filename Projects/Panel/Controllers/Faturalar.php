@@ -11,6 +11,7 @@ use furkankadioglu\eFatura\Models\CurrencyType;
 use furkankadioglu\eFatura\Models\InvoiceType;
 use furkankadioglu\eFatura\Models\UnitType;
 use GuzzleHttp\Client;
+use Ramsey\Uuid\Uuid;
 
 
 class Faturalar extends Controller

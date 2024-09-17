@@ -42,6 +42,15 @@
       <path value="$PROJECT_DIR$/Internal/package-composer/webmozart/assert" />
       <path value="$PROJECT_DIR$/Internal/package-composer/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/Internal/package-composer/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/Projects/Devtools/vendor/composer" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/psr/http-client" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/psr/http-message" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/psr/http-factory" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/guzzlehttp/psr7" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
@@ -51,6 +60,7 @@
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/Internal/package-composer/autoload.php" use_configuration_file="true" />
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/Projects/Devtools/vendor/autoload.php" />
     </phpunit_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
