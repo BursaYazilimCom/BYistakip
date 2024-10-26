@@ -60,7 +60,7 @@
                                             <td>
                                                 <span class='text text-{{AyarModel::odemeDurumu($s->odeme_durumu)['renk']}}'>{{AyarModel::odemeDurumu($s->odeme_durumu)['durum']}}</span>
                                             </td>
-                                            <td>{{number_format((float)$s->genel_toplam_tutari,2)}} ₺</td>
+                                            <td>{{number_format($s->genel_toplam_tutari,2)}} ₺</td>
                                             <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
                                             <td>{{AyarModel::durum($s->durum)}}</td>
                                             <td>

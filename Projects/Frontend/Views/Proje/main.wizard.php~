@@ -88,7 +88,7 @@
                                                      @endif
                                                     ">{{$yol->baslik}}
                                                 </span>
-                                                <div class="text-gray-400 fw-bold">{{Security::htmlDecode(str_replace("\n","<br>",$yol->aciklama))}}</div>
+                                                <div class="text-gray-400 fw-bold">{{Security::htmlDecode($yol->aciklama)}}</div>
                                             </div>
                                             <!--end::Title-->
                                         </div>

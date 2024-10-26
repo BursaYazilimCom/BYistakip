@@ -86,8 +86,8 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
-                                                        <td>{{number_format($fatura->alinan_odeme,2)}} ₺</td>
+                                                        <td>{{number_format((float)$fatura->genel_toplam,2)}} ₺</td>
+                                                        <td>{{number_format((float)$fatura->alinan_odeme,2)}} ₺</td>
                                                         <td>{{Date::convert($fatura->belge_tarihi,'d.m.Y')}}</td>
                                                         <td>
                                                             @if($fatura->durum=="0")

@@ -216,10 +216,10 @@
                                                     </td>
                                                     <td>
                                                         @if($detay->durum=="2")
-                                                        {{number_format($turun->fiyat,2)}}
+                                                        {{number_format((float)$turun->fiyat,2)}}
                                                         @else
                                                         <div class="input-group">
-                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{str_replace(',','',number_format($turun->fiyat,2))}}" class="fiyat form-control">
+                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{str_replace(',','',number_format((float)$turun->fiyat,2))}}" class="fiyat form-control">
                                                             <span class="input-group-text">₺</span>
                                                         </div>
 
@@ -243,10 +243,10 @@
                                                     <td>
 
                                                         @if($detay->durum=="2")
-                                                        {{number_format($turun->tutar,2)}}
+                                                        {{number_format((float)$turun->tutar,2)}}
                                                         @else
                                                         <div class="input-group">
-                                                            <input type="text" name="tutar" readonly id="tutar" value="{{number_format($turun->tutar,2)}}" class="tutar form-control">
+                                                            <input type="text" name="tutar" readonly id="tutar" value="{{number_format((float)$turun->tutar,2)}}" class="tutar form-control">
                                                             <span class="input-group-text">₺</span>
                                                         </div>
                                                         @endif
@@ -274,27 +274,27 @@
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>Ara Toplam</td>
-                                                    <td class="kdvsizTutar">{{number_format($araToplamTutar,2)}} ₺</td>
+                                                    <td class="kdvsizTutar">{{number_format((float)$araToplamTutar,2)}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>KDV %10</td>
-                                                    <td class="kdvTutar10">{{number_format($kdv10,2)}} ₺</td>
+                                                    <td class="kdvTutar10">{{number_format((float)$kdv10,2)}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>KDV %20</td>
-                                                    <td class="kdvTutar20">{{number_format($kdv20,2)}} ₺</td>
+                                                    <td class="kdvTutar20">{{number_format((float)$kdv20,2)}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>KDV Toplamı</td>
-                                                    <td class="kdvlerToplam">{{number_format($kdv20+$kdv10,2)}} ₺</td>
+                                                    <td class="kdvlerToplam">{{number_format((float)$kdv20+(float)$kdv10,2)}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>Genel Toplam</td>
-                                                    <td class="genel_toplam">{{number_format($toplamTutar,2)}} ₺</td>
+                                                    <td class="genel_toplam">{{number_format((float)$toplamTutar,2)}} ₺</td>
                                                 </tr>
                                                 </tfoot>
                                             </table>

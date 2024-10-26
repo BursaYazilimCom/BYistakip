@@ -71,12 +71,12 @@ class Ajax extends Controller
                         <?=$furun->aciklama?><br>
                             <small><?=$furun->urun_adi?></small>
                         </td>
-                        <td class="text-end"><?=number_format((float)$furun->fiyat,2)?></td>
+                        <td class="text-end"><?=number_format($furun->fiyat,2)?></td>
                         <td class="text-end"><?=$furun->miktar?></td>
                         <td class="text-end">
-                            <?=$kdv = number_format((float)(($furun->fiyat*$furun->miktar)/100)*$furun->kdv,2)?>
+                            <?=$kdv = number_format((($furun->fiyat*$furun->miktar)/100)*$furun->kdv,2)?>
                             <br /><small>%<?=$furun->kdv?></small></td>
-                        <td class="text-end text-dark fw-boldest"><?=number_format((float)($furun->fiyat*$furun->miktar)+$kdv,2)?> ₺</td>
+                        <td class="text-end text-dark fw-boldest"><?=number_format(($furun->fiyat*$furun->miktar)+$kdv,2)?> ₺</td>
                     </tr>
                     <?php } ?>
 

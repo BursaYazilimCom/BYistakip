@@ -422,7 +422,7 @@ class InternalSiparisModel extends Model
 
             $veri = DB::orderby('bitis_tarihi','ASC')->limit($sayfa,25)->siparis_urunleri();
 
-            //echo DB::stringQuery();
+            echo DB::stringQuery();
             return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
 
         }else{

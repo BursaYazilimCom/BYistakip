@@ -56,7 +56,7 @@
                                             <td><strong>{{$uu->notu}}</strong><br><small>{{$uu->urun_adi}}</small></td>
                                             <td>{{AyarModel::odemePeriyodu($uu->odeme_periyodu)}}</td>
                                             <td>{{$uu->adet}}</td>
-                                            <td>{{number_format($uu->genel_toplam_tutari,2)}}</td>
+                                            <td>{{number_format((float)$uu->genel_toplam_tutari,2)}}</td>
                                             <td>{{Date::convert($uu->baslangic_tarihi,'d.m.Y')}}</td>
                                             <td>{{Date::convert($uu->bitis_tarihi,'d.m.Y')}}</td>
                                             <td>{{AyarModel::siparisDurumAdi($uu->durum)}}</td>

@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 
-use User,Method,Post,Session,Cookie,Redirect,DB,Upload,Json,Import,Encode,URL,Validation,Folder,Converter;
+use User,Method,Post,Session,Cookie,Redirect,DB,Upload,Json,Import,Encode,URL,Validation,Folder,Converter,Security;
 use InternalProjeModel as ProjeModel,AyarModel,InternalCariModel as CariModel;
 
 class Projeler extends Controller
@@ -184,7 +184,7 @@ class Projeler extends Controller
             $ekleData = [
                 'proje_id'  => $id,
                 'baslik'    => Post::baslik(),
-                'aciklama'  => Post::aciklama(),
+                'aciklama'  => Security::htmlEncode(Post::aciklama()),
                 'sira'      => Post::sira(),
                 'durum'     => Post::durum()
             ];

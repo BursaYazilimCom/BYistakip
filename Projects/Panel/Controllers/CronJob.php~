@@ -169,10 +169,6 @@ class CronJob extends Controller
         //print_r($tumSiparisler);
         foreach ($tumSiparisler as $siparis) {
 
-            $toplamFiyat    = 0;
-            $kdvToplami     = 0;
-            $toplamTutar    = 0;
-
             $cariBilgi = CariModel::detay($siparis->cari);
             $faturaID= "";
 
@@ -255,7 +251,9 @@ class CronJob extends Controller
                 if($faturaTekrarKontrolu2['adet']==0){
 
                     if($faturaID==""){
-
+                        $toplamFiyat    = 0;
+                        $kdvToplami     = 0;
+                        $toplamTutar    = 0;
                         //eğer siparişteki ürün adeti 1 den fazla ile fatura oluşturmak için fiyat toplamlarını alıyoruz
                         /*foreach ($siparisurunleri as $sut) {
                             //fiyat birimine egöre güncel kur alınacak
@@ -315,13 +313,19 @@ class CronJob extends Controller
                         print_r($faturaData);
                         echo "</pre>";
 
-                        $faturaID = FaturaModel::ekle($faturaData);
+                        //$faturaID = FaturaModel::ekle($faturaData);
 
                         if ($faturaID) {
 
+                            $toplamTutar = "";
+                            $kdvToplami = "";
+                            $toplamFiyat = "";
+
                             echo $su->id." Numaralı sipariş ürünü için  ".$faturaID." Numaralı yenileme faturası Oluşturuldu<br>";
                         }else{
-
+                            $toplamTutar = "";
+                            $kdvToplami = "";
+                            $toplamFiyat = "";
                             echo $su->id." Numaralı sipariş ürünü için yenileme faturası oluşturulamadı<br>";
                         }
 
@@ -348,56 +352,15 @@ class CronJob extends Controller
                         'tutar'                 =>$urunToplamFiyat,
                     ];
 
-                    /****************************/
-
-                    if($su->fiyat_sabitle=="0"){
-                        //Ürünün güncel fiyatını öğreniyoruz
-                        $urunBilgi = UrunModel::detay($su->urun);
-                        //ödeme periyoduna göre fiyatı hesaplıyoruz
-                        if ($su->odeme_periyodu == "A") {
-                            $urunFiyati = $urunBilgi->aylik_fiyat;
-                        }elseif ($su->odeme_periyodu == "3A"){
-                            $urunFiyati = $urunBilgi->uc_aylik_fiyat;
-                        }elseif ($su->odeme_periyodu == "6A"){
-                            $urunFiyati = $urunBilgi->alti_aylik_fiyat;
-                        } elseif ($su->odeme_periyodu == "Y") {
-                            echo "Yıllık ürün fiyatı:";
-                            echo $urunFiyati = $urunBilgi->yillik_fiyat;
-                        }else{
-                            $urunFiyati = $urunBilgi->yillik_fiyat;
-                        }
-
-                        $toplamFiyat = $toplamFiyat+($urunFiyati * $su->adet);
-
-                        $kdvToplami = $kdvToplami+((($urunFiyati * $su->adet)*$su->kdv)/100);
-
-                    }else{
-                        $toplamFiyat = $toplamFiyat+($su->birim_fiyat * $su->adet);
-                        $kdvToplami = $kdvToplami+(($toplamFiyat*$su->kdv)/100);
-                    }
-
-                    $toplamTutar = $toplamFiyat+$kdvToplami;
-
-                    /****************************/
-
                     echo "<pre>";
 
                     print_r($fUrun);
 
                     echo "<pre>";
 
-                    $faturaUrunEkle = FaturaModel::urunEkle($fUrun);
+                    //faturaUrunEkle = FaturaModel::urunEkle($fUrun);
 
                     if ($faturaUrunEkle) {
-
-                        $faturaToplamData = [
-                            'id'                    => $faturaID,
-                            'toplam_tutar'          => AyarModel::tlCevir($toplamFiyat,$su->para_birimi),
-                            'kdv_toplami'           => AyarModel::tlCevir($kdvToplami,$su->para_birimi),
-                            'genel_toplam'          => AyarModel::tlCevir($toplamTutar,$su->para_birimi),
-                        ];
-
-                        $faturaTutarGuncelle = FaturaModel::faturaTutarGuncelle($faturaToplamData);
 
                         $siparisUrunGUncelle = SiparisModel::urunDurumDegistir($su->id,AyarModel::defaultAyarlar('odemeBekleniyorDurumu'));
                         $urunKdvTutari = "";
@@ -425,6 +388,39 @@ class CronJob extends Controller
 
 
         }
+
+
+        //$yillikPeriyodUrunleri = UrunModel::uyeUrunleriSonOtuz('year',$onBesGunSonra);
+
+
+        /*foreach ($yillikPeriyodUrunleri as $pu){
+
+            $uyeBilgi = UyeModel::detay($pu->uye);
+
+            $urunTipi = AyarModel::urunTipleri($pu->urun_tipi);
+
+            Email::from(AyarModel::defaultAyarlar('smtpUser'), 'BURSA YAZILIM', AyarModel::defaultAyarlar('smtpUser'))
+                ->to($uyeBilgi->email, 'To')
+                ->bcc(AyarModel::defaultAyarlar('iletisimEposta'), 'To 1')
+                ->subject($pu->urun_adi.' '.$urunTipi.' Ürününüzün son kullanım tarihi yaklaşıyor')
+                ->template('general', [
+                    'name'          => $uyeBilgi->adi_soyadi,
+                    'subject'       => $pu->urun_adi.' '.$urunTipi.' Ürününüzün son kullanım tarihi yaklaşıyor',
+                    'content'       => $pu->urun_adi.' '.$urunTipi.' Ürününüz '.Date::convert($pu->bitis_tarihi,'{dayNumber0}.{monthNumber0}.{year}').' tarihinde ödemesi yapılmadığı taktirde kullanım süresi dolacaktır.<br>Bu süre geçtikten sonra ürününüzün durumuna göre kurtarma ücreti yansıtılabilir. <br>Aşağıdaki bulunan linkten Panelinize girerek gerekli süre uzatma işlemlerini gerçekleştirebilirsiniz<br><br> Eğer ödeme yaptıysanız lütfen dikkate almayınız. ',
+                    'href'          => URL::site('userPanel'),
+                    'hrefButton'    => 'Paneliniz'
+                ])
+                ->send();
+
+        }*/
+
+
+        echo "<pre>";
+        //print_r($yillikPeriyodUrunleri);
+
+        echo "</pre>";
+
+
 
 
     }

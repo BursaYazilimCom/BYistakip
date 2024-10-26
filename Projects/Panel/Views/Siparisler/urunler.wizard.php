@@ -94,11 +94,15 @@
                                                 @endif
                                             </td>
                                             <td>{{$s->adet}}</td>
-                                            <td>{{number_format($s->toplam_fiyat,2)}}<br><small>{{AyarModel::odemePeriyodu($s->odeme_periyodu)}}</small></td>
+                                            <td>{{number_format((float)$s->toplam_fiyat,2)}}<br><small>{{AyarModel::odemePeriyodu($s->odeme_periyodu)}}</small></td>
                                             <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>
                                             <td class="text-danger" style="font-weight: bold">
                                                 @if($s->islem_gerekiyor=='1')
-                                                {{$s->yapilacak_islem}}
+
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="{{$s->yapilacak_islem}}" href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}"><i data-feather="alert-triangle"></i></a>
+                                                </div>
+
                                                 @endif
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                 <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Ürünü Düzenle" href="{{URL::site('siparisler/urunDuzenle')}}/{{$s->id}}"><i data-feather="edit"></i></a>

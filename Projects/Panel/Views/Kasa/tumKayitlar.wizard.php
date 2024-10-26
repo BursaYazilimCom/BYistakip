@@ -39,9 +39,9 @@
                         {{ Redirect::select('bilgi',true) }}
                         <div class="card-header text-center">
                             <h4 class="card-title" style="margin: 0 auto;">
-                            Gelirler: <span class="text-success">{{number_format($gelirGiderToplami->gelir,2)}}</span> 
-                            Giderler: <span class="text-danger">{{number_format($gelirGiderToplami->gider,2)}}</span> 
-                            Kasa Bakiyesi: <strong>{{number_format($gelirGiderToplami->gelir-$gelirGiderToplami->gider,2)}} ₺</strong></h4>
+                            Gelirler: <span class="text-success">{{number_format((float)$gelirGiderToplami->gelir,2)}}</span>
+                            Giderler: <span class="text-danger">{{number_format((float)$gelirGiderToplami->gider,2)}}</span>
+                            Kasa Bakiyesi: <strong>{{number_format((float)$gelirGiderToplami->gelir-(float)$gelirGiderToplami->gider,2)}} ₺</strong></h4>
                         </div>
                         <div class="card-body">
                             <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
@@ -66,8 +66,8 @@
                                         <td>{{$kayit->KasaAdi}}</td>
                                         <td>{{$kayit->hesap}}</td>
                                         <td>{{$kayit->aciklama}}</td>
-                                        <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format($kayit->gelir,2)}}</td>
-                                        <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format($kayit->gider,2)}} </td>
+                                        <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format((float)$kayit->gelir,2)}}</td>
+                                        <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format((float)$kayit->gider,2)}} </td>
                                  
                                         <td>
                                            

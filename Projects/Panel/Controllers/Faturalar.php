@@ -892,7 +892,7 @@ class Faturalar extends Controller
                     if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
 
                         $smsData = [
-                            'mesaj'=>$faturaDetay->id.' faturanız resmileştirilmiştir. '.number_format($faturaDetay->genel_toplam,2).' TL Tutarında ki faturanızın; Resmi faturanız E-Posta olarak iletilmiştir.',
+                            'mesaj'=>$faturaDetay->id.' faturanız resmileştirilmiştir. '.number_format((float)$faturaDetay->genel_toplam,2).' TL Tutarında ki faturanızın; Resmi faturanız E-Posta olarak iletilmiştir.',
                             'numara'=>$cariDetay->gsm
                         ];
 
@@ -1143,7 +1143,7 @@ class Faturalar extends Controller
         $mailgonder = Email::subject('Fatura Hatırlatma')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
 
             'konu' => 'Fatura Hatırlatma',
-            'mesaj' => $faturaDetay->id.' Numaralı faturanızın ödemesini hatırlatmak için bu maili aldınız. <br>'.AyarModel::tarihGoster($faturaDetay->vade_tarihi).' ödeme tarihli '.number_format($faturaDetay->genel_toplam,2).'TL Tutarında ki faturanızı ödemek için aşağıdaki sayfayı ziyaret edebilirsiniz.<br><br><br>Ek Not:<br>'.$ekNot.' <hr>',
+            'mesaj' => $faturaDetay->id.' Numaralı faturanızın ödemesini hatırlatmak için bu maili aldınız. <br>'.AyarModel::tarihGoster($faturaDetay->vade_tarihi).' ödeme tarihli '.number_format((float)$faturaDetay->genel_toplam,2).'TL Tutarında ki faturanızı ödemek için aşağıdaki sayfayı ziyaret edebilirsiniz.<br><br><br>Ek Not:<br>'.$ekNot.' <hr>',
             'link' => AyarModel::defaultAyarlar('siteUrl')."/faturalar/detay/".$id,
             'link_baslik' => 'Fatura\'yı Ödemek İçin Tıklayınız',
             'firma' => AyarModel::defaultAyarlar('firmaAdi'),
@@ -1157,7 +1157,7 @@ class Faturalar extends Controller
         if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
 
             $smsData = [
-                'mesaj'=>'Bu sms Fatura ödemenizi hatırlatmak için gönderilmiştir.'.AyarModel::tarihGoster($faturaDetay->vade_tarihi).' ödeme tarihli '.number_format($faturaDetay->genel_toplam,2).'TL faturanız bulunmaktadır. Hizmetinizin kesitiye uğramaması için ödeme yapmanız gerekmektedir. ',
+                'mesaj'=>'Bu sms Fatura ödemenizi hatırlatmak için gönderilmiştir.'.AyarModel::tarihGoster($faturaDetay->vade_tarihi).' ödeme tarihli '.number_format((float)$faturaDetay->genel_toplam,2).'TL faturanız bulunmaktadır. Hizmetinizin kesitiye uğramaması için ödeme yapmanız gerekmektedir. ',
                 'numara'=>$cariDetay->gsm
             ];
 

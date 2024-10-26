@@ -58,12 +58,12 @@ class Ajax extends Controller
 
                             <?php } ?>
                         </td>
-                        <td class="text-end"><?=number_format($furun->fiyat,2)?></td>
+                        <td class="text-end"><?=number_format((float)$furun->fiyat,2)?></td>
                         <td class="text-end"><?=$furun->miktar?></td>
                         <td class="text-end">
-                            <small>%<?=$furun->kdv?></small> <?=$kdv = number_format((($furun->fiyat*$furun->miktar)/100)*$furun->kdv,2)?>
+                            <small>%<?=$furun->kdv?></small> <?=$kdv = number_format((float)(($furun->fiyat*$furun->miktar)/100)*$furun->kdv,2)?>
                         </td>
-                        <td class="text-end text-dark fw-boldest"><?=number_format(($furun->fiyat*$furun->miktar)+$kdv,2)?> ₺</td>
+                        <td class="text-end text-dark fw-boldest"><?=number_format((float)($furun->fiyat*$furun->miktar)+$kdv,2)?> ₺</td>
                     </tr>
                 <?php } ?>
 
@@ -1151,19 +1151,19 @@ class Ajax extends Controller
                                 <div class="col-4">
                                     <label class="form-label" for="modalAddCardNumber">Fatura Tutarı:</label>
                                     <div class="input-group input-group-merge">
-                                        <?=number_format($faturaDetay->genel_toplam,2)?> ₺
+                                        <?=number_format((float)$faturaDetay->genel_toplam,2)?> ₺
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label" for="modalAddCardNumber">Daha Önce Alınan Ödeme:</label>
                                     <div class="input-group input-group-merge">
-                                        <?=number_format($faturaDetay->alinan_odeme,2)?> ₺
+                                        <?=number_format((float)$faturaDetay->alinan_odeme,2)?> ₺
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label" for="modalAddCardNumber">Kalan Ödeme:</label>
                                     <div class="input-group input-group-merge">
-                                        <?=number_format($faturaDetay->genel_toplam-$faturaDetay->alinan_odeme,2)?> ₺
+                                        <?=number_format((float)$faturaDetay->genel_toplam-(float)$faturaDetay->alinan_odeme,2)?> ₺
                                     </div>
                                 </div>
                             </div>

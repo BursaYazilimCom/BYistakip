@@ -145,7 +145,7 @@
                                         <td><a href="{{URL::site()}}faturalar/duzenle/{{$fatura->id}}" data-bs-toggle="tooltip" title="Fatura Görüntüle"> {{$fatura->id}}</a></td>
                                         <td>{{Date::convert($fatura->belge_tarihi,"d.m.Y")}}</td>
                                         <td>{{Date::convert($fatura->vade_tarihi,"d.m.Y")}}</td>
-                                        <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
+                                        <td>{{number_format((float)$fatura->genel_toplam,2)}} ₺</td>
 
                                         <td>
                                             @if($fatura->durum=="0")

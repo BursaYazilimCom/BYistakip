@@ -161,7 +161,7 @@
                                                         <label class="col-form-label" for="gecerli_kur">Sipariş Zamanı Döviz Kuru</label>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        {{number_format($urunDetay->gecerli_kur,4)}} ₺
+                                                        {{number_format((float)$urunDetay->gecerli_kur,4)}} ₺
                                                     </div>
                                                 </div>
                                             </div>
@@ -170,7 +170,7 @@
                                                     <div class="col-sm-12">
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="checkbox" name="fiyat_sabitle" id="fiyat_sabitle" value="1" {{$urunDetay->fiyat_sabitle=="1"?"checked":""}} />
-                                                            <label class="form-check-label" for="fiyat_sabitle">Sonraki faturalarda bu fiyatı değiştirme <br><small>Abonelikli ürünlerde ileride kesilecek faturalarda güncel ürün fiyatını değil bu faturada geçerli olan {{number_format($urunDetay->birim_fiyat,2)}} ₺ fiyatını baz alır.</small></label>
+                                                            <label class="form-check-label" for="fiyat_sabitle">Sonraki faturalarda bu fiyatı değiştirme <br><small>Abonelikli ürünlerde ileride kesilecek faturalarda güncel ürün fiyatını değil bu faturada geçerli olan {{number_format((float)$urunDetay->birim_fiyat,2)}} ₺ fiyatını baz alır.</small></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -188,15 +188,15 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td>Birim Fiyat</td>
-                                                                <td style="text-align: right">{{number_format($urunDetay->birim_fiyat,2)}} ₺</td>
+                                                                <td style="text-align: right">{{number_format((float)$urunDetay->birim_fiyat,2)}} ₺</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Toplam KDV (% {{$urunDetay->kdv}})</td>
-                                                                <td style="text-align: right">{{number_format($urunDetay->kdv_tutari,2)}} ₺</td>
+                                                                <td style="text-align: right">{{number_format((float)$urunDetay->kdv_tutari,2)}} ₺</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Genel Toplam</td>
-                                                                <td style="text-align: right">{{number_format($urunDetay->toplam_fiyat,2)}} ₺</td>
+                                                                <td style="text-align: right">{{number_format((float)$urunDetay->toplam_fiyat,2)}} ₺</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

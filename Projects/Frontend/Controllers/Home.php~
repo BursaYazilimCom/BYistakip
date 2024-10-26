@@ -26,12 +26,12 @@ class Home extends Controller
         $toplamlar = [
             'uyeUrunAdet' => SiparisModel::uyeUrunAdet($user->id),
             'talepler' => $talepler['toplam'],
-            'odenmemisFaturaToplami' => number_format((float)FaturaModel::cariFaturaToplamlari($user->id,'0')->toplam,2),
-            'odenenFaturaToplami' => number_format((float)FaturaModel::cariFaturaToplamlari($user->id,'1')->toplam,2)
+            'odenmemisFaturaToplami' => number_format(FaturaModel::cariFaturaToplamlari($user->id,'0')->toplam,2),
+            'odenenFaturaToplami' => number_format(FaturaModel::cariFaturaToplamlari($user->id,'1')->toplam,2)
         ];
 
 
-        View::cariFaturaToplamlari(['odenen'=>number_format((float)$odenenler->toplam,2),'odenmeyen'=>number_format((float)$odenmeyenler->toplam,2)]);
+        View::cariFaturaToplamlari(['odenen'=>number_format($odenenler->toplam,2),'odenmeyen'=>number_format($odenmeyenler->toplam,2)]);
         View::cariDetay($cariDetay);
         View::faturalar($faturalar);
         View::uyeUrunleri($uyeUrunleri);

@@ -250,7 +250,7 @@
                                     <thead>
                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                             <th> Proje Adı </th>
-                                            <th class="d-none d-sm-block"> Başlangıç </th>
+                                            <th> Başlangıç </th>
                                             <th> Durum </th>
                                             <th> Termin </th>
 
@@ -262,7 +262,7 @@
                                         @foreach($cariProjeleri['liste'] as $proje)
                                             <tr>
                                                 <td>{{$proje->proje_adi}}</td>
-                                                <td class="d-none d-sm-block">{{Date::convert($proje->proje_baslangic_tarihi,'d.m.Y')}}</td>
+                                                <td>{{Date::convert($proje->proje_baslangic_tarihi,'d.m.Y')}}</td>
                                                 <td>
                                                     <span class="badge badge-{{$proje->durum==1?'success':'primary'}}">{{$proje->durum==1?'Teslim Edildi':'Devam Ediyor'}}</span>
                                                 </td>

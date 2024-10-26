@@ -124,7 +124,7 @@
                                     <tr class="fw-bolder text-gray-700 fs-5 text-end">
                                         <td class="d-flex align-items-center pt-6">
                                             {{$furun->urun_adi}}</td>
-                                        <td class="pt-6 text-dark fw-boldest">{{number_format($furun->tutar,2)}} ₺</td>
+                                        <td class="pt-6 text-dark fw-boldest">{{number_format((float)$furun->tutar,2)}} ₺</td>
                                     </tr>
                                     @endforeach
 
@@ -142,7 +142,7 @@
                                         <div class="fw-bold pe-10 text-gray-600 fs-7">Ara Toplam:</div>
                                         <!--end::Accountname-->
                                         <!--begin::Label-->
-                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format($araToplamTutar,2)}} ₺</div>
+                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format((float)$araToplamTutar,2)}} ₺</div>
                                         <!--end::Label-->
                                     </div>
                                     <!--end::Item-->
@@ -152,7 +152,7 @@
                                         <div class="fw-bold pe-10 text-gray-600 fs-7">Kdv %10</div>
                                         <!--end::Accountname-->
                                         <!--begin::Label-->
-                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format($kdv10,2)}} ₺</div>
+                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format((float)$kdv10,2)}} ₺</div>
                                         <!--end::Label-->
                                     </div>
                                     <div class="d-flex flex-stack mb-3">
@@ -160,7 +160,7 @@
                                         <div class="fw-bold pe-10 text-gray-600 fs-7">Kdv %20</div>
                                         <!--end::Accountname-->
                                         <!--begin::Label-->
-                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format($kdv20,2)}} ₺</div>
+                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format((float)$kdv20,2)}} ₺</div>
                                         <!--end::Label-->
                                     </div>
                                     <!--end::Item-->
@@ -170,7 +170,7 @@
                                         <div class="fw-bold pe-10 text-gray-600 fs-7">Kdv Toplamı</div>
                                         <!--end::Accountnumber-->
                                         <!--begin::Number-->
-                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format($kdv20+$kdv10,2)}} ₺</div>
+                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format((float)$kdv20+(float)$kdv10,2)}} ₺</div>
                                         <!--end::Number-->
                                     </div>
                                     <!--end::Item-->
@@ -180,7 +180,7 @@
                                         <div class="fw-bold pe-10 text-gray-600 fs-7">Genel Toplam</div>
                                         <!--end::Code-->
                                         <!--begin::Label-->
-                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format($toplamTutar,2)}} ₺</div>
+                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{number_format((float)$toplamTutar,2)}} ₺</div>
                                         <!--end::Label-->
                                     </div>
                                     <!--end::Item-->

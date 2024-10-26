@@ -49,7 +49,7 @@ class Login extends Controller
             }else{
 
                AyarModel::basarisiz('Başarısız Giriş','Giriş Sırasında bir hata oluştu:<br>'.User::error(), URL::site('login'));
-
+               
             }
 
         }

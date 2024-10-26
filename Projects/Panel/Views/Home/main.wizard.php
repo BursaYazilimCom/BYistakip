@@ -183,7 +183,7 @@
                                                         </div>
                                                     </td>
                                                     <td>{{$s->odeme_durumu=="1"?"<span class='text text-success'>Ödendi</span>":"<span class='text text-danger'>Ödeme Bekliyor</span>"}}</td>
-                                                    <td>{{number_format($s->genel_toplam_tutari,2)}} ₺</td>
+                                                    <td>{{number_format((float)$s->genel_toplam_tutari,2)}} ₺</td>
                                                     <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
                                                     <td>{{$s->durum=="1"?"<span class='text text-success'>Aktif</span>":"<span class='text text-danger'>Pasif</span>"}}</td>
 
@@ -256,9 +256,9 @@
                                                 </div>
                                             </div>
                                             @if($kToplam[$kh->id]<0)
-                                            <div class="fw-bolder text-danger">{{number_format($kToplam[$kh->id],2)}} ₺</div>
+                                            <div class="fw-bolder text-danger">{{number_format((float)$kToplam[$kh->id],2)}} ₺</div>
                                             @else
-                                            <div class="fw-bolder text-success">{{number_format($kToplam[$kh->id],2)}} ₺</div>
+                                            <div class="fw-bolder text-success">{{number_format((float)$kToplam[$kh->id],2)}} ₺</div>
                                             @endif
                                         </div>  
                                     @endforeach

@@ -52,12 +52,12 @@ class Siparisler extends Controller
 
     }
 
-    public function urunler($sayfa=null){
+    public function urunler(){
 
 
         $user = User::data();
 
-        $siparisUrunleri     = SiparisModel::siparisUrunleriListe("",$sayfa);
+        $siparisUrunleri     = SiparisModel::siparisUrunleriListe("");
 
         View::listele($siparisUrunleri);
 

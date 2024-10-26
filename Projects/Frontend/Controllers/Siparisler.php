@@ -16,7 +16,7 @@ class Siparisler extends Controller
         }
     }
 
-    public function main($sayfa=""){
+    public function main($sayfa=null){
 
         $user = User::data();
 

@@ -79,7 +79,7 @@
                                             <td>{{AyarModel::odemePeriyodu($s->odeme_periyodu)}}</td>
                                             <td>{{Date::convert($s->bitis_tarihi,'d.m.Y')}}</td>
                                             <td>{{$s->adet}}</td>
-                                            <td>{{number_format($s->toplam_fiyat,2)}}</td>
+                                            <td>{{number_format((float)$s->toplam_fiyat,2)}}</td>
                                             <td>{{AyarModel::siparisDurumAdi($s->durum)}}</td>
                                             <td class="text-danger" style="font-weight: bold">
                                                 @if($s->islem_gerekiyor=='1')

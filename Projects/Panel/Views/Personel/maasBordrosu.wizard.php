@@ -161,7 +161,7 @@
                                                 <td>{{$kayitTuruSayi['YI']}}</td>
                                                 <td>{{$ayKacGunCekiyor}}</td>
                                                 <td>30<br>225</td>
-                                                <td>{{number_format($personelDetay->maas/30,2)}}</td>
+                                                <td>{{number_format((float)$personelDetay->maas/30,2)}}</td>
                                                 <td>{{$fazlaMesai}}</td>
                                             </tr>
                                         </tbody>

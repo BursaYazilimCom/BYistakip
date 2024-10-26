@@ -62,7 +62,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder {{$kToplam[$kh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$kh->id}}">₺ {{number_format($kToplam[$kh->id],2)}} -></a>
+                                        <a class="fw-bolder {{$kToplam[$kh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$kh->id}}">₺ {{number_format((float)$kToplam[$kh->id],2)}} -></a>
                                     </div>
 
                                     @endforeach
@@ -90,7 +90,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder {{$kToplam[$bh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$bh->id}}">₺ {{number_format($kToplam[$bh->id],2)}}</a>
+                                        <a class="fw-bolder {{$kToplam[$bh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$bh->id}}">₺ {{number_format((float)$kToplam[$bh->id],2)}}</a>
                                     </div>
 
                                     @endforeach
@@ -117,7 +117,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder {{$kToplam[$kkh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$kkh->id}}">₺ {{number_format($kToplam[$kkh->id],2)}}</a>
+                                        <a class="fw-bolder {{$kToplam[$kkh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$kkh->id}}">₺ {{number_format((float)$kToplam[$kkh->id],2)}}</a>
                                     </div>
 
                                     @endforeach
@@ -144,7 +144,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder {{$kToplam[$ph->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$ph->id}}">₺ {{number_format($kToplam[$ph->id],2)}}</a>
+                                        <a class="fw-bolder {{$kToplam[$ph->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$ph->id}}">₺ {{number_format((float)$kToplam[$ph->id],2)}}</a>
                                     </div>
 
                                     @endforeach
@@ -171,7 +171,7 @@
                                                 <small></small>
                                             </div>
                                         </div>
-                                        <a class="fw-bolder {{$kToplam[$vh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$vh->id}}">₺ {{number_format($kToplam[$vh->id],2)}}</a>
+                                        <a class="fw-bolder {{$kToplam[$vh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$vh->id}}">₺ {{number_format((float)$kToplam[$vh->id],2)}}</a>
                                     </div>
 
                                     @endforeach
@@ -199,7 +199,7 @@
                                             </div>
                                         </div>
                                         
-                                        <a class="fw-bolder {{$kToplam[$dh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$dh->id}}">₺ {{number_format($kToplam[$dh->id],2)}}</a>
+                                        <a class="fw-bolder {{$kToplam[$dh->id]>=0.0000?'text-success':'text-danger'}}" href="{{URL::site("kasa/kayitlar/")}}{{$dh->id}}">₺ {{number_format((float)$kToplam[$dh->id],2)}}</a>
 
                                     </div>
 

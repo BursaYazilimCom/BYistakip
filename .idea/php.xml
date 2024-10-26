@@ -51,6 +51,9 @@
       <path value="$PROJECT_DIR$/Internal/package-composer/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/Internal/package-composer/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/Internal/package-composer/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/brick/math" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/ramsey/collection" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

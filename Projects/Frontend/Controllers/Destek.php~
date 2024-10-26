@@ -10,7 +10,7 @@ class Destek extends Controller
     public function main()
     {
         $user = User::data();
-        $listeData = DestekModel::liste($user->id,$sayfa=null);
+        $listeData = DestekModel::liste($user->id,$sayfa="");
 
         View::listele($listeData);
 

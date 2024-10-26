@@ -114,19 +114,19 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td>İlk Sipariş Döviz Kuru</td>
-                                                                <td style="text-align: left"> {{number_format($urunDetay->gecerli_kur,4)}} ₺</td>
+                                                                <td style="text-align: left"> {{number_format((float)$urunDetay->gecerli_kur,4)}} ₺</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Birim Fiyat</td>
-                                                                <td style="text-align: left">{{number_format($urunDetay->birim_fiyat,2)}} ₺</td>
+                                                                <td style="text-align: left">{{number_format((float)$urunDetay->birim_fiyat,2)}} ₺</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Toplam KDV (% {{$urunDetay->kdv}})</td>
-                                                                <td style="text-align: left">{{number_format($urunDetay->kdv_tutari,2)}} ₺</td>
+                                                                <td style="text-align: left">{{number_format((float)$urunDetay->kdv_tutari,2)}} ₺</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Genel Toplam</td>
-                                                                <td style="text-align: left">{{number_format($urunDetay->toplam_fiyat,2)}} ₺</td>
+                                                                <td style="text-align: left">{{number_format((float)$urunDetay->toplam_fiyat,2)}} ₺</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -148,7 +148,7 @@
                                                                 <tr>
                                                                     <td>Tek Seferlik</td>
                                                                     <td style="text-align: left"> 
-                                                                        {{number_format($anaUrunDetay->fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
+                                                                        {{number_format((float)$anaUrunDetay->fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
                                                                     </td>
                                                                 </tr>
                                                             @endif
@@ -157,7 +157,7 @@
                                                                 <tr>
                                                                     <td>Aylık</td>
                                                                     <td style="text-align: left"> 
-                                                                        {{number_format($anaUrunDetay->aylik_fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
+                                                                        {{number_format((float)$anaUrunDetay->aylik_fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
                                                                     </td>
                                                                 </tr>
                                                             @endif
@@ -166,7 +166,7 @@
                                                                 <tr>
                                                                     <td>3 Aylık</td>
                                                                     <td style="text-align: left"> 
-                                                                        {{number_format($anaUrunDetay->uc_aylik_fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
+                                                                        {{number_format((float)$anaUrunDetay->uc_aylik_fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
                                                                     </td>
                                                                 </tr>
                                                             @endif
@@ -175,7 +175,7 @@
                                                                 <tr>
                                                                     <td>6 Aylık</td>
                                                                     <td style="text-align: left"> 
-                                                                        {{number_format($anaUrunDetay->alti_aylik_fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
+                                                                        {{number_format((float)$anaUrunDetay->alti_aylik_fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
                                                                     </td>
                                                                 </tr>
                                                             @endif
@@ -184,7 +184,7 @@
                                                                 <tr>
                                                                     <td>Yıllık</td>
                                                                     <td style="text-align: left"> 
-                                                                        {{number_format($anaUrunDetay->yillik_fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
+                                                                        {{number_format((float)$anaUrunDetay->yillik_fiyat,2)}} {{$anaUrunDetay->fiyat_birim}}
                                                                     </td>
                                                                 </tr>
                                                             @endif
