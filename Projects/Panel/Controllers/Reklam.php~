@@ -1,0 +1,410 @@
+<?php namespace Project\Controllers;
+
+
+use User,Method,Post,Redirect,Json,URL,Validation,Converter,Security,Upload;
+use InternalReklamModel as ReklamModel,AyarModel,InternalTedarikciModel as TedarikciModel;
+
+class Reklam extends Controller
+{
+
+    public function __construct()
+    {
+        $user                   = User::data();
+        $yetkiler               = \Json::decode($user->yetkiler);
+
+        if(!in_array(CURRENT_CONTROLLER,$yetkiler)){
+
+            Redirect::insert(['bilgi'=>'<div class="callout callout-danger">Yetkiniz olmayan bir alana ulaşmaya çalışıyorsunuz!</div>'])->action('home');
+
+        }
+    }
+
+    public function main()
+    {
+
+
+    }
+
+    public function hesaplar()
+    {
+        $hesaplar = ReklamModel::hesapListe();
+
+        View::liste($hesaplar);
+
+
+    }
+
+
+    public function hesapForm($id=""){
+
+        $platformlar = ReklamModel::platformlar();
+        $hesap_durumlari = ReklamModel::hesap_durumlari();
+        if($id){
+            $data = ReklamModel::hesapDetay($id);
+
+            View::detay($data);
+            View::action("reklam/hesapGuncelle/".$id);
+
+        }else{
+            $data = (object)[
+                'id'            =>'',
+                'ads_id'        =>'',
+                'mail_adresi'   =>'',
+                'mail_adresi2'  =>'',
+                'sifre'         =>'',
+                'rvd'           =>'',
+                'dogrulama_tel' =>'',
+                'odeme_yontemi' =>'',
+                'odeme_araci'   =>'',
+                'proxy'         =>'',
+                'aciklama'      =>'',
+                'ek_not'        =>'',
+                'platform'      =>'',
+                'acilis_tarihi' =>'',
+                'durum'         =>'1'
+
+            ];
+
+            View::detay($data);
+            View::platformlar($platformlar);
+
+            View::action("reklam/hesapEkle");
+        }
+        View::platformlar($platformlar);
+        View::hesap_durumlari($hesap_durumlari);
+
+    }
+
+    public function hesapEkle(){
+
+        if(empty(Post::mail_adresi()) or empty(Post::sifre())){
+
+                AyarModel::basarisiz('Başarısız İşlem', 'Ekleme işlemi sırasında hata oluştu ! Lütfen giriş yaptığınız bilgileri kontrol edin.'.str_replace('<br>',EOL,Validation::error('string')), URL::prev());
+
+
+        }else{
+
+            $ekleData = [
+                'ads_id'            =>Post::ads_id(),
+                'mail_adresi'       =>Post::mail_adresi(),
+                'mail_adresi2'      =>Post::mail_adresi2(),
+                'sifre'             =>Post::sifre(),
+                'reklam_url'        =>Post::reklam_url(),
+                'rvd'               =>Post::rvd(),
+                'dogrulama_tel'     =>Post::dogrulama_tel(),
+                'odeme_yontemi'     =>Post::odeme_yontemi(),
+                'odeme_araci'       =>Post::odeme_araci(),
+                'proxy'             =>Post::proxy(),
+                'aciklama'          =>Security::htmlEncode(Post::aciklama()),
+                'ek_not'            =>Security::htmlEncode(Post::ek_not()),
+                'platform'          =>Post::platform(),
+                'acilis_tarihi'     =>Post::acilis_tarihi(),
+                'durum'             =>Post::durum()
+            ];
+
+            $ekle = ReklamModel::hesapEkle($ekleData);
+
+            if($ekle){
+
+                AyarModel::basarili('Başarılı İşlem', 'Hesap Ekleme İşlemi Yapıldı !', URL::site("reklam/hesaplar"));
+
+            }else{
+
+                AyarModel::basarisiz('Başarısız İşlem', 'Hesap Ekleme İşlemi Yapılamadı !', URL::prev());
+
+            }
+
+        }
+
+    }
+
+    public function hesapGuncelle($id){
+
+        if(empty(Post::mail_adresi()) or empty(Post::sifre())){
+
+            AyarModel::basarisiz('Güncelleme İşlemi','Güncelleme işlemi sırasında hata oluştu<br>'.str_replace('<br>',EOL,Validation::error('string')),URL::prev());
+
+
+        }else{
+
+            $updateData = [
+                'id'                =>$id,
+                'ads_id'            =>Post::ads_id(),
+                'mail_adresi'       =>Post::mail_adresi(),
+                'mail_adresi2'      =>Post::mail_adresi2(),
+                'sifre'             =>Post::sifre(),
+                'reklam_url'        =>Post::reklam_url(),
+                'rvd'               =>Post::rvd(),
+                'dogrulama_tel'     =>Post::dogrulama_tel(),
+                'odeme_yontemi'     =>Post::odeme_yontemi(),
+                'odeme_araci'       =>Post::odeme_araci(),
+                'proxy'             =>Post::proxy(),
+                'aciklama'          =>Security::htmlEncode(Post::aciklama()),
+                'ek_not'            =>Security::htmlEncode(Post::ek_not()),
+                'platform'          =>Post::platform(),
+                'acilis_tarihi'     =>Post::acilis_tarihi(),
+                'durum'             =>Post::durum()
+            ];
+
+            $update = ReklamModel::hesapGuncelle($updateData);
+
+            if($update){
+
+                AyarModel::basarili('Güncelleme İşlemi','Güncelleme İşlemi Yapıldı !', URL::site('reklam/hesapForm/'.$id));
+
+            }else{
+
+                AyarModel::basarisiz('Güncelleme İşlemi','Güncelleme İşlemi Yapılamadı !', URL::prev());
+
+            }
+
+        }
+
+    }
+
+    /****************************************/
+
+    public function gruplar()
+    {
+        $listeData = UrunModel::urunGrupListe();
+        $siralamaYeri = "urunGuruplari";
+
+        View::siralamaYeri($siralamaYeri);
+        View::listele($listeData);
+
+
+    }
+
+    public function grupEkle ()
+    {
+
+        if(!Validation::check()){
+
+            $hata = str_replace('<br>',EOL,Validation::error('string'));
+            AyarModel::basarisiz('Grup Ekleme İşlemi','Grup Ekleme işlemi sırasında hata oluştu<br>'.$hata,URL::prev());
+
+        }else{
+
+            $ekleData = [
+                'adi'           =>Post::adi(),
+                'aciklama'      =>Security::htmlEncode(Post::aciklama()),
+                'sira'          =>Post::gsira(),
+                'tur'           =>Post::turu(),
+                'urun_gorunumu' =>Post::urun_gorunumu(),
+                'durum'         =>Post::gdurum()
+            ];
+
+            $ekle = UrunModel::urunGrupEkle($ekleData);
+
+            if($ekle){
+
+                $sira           = Post::sira();
+                $tur            = Post::tur();
+                $baslik         = Post::baslik();
+                $gereklilik     = Post::gereklilik();
+                $yer            = Post::yer();
+                $durum          = Post::durum();
+
+                for($i=0;$i<count($baslik);$i++){
+
+                    $ozellikEkle = [
+                        'grup'          => $ekle,
+                        'sira'          => $sira[$i],
+                        'baslik'        => $baslik[$i],
+                        'tur'           => $tur[$i],
+                        'gereklilik'    => $gereklilik[$i]==""?0:1,
+                        'yer'           => $yer[$i],
+                        'durum'         => $durum[$i]
+                    ];
+
+                    $ozellikEkle = UrunModel::urunGrupOzellikEkle($ozellikEkle);
+
+                    $ozellikEkle ="";
+
+                }
+
+                AyarModel::basarili('Grup Ekleme İşlemi','Grup Ekleme işlemi başarı ile gerçekleştirildi',URL::site('urun/grupForm/'.$ekle));
+
+            }else{
+
+                AyarModel::basarisiz('Grup Ekleme İşlemi','Grup Ekleme işlemi sırasında hata oluştu',URL::prev());
+
+            }
+
+        }
+
+    }
+
+    public function grupGuncelle($id)
+    {
+
+        if(!Validation::check()){
+
+            $hata = str_replace('<br>',EOL,Validation::error('string'));
+            AyarModel::basarisiz('Grup Güncelleme İşlemi','Grup Güncelleme işlemi sırasında hata oluştu<br>'.$hata,URL::prev());
+
+        }else{
+
+            if (Post::id()!=$id) {
+                redirect(URL::prev());
+            }
+
+            $guncellemeData = [
+                'id'            =>$id,
+                'adi'           =>Post::adi(),
+                'aciklama'      =>Security::htmlEncode(Post::aciklama()),
+                'sira'          =>Post::gsira(),
+                'tur'           =>Post::turu(),
+                'urun_gorunumu' =>Post::urun_gorunumu(),
+                'durum'         =>Post::gdurum()
+            ];
+
+            $guncelle = UrunModel::urunGrupGuncelle($guncellemeData);
+
+            $oid            = Post::oid();
+            $sira           = Post::sira();
+            $tur            = Post::tur();
+            $baslik         = Post::baslik();
+            $gereklilik     = Post::gereklilik();
+            $yer            = Post::yer();
+            $durum          = Post::durum();
+
+
+            if($baslik!=""){
+
+                for($i=0;$i<count($baslik);$i++){
+
+                    $ozellikData = [
+                        'id'            => $oid[$i],
+                        'grup'          => $id,
+                        'sira'          => $sira[$i],
+                        'baslik'        => $baslik[$i],
+                        'tur'           => $tur[$i],
+                        'gereklilik'    => $gereklilik[$i],
+                        'yer'           => $yer[$i],
+                        'durum'         => $durum[$i]
+                    ];
+
+                    if($oid[$i]=="0"){
+
+                        UrunModel::urunGrupOzellikEkle($ozellikData);
+
+                    }else{
+
+                        UrunModel::urunGrupOzellikGuncelle($ozellikData);
+                    }
+
+                    $ozellikData ="";
+
+                }
+
+            }
+
+
+            if($guncelle){
+
+                AyarModel::basarili('Grup Ekleme İşlemi','Grup Ekleme işlemi başarı ile gerçekleştirildi',URL::site('urun/grupForm/'.$id));
+
+            }else{
+
+                AyarModel::basarisiz('Grup Ekleme İşlemi','Grup Ekleme işlemi sırasında hata oluştu',URL::prev());
+
+            }
+
+        }
+
+    }
+
+    public function ajax():void
+    {
+        $user       = User::data();
+        $dataAction = Post::dataAction();
+        $dataId     = Post::dataId();
+        $data       = [];
+
+        switch ($dataAction){
+
+                /*********************************************************/
+            case "urunSil":
+
+                $sil = UrunModel::sil($dataId);
+
+                $data['title'] = "Ürün Silme İşlemi";
+
+                if($sil){
+
+                    $ozellikSil = UrunModel::urunOzellikleriniSil($dataId);
+
+                    $data['success'] = 'Ürün silme işlemi başarı ile yapıldı!';
+                    $data['redirect'] = '';
+
+                }else{
+
+                    $data['error'] = "Ürün silme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
+
+            case "grupSil":
+
+                $sil = UrunModel::urunGrupSil($dataId);
+
+                $data['title'] = "Grup Silme İşlemi";
+
+                if($sil){
+
+                    $ozellikSil = UrunModel::urunGrupOzellikleriniSil($dataId);
+
+                    $data['success'] = 'Grup silme işlemi başarı ile yapıldı!';
+                    $data['redirect'] = '';
+
+                }else{
+
+                    $data['error'] = "Grup silme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
+
+            case "urunGrupOzellikSil":
+
+                $ozellikDetay = UrunModel::urunGrupOzellikDetay($dataId);
+
+                $sil = UrunModel::urunGrupOzellikSil($dataId);
+
+
+                $data['title'] = "Grup Özellik Silme İşlemi";
+
+                if($sil){
+
+                    $data['success'] = 'Grup Özellik silme işlemi başarı ile yapıldı!';
+                    $data['redirect'] = '';
+
+                }else{
+
+                    $data['error'] = "Grup Özellik silme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
+
+            /*********************************************************/
+
+
+        }
+
+    }
+
+    
+    public function s404()
+    {
+
+    }
+}
