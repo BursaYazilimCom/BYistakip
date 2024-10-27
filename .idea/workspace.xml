@@ -6,16 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="Yenileme faturası oluşturma işlemleri yapılıyor">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fd04f14a-41c6-4007-83e7-140706f7bf10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fd04f14a-41c6-4007-83e7-140706f7bf10.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/istakip.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/istakip.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Reklam.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Reklam.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/ReklamModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/ReklamModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesapForm.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesapForm.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesaplar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesaplar.wizard.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
