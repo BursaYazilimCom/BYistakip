@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="bursayazilim_client@bursayazilim.com">
-  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.51">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.53">
     <root id="1">
       <DefaultCasing>exact</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
@@ -1078,41 +1078,41 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </table>
     <column id="327" parent="292" name="id">
       <AutoIncrement>87</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="328" parent="292" name="sira">
-      <DasType>int|0s</DasType>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="329" parent="292" name="anahtar">
-      <DasType>varchar(50)|0s</DasType>
       <Position>3</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="330" parent="292" name="deger">
-      <DasType>varchar(1500)|0s</DasType>
       <Position>4</Position>
+      <StoredType>varchar(1500)|0s</StoredType>
     </column>
     <column id="331" parent="292" name="baslik">
-      <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="332" parent="292" name="aciklama">
-      <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="333" parent="292" name="tur">
-      <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="334" parent="292" name="tum_degerler">
-      <DasType>varchar(500)|0s</DasType>
       <Position>8</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="335" parent="292" name="duzenleme_izni">
-      <DasType>int|0s</DasType>
       <Position>9</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <index id="336" parent="292" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1126,69 +1126,69 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="338" parent="293" name="id">
       <AutoIncrement>3463</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="339" parent="293" name="email">
-      <DasType>varchar(100)|0s</DasType>
       <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="340" parent="293" name="adi">
-      <DasType>varchar(100)|0s</DasType>
       <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="341" parent="293" name="gsm">
-      <DasType>varchar(100)|0s</DasType>
       <Position>4</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="342" parent="293" name="il">
-      <DasType>int|0s</DasType>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="343" parent="293" name="ilce">
-      <DasType>int|0s</DasType>
       <Position>6</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="344" parent="293" name="tc">
-      <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="345" parent="293" name="firma_adi">
-      <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="346" parent="293" name="fatura_adresi">
-      <DasType>text|0s</DasType>
       <Position>9</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="347" parent="293" name="vergi_dairesi">
-      <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="348" parent="293" name="vergi_no">
-      <DasType>varchar(255)|0s</DasType>
       <Position>11</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="349" parent="293" name="bakiye">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>12</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="350" parent="293" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>13</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="351" parent="293" name="yonetim_notu">
-      <DasType>text|0s</DasType>
       <Position>14</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="352" parent="293" name="kayit_tarihi">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>15</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="353" parent="293" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1202,29 +1202,29 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="355" parent="294" name="id">
       <AutoIncrement>21</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="356" parent="294" name="fatura_id">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="357" parent="294" name="tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>(0)</DefaultExpression>
       <Position>3</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="358" parent="294" name="aciklama">
-      <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="359" parent="294" name="tarih">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>(now())</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="360" parent="294" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1238,73 +1238,73 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="362" parent="295" name="id">
       <AutoIncrement>71</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="363" parent="295" name="fatura">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="364" parent="295" name="urun">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="365" parent="295" name="siparis_urun_id">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>4</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="366" parent="295" name="eklenecek_gun_sayisi">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="367" parent="295" name="donem_baslangic_tarihi">
-      <DasType>date|0s</DasType>
       <Position>6</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="368" parent="295" name="donem_bitis_tarihi">
-      <DasType>date|0s</DasType>
       <Position>7</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="369" parent="295" name="urun_adi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="370" parent="295" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
       <Position>9</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="371" parent="295" name="miktar">
-      <DasType>int|0s</DasType>
       <DefaultExpression>(0)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>10</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="372" parent="295" name="fiyat">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>11</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="373" parent="295" name="kdv">
-      <DasType>int|0s</DasType>
       <DefaultExpression>20</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>12</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="374" parent="295" name="kdv_tutari">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>13</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="375" parent="295" name="tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>14</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <index id="376" parent="295" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1318,121 +1318,121 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="378" parent="296" name="id">
       <AutoIncrement>70</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="379" parent="296" name="tur">
       <Comment>1:alış,2:satış,3:iade</Comment>
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="380" parent="296" name="satis_turu">
       <Comment>1:ilk satis,2:yenileme</Comment>
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="381" parent="296" name="belge_no">
-      <DasType>char(50)|0s</DasType>
       <Position>4</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="382" parent="296" name="irsaliye_no">
-      <DasType>char(50)|0s</DasType>
       <Position>5</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="383" parent="296" name="fatura_adi">
-      <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="384" parent="296" name="fatura_adresi">
-      <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="385" parent="296" name="vergi_dairesi">
-      <DasType>char(50)|0s</DasType>
       <Position>8</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="386" parent="296" name="vergi_no">
-      <DasType>char(50)|0s</DasType>
       <Position>9</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="387" parent="296" name="tedarikci">
-      <DasType>int|0s</DasType>
       <Position>10</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="388" parent="296" name="musteri">
-      <DasType>int|0s</DasType>
       <Position>11</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="389" parent="296" name="siparis_id">
-      <DasType>int|0s</DasType>
       <Position>12</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="390" parent="296" name="toplam_tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>13</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="391" parent="296" name="kdv_toplami">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>14</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="392" parent="296" name="genel_toplam">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>15</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="393" parent="296" name="alinan_odeme">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <Position>16</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="394" parent="296" name="belge_tarihi">
-      <DasType>date|0s</DasType>
       <NotNull>1</NotNull>
       <Position>17</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="395" parent="296" name="vade_tarihi">
-      <DasType>date|0s</DasType>
       <Position>18</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="396" parent="296" name="odeme_tarihi">
-      <DasType>datetime|0s</DasType>
       <Position>19</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
     <column id="397" parent="296" name="odeme_yontemi">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>20</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="398" parent="296" name="resmi_fatura_dosyasi">
-      <DasType>varchar(100)|0s</DasType>
       <Position>21</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="399" parent="296" name="durum">
       <Comment>0:iptal,1:resmileşmemiş,2:resmileşmiş</Comment>
-      <DasType>int|0s</DasType>
       <DefaultExpression>2</DefaultExpression>
       <Position>22</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="400" parent="296" name="odeme">
       <Comment>0 : ödeme yapılmadı,  1 : ödeme yapıldı</Comment>
-      <DasType>int|0s</DasType>
       <Position>23</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="401" parent="296" name="aciklama">
-      <DasType>text|0s</DasType>
       <Position>24</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="402" parent="296" name="ekleme_tarihi">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>25</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="403" parent="296" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1446,91 +1446,91 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="405" parent="297" name="id">
       <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="406" parent="297" name="firma_adi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="407" parent="297" name="firma_sektor">
-      <DasType>varchar(50)|0s</DasType>
       <Position>3</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="408" parent="297" name="faaliyet_alani">
-      <DasType>varchar(50)|0s</DasType>
       <Position>4</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="409" parent="297" name="firma_email">
-      <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="410" parent="297" name="firma_yetkili">
-      <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="411" parent="297" name="firma_yetkili_gsm">
-      <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="412" parent="297" name="firma_vd">
-      <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="413" parent="297" name="firma_vn">
-      <DasType>varchar(255)|0s</DasType>
       <Position>9</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="414" parent="297" name="firma_sgk_sicil">
-      <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="415" parent="297" name="firma_fatura_adresi">
-      <DasType>varchar(255)|0s</DasType>
       <Position>11</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="416" parent="297" name="il">
-      <DasType>int|0s</DasType>
       <Position>12</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="417" parent="297" name="ilce">
-      <DasType>int|0s</DasType>
       <Position>13</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="418" parent="297" name="firma_sube">
-      <DasType>int|0s</DasType>
       <Position>14</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="419" parent="297" name="tehlike_sinifi">
-      <DasType>varchar(255)|0s</DasType>
       <Position>15</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="420" parent="297" name="uname">
-      <DasType>varchar(255)|0s</DasType>
       <Position>16</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="421" parent="297" name="upass">
-      <DasType>varchar(255)|0s</DasType>
       <Position>17</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="422" parent="297" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <Position>18</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="423" parent="297" name="ekleme_tarihi">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>19</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <column id="424" parent="297" name="duzenleme_tarihi">
-      <DasType>char(50)|0s</DasType>
       <DefaultExpression>&apos;0000-00-00 00:00:00&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>20</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <index id="425" parent="297" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1544,48 +1544,48 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="427" parent="298" name="id">
       <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="428" parent="298" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="429" parent="298" name="periyod">
       <Comment>0:tek sefer 1 yenilenen</Comment>
-      <DasType>int|0s</DasType>
       <DefaultExpression>(0)</DefaultExpression>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="430" parent="298" name="yil">
-      <DasType>char(50)|0s</DasType>
       <Position>4</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="431" parent="298" name="ay">
-      <DasType>char(50)|0s</DasType>
       <Position>5</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="432" parent="298" name="gun">
-      <DasType>char(50)|0s</DasType>
       <Position>6</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="433" parent="298" name="saat">
-      <DasType>time|0s</DasType>
       <DefaultExpression>(0)</DefaultExpression>
       <Position>7</Position>
+      <StoredType>time|0s</StoredType>
     </column>
     <column id="434" parent="298" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>(0)</DefaultExpression>
       <Position>8</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="435" parent="298" name="kayit_tarihi">
-      <DasType>datetime|0s</DasType>
       <DefaultExpression>(now())</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>9</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
     <index id="436" parent="298" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1599,24 +1599,24 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="438" parent="299" name="id">
       <AutoIncrement>963</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="439" parent="299" name="il">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="440" parent="299" name="ilce">
-      <DasType>varchar(60)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>varchar(60)|0s</StoredType>
     </column>
     <column id="441" parent="299" name="oylesine">
-      <DasType>varchar(55)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(55)|0s</StoredType>
     </column>
     <index id="442" parent="299" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1630,28 +1630,28 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="444" parent="300" name="id">
       <AutoIncrement>85</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="445" parent="300" name="plaka">
-      <DasType>tinyint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>tinyint|0s</StoredType>
     </column>
     <column id="446" parent="300" name="il">
-      <DasType>varchar(100)|0s</DasType>
       <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="447" parent="300" name="siralama">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="448" parent="300" name="kod">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <index id="449" parent="300" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1665,77 +1665,77 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="451" parent="301" name="id">
       <AutoIncrement>14</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="452" parent="301" name="kasa">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="453" parent="301" name="islem">
       <Comment>o:odeme t:tahsilat</Comment>
-      <DasType>char(1)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>char(1)|0s</StoredType>
     </column>
     <column id="454" parent="301" name="hesap">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="455" parent="301" name="islem_turu">
       <Comment>masraf,tedarikci,personel,cari,siparis,fatura</Comment>
-      <DasType>char(50)|0s</DasType>
       <Position>5</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="456" parent="301" name="islem_tur_id">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>6</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="457" parent="301" name="aciklama">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="458" parent="301" name="gelir">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>8</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="459" parent="301" name="gider">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>9</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="460" parent="301" name="mevcut_kasa_toplami">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>10</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="461" parent="301" name="yil">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>11</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="462" parent="301" name="tarih">
-      <DasType>date|0s</DasType>
       <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>12</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="463" parent="301" name="islem_yapan">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>13</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="464" parent="301" name="islem_tarihi">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>14</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="465" parent="301" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1749,39 +1749,39 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="467" parent="302" name="id">
       <AutoIncrement>6</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="468" parent="302" name="adi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="469" parent="302" name="hesap_no">
-      <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="470" parent="302" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
       <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="471" parent="302" name="tur">
       <Comment>1:kasa 2:banka hesabı 3: pos hesabı 4:kredi kartı 5 veresiye 6:Diger</Comment>
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="472" parent="302" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <Position>6</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="473" parent="302" name="tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>7</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <index id="474" parent="302" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1795,27 +1795,27 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="476" parent="303" name="id">
       <AutoIncrement>27</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="477" parent="303" name="ana_kalem">
-      <DasType>int|0s</DasType>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="478" parent="303" name="ust">
-      <DasType>int|0s</DasType>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="479" parent="303" name="adi">
-      <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="480" parent="303" name="renk">
-      <DasType>char(50)|0s</DasType>
       <DefaultExpression>&apos;success&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <index id="481" parent="303" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1829,53 +1829,53 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="483" parent="304" name="id">
       <AutoIncrement>27</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="484" parent="304" name="kalem">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="485" parent="304" name="kasa">
-      <DasType>int|0s</DasType>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="486" parent="304" name="belge_no">
-      <DasType>char(50)|0s</DasType>
       <Position>4</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="487" parent="304" name="belge_dosya">
-      <DasType>char(200)|0s</DasType>
       <Position>5</Position>
+      <StoredType>char(200)|0s</StoredType>
     </column>
     <column id="488" parent="304" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
       <Position>6</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="489" parent="304" name="odeme_durumu">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="490" parent="304" name="tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="491" parent="304" name="odeme_tarihi">
-      <DasType>date|0s</DasType>
       <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>9</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="492" parent="304" name="islem_tarihi">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>10</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="493" parent="304" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1889,39 +1889,39 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="495" parent="305" name="id">
       <AutoIncrement>10</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="496" parent="305" name="olay">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="497" parent="305" name="tur">
       <Comment>1:siparis,2:proje,3:fatura,4:siparis ürün</Comment>
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="498" parent="305" name="tur_id">
-      <DasType>int|0s</DasType>
       <DefaultExpression>(1)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="499" parent="305" name="ne_zaman">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <column id="500" parent="305" name="okundu">
-      <DasType>int|0s</DasType>
       <DefaultExpression>(0)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <index id="501" parent="305" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1935,40 +1935,40 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="503" parent="306" name="id">
       <AutoIncrement>13</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="504" parent="306" name="baslik">
-      <DasType>varchar(255)|0s</DasType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="505" parent="306" name="kasa_hesabi">
-      <DasType>int|0s</DasType>
       <DefaultExpression>(0)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="506" parent="306" name="tur">
       <Comment>1:havale Eft,2:sanal pos,3:diger</Comment>
-      <DasType>varchar(50)|0s</DasType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="507" parent="306" name="bilgiler">
-      <DasType>varchar(500)|0s</DasType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="508" parent="306" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <index id="509" parent="306" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1982,29 +1982,29 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="511" parent="307" name="id">
       <AutoIncrement>13</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="512" parent="307" name="para">
-      <DasType>char(50)|0s</DasType>
       <Position>2</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="513" parent="307" name="kod">
-      <DasType>char(50)|0s</DasType>
       <Position>3</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="514" parent="307" name="sembol">
-      <DasType>char(50)|0s</DasType>
       <Position>4</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="515" parent="307" name="guncel_kur">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <Position>5</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="516" parent="307" name="guncelleme">
-      <DasType>timestamp|0s</DasType>
       <Position>6</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="517" parent="307" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2018,145 +2018,145 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="519" parent="308" name="id">
       <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="520" parent="308" name="adi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="521" parent="308" name="telefon">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="522" parent="308" name="mail_adresi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="523" parent="308" name="sifre">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="524" parent="308" name="adresi">
-      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="525" parent="308" name="resim">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="526" parent="308" name="imza">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="527" parent="308" name="imza_yazi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>9</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="528" parent="308" name="tc_kimlik">
-      <DasType>varchar(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>10</Position>
+      <StoredType>varchar(20)|0s</StoredType>
     </column>
     <column id="529" parent="308" name="yetkinlik">
-      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>11</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="530" parent="308" name="meslek">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>12</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="531" parent="308" name="diploma_tarihi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>13</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="532" parent="308" name="diploma_no">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>14</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="533" parent="308" name="belge_sinifi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>15</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="534" parent="308" name="belge_tarihi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>16</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="535" parent="308" name="belge_no">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>17</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="536" parent="308" name="mezuniyet">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>18</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="537" parent="308" name="egitimleri">
-      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>19</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="538" parent="308" name="ise_baslangic">
-      <DasType>varchar(50)|0s</DasType>
       <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>20</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="539" parent="308" name="isden_ayrilma">
-      <DasType>varchar(50)|0s</DasType>
       <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>21</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="540" parent="308" name="sube">
-      <DasType>varchar(10)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>22</Position>
+      <StoredType>varchar(10)|0s</StoredType>
     </column>
     <column id="541" parent="308" name="panel_yetkisi">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>23</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="542" parent="308" name="rutbe">
-      <DasType>varchar(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>24</Position>
+      <StoredType>varchar(20)|0s</StoredType>
     </column>
     <column id="543" parent="308" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>25</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="544" parent="308" name="sifre_degisim">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>26</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="545" parent="308" name="kayit_tarihi">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>27</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="546" parent="308" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2170,31 +2170,31 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="548" parent="309" name="id">
       <AutoIncrement>4</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="549" parent="309" name="proje_id">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="550" parent="309" name="personel_id">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="551" parent="309" name="gorevi">
-      <DasType>text|0s</DasType>
       <Position>4</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="552" parent="309" name="tarih">
-      <DasType>datetime|0s</DasType>
       <DefaultExpression>(now())</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
     <index id="553" parent="309" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2208,45 +2208,45 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="555" parent="310" name="id">
       <AutoIncrement>4</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="556" parent="310" name="proje_id">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="557" parent="310" name="detay">
-      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="558" parent="310" name="cevap">
-      <DasType>text|0s</DasType>
       <Position>4</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="559" parent="310" name="talep_ip">
-      <DasType>text|0s</DasType>
       <Position>5</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="560" parent="310" name="talep_user_agent">
-      <DasType>varchar(500)|0s</DasType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <Position>6</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="561" parent="310" name="durum">
       <Comment>0:işlem bekliyor,1:plana alındı,2:çözüldü</Comment>
-      <DasType>enum(&apos;2&apos;, &apos;1&apos;, &apos;0&apos;)|0e</DasType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <Position>7</Position>
+      <StoredType>enum(&apos;2&apos;, &apos;1&apos;, &apos;0&apos;)|0e</StoredType>
     </column>
     <column id="562" parent="310" name="tarih">
-      <DasType>datetime|0s</DasType>
       <DefaultExpression>(now())</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
     <index id="563" parent="310" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2260,38 +2260,38 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="565" parent="311" name="id">
       <AutoIncrement>16</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="566" parent="311" name="proje_id">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="567" parent="311" name="tur">
       <Comment>1 degisiklik, 2 hata çözümü, 3 yenilik</Comment>
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="568" parent="311" name="islem">
-      <DasType>varchar(500)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="569" parent="311" name="ekleyen">
-      <DasType>int|0s</DasType>
       <DefaultExpression>(0)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="570" parent="311" name="tarih">
-      <DasType>date|0s</DasType>
       <DefaultExpression>(now())</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <index id="571" parent="311" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2305,35 +2305,35 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="573" parent="312" name="id">
       <AutoIncrement>28</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="574" parent="312" name="proje_id">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="575" parent="312" name="baslik">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="576" parent="312" name="aciklama">
-      <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="577" parent="312" name="sira">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="578" parent="312" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <index id="579" parent="312" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2347,52 +2347,52 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="581" parent="313" name="id">
       <AutoIncrement>4</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="582" parent="313" name="musteri">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="583" parent="313" name="proje_adi">
-      <DasType>varchar(255)|0s</DasType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="584" parent="313" name="sef">
-      <DasType>varchar(255)|0s</DasType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="585" parent="313" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
       <Position>5</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="586" parent="313" name="proje_baslangic_tarihi">
-      <DasType>date|0s</DasType>
       <Position>6</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="587" parent="313" name="tahmini_bitis_tarihi">
-      <DasType>date|0s</DasType>
       <Position>7</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="588" parent="313" name="bitis_tarihi">
-      <DasType>varchar(50)|0s</DasType>
       <Position>8</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="589" parent="313" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>9</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="590" parent="313" name="sifre">
-      <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <index id="591" parent="313" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2406,35 +2406,35 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="593" parent="314" name="id">
       <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="594" parent="314" name="baslik">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="595" parent="314" name="sef">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="596" parent="314" name="icerik">
-      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="597" parent="314" name="ekleyen">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="598" parent="314" name="durum">
-      <DasType>enum(&apos;1&apos;, &apos;0&apos;)|0e</DasType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>enum(&apos;1&apos;, &apos;0&apos;)|0e</StoredType>
     </column>
     <index id="599" parent="314" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2448,23 +2448,23 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="601" parent="315" name="id">
       <AutoIncrement>34</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="602" parent="315" name="adi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="603" parent="315" name="uyari">
-      <DasType>char(50)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="604" parent="315" name="sira">
-      <DasType>int|0s</DasType>
       <Position>4</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <index id="605" parent="315" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2478,39 +2478,39 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="607" parent="316" name="id">
       <AutoIncrement>36</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="608" parent="316" name="cari">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="609" parent="316" name="siparis">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="610" parent="316" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="611" parent="316" name="guncelleyen">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="612" parent="316" name="tarih">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>(now())</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="613" parent="316" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2524,117 +2524,117 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="615" parent="317" name="id">
       <AutoIncrement>16</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="616" parent="317" name="siparis">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="617" parent="317" name="urun">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="618" parent="317" name="urun_adi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="619" parent="317" name="tedarikci">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="620" parent="317" name="cari">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="621" parent="317" name="adet">
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>7</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="622" parent="317" name="notu">
-      <DasType>varchar(500)|0s</DasType>
       <Position>8</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="623" parent="317" name="odeme_periyodu">
       <Comment>t:tek sefer,u:ucretsiz,a:aylık,3a:3aylik,6a:6 aylık,y:yillik</Comment>
-      <DasType>varchar(5)|0s</DasType>
       <Position>9</Position>
+      <StoredType>varchar(5)|0s</StoredType>
     </column>
     <column id="624" parent="317" name="para_birimi">
-      <DasType>varchar(10)|0s</DasType>
       <Position>10</Position>
+      <StoredType>varchar(10)|0s</StoredType>
     </column>
     <column id="625" parent="317" name="gecerli_kur">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>11</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="626" parent="317" name="fiyat_sabitle">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>12</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="627" parent="317" name="birim_fiyat">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>13</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="628" parent="317" name="kdv">
-      <DasType>int|0s</DasType>
       <DefaultExpression>20</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>14</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="629" parent="317" name="kdv_tutari">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>15</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="630" parent="317" name="toplam_fiyat">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>16</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="631" parent="317" name="siparis_tarihi">
-      <DasType>date|0s</DasType>
       <NotNull>1</NotNull>
       <Position>17</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="632" parent="317" name="baslangic_tarihi">
-      <DasType>date|0s</DasType>
       <NotNull>1</NotNull>
       <Position>18</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="633" parent="317" name="bitis_tarihi">
-      <DasType>date|0s</DasType>
       <NotNull>1</NotNull>
       <Position>19</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="634" parent="317" name="islem_gerekiyor">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>20</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="635" parent="317" name="yapilacak_islem">
-      <DasType>varchar(255)|0s</DasType>
       <Position>21</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="636" parent="317" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>22</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <index id="637" parent="317" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2648,81 +2648,81 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="639" parent="318" name="id">
       <AutoIncrement>13</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="640" parent="318" name="belge_no">
-      <DasType>char(50)|0s</DasType>
       <Position>2</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="641" parent="318" name="cari">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="642" parent="318" name="toplam_tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>4</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="643" parent="318" name="kdv_tutari">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>5</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="644" parent="318" name="genel_toplam_tutari">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>6</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="645" parent="318" name="odeme_yontemi">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="646" parent="318" name="odeme_durumu">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="647" parent="318" name="alinan_odeme">
-      <DasType>decimal(15,4 digit)|0s</DasType>
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>9</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
     <column id="648" parent="318" name="olusturan">
-      <DasType>int|0s</DasType>
       <Position>10</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="649" parent="318" name="kayit_sekli">
       <Comment>1:sipariş: 0: teklif</Comment>
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <Position>11</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="650" parent="318" name="fatura">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>12</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="651" parent="318" name="siparis_notu">
-      <DasType>varchar(1000)|0s</DasType>
       <Position>13</Position>
+      <StoredType>varchar(1000)|0s</StoredType>
     </column>
     <column id="652" parent="318" name="durum">
       <Comment>0:pasif,1:aktif</Comment>
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>14</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="653" parent="318" name="tarih">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>15</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="654" parent="318" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2736,25 +2736,25 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="656" parent="319" name="id">
       <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="657" parent="319" name="konu">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="658" parent="319" name="aciklama">
-      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="659" parent="319" name="tarih">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="660" parent="319" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2768,14 +2768,14 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="662" parent="320" name="id">
       <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="663" parent="320" name="sql">
-      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <index id="664" parent="320" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2789,19 +2789,19 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="666" parent="321" name="id">
       <AutoIncrement>9</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="667" parent="321" name="adi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="668" parent="321" name="ek_bilgiler">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <index id="669" parent="321" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2815,24 +2815,24 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="671" parent="322" name="id">
       <AutoIncrement>12</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="672" parent="322" name="adi">
-      <DasType>varchar(200)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(200)|0s</StoredType>
     </column>
     <column id="673" parent="322" name="sira">
-      <DasType>int|0s</DasType>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="674" parent="322" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <index id="675" parent="322" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2846,99 +2846,99 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="677" parent="323" name="id">
       <AutoIncrement>27</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="678" parent="323" name="urun_kodu">
-      <DasType>varchar(50)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="679" parent="323" name="tedarikci">
-      <DasType>int|0s</DasType>
       <DefaultExpression>(0)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="680" parent="323" name="grup">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="681" parent="323" name="adi">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="682" parent="323" name="fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
       <Position>6</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
     </column>
     <column id="683" parent="323" name="aylik_fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
       <Position>7</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
     </column>
     <column id="684" parent="323" name="uc_aylik_fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
       <Position>8</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
     </column>
     <column id="685" parent="323" name="alti_aylik_fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
       <Position>9</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
     </column>
     <column id="686" parent="323" name="yillik_fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
       <Position>10</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
     </column>
     <column id="687" parent="323" name="fiyat_birim">
-      <DasType>varchar(10)|0s</DasType>
       <DefaultExpression>&apos;TL&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>11</Position>
+      <StoredType>varchar(10)|0s</StoredType>
     </column>
     <column id="688" parent="323" name="kdv">
-      <DasType>int|0s</DasType>
       <DefaultExpression>18</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>12</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="689" parent="323" name="aciklama">
-      <DasType>text|0s</DasType>
       <Position>13</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="690" parent="323" name="detay">
-      <DasType>text|0s</DasType>
       <Position>14</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="691" parent="323" name="durum">
-      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>15</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="692" parent="323" name="odeme_turu">
       <Comment>U:ücretsiz, T:Tek seferlik, Y:Yenilenen</Comment>
-      <DasType>char(50)|0s</DasType>
       <DefaultExpression>&apos;T&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>16</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="693" parent="323" name="stoklu_urun">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>17</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="694" parent="323" name="guncel_stok">
-      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>18</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="695" parent="323" name="tarih">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>(now())</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>19</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="696" parent="323" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2952,21 +2952,21 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="698" parent="324" name="id">
       <AutoIncrement>24</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="699" parent="324" name="alan">
-      <DasType>varchar(100)|0s</DasType>
       <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="700" parent="324" name="baslik">
-      <DasType>varchar(100)|0s</DasType>
       <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="701" parent="324" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
       <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <index id="702" parent="324" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -2980,25 +2980,25 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="704" parent="325" name="id">
       <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="705" parent="325" name="personel_id">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="706" parent="325" name="belge_yetki_id">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="707" parent="325" name="verilis_tarihi">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="708" parent="325" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -3012,65 +3012,65 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </key>
     <column id="710" parent="326" name="id">
       <AutoIncrement>59</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="711" parent="326" name="username">
-      <DasType>varchar(50)|0s</DasType>
       <Position>2</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="712" parent="326" name="password">
-      <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="713" parent="326" name="email">
-      <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="714" parent="326" name="isim">
-      <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="715" parent="326" name="resim">
-      <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="716" parent="326" name="telefon">
-      <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="717" parent="326" name="notlar">
-      <DasType>text|0s</DasType>
       <Position>8</Position>
+      <StoredType>text|0s</StoredType>
     </column>
     <column id="718" parent="326" name="unvan">
-      <DasType>varchar(100)|0s</DasType>
       <Position>9</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="719" parent="326" name="ban">
-      <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="720" parent="326" name="aktiflik">
-      <DasType>varchar(255)|0s</DasType>
       <Position>11</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="721" parent="326" name="aktivasyon">
-      <DasType>varchar(255)|0s</DasType>
       <Position>12</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="722" parent="326" name="yetkiler">
-      <DasType>varchar(500)|0s</DasType>
       <Position>13</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
     <column id="723" parent="326" name="panel_rengi">
-      <DasType>char(50)|0s</DasType>
       <Position>14</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
     <column id="724" parent="326" name="ekleme_tarihi">
-      <DasType>timestamp|0s</DasType>
       <Position>15</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
     <index id="725" parent="326" name="PRIMARY">
       <ColNames>id</ColNames>

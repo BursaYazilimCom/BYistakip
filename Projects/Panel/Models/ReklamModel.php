@@ -32,6 +32,7 @@ class InternalReklamModel extends Model
     static function hesapListe(){
         $veri = DB::select(
             'reklam_hesaplari.id as id',
+            'reklam_hesaplari.cari as cari',
             'reklam_hesaplari.ads_id as ads_id',
             'reklam_hesaplari.mail_adresi as mail_adresi',
             'reklam_hesaplari.mail_adresi2 as mail_adresi2',
@@ -48,11 +49,13 @@ class InternalReklamModel extends Model
             'reklam_hesaplari.proxy as proxy',
             'reklam_platformlari.adi as platform_adi',
             'reklam_hesap_durumlari.adi as durum_adi',
-            'reklam_hesap_durumlari.uyari as durum_uyari'
+            'reklam_hesap_durumlari.uyari as durum_uyari',
+            'cari.adi as cariAdi'
 
         )
             ->innerjoin('reklam_platformlari.id','reklam_hesaplari.platform')
             ->innerjoin('reklam_hesap_durumlari.id','reklam_hesaplari.durum')
+            ->innerjoin('cari.id','reklam_hesaplari.cari')
             ->limit(NULL,25)->orderby('reklam_hesaplari.id','DESC')->reklam_hesaplari();
 
         return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
@@ -74,6 +77,7 @@ class InternalReklamModel extends Model
     static function hesapEkle($data){
 
         $ekle = DB::insert('reklam_hesaplari',[
+            'cari'          =>$data['cari'],
             'ads_id'        =>$data['ads_id'],
             'mail_adresi'   =>$data['mail_adresi'],
             'mail_adresi2'  =>$data['mail_adresi2'],
@@ -100,6 +104,7 @@ class InternalReklamModel extends Model
 
         $guncelle = DB::where('id',$data["id"])
                     ->update('reklam_hesaplari',[
+                        'cari'          =>$data['cari'],
                         'ads_id'        =>$data['ads_id'],
                         'mail_adresi'   =>$data['mail_adresi'],
                         'mail_adresi2'  =>$data['mail_adresi2'],

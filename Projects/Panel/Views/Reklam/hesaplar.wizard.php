@@ -40,6 +40,7 @@
                                     <table class="table table-hover  table-bordered">
                                         <thead>
                                         <tr>
+                                            <th>Cari</th>
                                             <th>ID</th>
                                             <th>Mail</th>
                                             <th>Şifre</th>
@@ -55,6 +56,7 @@
                                         <tbody id="addDataTable">
                                         @foreach($liste['liste'] as $u)
                                         <tr class="table-{{$u->durum_uyari}}" id="row-{{$u->id}}">
+                                            <td>{{$u->cariAdi}}</td>
                                             <td>{{$u->ads_id}}</td>
                                             <td>{{$u->mail_adresi}}</td>
                                             <td>{{$u->sifre}}</td>

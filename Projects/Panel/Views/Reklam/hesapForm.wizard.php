@@ -166,6 +166,27 @@
 
 
                                     <div class="col-md-6 col-12">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-form-label" for="platform">Hesap Sahibi</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <select class="select2 form-select" required name="cari" id="cari">
+
+                                                            <option value="0">--Seçiniz--</option>
+                                                            @foreach($cariler as $cari)
+                                                            <option {{$cari->id==$detay->cari?'selected':''}} value="{{$cari->id}}">{{$cari->adi}}</option>
+                                                            @endforeach
+
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
 
                                         <div class="row">
 

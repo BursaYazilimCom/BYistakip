@@ -2,7 +2,7 @@
 
 
 use User,Method,Post,Redirect,Json,URL,Validation,Converter,Security,Upload;
-use InternalReklamModel as ReklamModel,AyarModel,InternalTedarikciModel as TedarikciModel;
+use InternalReklamModel as ReklamModel,AyarModel,InternalTedarikciModel as TedarikciModel,InternalCariModel as CariModel;
 
 class Reklam extends Controller
 {
@@ -37,8 +37,10 @@ class Reklam extends Controller
 
     public function hesapForm($id=""){
 
-        $platformlar = ReklamModel::platformlar();
-        $hesap_durumlari = ReklamModel::hesap_durumlari();
+        $platformlar    = ReklamModel::platformlar();
+        $hesap_durumlari= ReklamModel::hesap_durumlari();
+        $cariler        = CariModel::tumListe();
+
         if($id){
             $data = ReklamModel::hesapDetay($id);
 
@@ -48,6 +50,7 @@ class Reklam extends Controller
         }else{
             $data = (object)[
                 'id'            =>'',
+                'cari'          =>'',
                 'ads_id'        =>'',
                 'mail_adresi'   =>'',
                 'mail_adresi2'  =>'',
@@ -70,6 +73,7 @@ class Reklam extends Controller
 
             View::action("reklam/hesapEkle");
         }
+        View::cariler($cariler);
         View::platformlar($platformlar);
         View::hesap_durumlari($hesap_durumlari);
 
@@ -86,6 +90,7 @@ class Reklam extends Controller
 
             $ekleData = [
                 'ads_id'            =>Post::ads_id(),
+                'cari'              =>Post::cari(),
                 'mail_adresi'       =>Post::mail_adresi(),
                 'mail_adresi2'      =>Post::mail_adresi2(),
                 'sifre'             =>Post::sifre(),
@@ -129,6 +134,7 @@ class Reklam extends Controller
 
             $updateData = [
                 'id'                =>$id,
+                'cari'              =>Post::cari(),
                 'ads_id'            =>Post::ads_id(),
                 'mail_adresi'       =>Post::mail_adresi(),
                 'mail_adresi2'      =>Post::mail_adresi2(),
