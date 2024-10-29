@@ -11,7 +11,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{URL::site()}}">Anasayfa</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">Reklam Hesapları</a>
+                                <li class="breadcrumb-item"><a href="#">Ödeme Araçları</a>
                                 </li>
                             </ol>
                         </div>
@@ -28,10 +28,10 @@
                         <div class="card brdt-warning">
                             <div class="card-header">
                                 <div class="head-label">
-                                    <h4 class="card-title">Reklam Hesapları</h4>
+                                    <h4 class="card-title">Ödeme Araçları</h4>
                                 </div>
                                 <div class="dt-action-buttons text-end">
-                                    <a href="{{URL::site('reklam/hesapForm')}}" class="dt-button create-new btn btn-primary" tabindex="0" ><span><i data-feather="plus"></i>HESAP EKLE</span></a>
+                                    <a href="{{URL::site('reklam/odemeAracForm')}}" class="dt-button create-new btn btn-primary" tabindex="0" ><span><i data-feather="plus"></i>ÖDEME ARACI EKLE</span></a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -40,43 +40,35 @@
                                     <table class="table table-hover  table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>Cari</th>
-                                            <th>ID</th>
-                                            <th>Mail</th>
-                                            <th>Şifre</th>
-                                            <th>Reklam URL</th>
-                                            <th>RVD</th>
-                                            <th>2A Tel</th>
-                                            <th>Ödeme</th>
-                                            <th>Platform</th>
+                                            <th>Tür</th>
+                                            <th>Numara</th>
+                                            <th>Sahibi</th>
                                             <th>Durum</th>
                                             <th></th>
                                         </tr>
                                         </thead>
                                         <tbody id="addDataTable">
                                         @foreach($liste['liste'] as $u)
-                                        <tr class="table-{{$u->durum_uyari}}" id="row-{{$u->id}}">
-                                            <td>{{$u->cariAdi}}</td>
-                                            <td>{{$u->ads_id}}</td>
-                                            <td>{{$u->mail_adresi}}</td>
-                                            <td>{{$u->sifre}}</td>
-                                            <td>{{$u->reklam_url}}</td>
-                                            <td>{{$u->rvd}}</td>
-                                            <td>{{$u->dogrulama_tel}}</td>
-                                            <td>{{$u->odemeAraci}}</td>
-                                            <td>{{$u->platform_adi}}</td>
+                                        <tr class="table-{{$u->durum=='0'?'danger':''}}" id="row-{{$u->id}}">
+                                            <td>{{$u->tur}}</td>
+                                            <td>{{$u->numara}}</td>
+                                            <td>{{$u->sahibi}}</td>
                                             <td>
-                                                <span class="badge bg-{{$u->durum_uyari}}">{{$u->durum_adi}}</span>
+                                                @if($u->durum=="0")
+                                                    <span class="badge bg-danger">Pasif</span>
+                                                @else
+                                                    <span class="badge bg-success">Aktif</span>
+                                                @endif
                                             </td>
 
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
 
-                                                    <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Düzenle" href="{{URL::site('reklam/hesapForm')}}/{{$u->id}}">
+                                                    <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Düzenle" href="{{URL::site('reklam/odemeAracForm')}}/{{$u->id}}">
                                                         <i data-feather="edit-2" class="me-50"></i>
                                                     </a>
 
-                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$u->id}}','{{URL::site('reklam/ajax')}}','hesapSil')"><i data-feather="trash" class="me-50"></i></a>
+                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$u->id}}','{{URL::site('reklam/ajax')}}','odemeAracSil')"><i data-feather="trash" class="me-50"></i></a>
                                                 </div>
 
                                             </td>

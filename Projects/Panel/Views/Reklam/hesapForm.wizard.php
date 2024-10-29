@@ -248,7 +248,15 @@
                                                         <label class="col-form-label" for="odeme_araci">Ödeme Aracı</label>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        @Form::id('odeme_araci')->placeholder('Ödeme Aracı')->text('odeme_araci',$detay->odeme_araci,['class'=>'form-control'])
+                                                        <select class="select2 form-select" required name="odeme_araci" id="odeme_araci">
+
+                                                            <option value="0">--Seçiniz--</option>
+                                                            @foreach($odemeAraclari as $oa)
+                                                            <option {{$oa->id==$detay->odeme_araci?'selected':''}} value="{{$oa->id}}">{{$oa->numara}}</option>
+                                                            @endforeach
+
+                                                        </select>
+
                                                     </div>
                                                 </div>
                                             </div>

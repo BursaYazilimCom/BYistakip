@@ -3,6 +3,30 @@
 class InternalReklamModel extends Model
 {
 
+    static function periyod($id="")
+    {
+        //o:oran, t:tek sefer,u:ucretsiz,g:gunluk,h:haftalik,a:aylık,3a:3aylik,6a:6 aylık,y:yillik
+        $periyodlar = [
+            'O' => 'Oran',
+            'T' => 'Tek Seferlik',
+            'U' => 'Ücretsiz',
+            'G' => 'Günlük',
+            'H' => 'Haftalik',
+            'A' => 'Aylık',
+            '3A' => '3 Aylık',
+            '6A' => '6 Aylık',
+            'Y' => 'Yıllık'
+        ];
+            if ($id==""){
+                $veri = $periyodlar;
+            }else{
+                $veri = $periyodlar[$id];
+            }
+
+        return $veri;
+
+    }
+
     static function platformlar(){
         $veri = DB::orderby('sira','asc')->reklam_platformlari()->result();
 
@@ -50,9 +74,11 @@ class InternalReklamModel extends Model
             'reklam_platformlari.adi as platform_adi',
             'reklam_hesap_durumlari.adi as durum_adi',
             'reklam_hesap_durumlari.uyari as durum_uyari',
+            'reklam_odeme_araclari.numara as odemeAraci',
             'cari.adi as cariAdi'
 
         )
+            ->innerjoin('reklam_odeme_araclari.id','reklam_hesaplari.odeme_araci')
             ->innerjoin('reklam_platformlari.id','reklam_hesaplari.platform')
             ->innerjoin('reklam_hesap_durumlari.id','reklam_hesaplari.durum')
             ->innerjoin('cari.id','reklam_hesaplari.cari')
@@ -61,10 +87,6 @@ class InternalReklamModel extends Model
         return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
 
     }
-
-
-
-
 
     static function hesapTumListe(){
         $veri = DB::orderby('id','DESC')->reklam_hesaplari()->result();
@@ -131,6 +153,155 @@ class InternalReklamModel extends Model
 
         return $sil;
     }
+
+    /******************************/
+
+    static function anlasmaDetay($id)
+    {
+        $veri =  DB::where('reklam_anlasmalari.id',$id)
+            ->reklam_anlasmalari()
+            ->row();
+
+        //DB::stringQuery();
+
+        return $veri;
+
+    }
+
+    static function anlasmaListe(){
+        $veri = DB::select(
+            'reklam_anlasmalari.id as id',
+            'reklam_anlasmalari.cari as cari',
+            'reklam_anlasmalari.periyod as periyod',
+            'reklam_anlasmalari.ucret as ucret',
+            'reklam_anlasmalari.baslangic_tarihi as baslangic_tarihi',
+            'reklam_anlasmalari.bitis_tarihi as bitis_tarihi',
+            'reklam_anlasmalari.detay as detay',
+            'reklam_anlasmalari.durum as durum',
+            'cari.adi as cariAdi'
+
+        )
+            ->innerjoin('cari.id','reklam_anlasmalari.cari')
+            ->limit(NULL,25)->orderby('reklam_anlasmalari.id','DESC')->reklam_anlasmalari();
+
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
+
+    }
+
+    static function anlasmaEkle($data){
+
+        $ekle = DB::insert('reklam_anlasmalari',[
+            'cari'              =>$data['cari'],
+            'periyod'           =>$data['periyod'],
+            'ucret'             =>$data['ucret'],
+            'baslangic_tarihi'  =>$data['baslangic_tarihi'],
+            'bitis_tarihi'      =>$data['bitis_tarihi'],
+            'detay'             =>$data['detay'],
+            'durum'             =>$data['durum']
+        ]);
+
+        //echo DB::stringQuery();
+
+        return DB::insertID();
+    }
+
+    static function anlasmaGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('reklam_anlasmalari',[
+                'cari'              =>$data['cari'],
+                'periyod'           =>$data['periyod'],
+                'ucret'             =>$data['ucret'],
+                'baslangic_tarihi'  =>$data['baslangic_tarihi'],
+                'bitis_tarihi'      =>$data['bitis_tarihi'],
+                'detay'             =>$data['detay'],
+                'durum'             =>$data['durum']
+            ]);
+        // echo DB::stringQuery();
+        return $guncelle;
+    }
+
+    static function anlasmaSil($id){
+
+        $sil        = DB::whereId($id)->delete('reklam_anlasmalari');
+
+        return $sil;
+    }
+
+    /************************************/
+
+    static function odemeAracDetay($id)
+    {
+        $veri =  DB::where('reklam_odeme_araclari.id',$id)
+            ->reklam_odeme_araclari()
+            ->row();
+
+        //DB::stringQuery();
+
+        return $veri;
+
+    }
+
+    static function odemeAracListe(){
+        $veri = DB::limit(NULL,25)->orderby('reklam_odeme_araclari.id','DESC')->reklam_odeme_araclari();
+
+        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
+
+    }
+
+    static function odemeAracTumListe($durum=""){
+
+        if($durum==""){
+            $veri = DB::orderby('reklam_odeme_araclari.id','DESC')->reklam_odeme_araclari()->result();
+        }else{
+            $veri = DB::orderby('reklam_odeme_araclari.id','DESC')->where('durum',$durum)->reklam_odeme_araclari()->result();
+        }
+
+        return $veri;
+
+    }
+
+    static function odemeAracEkle($data){
+
+        $ekle = DB::insert('reklam_odeme_araclari',[
+            'tur'           =>$data['tur'],
+            'numara'        =>$data['numara'],
+            'cvv'           =>$data['cvv'],
+            'son_kullanim'  =>$data['son_kullanim'],
+            'sahibi'        =>$data['sahibi'],
+            'aciklama'        =>$data['aciklama'],
+            'durum'         =>$data['durum']
+        ]);
+
+        //echo DB::stringQuery();
+
+        return DB::insertID();
+    }
+
+    static function odemeAracGuncelle($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('reklam_odeme_araclari',[
+                'tur'           =>$data['tur'],
+                'numara'        =>$data['numara'],
+                'cvv'           =>$data['cvv'],
+                'son_kullanim'  =>$data['son_kullanim'],
+                'sahibi'        =>$data['sahibi'],
+                'aciklama'        =>$data['aciklama'],
+                'durum'         =>$data['durum']
+            ]);
+        // echo DB::stringQuery();
+        return $guncelle;
+    }
+
+    static function odemeAracSil($id){
+
+        $sil        = DB::whereId($id)->delete('reklam_odeme_araclari');
+
+        return $sil;
+    }
+
+    /************************************/
 
     static function ara($key){
 

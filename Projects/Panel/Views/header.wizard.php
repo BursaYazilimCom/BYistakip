@@ -141,6 +141,20 @@
 
                         </ul>
                     </li>
+                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="aperture"></i><span>Reklam</span></a>
+                        <ul class="dropdown-menu" data-bs-popper="none">
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('reklam/hesaplar')}}"><i data-feather="list"></i><span>Reklam Hesapları</span></a>
+                            </li>
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('reklam/anlasmalar')}}"><i data-feather="list"></i><span>Anlaşmalar</span></a>
+                            </li>
+                            <li data-menu="">
+                                <a class="dropdown-item d-flex align-items-center" href="{{URL::site('reklam/odemeAraclari')}}"><i data-feather="credit-card"></i><span>Ödeme Araçları</span></a>
+                            </li>
+
+                        </ul>
+                    </li>
                     <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i data-feather="edit-2"></i><span>Muhasebe</span></a>
                         <ul class="dropdown-menu" data-bs-popper="none">
                             <li data-menu="">

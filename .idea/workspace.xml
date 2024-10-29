@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="Yenileme faturası oluşturma işlemleri yapılıyor">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/Ks.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/anlasmaForm.wizard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/anlasmalar.wizard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/odemeAracForm.wizard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/odemeAraclari.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fd04f14a-41c6-4007-83e7-140706f7bf10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fd04f14a-41c6-4007-83e7-140706f7bf10.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Reklam.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Reklam.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/ReklamModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/ReklamModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/form.wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/grup.wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/grupForm.wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/gruplar.wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesapForm.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesapForm.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesaplar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesaplar.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/header.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/header.wizard.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +128,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "0.6.0",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/wamp/www/organizeTermofom",
+    "last_opened_file_path": "D:/wamp/www/istakip/Projects/Panel/Views/Reklam",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -127,6 +145,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\wamp\www\istakip\Projects\Panel\Views\Reklam" />
       <recent name="D:\wamp\www\istakip\External\Libraries" />
       <recent name="D:\wamp\www\istakip\Projects\Frontend\Views\Proje" />
       <recent name="D:\wamp\www\istakip\Projects\Panel\Views\Projeler" />

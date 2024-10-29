@@ -34,12 +34,12 @@ class Reklam extends Controller
 
     }
 
-
     public function hesapForm($id=""){
 
         $platformlar    = ReklamModel::platformlar();
         $hesap_durumlari= ReklamModel::hesap_durumlari();
         $cariler        = CariModel::tumListe();
+        $odemeAraclari = ReklamModel::odemeAracTumListe(1);
 
         if($id){
             $data = ReklamModel::hesapDetay($id);
@@ -73,6 +73,7 @@ class Reklam extends Controller
 
             View::action("reklam/hesapEkle");
         }
+        View::odemeAraclari($odemeAraclari);
         View::cariler($cariler);
         View::platformlar($platformlar);
         View::hesap_durumlari($hesap_durumlari);
@@ -170,6 +171,226 @@ class Reklam extends Controller
 
     /****************************************/
 
+    public function anlasmalar()
+    {
+        $anlasmalar = ReklamModel::anlasmaListe();
+
+        View::liste($anlasmalar);
+
+
+    }
+
+    public function anlasmaForm($id=""){
+
+        $cariler        = CariModel::tumListe();
+
+        if($id){
+            $data = ReklamModel::anlasmaDetay($id);
+
+            View::detay($data);
+            View::action("reklam/anlasmaGuncelle/".$id);
+
+        }else{
+            $data = (object)[
+                'id'                =>'',
+                'cari'              =>'',
+                'periyod'           =>'',
+                'ucret'             =>'',
+                'baslangic_tarihi'  =>'',
+                'bitis_tarihi'      =>'',
+                'detay'             =>'',
+                'durum'             =>'1'
+
+            ];
+
+            View::detay($data);
+
+            View::action("reklam/anlasmaEkle");
+        }
+        View::cariler($cariler);
+
+    }
+
+    public function anlasmaEkle(){
+
+        if(empty(Post::cari())){
+
+            AyarModel::basarisiz('Başarısız İşlem', 'Ekleme işlemi sırasında hata oluştu ! Lütfen giriş yaptığınız bilgileri kontrol edin.'.str_replace('<br>',EOL,Validation::error('string')), URL::prev());
+
+
+        }else{
+
+            $ekleData = [
+                'cari'              =>Post::cari(),
+                'periyod'           =>Post::periyod(),
+                'ucret'             =>Post::ucret(),
+                'baslangic_tarihi'  =>Post::baslangic_tarihi(),
+                'bitis_tarihi'      =>Post::bitis_tarihi()==""?null:Post::bitis_tarihi(),
+                'detay'             =>Security::htmlEncode(Post::detay()),
+                'durum'             =>Post::durum()
+            ];
+
+            $ekle = ReklamModel::anlasmaEkle($ekleData);
+
+            if($ekle){
+
+                AyarModel::basarili('Başarılı İşlem', 'Anlasma Ekleme İşlemi Yapıldı !', URL::site("reklam/anlasmalar"));
+
+            }else{
+
+                AyarModel::basarisiz('Başarısız İşlem', 'Hesap Ekleme İşlemi Yapılamadı !', URL::prev());
+
+            }
+
+        }
+
+    }
+
+    public function anlasmaGuncelle($id){
+
+        if(empty(Post::cari())){
+
+            AyarModel::basarisiz('Güncelleme İşlemi','Güncelleme işlemi sırasında hata oluştu<br>'.str_replace('<br>',EOL,Validation::error('string')),URL::prev());
+
+
+        }else{
+
+            $updateData = [
+                'id'                =>$id,
+                'cari'              =>Post::cari(),
+                'periyod'           =>Post::periyod(),
+                'ucret'             =>Post::ucret(),
+                'baslangic_tarihi'  =>Post::baslangic_tarihi(),
+                'bitis_tarihi'      =>Post::bitis_tarihi(),
+                'detay'             =>Security::htmlEncode(Post::detay()),
+                'durum'             =>Post::durum()
+            ];
+
+            $update = ReklamModel::anlasmaGuncelle($updateData);
+
+            if($update){
+
+                AyarModel::basarili('Güncelleme İşlemi','Güncelleme İşlemi Yapıldı !', URL::site('reklam/anlasmaForm/'.$id));
+
+            }else{
+
+                AyarModel::basarisiz('Güncelleme İşlemi','Güncelleme İşlemi Yapılamadı !', URL::prev());
+
+            }
+
+        }
+
+    }
+
+    /****************************************/
+
+    public function odemeAraclari()
+    {
+        $liste = ReklamModel::odemeAracListe();
+
+        View::liste($liste);
+
+    }
+
+    public function odemeAracForm($id=""){
+
+        if($id){
+            $data = ReklamModel::odemeAracDetay($id);
+
+            View::detay($data);
+            View::action("reklam/odemeAracGuncelle/".$id);
+
+        }else{
+            $data = (object)[
+                'id'                =>'',
+                'tur'               =>'',
+                'numara'            =>'',
+                'cvv'               =>'',
+                'son_kullanim'      =>'',
+                'sahibi'            =>'',
+                'aciklama'          =>'',
+                'durum'             =>'1'
+
+            ];
+
+            View::detay($data);
+
+            View::action("reklam/odemeAracEkle");
+        }
+
+    }
+
+    public function odemeAracEkle(){
+
+        if(empty(Post::numara()) or empty(Post::cvv()) or empty(Post::son_kullanim()) or empty(Post::sahibi())){
+
+            AyarModel::basarisiz('Başarısız İşlem', 'Ekleme işlemi sırasında hata oluştu ! Lütfen giriş yaptığınız bilgileri kontrol edin.'.str_replace('<br>',EOL,Validation::error('string')), URL::prev());
+
+
+        }else{
+
+            $ekleData = [
+                'tur'           =>Post::tur(),
+                'numara'        =>Post::numara(),
+                'cvv'           =>Post::cvv(),
+                'son_kullanim'  =>Post::son_kullanim(),
+                'sahibi'        =>Post::sahibi(),
+                'aciklama'      =>Security::htmlEncode(Post::aciklama()),
+                'durum'         =>Post::durum()
+            ];
+
+            $ekle = ReklamModel::odemeAracEkle($ekleData);
+
+            if($ekle){
+
+                AyarModel::basarili('Başarılı İşlem', 'Ödeme Aracı Ekleme İşlemi Yapıldı !', URL::site("reklam/odemeAraclari"));
+
+            }else{
+
+                AyarModel::basarisiz('Başarısız İşlem', 'Ödeme Aracı İşlemi Yapılamadı !', URL::prev());
+
+            }
+
+        }
+
+    }
+
+    public function odemeAracGuncelle($id){
+
+        if(empty(Post::numara()) or empty(Post::cvv()) or empty(Post::son_kullanim()) or empty(Post::sahibi()) ){
+
+            AyarModel::basarisiz('Güncelleme İşlemi','Güncelleme işlemi sırasında hata oluştu<br>'.str_replace('<br>',EOL,Validation::error('string')),URL::prev());
+
+
+        }else{
+
+            $updateData = [
+                'id'            =>$id,
+                'tur'           =>Post::tur(),
+                'numara'        =>Post::numara(),
+                'cvv'           =>Post::cvv(),
+                'son_kullanim'  =>Post::son_kullanim(),
+                'sahibi'        =>Post::sahibi(),
+                'aciklama'      =>Security::htmlEncode(Post::aciklama()),
+                'durum'         =>Post::durum()
+            ];
+
+            $update = ReklamModel::odemeAracGuncelle($updateData);
+
+            if($update){
+
+                AyarModel::basarili('Güncelleme İşlemi','Güncelleme İşlemi Yapıldı !', URL::site('reklam/odemeAracForm/'.$id));
+
+            }else{
+
+                AyarModel::basarisiz('Güncelleme İşlemi','Güncelleme İşlemi Yapılamadı !', URL::prev());
+
+            }
+
+        }
+
+    }
+
     public function ajax():void
     {
         $user       = User::data();
@@ -188,12 +409,12 @@ class Reklam extends Controller
 
                 if($sil){
 
-                    $data['success'] = 'Ürün silme işlemi başarı ile yapıldı!';
+                    $data['success'] = 'Hesap silme işlemi başarı ile yapıldı!';
                     $data['redirect'] = '';
 
                 }else{
 
-                    $data['error'] = "Ürün silme işlemi yapılamadı!";
+                    $data['error'] = "Hesap silme işlemi yapılamadı!";
 
                 }
 
@@ -201,6 +422,47 @@ class Reklam extends Controller
 
                 break;
 
+            case "anlasmaSil":
+
+                $sil = ReklamModel::anlasmaSil($dataId);
+
+                $data['title'] = "Anlasma Silme İşlemi";
+
+                if($sil){
+
+                    $data['success'] = 'Anlasma silme işlemi başarı ile yapıldı!';
+                    $data['redirect'] = '';
+
+                }else{
+
+                    $data['error'] = "Anlasma silme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
+
+            case "odemeAracSil":
+
+                $sil = ReklamModel::odemeAracSil($dataId);
+
+                $data['title'] = "Ödeme Aracı Silme İşlemi";
+
+                if($sil){
+
+                    $data['success'] = 'Ödeme Aracı silme işlemi başarı ile yapıldı!';
+                    $data['redirect'] = '';
+
+                }else{
+
+                    $data['error'] = "Ödeme Aracı silme işlemi yapılamadı!";
+
+                }
+
+                echo Json::encode($data);
+
+                break;
             /*********************************************************/
 
 
