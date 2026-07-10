@@ -11404,6 +11404,7 @@ textarea.form-control-lg {
   letter-spacing: 0.5rem !important;
 }
 
+
 @media (min-width: 576px) {
   .float-sm-start {
     float: left !important;
@@ -47353,4 +47354,28 @@ body.page-bg-image-lg {
 }
 .docs-aside-menu .menu-item .menu-icon {
   justify-content: flex-start;
+}
+
+
+
+
+.efect-text {
+    font-size: 13px;
+    font-weight: bold;
+    color: #3498db;
+    text-align: center;
+    animation: blink 2s infinite; /* Animasyonu ekliyoruz */
+}
+
+/* Yanıp sönme animasyonu */
+@keyframes blink {
+    0% {
+        opacity: 1; /* Başlangıçta tam görünüyor */
+    }
+    50% {
+        opacity: 0; /* Ortada tamamen görünmez */
+    }
+    100% {
+        opacity: 1; /* Tekrar tam görünüyor */
+    }
 }

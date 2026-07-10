@@ -165,6 +165,7 @@ class InternalProjeModel extends Model
             'proje_id'  =>$data['proje_id'],
             'tur'       =>$data['tur'],
             'islem'     =>$data['islem'],
+            'link'     =>$data['link'],
             'ekleyen'     =>$data['ekleyen']
         ]);
 

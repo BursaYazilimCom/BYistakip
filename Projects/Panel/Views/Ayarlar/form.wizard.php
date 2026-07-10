@@ -47,7 +47,7 @@
                             </li>
 
                         </ul>
-                        <div class="card">
+                        <div class="card brdt-navy">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="card-header">
                                 <h4 class="card-title">Kullanıcı Bilgileri</h4>

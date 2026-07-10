@@ -31,7 +31,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-lg-2 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-pink">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Detayları</h4>
                                     </div>
@@ -130,7 +130,7 @@
 
                                                         <option value="">--Seçiniz--</option>
                                                         <option  value="0" selected>Yapılmadı</option>
-                                                        <option  value="0">Yapıldı</option>
+                                                        <option  value="1">Yapıldı</option>
 
                                                     </select>
                                                 </div>
@@ -167,7 +167,7 @@
                             </div>
 
                             <div class="col-lg-10 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-pink">
                                     <div class="card-header">
                                         <h4 class="card-title">Fatura Detayları</h4>
                                     </div>

@@ -2,9 +2,9 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-    <footer class="footer footer-light">
+    <!--<footer class="footer footer-light">
         <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; {{date('Y')}}<a class="ms-25" href="https://www.bursayazilim.com" target="_blank">Bursa Yazılım</a><span class="d-none d-sm-inline-block">, Tüm Hakları Saklıdır</span></span><span class="float-md-end d-none d-md-block">Yazılım Gücü<i data-feather="heart" data-toogle="tooltip" title="Yürekten geliyor"></i></span></p>
-    </footer>
+    </footer>-->
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
 
@@ -12,36 +12,116 @@
     <!-- BEGIN: Vendor JS-->
     <script src="vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-<script src="vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="vendors/js/forms/select/select2.full.min.js"></script>
 
     <!-- BEGIN: Page Vendor JS-->
     <script src="vendors/js/ui/jquery.sticky.js"></script>
-<!-- <script src="vendors/js/charts/apexcharts.min.js"></script> -->
-<script src="vendors/js/extensions/toastr.min.js"></script>
-<script src="vendors/js/forms/repeater/jquery.repeater.min.js"></script>
-<!-- END: Page Vendor JS-->
+    <script src="vendors/js/calendar/fullcalendar.min.js"></script>
+    <!-- <script src="vendors/js/charts/apexcharts.min.js"></script> -->
+    <script src="vendors/js/extensions/toastr.min.js"></script>
+    <script src="vendors/js/forms/repeater/jquery.repeater.min.js"></script>
+    <!-- END: Page Vendor JS-->
 
-<script src="js/scripts/jquery-ui.min.js"></script> <!-- jquery kütüphanelerimizi ekliyoruz -->
-<script src="js/scripts/jquery.ui.touch-punch.min.js"></script> 
-<!-- Bu JS dosyası ile Mobil cihazlar ve tabletlerde sürükle bıark özelliğini aktif ediyoruz-->
+    <script src="js/scripts/jquery-ui.min.js"></script> <!-- jquery kütüphanelerimizi ekliyoruz -->
+    <script src="js/scripts/jquery.ui.touch-punch.min.js"></script> 
+    <!-- Bu JS dosyası ile Mobil cihazlar ve tabletlerde sürükle bıark özelliğini aktif ediyoruz-->
 
     <!-- BEGIN: Theme JS-->
     <script src="js/core/app-menu.js"></script>
     <script src="js/core/app.js"></script>
     <script src="js/scripts/forms/form-repeater.js"></script>
-    <!-- END: Theme JS-->
-    <!-- BEGIN: Page JS-->
 
-<script src="js/scripts/pages/auth-login.js"></script>
-<script src="js/scripts/forms/form-select2.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDizM76Gj0ty8oFWl96MWJ_5y4b9FLvWyw&libraries=places"></script>
-<script type='text/javascript' src='js/scripts/gmap.js'></script>
-<script type='text/javascript' src='vendors/js/pickers/flatpickr/flatpickr.min.js'></script>
-<script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
+    <script src="js/scripts/pages/auth-login.js"></script>
+    <script src="js/scripts/forms/form-select2.js"></script>
+   <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDizM76Gj0ty8oFWl96MWJ_5y4b9FLvWyw&libraries=places"></script>
+    <script type='text/javascript' src='js/scripts/gmap.js'></script>-->
+    <script type='text/javascript' src='vendors/js/pickers/flatpickr/flatpickr.min.js'></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
 
 
+
+
+@if(CURRENT_CONTROLLER=='Planlama')
+
+    <script type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        dayMaxEventRows: 3,
+        height: 750,
+        selectable: true,
+        events: '{{URL::site("ajax/etkinlikListe")}}',
+        select: function (start, end, allDay) {
+            $("#add-new-sidebar").modal("show");
+            $("#startDate").val(start.startStr+" 09:00");
+            $("#endDate").val(start.startStr+" 19:00");
+        },
+        eventClick: function(info) {
+            //alert('Event: ' + info.event.extendedProps.tur);
+            //alert('id: ' + info.event.end);
+
+            
+            $("#eventTitle").html(info.event.title);
+
+            var startDateObj = new Date(info.event.start);
+
+            var formattedStartDate = ('0' + startDateObj.getDate()).slice(-2) + '.' + ('0' + (startDateObj.getMonth() + 1)).slice(-2) + '.' + startDateObj.getFullYear();
+
+
+            $("#start").html(formattedStartDate+" - "+info.event.extendedProps.sTime);
+
+            var start = info.event.start;
+            var end = info.event.end || start;
+
+            var endDateObj = new Date(end);
+
+            var formattedendDate = ('0' + endDateObj.getDate()).slice(-2) + '.' + ('0' + (endDateObj.getMonth() + 1)).slice(-2) + '.' + endDateObj.getFullYear();
+
+            $("#end").html(formattedendDate+" - "+info.event.extendedProps.eTime);
+
+            $("#eventTur").html(info.event.extendedProps.tur);
+            $("#location").html(info.event.extendedProps.lctn);
+            $("#description").html(info.event.extendedProps.description);
+            $("#users").html(info.event.extendedProps.allUsers);
+
+            if (info.event.extendedProps.sUrl!="") {
+                $("#url").attr('href',info.event.extendedProps.sUrl);
+            }
+
+            $("#eventDelete").attr('href','{{URL::site("planlama/etkinlikSil")}}/'+info.event.id);
+            $("#eventEdit").attr('data-id',info.event.id);
+
+            if (info.event.extendedProps.mailInfo=="1") {
+                $("#mailInfo").html('Gönderildi');
+            }else{
+                $("#mailInfo").html('Gönderilmedi');
+            }
+
+
+            if (info.event.extendedProps.smsInfo=="1") {
+                $("#smsInfo").html('Gönderildi');
+            }else{
+                $("#smsInfo").html('Gönderilmedi');
+            }
+            
+
+            $("#eventModal").modal("show");
+
+
+        }
+    });
+
+    calendar.render();
+    });
+    </script>
+
+@endif
 @if(CURRENT_CONTROLLER=='Rapor')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
@@ -138,8 +218,34 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+        $(document).ready(function(){
+            // Ödeme seçimi her değiştiğinde tetiklenecek olan event listener'ı ekle
+            $("#odeme").change(function(){
+                // Seçili ödeme durumunu al
+                var odemeDurumu = $(this).val();
+                // MasrafGirisi div elementini seç
+                var masrafGirisiDiv = $("#masrafGirisi");
+
+                // Eğer ödeme yapıldı ise masrafGirisi div'ini görünür yap, yapılmadı ise gizle
+                if (odemeDurumu === "1") {
+                    masrafGirisiDiv.slideDown();
+                } else {
+                    masrafGirisiDiv.slideUp();
+                }
+            });
+
+            // Sayfa yüklendiğinde önceki seçimin durumunu kontrol et
+            $("#odeme").trigger("change");
+        });
+
         $('#summernote').summernote({
             placeholder: 'Müşterilerinize Göstereceğiniz Detayları Girin',
+            tabsize: 2,
+            height: 100
+        });
+        $('#summernote2').summernote({
+            placeholder: 'Müşterilerinize Göstereceğiniz Cevabı Girin',
             tabsize: 2,
             height: 200
         });
@@ -250,7 +356,7 @@
                 return $(this).text();
             })
 
-            console.log(data);
+            //console.log(data);
 
             if(action=="sektorDuzenle")    {
 
@@ -303,6 +409,46 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function(){
+        var g=1;
+        $('#addRowOptionProduct').click(function(){
+
+            formHtml1 = '<tr id="row'+g+'">';
+            formHtml1 += '<input type="hidden" name="oid[]" id="oid" value="0" class="form-control">';
+            formHtml1 += '<td style="max-width: 100px"><input type="text" value="'+g+'"  name="sira[]" id="sira" class="form-control"></td>';
+            formHtml1 += '<td><select class="form-select" name="tur[]" id="tur">';
+            formHtml1 += '<option value="">--Seçiniz--</option>';
+            formHtml1 += '<option value="text">Metin</option>';
+            formHtml1 += '<option value="file">Dosya</option>';
+            formHtml1 += '<option value="image">Resim</option>';
+            formHtml1 += '<option value="link">URL</option>';
+            formHtml1 += '<option value="icon">İcon</option>';
+            formHtml1 += '<option value="code">Kod</option>';
+            formHtml1 += '</select></td>';
+            formHtml1 += '<td><input type="text" name="baslik[]" id="baslik" class="form-control"></td>';
+            formHtml1 += '<td><select name="durum[]" id="durum" class="form-select"><option value="0">Her Zaman</option><option value="1">Sipariş Onay Sonrası</option></select></td>';
+            formHtml1 += '<td><select name="yer[]" id="yer" class="form-select"><option value="0">Listeleme</option><option value="1">Ürün Detay</option><option value="2">İkiside</option></select></td>';
+            formHtml1 += '<td><select name="gereklilik[]" id="gereklilik" class="form-select"><option value="1">Zorunlu</option><option value="0">Değil</option></select></td>';
+            formHtml1 += '<td><a name="remove" id="'+g+'" class="text-danger btn_remove"><i data-feather="trash" class="me-50"></i></a></td>';
+            formHtml1 += '</tr>';
+
+            g++;
+            $('#addDataTableOptionProduct').append(formHtml1);
+            feather.replace();
+
+        });
+
+        $(document).on('click', '.btn_remove', function(){
+            var button_id = $(this).attr("id");
+            $('#row'+button_id+'').remove();
+        });
+        $(document).on('click', '.btn_addText', function(){
+            var button_id = $(this).attr("id");
+            $('#uyariText'+button_id+'').html('<input type="text" name="uyari[]" class="form-control">');
+        });
+
+    });
+
     $(document).ready(function (){
 
         $('.editButon').on('click',function () {
@@ -316,25 +462,6 @@
             var data = $tr.children('td').map(function () {
                 return $(this).text();
             })
-
-            console.log(data);
-
-            if(action=="grupDuzenle")    {
-
-                $('#dataAction').val('grupGuncelle');
-                $('#update_id').val(data[0]);
-                $('#sira').val(data[1]);
-                $('#adi').val(data[2]);
-
-                if (data[3]=="Aktif"){
-                    var durum = "1";
-                }else {
-                    var durum = "0";
-                }
-                $('#durum').val(durum);
-
-
-            }else{}
 
         })
 
@@ -476,6 +603,77 @@ $('#widget').draggable();
                 });
                 
             });
+
+
+                $(document).ready(function(){
+                    var i=1;
+                    $('#addRowSupplierProduct').click(function(){
+
+                        formHtml = '<tr id="row'+i+'">';
+                        formHtml += '<td><input style="min-width: 200px" type="text" required  name="urun[]" id="urun" class="form-control"></td>';
+                        formHtml += '<td><select style="min-width: 200px" class="select2 form-select" name="ilgili_urun[]" id="ilgili_urun">';
+                        formHtml += '<option value="">--Seçiniz--</option>';
+                        @foreach($tumUrunler as $furun)
+                            formHtml += '<option value="{{ $furun->id }}">{{ $furun->adi }}</option>';
+                        @endforeach
+                        formHtml += '</select></td>';
+
+                        formHtml += '<td><input type="text" name="aciklama[]" id="aciklama" class="form-control"></td>';
+
+                        formHtml += '<td><input type="number" name="miktar[]" id="miktar_'+i+'" value="1" class="miktar form-control"></td>';
+
+                        formHtml += '<td><div class="input-group"><input type="text" name="fiyat[]" id="fiyat_'+i+'" value="0" class="fiyat form-control"><span class="input-group-text">₺</span></div></td>';
+                        formHtml += '<td><select name="kdv[]" id="kdv_'+i+'" class="kdv form-control"><option value="">--Seçiniz--</option><option value="0">%0</option><option value="10">%10</option><option value="20" selected>%20</option></select></td>';
+                        formHtml += '<td><div class="input-group"><input type="text" name="tutar[]" value="0" readonly id="tutar_'+i+'" class="tutar form-control"><span class="input-group-text">₺</span></div></td>';
+                        formHtml += '<td><a name="remove" id="'+i+'" class="text-danger btn_remove"><i data-feather="trash" class="me-50"></i></a></td>';
+
+                        formHtml += '</tr>';
+
+                        i++;
+                        $('#addDataTableSupplierProduct').append(formHtml);
+                        feather.replace();
+
+                        // Tüm tr satırlarını seç
+                        var satirlar = document.querySelectorAll("#addDataTableSupplierProduct tr");
+
+                        // Her satırdaki input alanlarını bul
+                        satirlar.forEach(function(satir, index) {
+                            var miktarInput = satir.querySelector(".miktar");
+                            var fiyatInput = satir.querySelector(".fiyat");
+                            var tutarInput = satir.querySelector(".tutar");
+
+                            // Her miktar veya fiyat değiştiğinde hesaplama yap
+                            miktarInput.addEventListener("input", hesaplaTutar);
+                            fiyatInput.addEventListener("input", hesaplaTutar);
+
+                            function hesaplaTutar() {
+                                var miktar = miktarInput.value;
+                                var fiyat = fiyatInput.value;
+                                var kdv = satir.querySelector(".kdv").value;
+
+                                // Hesaplama yap
+                                var tutar = (miktar * fiyat) * (1 + kdv / 100);
+
+                                // Tutar alanını güncelle
+                                tutarInput.value = tutar.toFixed(2);
+
+                                // Genel toplamı hesapla
+                                genelToplamHesapla();
+                            }
+                        });
+
+                    });
+
+                    $(document).on('click', '.btn_remove', function(){
+                        var button_id = $(this).attr("id");
+                        $('#row'+button_id+'').remove();
+                    });
+                    $(document).on('click', '.btn_addText', function(){
+                        var button_id = $(this).attr("id");
+                        $('#uyariText'+button_id+'').html('<input type="text" name="uyari[]" class="form-control">');
+                    });
+
+                });
 
 
             

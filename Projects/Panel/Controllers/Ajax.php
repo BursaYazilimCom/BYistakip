@@ -1,21 +1,75 @@
 <?php namespace Project\Controllers;
 
-Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
+Use Http,Post,Get,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
 Use AjaxModel,KasaModel,AyarModel, InternalFaturaModel as FaturaModel,InternalPlanlamaModel as PlanlamaModel;
 Use PersonelModel,InternalProjeModel as ProjeModel, InternalUrunModel as UrunModel,InternalCariModel as CariModel,SiparisModel;
-use MasrafModel;
+use MasrafModel,InternalDestekModel as DestekModel;
 
 
 
 
 class Ajax extends Controller
 {
-
-    public function main(){
-
+    public  function __construct()
+    {
         if(!Http::isajax()){
             redirect("Login");
             exit;
+        }
+    }
+
+    public function main(){
+
+        $id = Post::dataId();
+
+        if(Post::dataAction()=="faturaDetay"){
+
+
+            $faturaDetay = FaturaModel::detay($id);
+
+            $faturaUrunleri = FaturaModel::faturaUrunleri($id);
+
+            ?>
+
+            <table class="table table-hover table-rounded table-striped border gy-3 gs-3">
+                <thead>
+                    <tr>
+                        <th> <strong>Ürün</strong> </th>
+                        <th class="text-end"><strong>Fiyat</strong></th>
+                        <th class="text-end"><strong>Adet</strong></th>
+                        <th class="text-end"><strong>Kdv</strong></th>
+                        <th class="text-end"><strong>Toplam</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                <?php foreach($faturaUrunleri as $furun){ ?>
+                    <tr>
+                        <td>
+                            <?=$furun->aciklama?> |
+                            <small><strong>Ürün:</strong> <?=$furun->urun_adi?></small> |
+                            <?php
+                            if($faturaDetay->tur=="2"){
+                                if($faturaDetay->satis_turu=="1"){?>
+                                    <small>İlk Sipariş</small>
+                                <?php }else{ ?>
+                                    <small><strong>Yenilenme Dönemi:</strong> <?=Date::convert($furun->donem_baslangic_tarihi,'d.m.Y')?> <?=Date::convert($furun->donem_bitis_tarihi,'d.m.Y')?></small>
+                                <?php } ?>
+
+                            <?php } ?>
+                        </td>
+                        <td class="text-end"><?=number_format((float)$furun->fiyat,2)?></td>
+                        <td class="text-end"><?=$furun->miktar?></td>
+                        <td class="text-end">
+                            <small>%<?=$furun->kdv?></small> <?=$kdv = number_format((float)(($furun->fiyat*$furun->miktar)/100)*$furun->kdv,2)?>
+                        </td>
+                        <td class="text-end text-dark fw-boldest"><?=number_format((float)($furun->fiyat*$furun->miktar)+$kdv,2)?> ₺</td>
+                    </tr>
+                <?php } ?>
+
+                </tbody>
+            </table>
+            <?php
         }
 
     }
@@ -77,8 +131,124 @@ class Ajax extends Controller
 
     }
 
+    public function etkinlikListe(){
+        if(!Http::isajax()){
+            redirect("Login");
+            exit;
+        }
 
-    public function modal(){
+        $start = Date::convert(Get::start(),"Y-m-d H:i:s");
+        $end = Date::convert(Get::end(),"Y-m-d H:i:s");
+
+        //echo $start." - ".$end;
+
+        /*if(!Http::isajax()){
+            redirect("Login");
+            exit;
+        }*/
+
+        if($start=="" && $end==""){
+            $buAy = date("m");
+            $ayKacCekiyor = cal_days_in_month(CAL_GREGORIAN, 1, date("Y"));
+            $start = date("Y-".$buAy."-01 H:i:s");
+            $end = date("Y-".$buAy."-".$ayKacCekiyor." H:i:s");
+        }
+
+        $etkinlikListe = PlanlamaModel::etkinlikListe($start,$end);
+        
+
+
+        $etkinlikler = [];
+        foreach ($etkinlikListe['liste'] as $etkinlik) {
+            $turDetay = PlanlamaModel::etkinlikTurDetay($etkinlik->tur);
+            $katilimcilar = json_decode($etkinlik->katilimcilar);
+            $users ="";
+            if(count($katilimcilar)>0){
+                for($k=0;$k<count($katilimcilar);$k++){
+                    $users = $users."<br>".$katilimcilar[$k];
+                }
+            }else{
+                $users ="Katılımcı Kaydı Yapılmadı";
+            }
+            
+
+            $etkinlikDetay = [
+                'id'            => $etkinlik->id,
+                'title'         => $etkinlik->baslik,//
+                
+                'start'         => $etkinlik->baslangic_tarihi,//
+                'end'           => $etkinlik->bitis_tarihi,//
+                'color'         => $turDetay->renk,
+                'extendedProps' => [
+                    'description'   => $etkinlik->aciklama,//
+                    'tur'           => $turDetay->tur,//
+                    'sTime'         => $etkinlik->baslangic_saati,//
+                    'eTime'         => $etkinlik->bitis_saat,//
+                    'sUrl'          => $etkinlik->url,//
+                    'allUsers'      => $users,//
+                    'lctn'          => $etkinlik->konum,//
+                    'mailInfo'      => $etkinlik->mail_bilgilendirme,
+                    'smsInfo'       => $etkinlik->sms_bilgilendirme
+                ]
+                
+            ];
+
+            array_push($etkinlikler, $etkinlikDetay);
+            $etkinlikDetay = "";
+
+        }
+
+        echo json_encode($etkinlikler);
+
+        exit(); 
+
+        
+
+    }
+
+    public function urunGrupOzellikGetir($grup,$urun="")
+    {
+        if($urun=="0") {
+            $urunOzellikleri = UrunModel::urunGrupOzellikleri($grup);
+            $detay = (object) [];
+
+        }else{
+            $detay = UrunModel::detay($urun);
+            $urunOzellikleri = UrunModel::urunGrupOzellikleri($grup);
+        }
+
+        foreach($urunOzellikleri as $ozellik){ ?>
+            <div class="col-sm-3">
+                <label class="col-form-label" for="detay"><?=$ozellik->gereklilik=="1"?"<strong class='text-danger'>*</strong>":""?> <?=$ozellik->baslik?> (<?=$ozellik->tur?>)
+                    <?php if(($ozellik->tur=="image" or $ozellik->tur=="file") and UrunModel::urunOzellikDeger($detay->id,$ozellik->id)!="") { ?>
+                    <a href="<?=URL::site()?>..//Uploads/urun-dosyalari/<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>" target="_blank"><strong class="text-success">Yüklenmiş Dosyayı Görüntüle</strong></a>
+                  <?php } ?>
+                </label>
+                <input type="hidden" name="ozellik_id[]" value="<?=$ozellik->id?>">
+                <?php if($ozellik->tur=="text"){ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Gireceğiniz Değer Yazı Olmalıdır" class="form-control" type="text" value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } elseif($ozellik->tur=="file"){ ?>
+                    <input name="file_<?=$ozellik->id?>" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Yükleyeceğiniz Dosya zip,rar,pdf,doc,docx gibi uzantılı dosya olmalıdır" class="form-control" type="file" accept=".zip,.rar,.pdf,.doc,.docx">
+                <?php } elseif($ozellik->tur=="image"){ ?>
+                    <input name="image_<?=$ozellik->id?>" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Yükleyeceğiniz Resim jpg,jpeg,png,webp uzantılı dosya olmalıdır" class="form-control" type="file" accept=".gif,.jpg,.jpeg,.png">
+                <?php } elseif($ozellik->tur=="link"){ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Bağlantı Tam adres olmalıdır" class="form-control" type="text" value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } elseif($ozellik->tur=="icon"){ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="iconlar font-awesome 5.x  desteklemektedir. Örn: fa fa-user olarak girmelisiniz" class="form-control" type="text" value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } elseif($ozellik->tur=="code"){ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Gireceğiniz kodlar HTML kodları olmalıdır. Harici kodlar çalışmayacaktır." class="form-control" type="text"  value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } else{ ?>
+                    <input name="deger[<?=$ozellik->id?>]" <?=$ozellik->gereklilik=='1'?'required':''?> id="deger" data-bs-toggle="tooltip" title="Gireceğiniz Değer Yazı Olmalıdır" class="form-control" type="text"  value="<?=UrunModel::urunOzellikDeger($detay->id,$ozellik->id)?>">
+                <?php } ?>
+            </div>
+
+    <?php
+        }
+
+    }
+
+    public function modal()
+    {
 
         if(!Http::isajax()){
             redirect("Login");
@@ -977,12 +1147,27 @@ class Ajax extends Controller
                     <div class="row">
 
                         <div class="col-12">
-                            <div class="col-12">
-                                <label class="form-label" for="modalAddCardNumber">Ödenmesi Gereken Tutar:</label>
-                                <div class="input-group input-group-merge">
-                                    <?=$faturaDetay->genel_toplam?> ₺
+                            <div class="row">
+                                <div class="col-4">
+                                    <label class="form-label" for="modalAddCardNumber">Fatura Tutarı:</label>
+                                    <div class="input-group input-group-merge">
+                                        <?=number_format((float)$faturaDetay->genel_toplam,2)?> ₺
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label" for="modalAddCardNumber">Daha Önce Alınan Ödeme:</label>
+                                    <div class="input-group input-group-merge">
+                                        <?=number_format((float)$faturaDetay->alinan_odeme,2)?> ₺
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label" for="modalAddCardNumber">Kalan Ödeme:</label>
+                                    <div class="input-group input-group-merge">
+                                        <?=number_format((float)$faturaDetay->genel_toplam-(float)$faturaDetay->alinan_odeme,2)?> ₺
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <label class="form-label" for="modalAddCardNumber">Ödeme Hesabı:</label>
                                 <div class="input-group input-group-merge">
@@ -1047,14 +1232,16 @@ class Ajax extends Controller
                                         <label class="col-form-label" for="odendi">Ödendi Yap</label>
                                     </div>
                                     <div class="col-sm-12">
+
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="odendi" id="odendi" value="1" />
-                                            <label class="form-check-label" for="odendi">Faturayı <strong>Ödendi</strong> olarak işaretle !</label>
+                                            <label class="form-check-label" for="odendi">Faturayı <strong>Ödendi</strong> olarak işaretle ! <br><small>(Fatura tam oalrak ödenmese bile faturayı ödendi yapmak istemeniz durumunda kullanabilirsiniz)</small></label>
                                         </div>
-                                        <div class="form-check form-check-inline">
+
+                                        <!--<div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="siparisOdendi" id="siparisOdendi" value="1" />
                                             <label class="form-check-label" for="siparisOdendi">İlgili Siparişi <strong>Ödendi</strong> olarak işaretle !</label>
-                                        </div>
+                                        </div>-->
 
                                     </div>
                                 </div>
@@ -1069,6 +1256,11 @@ class Ajax extends Controller
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="bildirim" id="bildirim" value="1" />
                                             <label class="form-check-label" for="bildirim">Müşteriye E-Posta ile bildir</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="uzat" id="uzat" value="1" />
+                                            <label class="form-check-label" for="uzat">Fatura Ürününün Süresini Uzat</label>
                                         </div>
 
                                     </div>
@@ -1110,7 +1302,7 @@ class Ajax extends Controller
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 text-danger">
-                            DİKKAT: Bu işlem sadece fatura ve siparişin durumunu değiştirir. Kasa defterine herhangi bir veri işlemez, Eğer bu fatura ile iglili gelir gider kaydı daha önceden yapmadıysanız hesaplarda hata oluşabilir.<br> Eğer kasa defterine işlensin istiyorsanız "ÖDEME EKLE" seçeneğini kullanın
+                            DİKKAT: <strong>Bu işlem sadece fatura ve siparişin durumunu değiştirir, Kasa defterine herhangi bir veri işlemez.</strong>  <br>Eğer bu fatura ile iglili gelir gider kaydı daha önceden yapmadıysanız bu fatura ile ilgili tahsilatı daha sonra manuel eklemeniz gerekir.<br> Eğer kasa defterine işlensin istiyorsanız "ÖDEME EKLE" seçeneğini kullanın
                         </div>
 
                         <div class="col-12">
@@ -1324,6 +1516,55 @@ class Ajax extends Controller
 
 
         }
+
+        if(Post::action()=="eFatura"){
+
+            $id = Post::rowid();
+            $faturaDetay = FaturaModel::detay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->enctype('multipart/form-data')->method('post')->action('faturalar/eFatura/'.$id)->open('eFatura'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">E-Fatura / E-Arşiv</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <div class="mb-1 row">
+                                <div class="col-sm-12">
+                                    <label class="col-form-label" for="bildirim">Bildirim</label>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="bildirim" id="bildirim" checked value="1" />
+                                        <label class="form-check-label" for="bildirim">Müşteriye E-Posta ile bildir !</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+
 
         if(Post::action()=="faturayaUrunEkle") {
             $id = Post::rowid();
@@ -1796,6 +2037,15 @@ class Ajax extends Controller
                         </div>
                     </div>
 
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="link">Link:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::id('link')->placeholder('Göstermek istediğiniz birşey varsa URL ekleyin')->text('link','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -2070,7 +2320,7 @@ class Ajax extends Controller
             <?php echo  Form::csrf()->method('post')->action('planlama/hatirlatmaGuncelle/'.$id)->open('hatirlatmaGuncelle'); ?>
 
             <div class="modal-header">
-                <h4 class="modal-title">Hatırlatma Ekle</h4>
+                <h4 class="modal-title">Hatırlatma Düzenle</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -2185,6 +2435,265 @@ class Ajax extends Controller
 
         }
 
+        if(Post::action()=="etkinlikTurEkle"){
+
+            // $id = Post::rowid();
+             //$hatirlatmaDetay = PlanlamaModel::hatirlatmaDetay($id);
+ 
+             ?>
+ 
+             <?php echo  Form::csrf()->method('post')->action('planlama/etkinlikTurEkle')->open('etkinlikTurEkle'); ?>
+ 
+             <div class="modal-header">
+                 <h4 class="modal-title">Etkinlik Tür Ekle</h4>
+             </div>
+             <div class="modal-body">
+                 <div class="row">
+ 
+                         <div class="mb-1 row">
+                             <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Hatırlatma Notu</label>
+                             <div class="col-sm-9">
+                                 <?php echo Form::vRequired()->id('tur')->placeholder('Tür Adı')->text('tur','',['class'=>'form-control']); ?>
+                             </div>
+                         </div>
+
+                         <div class="mb-1 row">
+                             <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Uyari Rengi</label>
+                             <div class="col-sm-9">
+                                 <?php echo Form::vRequired()->id('renk')->placeholder('Görüntülenme Rengi')->color('renk','',['class'=>'form-control']); ?>
+                             </div>
+                         </div>
+                 </div>
+ 
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                 <button type="submit" class="btn btn-primary">Kaydet</button>
+             </div>
+
+ 
+             <?php echo Form::close(); ?>
+ 
+             <?php
+ 
+ 
+ 
+         }
+ 
+         if(Post::action()=="etkinlikTurDuzenle"){
+ 
+             $id = Post::rowid();
+             $detay = PlanlamaModel::etkinlikTurDetay($id);
+ 
+             ?>
+ 
+             <?php echo  Form::csrf()->method('post')->action('planlama/etkinlikTurGuncelle/'.$id)->open('etkinlikTurGuncelle'); ?>
+ 
+             <div class="modal-header">
+                 <h4 class="modal-title">Etkinlik Türü Düzenle</h4>
+             </div>
+             <div class="modal-body">
+                 <div class="row">
+ 
+                     <div class="mb-1 row">
+                         <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Başlık</label>
+                         <div class="col-sm-9">
+                             <?php echo Form::vRequired()->id('tur')->placeholder('Başlık')->text('tur',$detay->tur,['class'=>'form-control']); ?>
+                         </div>
+                     </div>
+
+   
+                     <div class="mb-1 row">
+                             <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Uyari Rengi</label>
+                             <div class="col-sm-9">
+                                 <?php echo Form::vRequired()->id('renk')->placeholder('Görüntülenme Rengi')->color('renk',$detay->renk,['class'=>'form-control']); ?>
+                             </div>
+                         </div>
+ 
+                 </div>
+ 
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                 <button type="submit" class="btn btn-primary">Kaydet</button>
+             </div>
+
+ 
+             <?php echo Form::close(); ?>
+ 
+             <?php
+ 
+ 
+ 
+         }
+
+         if(Post::action()=="etkinlikDuzenle"){
+ 
+            $id = Post::rowid();
+            $detay = PlanlamaModel::etkinlikDetay($id);
+            $etkinlikTurleri = PlanlamaModel::etkinlikTurleri();
+
+            ?>
+
+            
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <?php echo  Form::csrf()->method('post')->action('planlama/etkinlikGuncelle/'.$id)->open('etkinlikGuncelle'); ?>
+            
+            <div class="modal-header">
+                <h4 class="modal-title">Etkinlik Türü Düzenle</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="mb-1 row">
+                        <label for="colFormLabelLg" class="col-sm-3 col-form-label-lg">Başlık</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="title" id="title" class="form-control" value="<?php echo $detay->baslik; ?>">
+                        </div>
+                    </div>
+  
+                    <div class="mb-1 row">
+                        <label for="tur" class="col-sm-3 col-form-label-lg">Tür</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="tur" id="tur">
+                                <?php foreach($etkinlikTurleri['liste'] as $etur){ ?>
+                                    <option value="<?php echo $etur->id; ?>" <?php if($etur->id==$detay->tur){ echo "selected"; } ?> ><?php echo $etur->tur; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <div class="col-xl-6">
+                            <label for="startDate" class="col-sm-12 col-form-label-lg">Başlangıç Tarihi</label>
+                            <input type="datetime-local" name="startDate" id="startDate" class="form-control" value="<?php echo $detay->baslangic_tarih_saat; ?>">
+                        </div>
+                        <div class="col-xl-6">
+                            <label for="endDate" class="col-sm-12 col-form-label-lg">Bitis Tarihi</label>
+                            <input type="datetime-local" name="endDate" id="endDate" class="form-control" value="<?php echo $detay->bitis_tarih_saat; ?>">
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="url" class="col-sm-3 col-form-label-lg">Etkinlik URL</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="url" id="url" class="form-control" placeholder="Etkinlik URL" value="<?php echo $detay->url; ?>">
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="konum" class="col-sm-3 col-form-label-lg">Etkinlik Yeri</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="konum" id="konum" class="form-control" placeholder="Etkinlik Yeri" value="<?php echo $detay->konum; ?>">
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="konum" class="col-sm-3 col-form-label-lg">Açıklama</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="aciklama" id="aciklama" cols="30" rows="5" placeholder="Açıklama Giriniz..."><?php echo $detay->aciklama; ?></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+
+                        <label for="katilimcilar" class="form-label">Katılımcılar (Noktalı virgül ile ayırın)</label>
+                        <div class="row" id="inputContainer">
+                        <?php
+                            $katilimcilar = json_decode($detay->katilimcilar);
+
+                            for ($kl = 0; $kl<count($katilimcilar); $kl++) { 
+                                ?>
+
+                                
+                                    <div class="col-12 inputRow">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="katilimcilar" name="katilimci[]" value="<?=$katilimcilar[$kl]?>" placeholder="Katılımcı Mail Adresi"  />
+                                            <button class="btn btn-outline-danger" type="button" id="deleteInputButton">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                
+
+                            <?php 
+
+                            }
+
+                            ?>
+                                <div class="col-12">
+                                    <div class="input-group">
+                                        <button class="btn btn-outline-success" type="button" id="addInputButton">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <script>
+                            $(document).ready(function() {
+                                // Eklemek için butona tıklandığında bu fonksiyon çalışacak
+                                $("#addInputButton").click(function() {
+                                    // Yeni bir input satırı oluştur ve inputContainer'a ekle
+                                    var inputRow = $('<div class="col-12 inputRow"><div class="input-group"><input type="text" class="form-control" id="katilimcilar" name="katilimci[]" placeholder="Katılımcı Mail Adresi"  /><button class="btn btn-outline-danger" type="button" id="deleteInputButton"><i class="fa fa-times"></i></button></div></div>');
+                                    $("#inputContainer").append(inputRow);
+
+                                    // Silme butonuna tıklandığında bu satırı kaldır
+                                    $("#deleteInputButton", inputRow).click(function() {
+                                        inputRow.remove();
+                                    });
+                                });
+
+                                // Sil düğmelerini seç
+                                var deleteButtons = document.querySelectorAll('#inputContainer .inputRow #deleteInputButton');
+
+                                // Her bir sil düğmesi için bir olay dinleyici ekle
+                                deleteButtons.forEach(function(button) {
+                                    button.addEventListener('click', function() {
+                                        // Sil düğmesinin üst elemanını (inputRow div'ini) bul
+                                        var row = this.closest('.inputRow');
+                                        // Satırı sil
+                                        row.remove();
+                                    });
+                                });
+
+                            });
+                            </script>
+
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="konum" class="col-sm-3 col-form-label-lg">Bilgilendirmeler</label>
+                        <div class="col-sm-9">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="mailBilgilendirme" id="mailBilgilendirme" value="1" />
+                                    <label class="form-label" for="mailBilgilendirme">Katılımcılara Mail Gönder</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="smsBilgilendirme" id="smsBilgilendirme" value="1" />
+                                    <label class="form-label" for="smsBilgilendirme">Katılımcılara SMS Gönder</label>
+                                </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <input type="hidden" name="id" id="id" value="<?=$id?>">
+            <?php echo Form::close(); ?>
+
+            <?php
+
+        }
+
         if(Post::action()=="altMasrafKalemDuzenle"){
 
             $id                 = Post::rowid();
@@ -2285,6 +2794,162 @@ class Ajax extends Controller
             <?php
         }
 
+        if(Post::action()=="masrafEkle") {
+
+            $masrafKalemleri    = MasrafModel::masrafKalemleri();
+
+            $kasaHesaplari      = KasaModel::turHesaplari(1);
+            $bankaHesaplari     = KasaModel::turHesaplari(2);
+            $posHesaplari       = KasaModel::turHesaplari(3);
+            $kkartiHesaplari    = KasaModel::turHesaplari(4);
+            $veresiyeHesaplari  = KasaModel::turHesaplari(5);
+            $digerHesaplar      = KasaModel::turHesaplari(6);
+
+
+            ?>
+                            <form action="<?=URL::site('masraf/masrafEkle')?>" enctype="multipart/form-data" method="post">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Masraf Ekle</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+
+                                        <div class="col-6">
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Masraf K.</label>
+                                                <div class="input-group input-group-merge">
+                                                    <select class="form-control" name="kalem" required >
+                                                        <option value="">--Seçiniz--</option>
+                                                        <?php
+                                                        foreach($masrafKalemleri['anaKalemler'] as $ustList){ ?>
+                                                        <optgroup label="<?=$ustList->adi?>">
+                                                            <?php
+                                                            foreach($masrafKalemleri['altKalemler'] as $altKalemList){
+                                                            
+
+                                                                if($altKalemList->ust==$ustList->id){
+
+                                                                ?>
+
+                                                                <option value="<?=$altKalemList->id?>"><?=$altKalemList->adi?></option>
+                                                                <?php
+                                                                }
+
+                                                            } ?>
+                                                        </optgroup>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Belge No:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <input type="text" class="form-control" name="belge_no" id="belge_no" placeholder="Fiş / Fatura No" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Açıklama:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <textarea class="form-control" name="aciklama" placeholder="Açıklama"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Dosya:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <label class="input-group-btn">
+                                                                    <span class="btn btn-primary">
+                                                                        <i class="fa fa-upload"></i> Masraf Belgesi Seç <input type="file" name="belge_dosya" style="display: none;">
+                                                                    </span>
+                                                    </label>
+                                                    <input type="text" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Ödeme:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <select name="odeme_durumu" id="gizleGoster" data-name="kasalar" required class="form-control">
+                                                        <option value="1">Ödendi</option>
+                                                        <option value="0">Ödenmedi</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Ödeme Hesabı:</label>
+                                                <div class="input-group input-group-merge">
+                                                    <select name="kasa" required class="form-control">
+                                                        <option value="0">--Seçiniz--</option>
+                                                        <optgroup label="Kasa Hesapları">
+                                                            <?php foreach($kasaHesaplari as $kh){ ?>
+                                                            <option value="<?=$kh->id?>"><?=$kh->adi?></option>
+                                                            <?php }?>
+                                                        </optgroup>
+                                                        <optgroup label="Banka Hesapları">
+                                                            <?php foreach($bankaHesaplari as $bh){ ?>
+                                                            <option value="<?=$bh->id?>"><?=$bh->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+                                                        <optgroup label="POS Hesapları">
+                                                            <?php foreach($posHesaplari as $ph){ ?>
+                                                            <option value="<?=$ph->id?>"><?=$ph->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+                                                        <optgroup label="Kredi Kartı Hesapları">
+                                                            <?php foreach($kkartiHesaplari as $kkh) { ?>
+                                                            <option value="<?=$kkh->id?>"><?=$kkh->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+                                                        <optgroup label="Veresiye Hesapları">
+                                                            <?php foreach($veresiyeHesaplari as $vh){ ?>
+                                                            <option value="<?=$vh->id?>"><?=$vh->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+                                                        <optgroup label="Diğer Hesaplar">
+                                                            <?php foreach($digerHesaplar as $dh){ ?>
+                                                            <option value="<?=$dh->id?>"><?=$dh->adi?></option>
+                                                            <?php } ?>
+                                                        </optgroup>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Ödeme Tarihi:Güm.Ay.Yıl</label>
+                                                <div class="input-group input-group-merge">
+                                                    <input type="text" name="odeme_tarihi" class="form-control" placeholder="24.10.2023"onkeyup="
+                                                    var v = this.value;
+                                                    if (v.match(/^\d{2}$/) !== null) {
+                                                        this.value = v + '.';
+                                                    } else if (v.match(/^\d{2}\.\d{2}$/) !== null) {
+                                                        this.value = v + '.';
+                                                    }" maxlength="10" value="<?=Date::current()?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="modalAddCardNumber">Tutar (TL):</label>
+                                                <div class="input-group input-group-merge">
+                                                    <input type="text" class="form-control" onkeyup="$(this).val($(this).val().replace(/,/g, '.'));" name="tutar" id="belge_no" placeholder="Ödenen tutar" value="">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                                </div>
+                            </form>
+
+        <?php
+        }
+
         if(Post::action()=="teklifeUrunEkle") {
             $id = Post::rowid();
             ?>
@@ -2365,6 +3030,331 @@ class Ajax extends Controller
 
 
         <?php
+
+        }
+
+        if(Post::action()=="destekDepartmanEkle"){
+
+            $id = Post::rowid();
+            $personeller = PersonelModel::tumListe();
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('destek/departmanEkle/')->open('departmanEkle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Destek Departmanı Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="yetkili_personel">Yetkili Personel</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="yetkili_personel" id="yetkili_personel">
+                                    <option value="">--Seçiniz--</option>
+                                    <?php foreach($personeller as $personel){ ?>
+                                    <option value="<?=$personel->id?>"><?=$personel->isim?></option>
+                                    <?php }?>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="adi">Departman Adı:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('adi')->placeholder('Departman Adı')->text('adi','',['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="durum">Durum</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="durum" id="durum">
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Pasif</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+        if(Post::action()=="destekDepartmanDuzenle"){
+
+            $id = Post::rowid();
+            $personeller = PersonelModel::tumListe();
+            $detay = DestekModel::deparmanDetay($id);
+
+            ?>
+
+            <?php echo  Form::csrf()->method('post')->action('destek/departmanGuncelle/'.$id)->open('departmanGuncelle'); ?>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Destek Departmanı Düzenle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="yetkili_personel">Yetkili Personel</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="yetkili_personel" id="yetkili_personel">
+                                    <option value="">--Seçiniz--</option>
+                                    <?php foreach($personeller as $personel){ ?>
+                                    <option value="<?=$personel->id?>" <?=$detay->yetkili_personel == $personel->id ? 'selected' : ''?>><?=$personel->isim?></option>
+                                    <?php }?>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="adi">Departman Adı:</label>
+                            <div class="input-group input-group-merge">
+                                <?php echo Form::vRequired()->id('adi')->placeholder('Departman Adı')->text('adi',$detay->adi,['class'=>'form-control']); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label class="form-label" for="durum">Durum</label>
+                            <div class="input-group input-group-merge">
+                                <select class="form-control" required name="durum" id="durum">
+                                    <option value="1" <?=$detay->durum == '1' ? 'selected' : ''?>>Aktif</option>
+                                    <option value="0" <?=$detay->durum == '0' ? 'selected' : ''?>>Pasif</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+            <?php
+
+
+
+        }
+
+        if(Post::action()=="mesaiSaatiEkle"){
+
+            $personelDetay = PersonelModel::detay(Post::rowid());
+            $personelListe          = PersonelModel::calisanlar();
+            ?>
+
+                <form class="form-horizontal" action="<?=URL::site('personel/mesaiEkle')?>" method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><?=$personelDetay->isim?> Mesai Ekle<Masraf Ekle</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                    
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Personel</label>
+                            <div class="input-group input-group-merge">
+                                <select name="personel" required class="form-control select2"  style="width: 100%;">
+                                <?php 
+                                    foreach($personelListe as $prsnl){
+                                    ?>
+                                            <option value="<?=$prsnl->id?>" <?=$prsnl->id==$personelDetay->id?'selected':''?> >
+                                            <?=$prsnl->isim?>
+                                        </option>
+
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label" for="modalAddCardNumber">Giriş Tarihi</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="date" class="form-control" required name="giris_tarihi" value="<?=date("Y-m-d",strtotime('-1 day',strtotime(date("Y-m-d"))))?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="modalAddCardNumber">Giriş Saati</label>
+                                <div class="input-group input-group-merge">
+                                <input type="time" class="form-control" value="<?=AyarModel::defaultAyarlar('gunlukCalismaBaslangicSaati')?>" required name="giris_saati">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="modalAddCardNumber">Çıkış Tarihi</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="date" class="form-control" required name="cikis_tarihi" value="<?=date("Y-m-d",strtotime('-1 day',strtotime(date("Y-m-d"))))?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="modalAddCardNumber">Çıkış Saati</label>
+                                <div class="input-group input-group-merge">
+                                <input type="time" class="form-control" value="<?=AyarModel::defaultAyarlar('gunlukCalismaBitisSaati')?>" required name="cikis_saati">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Fazla Mesai Sebebi</label>
+                            <div class="input-group input-group-merge">
+                                <input type="text" class="form-control" name="fazla_mesai_sebebi">
+                            </div>
+                        </div>
+
+                        <div class="row custom-options-checkable g-1 mb-1 mt-1">
+
+                            <div class="col-md-4">
+                                <input class="custom-option-item-check" type="radio" name="izin_durumu" id="izin_durumu1" value="1" checked />
+                                <label class="custom-option-item p-1" for="izin_durumu1">
+                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                    <span class="fw-bolder">Çalışıyor</span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <input class="custom-option-item-check" type="radio" value="1" name="izin_durumu" id="izin_durumu2" />
+                                <label class="custom-option-item p-1" for="izin_durumu2">
+                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                    <span class="fw-bolder">Ücretsiz İzinli</span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <input class="custom-option-item-check" type="radio" value="2" name="izin_durumu" id="izin_durumu3" />
+                                <label class="custom-option-item p-1" for="izin_durumu3">
+                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                    <span class="fw-bolder">Ücretli İzinli</span>
+                            </div>
+
+                            
+                        </div>
+
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Kayıt Türü</label>
+                            <div class="input-group input-group-merge">
+                                    <select class="form-control select2" style="width: 100%" name="kayit_turu">
+                                        <option value="N">Normal Çalışma</option>
+                                        <option value="HT">Hafta Tatili</option>
+                                        <option value="R">Raporlu</option>
+                                        <option value="I">Ücretli İzinli</option>
+                                        <option value="UI">Ücretsiz İzinli</option>
+                                        <option value="T">Resmi Tatil</option>
+                                        <option value="SI">Saatlik İzin</option>
+                                        <option value="YI">Yıllık İzinli</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="row custom-options-checkable g-1 mb-1 mt-1">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <label class="form-label" for="ise_gelis_yol_ucreti1">İşe Geliş Yol Ücreti</label>
+                                            <div class="col-md-6">
+                                                <input class="custom-option-item-check" type="radio" name="ise_gelis_yol_ucreti" id="ise_gelis_yol_ucreti1" value="1" checked />
+                                                <label class="custom-option-item p-1" for="ise_gelis_yol_ucreti1">
+                                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                    <span class="fw-bolder">Verilecek</span>
+                                                </span></label>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input class="custom-option-item-check" type="radio" value="0" name="ise_gelis_yol_ucreti" id="ise_gelis_yol_ucreti2" />
+                                                <label class="custom-option-item p-1" for="ise_gelis_yol_ucreti2">
+                                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                    <span class="fw-bolder">Verilmeyecek</span>
+                                                    </span></label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                        <label class="form-label" for="isten_cikis_yol_ucreti1">İşten Çıkış Yol Ücreti</label>
+                                            <div class="col-md-6">
+                                                <input class="custom-option-item-check" type="radio" name="isten_cikis_yol_ucreti" id="isten_cikis_yol_ucreti1" value="1" checked />
+                                                <label class="custom-option-item p-1" for="isten_cikis_yol_ucreti1">
+                                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                    <span class="fw-bolder">Verilecek</span>
+                                                    </span></label>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input class="custom-option-item-check" type="radio" value="0" name="isten_cikis_yol_ucreti" id="isten_cikis_yol_ucreti2" />
+                                                <label class="custom-option-item p-1" for="isten_cikis_yol_ucreti2">
+                                                <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                    <span class="fw-bolder">Verilmeyecek</span>
+                                                    </span></label>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Yemek Hakediş Adedi</label>
+                            <div class="input-group input-group-merge">
+                                <input type="number" class="form-control" value="1" name="yemek_hakedis">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            
+                            <label class="form-label" for="modalAddCardNumber">Günlük Not</label>
+                            <div class="input-group input-group-merge">
+                                <input type="number" class="form-control" name="gunluk_not">
+                            </div>
+                        </div>
+            
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-bs-dismiss="modal">Vazgeç</button>
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+
+
+
+        
+                </form>
+            <?php
 
         }
 

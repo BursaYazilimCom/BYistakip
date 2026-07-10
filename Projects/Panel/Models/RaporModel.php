@@ -109,5 +109,27 @@ class InternalRaporModel extends Model
 
     }
 
+    public function ayinHaftaIciGunleri($baslangicTarihi, $bitisTarihi) {
+
+        $haftaIciGunleri = array();
+        $currentDate = new DateTime($baslangicTarihi);
+        $endDate = new DateTime($bitisTarihi);
+
+        // Tarih aralığında döngü
+        while ($currentDate <= $endDate) {
+            // Hafta içi günleri kontrolü (Pazartesi'den Cuma'ya kadar)
+            $gunHafta = $currentDate->format('N');
+            if ($gunHafta >= 1 && $gunHafta <= 5) {
+                $haftaIciGunleri[] = $currentDate->format('Y-m-d');
+            }
+
+            // Bir gün ekleyerek döngüyü devam ettir
+            $currentDate->add(new DateInterval('P1D'));
+        }
+
+        return $haftaIciGunleri;
+        
+    }
+
 
 }

@@ -25,7 +25,7 @@
                 <div class="row">
                     <!-- Invoice repeater -->
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card brdt-info">
                             <div class="card-header">
                                 <div class="head-label">
                                     <h4 class="card-title">Teklifler</h4>
@@ -42,7 +42,7 @@
 
                                 <section class="invoice-list-wrapper">
                                     <div class="card">
-                                        <div class="card-datatable table-responsive">
+                                        <div class="card-datatable  table-responsive-sm table-responsive-md table-responsive-xl">
                                             <div id="DataTables_Table_0_wrapper"
                                                  class="dataTables_wrapper dt-bootstrap5 no-footer">
 
@@ -147,7 +147,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h1 class="text-center mb-1" id="modalTitle">Fatura İşlemleri</h1>
+                <h1 class="text-center mb-1" id="modalTitle">Telif İşlemleri</h1>
 
                 <div class="fetched-data"></div>
 

@@ -1,7 +1,9 @@
 <?php namespace Project\Controllers;
 
-Use Http,Post,Cookie,User,Date,URL,Json,Encode,Security,Form,Validation,Cart;
-Use AjaxModel,KasaModel,UrunModel,AyarModel, InternalFaturaModel as FaturaModel;
+Use Http,Post,Cookie,User,Date,URL,Json,Encode,Session,Security,Form,Validation,Cart;
+Use AjaxModel,KasaModel,UrunModel,AyarModel;
+use InternalFaturaModel as FaturaModel,SiparisModel;
+use InternalCariModel as CariModel;
 Use PersonelModel;
 
 
@@ -10,11 +12,99 @@ Use PersonelModel;
 class Ajax extends Controller
 {
 
+   public function __construct()
+   {
+       if(!Http::isajax()){
+           redirect("Login");
+           exit;
+       }
+
+   }
     public function main(){
 
-        if(!Http::isajax()){
-            redirect("Login");
-            exit;
+       $id = Post::dataId();
+
+        if(Post::dataAction()=="faturaDetay"){
+
+
+
+            if ($id==""){
+                echo AyarModel::basarisiz('Hatalı İşlem','Tanımsız bir faturaya ulaşmaya çalışıyorsunuz.',URL::site());
+                exit();
+            }
+
+            $faturaDetay = FaturaModel::detay($id);
+
+            if (Session::select('cariId')==""){
+
+                Session::insert('cariId', $faturaDetay->musteri);
+
+            }else{
+
+                if(Session::select('cariId')!=$faturaDetay->musteri){
+
+                    AyarModel::basarisiz('Hatalı İşlem','İlgili Fatura tarafınıza Ait Değildir.',URL::site());
+
+                }
+
+            }
+
+            $faturaUrunleri = FaturaModel::faturaUrunleri($id);
+            $cariDetay = CariModel::detay($faturaDetay->musteri);
+            ?>
+
+            <table class="table table-hover table-rounded table-striped border gy-3 gs-3">
+                    <thead>
+                    <tr>
+                        <th><strong>Ürün</strong></th>
+                        <th class="text-end"><strong>Fiyat</strong></th>
+                        <th class="text-end"><strong>Adet</strong></th>
+                        <th class="text-end"><strong>Kdv</strong></th>
+                        <th class="text-end"><strong>Toplam</strong></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php foreach($faturaUrunleri as $furun){ ?>
+                    <tr>
+                        <td>
+                        <?=$furun->aciklama?><br>
+                            <small><?=$furun->urun_adi?></small>
+                        </td>
+                        <td class="text-end"><?=number_format((float)$furun->fiyat,2)?></td>
+                        <td class="text-end"><?=$furun->miktar?></td>
+                        <td class="text-end">
+                            <?=$kdv = number_format((float)(($furun->fiyat*$furun->miktar)/100)*$furun->kdv,2)?>
+                            <br /><small>%<?=$furun->kdv?></small></td>
+                        <td class="text-end text-dark fw-boldest"><?=number_format((float)($furun->fiyat*$furun->miktar)+$kdv,2)?> ₺</td>
+                    </tr>
+                    <?php } ?>
+
+                </tbody>
+            </table>
+        <?php
+        }
+
+
+    }
+
+    public function login(){
+
+        if(!Validation::check()){
+
+            $data['error'] = str_replace('<br>',EOL,Validation::error('string'));
+
+        }else{
+
+            $status = User::login(Post::username(),Post::password());
+
+            if( $status === true ) {
+                AyarModel::basarili('Giriş işleminiz başarılı', 'Hoşgeldiniz', URL::site('home'));
+
+            }else{
+               AyarModel::basarisiz('Başarısız Giriş','Giriş Sırasında bir hata oluştu:<br>'.User::error(), URL::site('login'));
+            }
+
         }
 
     }
@@ -720,7 +810,7 @@ class Ajax extends Controller
 
         }
 
-        if (Post::action()=="faturaOdendiYap") {
+        if(Post::action()=="faturaOdendiYap"){
 
             $id = Post::rowid();
             $faturaDetay = FaturaModel::detay($id);
@@ -850,7 +940,7 @@ class Ajax extends Controller
 
         }
 
-        if (Post::action()=="faturaOdenmediYap") {
+        if(Post::action()=="faturaOdenmediYap"){
 
             $id = Post::rowid();
             $faturaDetay = FaturaModel::detay($id);
@@ -1022,7 +1112,7 @@ class Ajax extends Controller
 
         }
 
-        if (Post::action() == "faturayaUrunEkle") {
+        if(Post::action()=="faturayaUrunEkle"){
             $id = Post::rowid();
             ?>
 
@@ -1141,8 +1231,6 @@ class Ajax extends Controller
 
 
         }
-
-
 
     }
 

@@ -25,7 +25,7 @@
                 <div class="row">
                     <!-- Invoice repeater -->
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card brdt-pink">
                             <div class="card-header">
                                 <div class="head-label">
                                     <h4 class="card-title">Faturalar</h4>
@@ -42,7 +42,7 @@
 
                                 <section class="invoice-list-wrapper">
                                     <div class="card">
-                                        <div class="card-datatable table-responsive">
+                                        <div class="card-datatable table-responsive table-responsive-sm table-responsive-md table-responsive-xl">
                                             <div id="DataTables_Table_0_wrapper"
                                                  class="dataTables_wrapper dt-bootstrap5 no-footer">
 
@@ -86,9 +86,9 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>{{number_format($fatura->genel_toplam,2)}} ₺</td>
-                                                        <td>{{number_format($fatura->alinan_odeme,2)}} ₺</td>
-                                                        <td>{{Date::convert($fatura->belge_tarihi,'d.m.Y')}}</td>
+                                                        <td>{{number_format((float)$fatura->genel_toplam,2)}} ₺</td>
+                                                        <td>{{number_format((float)$fatura->alinan_odeme,2)}} ₺</td>
+                                                        <td>{{Date::convert((float)$fatura->belge_tarihi,'d.m.Y')}}</td>
                                                         <td>
                                                             @if($fatura->durum=="0")
                                                                 <span class="badge rounded-pill badge-light-danger"> İptal </span>

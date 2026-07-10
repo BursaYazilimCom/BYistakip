@@ -37,7 +37,7 @@
             <!-- Hoverable rows start -->
             <div class="row" id="table-hover-row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card brdt-danger">
                         <div class="card-header">
                             <h4 class="card-title">Gider Kayıtları</h4>
                         </div>
@@ -47,7 +47,7 @@
                             </p>
                             {{ Redirect::select('bilgi',true) }}
                         </div>
-                        <div class="table-responsive">
+                        <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                             <table class="table table-hover  table-bordered">
                                 <thead>
                                 <tr>
@@ -72,14 +72,14 @@
                                     <td>{{$kayit->kasaHesabi}}</td>
                                     <td>{{$kayit->belge_no}}
                                         @if($kayit->belge_dosya!="")
-                                        <a target="_blank" href="" data-toggle="tooltip" title="Dosya İndir" class="btn btn-primary btn-xs"><i class="fa fa-download"></i></a>
+                                        <a target="_blank" href="{{URL::site()}}../Uploads/masraf_belgeleri/{{$kayit->belge_dosya}}" data-bs-toggle="tooltip" download title="Dosya İndir" class="btn btn-primary btn-sm"><i class="fa fa-download"></i></a>
                                         @endif
                                     </td>
                                     <td>{{$kayit->aciklama}}</td>
                                     <td class="text-{{$kayit->odeme_durumu=='1'?'success':'danger'}}">
                                         {{$kayit->odeme_durumu=="1"?"Ödeme Yapıldı":"Ödeme Yapılmadı"}}
                                     </td>
-                                    <td class="text-danger">{{number_format($kayit->tutar,2)}}</td>
+                                    <td class="text-danger">{{number_format((float)$kayit->tutar,2)}}</td>
                                     <td>{{Date::convert($kayit->odeme_tarihi, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td>{{Date::convert($kayit->islem_tarihi, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td>

@@ -23,14 +23,39 @@ class Ayarlar extends Controller
     {
 
         $ayarlar = AyarModel::defaultAyarListe();
+        $siralamaYeri = "ayarlar";
 
+        foreach($ayarlar as $ayar){
+
+            $ayarArray[$ayar->grup][] = (object)[
+                "id"=>$ayar->id,
+                "sira"=>$ayar->sira,
+                "tur"=>$ayar->tur,
+                "anahtar"=>$ayar->anahtar,
+                "deger"=>$ayar->deger,
+                "tum_degerler"=>$ayar->tum_degerler,
+                "baslik"=>$ayar->baslik,
+                "aciklama"=>$ayar->aciklama
+            ];
+
+        }
+
+        View::siralamaYeri($siralamaYeri);
         View::ayarlar($ayarlar);
+        View::ayarArray($ayarArray);
+
 
 
     }
 
     public function guncelle()
     {
+/*
+        echo "<pre>";
+
+        var_dump(Post::all());
+        
+        echo"</pre>";*/
 
         $ayarlar = AyarModel::defaultAyarListe();
 
@@ -38,11 +63,15 @@ class Ayarlar extends Controller
         for ($a=0;$a<count($_POST['anahtar']);$a++){
 
             if($_POST['tur'][$a]=="file"){
+                $deger = Post::deger();
+                $anahtar = Post::anahtar();
 
-                if(Upload::isFile($_POST['deger'][$_POST['anahtar'][$a]])){
+                echo $anahtar[$a];
+
+                if(Upload::isFile($anahtar[$a])){
 
                     Upload::convertName()
-                        ->source($_POST['deger'][$_POST['anahtar'][$a]])
+                        ->source($anahtar[$a])
                         ->target(REAL_BASE_DIR . 'Uploads/site-img/')
                         ->start();
 
@@ -51,7 +80,9 @@ class Ayarlar extends Controller
                     $dosya = $dosyaBilgi->encodeName;
 
                 }else{
+
                     $dosya = AyarModel::defaultAyarlar($_POST['anahtar'][$a]);
+
                 }
 
                 $data = [
@@ -77,11 +108,11 @@ class Ayarlar extends Controller
 
         if ($guncelle) {
 
-            Redirect::insert(['bilgi' => '<div class="callout callout-success">Bilgiler başarı ile güncellendi!</div>'])->action('ayarlar');
-
+            AyarModel::basarili('Başarılı İşlem','Bilgiler başarı ile güncellendi!','ayarlar');
+           
         } else {
 
-            Redirect::insert(['bilgi' => '<div class="callout callout-danger">Bilgi güncelleme işlemi yapılamadı!</div>'])->action('ayarlar');
+            AyarModel::basarisiz('Başarısız İşlem','Güncelleme işlemi yapılamadı!','ayarlar');
 
         }
 

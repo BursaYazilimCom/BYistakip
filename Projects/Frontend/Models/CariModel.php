@@ -7,6 +7,11 @@ class InternalCariModel extends Model
         return DB::where('id',$id)->cari()->row();
     }
 
+    static function mailDetay($email)
+    {
+        return DB::where('email',$email)->cari()->row();
+    }
+
     static function cariAdi($id)
     {
         $data = DB::where('id',$id)->cari()->row();
@@ -33,7 +38,6 @@ class InternalCariModel extends Model
             'email'         =>$data['email'],
             'adi'           =>$data['adi'],
             'gsm'           =>$data['gsm'],
-            'gsm'           =>$data['gsm'],
             'il'            =>$data['il'],
             'tc'            =>$data['tc'],
             'firma_adi'     =>$data['firma_adi'],
@@ -41,7 +45,7 @@ class InternalCariModel extends Model
             'vergi_dairesi' =>$data['vergi_dairesi'],
             'vergi_no'      =>$data['vergi_no'],
             'bakiye'        =>$data['bakiye'],
-            'yonetim_notu'        =>$data['yonetim_notu'],
+            'yonetim_notu'  =>$data['yonetim_notu'],
             'durum'         =>$data['durum']
         ]);
 
@@ -50,30 +54,31 @@ class InternalCariModel extends Model
        return $ekle;
     }
 
+    static function updatePassword($data){
+
+        $guncelle = DB::where('id',$data["id"])
+            ->update('cari',[
+                'pass'         =>$data['pass']
+            ]);
+
+        return $guncelle;
+    }
+
     static function update($data){
 
         $guncelle = DB::where('id',$data["id"])
             ->update('cari',[
-                'email'         =>$data['email'],
                 'adi'           =>$data['adi'],
-                'gsm'           =>$data['gsm'],
                 'gsm'           =>$data['gsm'],
                 'il'            =>$data['il'],
                 'tc'            =>$data['tc'],
                 'firma_adi'     =>$data['firma_adi'],
                 'fatura_adresi' =>$data['fatura_adresi'],
                 'vergi_dairesi' =>$data['vergi_dairesi'],
-                'vergi_no'      =>$data['vergi_no'],
-                'bakiye'        =>$data['bakiye'],
-                'yonetim_notu'        =>$data['yonetim_notu'],
-                'durum'         =>$data['durum']
+                'vergi_no'      =>$data['vergi_no']
             ]);
 
         return $guncelle;
-    }
-
-    static function delete($id){
-        return DB::whereId($id)->delete('cari');
     }
 
     /**********************/

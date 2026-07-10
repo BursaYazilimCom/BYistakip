@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 use User,Method,DB,Post,Get,Date,XML,CURL,Json,Time,Email,URL,Masterpage;
-use AyarModel,PersonelModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalCariModel as CariModel,UrunModel;
+use AyarModel,PersonelModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalCariModel as CariModel,UrunModel,InternalSmsModel as SmsModel,InternalPlanlamaModel as PlanlamaModel;
 
 class CronJob extends Controller
 {
@@ -60,7 +60,7 @@ class CronJob extends Controller
                 ->to($uyeBilgi->email, 'To')
                 ->bcc(AyarModel::defaultAyarlar('iletisimEposta'), 'To 1')
                 ->subject($pu->urun_adi.' '.$urunTipi.' Ürününüzün son kullanım tarihi yaklaşıyor')
-                ->template('general', [
+                ->template('by', [
                     'name'          => $uyeBilgi->adi_soyadi,
                     'subject'       => $pu->urun_adi.' '.$urunTipi.' Ürününüzün son kullanım tarihi yaklaşıyor',
                     'content'       => $pu->urun_adi.' '.$urunTipi.' Ürününüz '.Date::convert($pu->bitis_tarihi,'{dayNumber0}.{monthNumber0}.{year}').' tarihinde ödemesi yapılmadığı taktirde kullanım süresi dolacaktır.<br>Bu süre geçtikten sonra ürününüzün durumuna göre kurtarma ücreti yansıtılabilir. <br>Aşağıdaki bulunan linkten Panelinize girerek gerekli süre uzatma işlemlerini gerçekleştirebilirsiniz<br><br> Eğer ödeme yaptıysanız lütfen dikkate almayınız. ',
@@ -108,6 +108,19 @@ class CronJob extends Controller
                 'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
                 'telefon' => AyarModel::defaultAyarlar('firmaTel'),
             ])->send();
+
+            //SMS GÖNDERİMİ
+            if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+                $smsData = [
+                    'mesaj'=>Date::convert($fatura->vade_tarihi,'{dayNumber0}.{monthNumber0}.{year}').' son ödeme tarihli faturanız bulunmaktadır.Ürünlerinizin yada projelerinizin kesintiye uğramaması için ödeme yapmanız gerekmektedir. Ödeme yaptıysanız uyarıyı dikkate almayınız.',
+                    'numara'=>$cariBilgi->gsm
+                ];
+
+                $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+            }
+            //SMS GÖNDERİMİ
             
 
         }
@@ -118,6 +131,7 @@ class CronJob extends Controller
     public function yenilemeFaturasiOlustur($tur=""){
 
         if ($tur=="") {
+
             echo "<h3>Yenileme Faturası oluşturabilmek için oluşturulacak fatura döngüsünü belirtiniz.</h3><ul style='line-height: 30px'>";
             echo "<li><strong>Aylık döngüler için: </strong>".URL::site('cronJob/yenilemeFaturasiOlustur/A')."</li>";
             echo "<li><strong>3 Aylık döngüler için: </strong>".URL::site('cronJob/yenilemeFaturasiOlustur/3A')."</li>";
@@ -129,6 +143,7 @@ class CronJob extends Controller
             echo "*/30 * * * * curl -L -s ".URL::site('cronJob/yenilemeFaturasiOlustur/')."<strong>A</strong> >/dev/null 2>&1";
             echo "</pre>";
             exit();
+
         }
         if ($tur=="A") {
             $faturaGunu = AyarModel::defaultAyarlar('aylikurunFaturaGunu');
@@ -144,16 +159,19 @@ class CronJob extends Controller
 
         $tarih = Date::addDay($bugun,$faturaGunu);
 
-        echo $bugun;
-        echo "<hr>";
-        echo $tarih;
-
-        echo "<pre>";
+        //echo $bugun;
+        //echo "<hr>";
+        //echo $tarih;
+        //echo "<pre>";
 
         $tumSiparisler = SiparisModel::yenilenecekSiparisler($tarih,$tur);
 
         //print_r($tumSiparisler);
         foreach ($tumSiparisler as $siparis) {
+
+            $toplamFiyat    = 0;
+            $kdvToplami     = 0;
+            $toplamTutar    = 0;
 
             $cariBilgi = CariModel::detay($siparis->cari);
             $faturaID= "";
@@ -166,17 +184,22 @@ class CronJob extends Controller
             foreach ($siparisurunleri as $su) {
 
                 $donemBaslamaTarihi = $su->bitis_tarihi;
+                $urunBilgiAna = UrunModel::detay($su->urun);
 
                 //siparis ürünleri bütüş tarihlerine uzatılmış bitiş tarihini ekle
 
                 if ($su->odeme_periyodu == "A") {
                     $donemBitisTarihi = date("Y-m-d", strtotime("+1 month", strtotime($su->bitis_tarihi)));
+                    $urunAnaFiyat = $urunBilgiAna->aylik_fiyat;
                 }elseif ($su->odeme_periyodu == "3A"){
                     $donemBitisTarihi = date("Y-m-d", strtotime("+3 month", strtotime($su->bitis_tarihi)));
+                    $urunAnaFiyat = $urunBilgiAna->uc_aylik_fiyat;
                 }elseif ($su->odeme_periyodu == "6A"){
                     $donemBitisTarihi = date("Y-m-d", strtotime("+6 month", strtotime($su->bitis_tarihi)));
+                    $urunAnaFiyat = $urunBilgiAna->alti_aylik_fiyat;
                 } elseif ($su->odeme_periyodu == "Y") {
                     $donemBitisTarihi = date("Y-m-d", strtotime("+12 month", strtotime($su->bitis_tarihi)));
+                    $urunAnaFiyat = $urunBilgiAna->yillik_fiyat;
                 }else{
                     echo "odeme periyodu bulunamadı";
                     exit();
@@ -232,10 +255,9 @@ class CronJob extends Controller
                 if($faturaTekrarKontrolu2['adet']==0){
 
                     if($faturaID==""){
-                        $toplamFiyat = 0;
-                        $kdvToplami = 0;
+
                         //eğer siparişteki ürün adeti 1 den fazla ile fatura oluşturmak için fiyat toplamlarını alıyoruz
-                        foreach ($siparisurunleri as $sut) {
+                        /*foreach ($siparisurunleri as $sut) {
                             //fiyat birimine egöre güncel kur alınacak
                             if($sut->fiyat_sabitle=="0"){
                                 //Ürünün güncel fiyatını öğreniyoruz
@@ -248,54 +270,64 @@ class CronJob extends Controller
                                 }elseif ($sut->odeme_periyodu == "6A"){
                                     $urunFiyati = $urunBilgi->alti_aylik_fiyat;
                                 } elseif ($sut->odeme_periyodu == "Y") {
+                                    echo "Yıllık ürün fiyatı:";
+                                    echo $urunFiyati = $urunBilgi->yillik_fiyat;
+                                }else{
                                     $urunFiyati = $urunBilgi->yillik_fiyat;
                                 }
 
-                                $toplamFiyat = $toplamFiyat+$urunFiyati * $sut->adet;
-                                $kdvToplami = $kdvToplami+($toplamFiyat*$sut->kdv/100);
+                                $toplamFiyat = $toplamFiyat+($urunFiyati * $sut->adet);
+
+                                $kdvToplami = $kdvToplami+((($urunFiyati * $sut->adet)*$sut->kdv)/100);
 
                             }else{
-                                $toplamFiyat = $toplamFiyat+$sut->birim_fiyat * $sut->adet;
-                                $kdvToplami = $kdvToplami+($toplamFiyat*$sut->kdv/100);
-                                $urunFiyati = $sut->birim_fiyat;
+                                $toplamFiyat = $toplamFiyat+($sut->birim_fiyat * $sut->adet);
+                                $kdvToplami = $kdvToplami+(($toplamFiyat*$sut->kdv)/100);
                             }
+
                             $toplamTutar = $toplamFiyat+$kdvToplami;
 
-                        }
+                        }*/
 
                         $faturaData = [
-                            'tur'               =>"2",
-                            'satis_turu'        =>"2",
-                            'belge_no'          =>rand(0,999999),
-                            'fatura_adi'        =>$cariBilgi->firma_adi,
-                            'fatura_adresi'     =>$cariBilgi->fatura_adresi,
-                            'vergi_dairesi'     =>$cariBilgi->vergi_dairesi,
-                            'vergi_no'          =>$cariBilgi->vergi_no,
-                            'tedarikci'         =>"0",
-                            'musteri'           =>$cariBilgi->id,
-                            'siparis_id'        =>$siparis->id,
-                            'toplam_tutar'      =>AyarModel::tlCevir($toplamFiyat,$su->para_birimi),
-                            'kdv_toplami'       =>AyarModel::tlCevir($kdvToplami,$su->para_birimi),
-                            'genel_toplam'      =>AyarModel::tlCevir($toplamTutar,$su->para_birimi),
-                            'belge_tarihi'      =>date("Y-m-d"),
-                            'vade_tarihi'       =>date("Y-m-d", strtotime("+7 days", strtotime(date("Y-m-d")))),
-                            'durum'             =>"1",
-                            'odeme'             =>"0",
-                            'odeme_yontemi'     =>$siparis->odeme_yontemi,
-                            'aciklama'          =>$siparis->id." Numaralı sipariş yenileme faturası"
+                            'tur'               => "2",
+                            'satis_turu'        => "2",
+                            'belge_no'          => rand(0,999999),
+                            'fatura_adi'        => $cariBilgi->firma_adi,
+                            'fatura_adresi'     => $cariBilgi->fatura_adresi,
+                            'vergi_dairesi'     => $cariBilgi->vergi_dairesi,
+                            'vergi_no'          => $cariBilgi->vergi_no,
+                            'tedarikci'         => "0",
+                            'musteri'           => $cariBilgi->id,
+                            'siparis_id'        => $siparis->id,
+                            'toplam_tutar'      => $toplamFiyat,
+                            'kdv_toplami'       => $kdvToplami,
+                            'genel_toplam'      => $toplamTutar,
+                            'belge_tarihi'      => date("Y-m-d"),
+                            'vade_tarihi'       => date("Y-m-d", strtotime("+7 days", strtotime(date("Y-m-d")))),
+                            'durum'             => "1",
+                            'odeme'             => "0",
+                            'odeme_yontemi'     => $siparis->odeme_yontemi,
+                            'aciklama'          => $siparis->id." Numaralı sipariş yenileme faturası"
                         ];
+
+                        echo "<pre>";
+                        print_r($faturaData);
+                        echo "</pre>";
 
                         $faturaID = FaturaModel::ekle($faturaData);
 
                         if ($faturaID) {
+
                             echo $su->id." Numaralı sipariş ürünü için  ".$faturaID." Numaralı yenileme faturası Oluşturuldu<br>";
                         }else{
+
                             echo $su->id." Numaralı sipariş ürünü için yenileme faturası oluşturulamadı<br>";
                         }
 
                     }
-                    $urunTLFiyat = AyarModel::tlCevir($urunFiyati,$su->para_birimi);
-                    $urunKdvTutari = $su->kdv*$urunTLFiyat/100;
+                    $urunTLFiyat = AyarModel::tlCevir($urunAnaFiyat,$su->para_birimi);
+                    $urunKdvTutari = ($su->kdv*$urunTLFiyat)/100;
 
                     $urunToplamFiyat = ($urunTLFiyat*$su->adet)+$urunKdvTutari;
 
@@ -316,13 +348,67 @@ class CronJob extends Controller
                         'tutar'                 =>$urunToplamFiyat,
                     ];
 
-                    //print_r($fUrun);
+                    /****************************/
+
+                    if($su->fiyat_sabitle=="0"){
+                        //Ürünün güncel fiyatını öğreniyoruz
+                        $urunBilgi = UrunModel::detay($su->urun);
+                        //ödeme periyoduna göre fiyatı hesaplıyoruz
+                        if ($su->odeme_periyodu == "A") {
+                            $urunFiyati = $urunBilgi->aylik_fiyat;
+                        }elseif ($su->odeme_periyodu == "3A"){
+                            $urunFiyati = $urunBilgi->uc_aylik_fiyat;
+                        }elseif ($su->odeme_periyodu == "6A"){
+                            $urunFiyati = $urunBilgi->alti_aylik_fiyat;
+                        } elseif ($su->odeme_periyodu == "Y") {
+                            echo "Yıllık ürün fiyatı:";
+                            echo $urunFiyati = $urunBilgi->yillik_fiyat;
+                        }else{
+                            $urunFiyati = $urunBilgi->yillik_fiyat;
+                        }
+
+                        $toplamFiyat = $toplamFiyat+($urunFiyati * $su->adet);
+
+                        $kdvToplami = $kdvToplami+((($urunFiyati * $su->adet)*$su->kdv)/100);
+
+                    }else{
+                        $toplamFiyat = $toplamFiyat+($su->birim_fiyat * $su->adet);
+                        $kdvToplami = $kdvToplami+(($toplamFiyat*$su->kdv)/100);
+                    }
+
+                    $toplamTutar = $toplamFiyat+$kdvToplami;
+
+                    /****************************/
+
+                    echo "<pre>";
+
+                    print_r($fUrun);
+
+                    echo "<pre>";
 
                     $faturaUrunEkle = FaturaModel::urunEkle($fUrun);
 
                     if ($faturaUrunEkle) {
+
+                        $faturaToplamData = [
+                            'id'                    => $faturaID,
+                            'toplam_tutar'          => AyarModel::tlCevir($toplamFiyat,$su->para_birimi),
+                            'kdv_toplami'           => AyarModel::tlCevir($kdvToplami,$su->para_birimi),
+                            'genel_toplam'          => AyarModel::tlCevir($toplamTutar,$su->para_birimi),
+                        ];
+
+                        $faturaTutarGuncelle = FaturaModel::faturaTutarGuncelle($faturaToplamData);
+
+                        $siparisUrunGUncelle = SiparisModel::urunDurumDegistir($su->id,AyarModel::defaultAyarlar('odemeBekleniyorDurumu'));
+                        $urunKdvTutari = "";
+                        $urunTLFiyat = "";
+                        $urunToplamFiyat = "";
+
                         echo $su->id." Numaralı sipariş ürünü için oluşturulan  ".$faturaID." Numaralı yenileme faturasına fatura ürünü eklendi<br>";
                     }else{
+                        $urunKdvTutari = "";
+                        $urunTLFiyat = "";
+                        $urunToplamFiyat = "";
                         echo $su->id." Numaralı sipariş ürünü için yenileme faturası oluşturulamadı<br>";
                     }
 
@@ -341,36 +427,75 @@ class CronJob extends Controller
         }
 
 
-        //$yillikPeriyodUrunleri = UrunModel::uyeUrunleriSonOtuz('year',$onBesGunSonra);
+    }
+
+    public function hatirlatmalar(){
+
+        $hatirlatmalar = PlanlamaModel::tumHatirlatmalar('1');
+
+        // Periyod 0 Tek sefer - 1 Yenilenen
+
+        foreach ($hatirlatmalar['liste'] as $yapilacak) {
+
+            $personel = PersonelModel::detay($yapilacak->personel);
+
+            $yapilacakYil = $yapilacak->yil;
+            $yapilacakAy = $yapilacak->ay==0 ? date('m') : $yapilacak->ay;
+            $yapilacakGun = $yapilacak->gun==0 ? date('d') : $yapilacak->gun;
+
+            $yapiacakZaman = $yapilacakYil."-".$yapilacakAy."-".$yapilacakGun." ".$yapilacak->saat;
+            $strYapiacakZaman = strtotime($yapilacakYil."-".$yapilacakAy."-".$yapilacakGun." ".$yapilacak->saat);
+            $uyariZamani = $strYapiacakZaman - (30 * 60);
+
+            $suan = date('Y-m-d H:i');
+            $strSuan = strtotime($suan);
+
+            if($strSuan>$uyariZamani) {
+
+                $mailgonder = Email::subject('Hatırlatma !')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($personel->email)->template('by', [
+
+                    'konu' => 'Hatırlatmanız var !',
+                    'mesaj' => Date::convert($yapiacakZaman,"d.m.Y H:i").' tarihinde yapılması için hatırlamanız gereken aşağıdaki göreviniz var<br><br>'.$yapilacak->aciklama,
+                    'firma' => AyarModel::defaultAyarlar('firmaAdi'),
+                    'firma_link' => AyarModel::defaultAyarlar('siteUrl'),
+                    'hakkimizda'=> AyarModel::defaultAyarlar('siteKisaAciklama'),
+                    'adres' => AyarModel::defaultAyarlar('firmaAdresi'),
+                    'telefon' => AyarModel::defaultAyarlar('firmaTel'),
+                ])->send();
+
+                //SMS GÖNDERİMİ
+                if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+                    $smsData = [
+                        'mesaj'=>'Hatırlatmanız var !'.Date::convert($yapiacakZaman,"d.m.Y H:i").' tarihinde. '.$yapilacak->aciklama,
+                        'numara'=>$personel->telefon
+                    ];
+
+                    $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+                }
+                //SMS GÖNDERİMİ
+                if($mailgonder){
+
+                    echo $yapilacak->id." Hatırlatma Bildirimi Gönderildi<br>";
+
+                    if ($yapilacak->periyod == 0) {
+                        PlanlamaModel::hatirlatmaDurumGuncelle(["id" => $yapilacak->id, "durum" => "0"]);
+                    }else {
+                        PlanlamaModel::hatirlatmaDurumGuncelle(["id" => $yapilacak->id, "durum" => "2"]);
+                    }
+                }
 
 
-        /*foreach ($yillikPeriyodUrunleri as $pu){
-
-            $uyeBilgi = UyeModel::detay($pu->uye);
-
-            $urunTipi = AyarModel::urunTipleri($pu->urun_tipi);
-
-            Email::from(AyarModel::defaultAyarlar('smtpUser'), 'BURSA YAZILIM', AyarModel::defaultAyarlar('smtpUser'))
-                ->to($uyeBilgi->email, 'To')
-                ->bcc(AyarModel::defaultAyarlar('iletisimEposta'), 'To 1')
-                ->subject($pu->urun_adi.' '.$urunTipi.' Ürününüzün son kullanım tarihi yaklaşıyor')
-                ->template('general', [
-                    'name'          => $uyeBilgi->adi_soyadi,
-                    'subject'       => $pu->urun_adi.' '.$urunTipi.' Ürününüzün son kullanım tarihi yaklaşıyor',
-                    'content'       => $pu->urun_adi.' '.$urunTipi.' Ürününüz '.Date::convert($pu->bitis_tarihi,'{dayNumber0}.{monthNumber0}.{year}').' tarihinde ödemesi yapılmadığı taktirde kullanım süresi dolacaktır.<br>Bu süre geçtikten sonra ürününüzün durumuna göre kurtarma ücreti yansıtılabilir. <br>Aşağıdaki bulunan linkten Panelinize girerek gerekli süre uzatma işlemlerini gerçekleştirebilirsiniz<br><br> Eğer ödeme yaptıysanız lütfen dikkate almayınız. ',
-                    'href'          => URL::site('userPanel'),
-                    'hrefButton'    => 'Paneliniz'
-                ])
-                ->send();
-
-        }*/
 
 
-        echo "<pre>";
-        //print_r($yillikPeriyodUrunleri);
+            }else{
 
-        echo "</pre>";
+                echo $yapilacak->id." -  ".Date::convert($yapiacakZaman,"d.m.Y H:i")." Henüz Zamanı gelmemiş<br>";
 
+            }
+
+        }
 
 
 

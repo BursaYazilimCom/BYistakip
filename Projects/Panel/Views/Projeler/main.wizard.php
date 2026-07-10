@@ -25,7 +25,7 @@
                 <div class="row">
                     <!-- Invoice repeater -->
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card brdt-info">
                             <div class="card-header">
                                 <div class="head-label">
                                     <h4 class="card-title">Projeler</h4>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="card-body">
                                 {{ Redirect::select('bilgi',true) }}
-                                <div class="table-responsive">
+                                <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                                     <table class="table table-hover  table-bordered">
                                         <thead>
                                         <tr>
@@ -73,7 +73,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="Yol Haritası" href="{{URL::site('projeler/yolHaritasi/'.$u->id)}}"><i data-feather="activity" class="me-50"></i></a>
+                                                <a class="btn btn-info btn-sm" data-bs-toggle="tooltiptooltip" title="Yol Haritası" href="{{URL::site('projeler/yolHaritasi/'.$u->id)}}"><i data-feather="activity" class="me-50"></i></a>
 
                                                 <a class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Yapılan Çalışmalar" href="{{URL::site('projeler/yapilanlar/'.$u->id)}}"><i data-feather="tool" class="me-50"></i></a>
 

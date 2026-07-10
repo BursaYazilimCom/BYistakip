@@ -31,7 +31,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-lg-2 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-info">
                                     <div class="card-header">
                                         <h4 class="card-title">Teklif Detayları</h4>
                                     </div>
@@ -97,6 +97,17 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-form-label" for="gecerlilik_suresi_gun">Kaç Gün Geçerli</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <input type="number" class="form-control form-control-sm" name="gecerlilik_suresi_gun" id="gecerlilik_suresi_gun" value="{{$detay->gecerlilik_suresi_gun}}" placeholder="Kaç Gün Geçerli" />
+                                                </div>
+                                            </div>
+                                        </div>
+
                                       
                                        
                                         <div class="col-12">
@@ -112,12 +123,12 @@
                             </div>
 
                             <div class="col-lg-10 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-info">
                                     <div class="card-header">
                                         <h4 class="card-title">Teklif Detayları</h4>
                                     </div>
                                     <hr>
-                                        <div class="table-responsive">
+                                        <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                                             <table class="table table-hover table-responsive">
                                                 <thead>
                                                 <tr>
@@ -139,7 +150,8 @@
                                                         </td>
 
                                                         <td style="min-width: 400px">
-                                                            <input type="text" name="aciklama[]" id="aciklama" class="form-control">
+                                                    
+                                                            <textarea name="aciklama[]" id="aciklama" class="form-control" rows="1"></textarea>
                                                         </td>
 
                                                         <td>

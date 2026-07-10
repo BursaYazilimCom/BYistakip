@@ -37,7 +37,7 @@
             <!-- Hoverable rows start -->
             <div class="row" id="table-hover-row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card brdt-danger">
                         <div class="card-header">
                             <h4 class="card-title">Gider Kayıtları</h4>
                         </div>
@@ -47,7 +47,7 @@
                             </p>
                             {{ Redirect::select('bilgi',true) }}
                         </div>
-                        <div class="table-responsive">
+                        <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                             <table class="table table-hover  table-bordered">
                                 <thead>
                                 <tr>
@@ -79,7 +79,7 @@
                                     <td class="text-{{$kayit->odeme_durumu=='1'?'success':'danger'}}">
                                         {{$kayit->odeme_durumu=="1"?"Ödeme Yapıldı":"Ödeme Yapılmadı"}}
                                     </td>
-                                    <td>{{number_format($kayit->tutar,2)}}</td>
+                                    <td>{{number_format((float)$kayit->tutar,2)}}</td>
                                     <td>{{Date::convert($kayit->odeme_tarihi, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td>{{Date::convert($kayit->islem_tarihi, '{dayNumber0}.{monthNumber0}.{year}')}}</td>
                                     <td>

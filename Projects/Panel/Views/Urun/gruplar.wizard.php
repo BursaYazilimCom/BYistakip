@@ -28,24 +28,26 @@
                 <div class="row">
                     <!-- Invoice repeater -->
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card brdt-warning">
                             <div class="card-header">
                                 <div class="head-label">
                                     <h4 class="card-title">Ürün Grupları</h4>
                                 </div>
                                 <div class="dt-action-buttons text-end">
-                                    <button class="dt-button create-new btn btn-primary" tabindex="0" data-bs-toggle="modal" data-bs-target="#modals-add"><span><i data-feather="plus"></i>EKLE</span></button>
+                                    <a href="{{URL::site('urun/grupForm')}}" class="dt-button create-new btn btn-primary"><span><i data-feather="plus"></i>GRUP OLUŞTUR</span></a>
                                 </div>
                             </div>
                             <div class="card-body">
 
-                                <div class="table-responsive">
+                                <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                                     <table class="table table-hover  table-bordered">
                                         <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Sıra</th>
                                             <th>Adı</th>
+                                            <th>Görünüm</th>
+                                            <th>Tür</th>
                                             <th>Durum</th>
                                             <th></th>
                                         </tr>
@@ -57,15 +59,16 @@
                                             <td style="cursor:move;">{{$item->id}}</td>
                                             <td>{{$item->sira}}</td>
                                             <td>{{$item->adi}}</td>
-                                            <td class="table-{{$item->durum=='1'?'success':'danger'}}">{{$item->durum=="1"?"Aktif":"Pasif"}}</span></td>
+                                            <td>
+                                                {{$item->urun_gorunumu=='list'?'Liste':'Dikey Blok'}}
+                                            </td>
+                                            <td>{{AyarModel::grupTur($item->tur)}}</td>
+                                            <td><span class="badge bg-{{$item->durum=='1'?'success':'danger'}}">{{$item->durum=="1"?"Aktif":"Pasif"}}</span></td>
                                             <td>
 
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                     <span data-bs-toggle="tooltip" title="Düzenle">
-                                                        <a class="btn btn-warning editButon btn-sm" data-action="grupDuzenle">
-                                                            <i data-feather="edit-2" class="me-50"></i>
-                                                        </a>
-                                                    </span>
+                                                    <a class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Düzenle" href="{{URL::site('urun/grupForm/')}}{{$item->id}}"><i data-feather="edit-2" class="me-50"></i></a>
+
                                                     <a class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Sil" onclick="deleteAction('{{$item->id}}','{{URL::site('urun/ajax')}}','grupSil')"><i data-feather="trash" class="me-50"></i></a>
                                                 </div>
 

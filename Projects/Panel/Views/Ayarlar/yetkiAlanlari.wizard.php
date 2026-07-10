@@ -26,7 +26,7 @@
                 <div class="row">
                     <!-- Invoice repeater -->
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card brdt-navy">
                             <div class="card-header">
                                 <div class="head-label">
                                     <h4 class="card-title">Yetki Alanları</h4>
@@ -37,7 +37,7 @@
                             </div>
                             <div class="card-body">
 
-                                <div class="table-responsive">
+                                <div class="table-responsive table-responsive-sm table-responsive-md table-responsive-xl">
                                     <table class="table table-hover  table-bordered">
                                         <thead>
                                         <tr>

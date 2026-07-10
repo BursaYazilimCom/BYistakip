@@ -18,6 +18,8 @@ use ZN\Email\Exception\SMTPDataFailureException;
 use ZN\Email\Exception\SMTPAuthException;
 use ZN\Email\Exception\SMTPAuthPasswordException;
 
+#[\AllowDynamicProperties]
+
 class SmtpDriver extends DriverMappingAbstract
 {
     /**
@@ -31,6 +33,28 @@ class SmtpDriver extends DriverMappingAbstract
      * @var object
      */
     protected $connect;
+
+    /**
+     * Keeps config variables
+     */
+    protected $to, 
+              $subject, 
+              $body, 
+              $header,
+              $host, 
+              $user, 
+              $password, 
+              $from, 
+              $port,
+              $encoding, 
+              $timeout, 
+              $cc, 
+              $bcc, 
+              $auth,
+              $encode, 
+              $keepAlive, 
+              $dsn, 
+              $tos;
 
     /**
      * Magic Constructor
@@ -61,6 +85,7 @@ class SmtpDriver extends DriverMappingAbstract
         $this->keepAlive  = $settings['keepAlive'] ?? '';
         $this->dsn        = $settings['dsn']       ?? '';
         $this->tos        = $settings['tos']       ?? [];
+        $this->lf         = $settings['commandLine'] ?? $this->lf;
     }
 
     /**

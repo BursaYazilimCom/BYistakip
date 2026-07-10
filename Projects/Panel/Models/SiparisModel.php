@@ -104,6 +104,13 @@ class InternalSiparisModel extends Model
 
     }
 
+    public function uyeUrunAdet($uye){
+
+        $adet = DB::where('cari',$uye)->siparis_urunleri()->result()->totalRows();
+
+        return $adet;
+    }
+
     public function uyeDurumSiparisleri($id,$durum){
 
             $liste = DB::select(
@@ -234,6 +241,18 @@ class InternalSiparisModel extends Model
 
     }
 
+    public function siparistekilUrunIslemGerekiyor($id,$gerekiyormu,$islem){
+
+        $guncelle = DB::where('id',$id)
+            ->update('siparis_urunleri',[
+                'islem_gerekiyor'       =>$gerekiyormu,
+                'yapilacak_islem'       => $islem
+            ]);
+
+        return $guncelle;
+
+    }
+
     public function islemGerekenSiparisler(){
         $veri = DB::where('islem_gerekiyor','1')->siparis_urunleri();
 
@@ -296,6 +315,18 @@ class InternalSiparisModel extends Model
         ]);
 
         //echo DB::stringQuery();
+
+        return $guncelle;
+
+    }
+
+    public function siparisUrunTarihGuncelle($id,$baslangic,$bitis){
+
+        $guncelle = DB::where('id',$id)
+            ->update('siparis_urunleri',[
+                'baslangic_tarihi'      =>$baslangic,
+                'bitis_tarihi'          =>$bitis
+            ]);
 
         return $guncelle;
 
@@ -385,17 +416,19 @@ class InternalSiparisModel extends Model
     }
 
 
-    public function siparisUrunleriListe($gurup=""){
+    public function siparisUrunleriListe($gurup="",$sayfa=Null){
 
         if ($gurup=="") {
 
-            $veri = DB::orderby('bitis_tarihi','ASC')->limit(null,25)->siparis_urunleri();
+            $veri = DB::orderby('bitis_tarihi','ASC')->limit($sayfa,25)->siparis_urunleri();
+
+            //echo DB::stringQuery();
+            return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
 
         }else{
-            $veri = DB::select('siparis_urunleri.*')->innerjoin('urunler.id','siparis_urunleri.urun')->where('urunler.grup',$gurup)->orderby('bitis_tarihi','ASC')->limit(null,25)->siparis_urunleri();
+            $veri = DB::select('siparis_urunleri.*')->innerjoin('urunler.id','siparis_urunleri.urun')->where('urunler.grup',$gurup)->orderby('bitis_tarihi','ASC')->limit($sayfa,25)->siparis_urunleri();
+            return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination('siparisler/gruplar/'.$gurup),'adet'=>$veri->totalRows(true)];
         }
-
-        return ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination(),'adet'=>$veri->totalRows(true)];
 
     }
 

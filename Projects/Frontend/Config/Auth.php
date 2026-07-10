@@ -27,16 +27,16 @@
     'spectator' => '',
     'matching'  =>
     [
-        'table'   => '',
+        'table'   => 'cari',
         'columns' =>
         [
-            'username'     => '', # Required
-            'password'     => '', # Required
-            'email'        => '', # Relative
-            'active'       => '', # Relative
-            'banned'       => '', # Relative
-            'activation'   => '', # Relative
-            'verification' => '', # Relative
+            'username'     => 'email', # Required
+            'password'     => 'pass', # Required
+            'email'        => 'email', # Relative
+            'active'       => 'online', # Relative
+            'banned'       => 'ban', # Relative
+            'activation'   => 'aktivasyon', # Relative
+            'verification' => 'cevap', # Relative
             'otherLogin'   => []  # Relative
         ]
     ],

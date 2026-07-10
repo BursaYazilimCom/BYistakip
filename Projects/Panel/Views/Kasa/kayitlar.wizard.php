@@ -37,17 +37,17 @@
             <!-- Hoverable rows start -->
             <div class="row" id="table-hover-row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card brdt-pink">
                         <div class="card-header">
                             <h4 class="card-title">{{$detay->adi}} Kasası Kayıtları</h4>
                         </div>
                         <div class="card-body">
                             <p class="card-text text-center">
-                            Gelirler: <span class="text-success">{{number_format($kasaToplamlari->gelir,2)}}</span> Giderler: <span class="text-danger">{{number_format($kasaToplamlari->gider,2)}}</span> Kasa Bakiyesi: <strong>{{number_format($kasaToplamlari->gelir-$kasaToplamlari->gider,2)}} ₺</strong>
+                            Gelirler: <span class="text-success">{{number_format((float)$kasaToplamlari->gelir,2)}}</span> Giderler: <span class="text-danger">{{number_format($kasaToplamlari->gider,2)}}</span> Kasa Bakiyesi: <strong>{{number_format((float)$kasaToplamlari->gelir-(float)$kasaToplamlari->gider,2)}} ₺</strong>
                             </p>
                             {{ Redirect::select('bilgi',true) }}
                         </div>
-                        <div class="table-responsive">
+                        <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                             <table class="table table-hover table-bordered">
                                 <tr>
                                     <th>Tarih</th>
@@ -69,8 +69,8 @@
                                     <td class="text-{{$kayit->islem=='o'?'danger':'success'}}">{{$kayit->islem=="o"?"Ödeme":"Tahsilat"}}</td>
                                     <td>{{$kayit->hesap}}</td>
                                     <td>{{$kayit->aciklama}}</td>
-                                    <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format($kayit->gelir,2)}}</td>
-                                    <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format($kayit->gider,2)}} </td>
+                                    <td class="text-success">{{$kayit->gelir=="0.0000"?"":number_format((float)$kayit->gelir,2)}}</td>
+                                    <td class="text-danger">{{$kayit->gider=="0.0000"?"":number_format((float)$kayit->gider,2)}} </td>
                                   
                                     <td>
                                         

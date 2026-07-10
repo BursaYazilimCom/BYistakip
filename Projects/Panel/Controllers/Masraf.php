@@ -83,10 +83,9 @@ class Masraf extends Controller
 
         if(Upload::isFile('belge_dosya')) {
 
-            Upload:
-            convertName()
+            Upload::convertName()
                 ->source('belge_dosya')
-                ->target(UPLOADS_DIR . 'masraf_belgeleri/')
+                ->target(REAL_BASE_DIR . 'Uploads/masraf_belgeleri/')
                 ->start();
             $dosyaBilgi = Upload::info();
 
@@ -146,7 +145,7 @@ class Masraf extends Controller
 
 
 
-                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Ekleme İşlemi Yapıldı !.</div></div>'])->action('masraf');
+                Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Başarı İle Ekleme İşlemi Yapıldı !.</div></div>'])->action(URL::prev());
             }else{
 
                 Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">Ekleme işlemi sırasında hata oluştu !.</div></div>'])->action(URL::prev());

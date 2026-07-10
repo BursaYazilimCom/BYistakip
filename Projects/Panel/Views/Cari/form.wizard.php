@@ -51,7 +51,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-md-6 col-12">
-                                <div class="card">
+                                <div class="card brdt-success">
                                     <div class="card-header">
                                         <h4 class="card-title">Cari Bilgileri</h4>
                                     </div>
@@ -155,9 +155,9 @@
                             </div>
 
                             <div class="col-md-6 col-12">
-                                <div class="card">
+                                <div class="card brdt-success">
                                     <div class="card-header">
-                                        <h4 class="card-title">İzinler</h4>
+                                        <h4 class="card-title">Firma Detayları</h4>
                                     </div>
 
                                         <div class="card-body">
@@ -207,7 +207,19 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row custom-options-checkable g-1">
+                                            <div class="row custom-options-checkable g-1 mb-1">
+
+                                                <div class="col-md-6">
+                                                    <input class="custom-option-item-check" type="radio" name="durum" id="durum2" value="1" {{$detay->durum=='1'?'checked':''}} />
+                                                    <label class="custom-option-item p-1" for="durum2">
+                                                    <span class="d-flex justify-content-between flex-wrap mb-50">
+                                                        <span class="fw-bolder">Aktif Üye</span>
+
+                                                    </span>
+                                                        <small class="d-block">Bildirimler gönderilir ve satış yapılabilir</small>
+                                                    </label>
+                                                </div>
+
                                                 <div class="col-md-6">
                                                     <input class="custom-option-item-check" type="radio" value="0" name="durum" id="durum1" {{$detay->durum=='0'?'checked':''}} />
                                                     <label class="custom-option-item p-1" for="durum1">
@@ -219,17 +231,9 @@
                                                     </label>
                                                 </div>
 
-                                                <div class="col-md-6">
-                                                    <input class="custom-option-item-check" type="radio" name="durum" id="durum2" value="1" {{$detay->durum=='1'?'checked':''}} />
-                                                    <label class="custom-option-item p-1" for="durum2">
-                                                    <span class="d-flex justify-content-between flex-wrap mb-50">
-                                                        <span class="fw-bolder">Aktif Üye</span>
-
-                                                    </span>
-                                                        <small class="d-block">Cariye ödeme ekstra bildirimler gönderilir ve satış yapılabilir</small>
-                                                    </label>
-                                                </div>
+                                                
                                             </div>
+
                                         </div>
 
 

@@ -32,18 +32,19 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-lg-2 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-pink">
                                     <div class="card-header">
-                                        <h4 class="card-title">Sipariş Detayları</h4>
+                                        <h4 class="card-title">Fatura Bilgileri</h4>
                                     </div>
                                     <div class="card-body">
+
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-12">
-                                                    <label class="col-form-label" for="cari">Müşteri</label>
+                                                    <label class="col-form-label" for="cari">{{$detay->musteri=="0"?"Cari":"Müşteri"}}</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <strong>{{ CariModel::cariAdi($detay->musteri)}}</strong>
+                                                    <strong>{{$detay->musteri=="0"?TedarikciModel::tedarikciAdi($detay->tedarikci):CariModel::cariAdi($detay->musteri)}}</strong>
 
                                                 </div>
                                             </div>
@@ -100,7 +101,7 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <label class="form-label" for="siparis_notu">Sipairş Notu</label>
+                                            <label class="form-label" for="siparis_notu">Fatura Notu</label>
                                             <div class="input-group input-group-merge">
                                                 @Form::id('siparis_notu')->placeholder('Sipariş Notu')->textarea('siparis_notu',$detay->aciklama,['class'=>'form-control'])
                                             </div>
@@ -112,15 +113,25 @@
                             </div>
 
                             <div class="col-lg-10 col-md-12 col-12">
-                                <div class="card">
+                                <div class="card brdt-pink">
                                     <div class="card-header">
                                         <h4 class="card-title">Fatura Detayları
-                                            @if($detay->odeme=="0")
-                                            <span class="badge rounded-pill badge-light-warning">Ödeme Yapılmadı</span>
-                                            @elseif($detay->odeme=="1")
-                                            <span class="badge rounded-pill badge-light-success">Ödeme Yapıldı olarak işaretlendi</span>
-                                            @endif
+
                                         </h4>
+                                        @if($detay->tur=="1")
+                                        <span class="badge rounded-pill badge-light-warning">Alış Faturası</span>
+                                        @elseif($detay->tur=="2")
+                                        <span class="badge rounded-pill badge-light-success">Satış Faturası</span>
+                                        @else
+                                        <span class="badge rounded-pill badge-light-danger">İade Faturası</span>
+                                        @endif
+
+                                        @if($detay->odeme=="0")
+                                        <span class="badge rounded-pill badge-light-warning">Ödeme Yapılmadı</span>
+                                        @elseif($detay->odeme=="1")
+                                        <span class="badge rounded-pill badge-light-success">Ödeme Yapıldı olarak işaretlendi</span>
+                                        @endif
+
                                         @if($detay->durum=="2")
                                             <span class="badge rounded-pill badge-light-success">Resmi Fatura <a href="{{URL::site()}}../Uploads/faturalar/{{ $detay->resmi_fatura_dosyasi }}" target="_blank" class="badge rounded-pill badge-light-info">Yüklenmiş Faturayı İndir</a></span>
 
@@ -133,6 +144,7 @@
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <div class="row">
+                                                @if($detay->tur=="2" or $detay->tur=="3")
                                                 <div class="col-md-6">
                                                     <h5 class="card-title">Firma Detayları</h5>
                                                     <p class="card-text mb-25"><strong>{{AyarModel::defaultAyarlar('firmaAdi')}}</strong></p>
@@ -146,6 +158,23 @@
                                                     <p class="card-text mb-0">Vergi D.: {{$detay->cariDetay->vergi_dairesi}}<br>Vergi No: {{$detay->cariDetay->vergi_no}}</p>
 
                                                 </div>
+                                                @else
+
+                                                    <div class="col-md-6">
+                                                        <h5 class="card-title">Fatura Kesen Firma</h5>
+                                                        <p class="card-text mb-25"><strong>{{$tedarikci->firma_adi}}</strong></p>
+                                                        <p class="card-text mb-25">{{$tedarikci->adres}}</p>
+                                                        <p class="card-text mb-0">Vergi D.: {{$tedarikci->vergi_dairesi}}<br>Vergi No: {{$tedarikci->vergi_no}}</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h5 class="card-title">Fatura Sahibi</h5>
+                                                        <p class="card-text mb-25"><strong>{{AyarModel::defaultAyarlar('firmaAdi')}}</strong> </p>
+                                                        <p class="card-text mb-25">{{AyarModel::defaultAyarlar('firmaAdresi')}}</p>
+                                                        <p class="card-text mb-0">Vergi D.: {{AyarModel::defaultAyarlar('vergiDairesi')}}<br>Vergi No: {{AyarModel::defaultAyarlar('vergiNo')}}</p>
+
+                                                    </div>
+
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -196,10 +225,13 @@
                                                         <input type="hidden" name="id[]" id="id" value="{{$furun->id}}">
                                                         <input type="hidden" name="urun_adi[]" id="urun_adi" value="{{$furun->urun_adi}}">
                                                         <strong>{{$furun->urun_adi}}</strong><br>
-                                                        @if($detay->satis_turu=="1")
-                                                        <small>İlk Sipariş</small>
-                                                        @else
-                                                        <small><strong>Yenilenme Dönemi:</strong>{{Date::convert($furun->donem_baslangic_tarihi,'d.m.Y')}} {{Date::convert($furun->donem_bitis_tarihi,'d.m.Y')}}</small>
+                                                        @if($detay->tur=="2")
+                                                            @if($detay->satis_turu=="1")
+                                                                <small>İlk Sipariş</small>
+                                                            @else
+                                                                <small><strong>Yenilenme Dönemi:</strong><br>{{Date::convert($furun->donem_baslangic_tarihi,'d.m.Y')}} {{Date::convert($furun->donem_bitis_tarihi,'d.m.Y')}}</small>
+                                                            @endif
+
                                                         @endif
 
                                                     </td>
@@ -217,10 +249,10 @@
                                                     </td>
                                                     <td>
                                                         @if($detay->durum=="2")
-                                                        {{number_format($furun->fiyat,2)}}
+                                                        {{number_format((float)$furun->fiyat,2)}}
                                                         @else
                                                         <div class="input-group">
-                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{number_format($furun->fiyat,2)}}" class="fiyat form-control">
+                                                            <input type="text" name="fiyat[]" id="fiyat" value="{{number_format((float)$furun->fiyat,2)}}" class="fiyat form-control">
                                                             <span class="input-group-text">₺</span>
                                                         </div>
 
@@ -244,10 +276,10 @@
                                                     <td>
 
                                                         @if($detay->durum=="2")
-                                                        {{number_format($furun->tutar,2)}}
+                                                        {{number_format((float)$furun->tutar,2)}}
                                                         @else
                                                         <div class="input-group">
-                                                            <input type="text" name="tutar" readonly id="tutar" value="{{number_format($furun->tutar,2)}}" class="tutar form-control">
+                                                            <input type="text" name="tutar" readonly id="tutar" value="{{number_format((float)$furun->tutar,2)}}" class="tutar form-control">
                                                             <span class="input-group-text">₺</span>
                                                         </div>
                                                         @endif
@@ -275,27 +307,27 @@
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>Ara Toplam</td>
-                                                    <td class="kdvsizTutar">{{number_format($araToplamTutar,2)}} ₺</td>
+                                                    <td class="kdvsizTutar">{{number_format((float)$araToplamTutar,2)}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>KDV %10</td>
-                                                    <td class="kdvTutar10">{{number_format($kdv10,2)}} ₺</td>
+                                                    <td class="kdvTutar10">{{number_format((float)$kdv10,2)}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>KDV %20</td>
-                                                    <td class="kdvTutar20">{{number_format($kdv20,2)}} ₺</td>
+                                                    <td class="kdvTutar20">{{number_format((float)$kdv20,2)}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>KDV Toplamı</td>
-                                                    <td class="kdvlerToplam">{{number_format($kdv20+$kdv10,2)}} ₺</td>
+                                                    <td class="kdvlerToplam">{{number_format((float)$kdv20+(float)$kdv10,2)}} ₺</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td>Genel Toplam</td>
-                                                    <td class="genel_toplam">{{number_format($toplamTutar,2)}} ₺</td>
+                                                    <td class="genel_toplam">{{number_format((float)$toplamTutar,2)}} ₺</td>
                                                 </tr>
                                                 </tfoot>
                                             </table>
@@ -383,10 +415,12 @@
                                                 @else
                                                 <small>Resmileştirilmiş faturaya yeni bir ürün kalemi ekleyemezsiniz. Bunun için yeni bir şipariş oluşturmalısınız </small><br><br>
                                                 @endif
+                                                @if($detay->tur!="1")
                                                 <a data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="faturaOdendiYap" class="dt-button create-new btn btn-info">
                                                     <i data-feather="plus" class="me-50"></i>
                                                     Ödeme EKle
                                                 </a>
+                                                @endif
                                                 @if($detay->durum=="1")
                                                 <a  data-bs-toggle="modal" data-bs-target="#openModal" data-id="{{$detay->id}}" data-action="faturaResmilestir"  href="#" class="dt-button create-new btn btn-warning"><span><i data-feather="airplay"></i> Faturayı Resmileştir</span></a>
 
@@ -436,7 +470,11 @@
                                                 <td>{{KasaModel::hesapAdi($mi->kasa)}}</td>
                                                 <td>{{$mi->islem=="t"?"<span class='text-success'>Tahsilat</span> ":"<span class='text-danger'>Ödeme Yapıldı</span>"}}</td>
                                                 <td>{{$mi->aciklama}}</td>
-                                                <td align="right">{{number_format($mi->gelir,2)}}</td>
+                                                @if($mi->islem=="t")
+                                                <td align="right">{{number_format((float)$mi->gelir,2)}}</td>
+                                                @else
+                                                <td align="right">{{number_format((float)$mi->gider,2)}}</td>
+                                                @endif
 
                                             </tr>
 
@@ -453,17 +491,17 @@
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td style="text-align: right">Toplam Tahsilat :</td>
-                                                <td align="right">{{number_format($gelir,2)}} ₺</td>
+                                                <td align="right">{{number_format((float)$gelir,2)}} ₺</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3"></td>
-                                                <td style="text-align: right">Toplam İade :</td>
-                                                <td align="right">{{number_format($gider,2)}} ₺</td>
+                                                <td style="text-align: right">Toplam Ödeme :</td>
+                                                <td align="right">{{number_format((float)$gider,2)}} ₺</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3"></td>
-                                                <td style="text-align: right">Toplam Alınan :</td>
-                                                <td align="right">{{number_format($gelir-$gider,2)}} ₺</td>
+                                                <td style="text-align: right">Toplam Tutar :</td>
+                                                <td align="right">{{number_format((float)$gelir-(float)$gider,2)}} ₺</td>
                                             </tr>
 
                                             </tfoot>

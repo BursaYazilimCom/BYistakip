@@ -114,4 +114,37 @@ class Strings extends Factory
     {
         return count(explode($char, $str)) - 1;
     }
+
+    /**
+     * Unserialize
+     * 
+     * @param string $str
+     * 
+     * @return array
+     */
+    public static function unserialize(string $str) : array
+    {
+        parse_str(urldecode($str), $array);
+
+        return $array;
+    }
+
+    /**
+     * Serialize
+     * 
+     * @param array $array
+     * 
+     * @return string
+     */
+    function serialize(array $array) : string
+    {
+        $queryString = [];
+
+        foreach( $array as $key => $value ) 
+        {
+            $queryString[] = urlencode($key) . '=' . urlencode($value);
+        }
+
+        return implode('&', $queryString);
+    }
 }

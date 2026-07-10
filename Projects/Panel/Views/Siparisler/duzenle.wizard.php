@@ -33,7 +33,7 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-md-3 col-12">
-                                <div class="card">
+                                <div class="card brdt-danger">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Detayları (#{{$detay->id}})</h4>
                                     </div>
@@ -88,6 +88,7 @@
                                                         <option value="">--Seçiniz--</option>
                                                         <option  value="0" {{$detay->odeme_durumu=="0"?'selected':''}}>Ödeme Bekleniyor</option>
                                                         <option  value="1" {{$detay->odeme_durumu=="1"?'selected':''}}>Ödeme Yapıldı</option>
+                                                        <option  value="2" {{$detay->odeme_durumu=="2"?'selected':''}}>Kısmi Ödeme Alındı</option>
 
                                                     </select>
                                                 </div>
@@ -104,15 +105,15 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td>Toplam Tutar</td>
-                                                                <td style="text-align: right">{{number_format($detay->toplam_tutar,2)}} ₺</td>
+                                                                <td style="text-align: right">{{number_format((float)$detay->toplam_tutar,2)}} ₺</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Toplam KDV</td>
-                                                                <td style="text-align: right">{{number_format($detay->kdv_tutari,2)}} ₺</td>
+                                                                <td style="text-align: right">{{number_format((float)$detay->kdv_tutari,2)}} ₺</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Genel Toplam</td>
-                                                                <td style="text-align: right">{{number_format($detay->genel_toplam_tutari,2)}} ₺</td>
+                                                                <td style="text-align: right">{{number_format((float)$detay->genel_toplam_tutari,2)}} ₺</td>
                                                             </tr>
 
                                                         </tbody>
@@ -172,7 +173,7 @@
                             </div>
 
                             <div class="col-md-9 col-12">
-                                <div class="card">
+                                <div class="card brdt-danger">
                                     <div class="card-header">
                                         <h4 class="card-title">Sipariş Ürünleri <small>Bu listedeki fiyatlar KDV dahil fiyatlardır. Fiyat değişikliği için faturayı düzenleyin</small></h4>
                                         <div class="btn-group" role="group" aria-label="Basic example">
@@ -182,7 +183,7 @@
                                         </div>
                                     </div>
                                         <div class="card-body">
-                                            <div class="table-responsive">
+                                            <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>
@@ -212,7 +213,7 @@
                                                         <td>{{$sUrun->adet}}</td>
                                                         <td>{{$sUrun->notu}}</td>
                                                         <td>{{Date::convert($sUrun->baslangic_tarihi, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
-                                                        <td>{{number_format($sUrun->toplam_fiyat,2)}} ₺  </td>
+                                                        <td>{{number_format((float)$sUrun->toplam_fiyat,2)}} ₺  </td>
                                                         <td>{{AyarModel::siparisDurumAdi($sUrun->durum)}}</td>
                                                         <td>
                                                             <a class=" btn btn-info btn-sm" data-bs-toggle="tooltip" title="Detay" href="{{URL::site()}}siparisler/urunDuzenle/{{$sUrun->id}}" >

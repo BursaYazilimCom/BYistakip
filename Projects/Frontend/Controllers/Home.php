@@ -1,6 +1,7 @@
 <?php namespace Project\Controllers;
 
-Use User,URL,AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel;
+Use User,URL,Date;
+Use AyarModel,InternalCariModel as CariModel,InternalProjeModel as ProjeModel,SiparisModel,InternalFaturaModel as FaturaModel,InternalDestekModel as DestekModel;
 
 class Home extends Controller
 {
@@ -12,15 +13,32 @@ class Home extends Controller
      */
     public function main(string ...$parameters)
     {
-        $cariHesaplar = CariModel::liste();
-        $projeler = ProjeModel::liste();
-        $devamEdenProjeler = ProjeModel::devamEden();
-        $siparisurunleri = SiparisModel::siparisUrunleriAdet();
+        $user = User::data();
 
-        View::musteriSayisi($cariHesaplar['adet']);
-        View::projeSayisi($projeler['adet']);
-        View::devamEdenProjeler($devamEdenProjeler['adet']);
-        View::siparisurunleri($siparisurunleri['adet']);
+        $cariDetay      = CariModel::detay($user->id);
+        $uyeUrunleri    = SiparisModel::uyeSiparisUrunleri($user->id,'0');
+        $cariProjeleri  = ProjeModel::CariProjeleri($user->id,0);
+        $faturalar      = FaturaModel::cariFaturalari($user->id,"0");
+        $odenenler      = FaturaModel::cariFaturaToplamlari($user->id,'1');
+        $odenmeyenler   = FaturaModel::cariFaturaToplamlari($user->id,'0');
+        $talepler       = DestekModel::liste($user->id,null);
+
+        $toplamlar = [
+            'uyeUrunAdet' => SiparisModel::uyeUrunAdet($user->id),
+            'talepler' => $talepler['toplam'],
+            'odenmemisFaturaToplami' => number_format((float)FaturaModel::cariFaturaToplamlari($user->id,'0')->toplam,2),
+            'odenenFaturaToplami' => number_format((float)FaturaModel::cariFaturaToplamlari($user->id,'1')->toplam,2)
+        ];
+
+
+        View::cariFaturaToplamlari(['odenen'=>number_format((float)$odenenler->toplam,2),'odenmeyen'=>number_format((float)$odenmeyenler->toplam,2)]);
+        View::cariDetay($cariDetay);
+        View::faturalar($faturalar);
+        View::uyeUrunleri($uyeUrunleri);
+        View::cariProjeleri($cariProjeleri);
+        View::toplamlar($toplamlar);
+        View::talepler($talepler);
+
 
         Masterpage::title(AyarModel::defaultAyarlar('siteAdi'));
     }

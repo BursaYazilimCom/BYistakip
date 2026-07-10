@@ -25,7 +25,7 @@
                 <div class="row">
                     <!-- Invoice repeater -->
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card brdt-danger">
                             <div class="card-header">
                                 <div class="head-label">
                                     <h4 class="card-title">Siparişler</h4>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="card-body">
                                 {{ Redirect::select('bilgi',true) }}
-                                <div class="table-responsive">
+                                <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                                     <table class="table table-hover  table-bordered">
                                         <thead>
                                         <tr>
@@ -54,10 +54,13 @@
                                         @foreach($listele['liste'] as $s)
                                         <tr id="row-{{$s->id}}">
                                             <td><a href="{{URL::site('siparisler/duzenle')}}/{{$s->id}}">{{$s->id}}</a></td>
-                                            <td><a href="{{URL::site('cari/detay/')}}/{{$s->cari}}"><strong>{{CariModel::cariAdi($s->cari)}}</strong></a></td>
+                                            <td><a href="{{URL::site('cari/detay')}}/{{$s->cari}}"><strong>{{CariModel::cariAdi($s->cari)}}</strong></a></td>
                                             <td>{{AyarModel::odemeYontemiAdi($s->odeme_yontemi)}}</td>
-                                            <td>{{$s->odeme_durumu=="1"?"<span class='text text-success'>Ödendi</span>":"<span class='text text-danger'>Ödeme Bekliyor</span>"}}</td>
-                                            <td>{{number_format($s->genel_toplam_tutari,2)}} ₺</td>
+
+                                            <td>
+                                                <span class='text text-{{AyarModel::odemeDurumu($s->odeme_durumu)['renk']}}'>{{AyarModel::odemeDurumu($s->odeme_durumu)['durum']}}</span>
+                                            </td>
+                                            <td>{{number_format((float)$s->genel_toplam_tutari,2)}} ₺</td>
                                             <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
                                             <td>{{AyarModel::durum($s->durum)}}</td>
                                             <td>

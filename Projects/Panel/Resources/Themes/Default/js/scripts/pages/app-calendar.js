@@ -12,7 +12,7 @@
 
 // RTL Support
 var direction = 'ltr',
-  assetPath = '../../../app-assets/';
+  assetPath = '../../../';
 if ($('html').data('textdirection') == 'rtl') {
   direction = 'rtl';
 }
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
     events: fetchEvents,
     editable: true,
     dragScroll: true,
-    dayMaxEvents: 2,
+    dayMaxEvents: 3,
     eventResizableFromStart: true,
     customButtons: {
       sidebarToggle: {

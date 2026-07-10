@@ -99,6 +99,20 @@ class InternalAyarModel extends Model
         return $ekle;
     }
 
+    public function gizle($metin) {
+        // Metnin uzunluğunu kontrol et
+        $uzunluk = strlen($metin);
+        
+        // İlk 4 karakteri al
+        $ilk_kisim = substr($metin, 0, 3);
+        
+        // Geri kalan kısmı * ile doldur
+        $gizli_kisim = str_repeat("*", $uzunluk - 3);
+        
+        // Sonuçları birleştir ve döndür
+        return $ilk_kisim . $gizli_kisim;
+    }
+
     public function sqlHataEkle($hata){
         $ekle = DB::insert('sql_hata_kayitlari',[
             'hata'      =>$hata
@@ -454,7 +468,7 @@ class InternalAyarModel extends Model
 
         $veri = DB::where('id',$id)->siparis_durumlari()->row();
 
-        return $veri->adi;
+        return "<span class='text text-".$veri->uyari."'>".$veri->adi."</span> ";
     }
 
     static function siparisDurumGuncelle($data){
@@ -589,6 +603,30 @@ class InternalAyarModel extends Model
         $data = ['liste'=>$veri->result(),'sayfalama'=>$veri->pagination()];
 
         return $data;
+    }
+
+
+    public function bilgilendirmeEkle($data){
+        
+        $ekle = DB::insert('gonderilen_bilgilendirmeler',[
+            'tur'               =>$data['tur'],
+            'cari'              =>$data['cari'],
+            'ilgili_tur'        =>$data['ilgili_tur'],
+            'gonderilen_adres'  =>$data['gonderilen_adres'],
+            'gonderilen_icerik' =>$data['gonderilen_icerik']
+        ]);
+
+        return $ekle;
+    }
+
+    public function girisEkle($cari,$ip){
+        
+        $ekle = DB::insert('giris_kayitlari',[
+            'cari'      => $cari,
+            'ip'        => $ip
+        ]);
+
+        return $ekle;
     }
 
 

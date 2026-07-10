@@ -20,15 +20,7 @@
             </div>
             <div class="content-header-right text-md-end col-md-2 col-12 d-md-block d-none">
                 <div class="mb-1 breadcrumb-right">
-                    <div class="dropdown">
-                        <a class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i data-feather="grid"  data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="İşlemler"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="{{URL::site('Personel/form')}}"><i class="me-1" data-feather="plus"></i><span class="align-middle">Kullanıcı Ekle</span></a>
-
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
         </div>
@@ -37,95 +29,119 @@
             <!-- Hoverable rows start -->
             <div class="row" id="table-hover-row">
                 <div class="col-12">
-                    <div class="card">
+                    <form action="{{URL::site('ayarlar/guncelle')}}" method="post" enctype="multipart/form-data">
+                    <div class="card brdt-navy">
                         <div class="card-header">
                             <h4 class="card-title">Ayarlar</h4>
                         </div>
                         <div class="card-body">
                             <p class="card-text">
-                                Sitenin Tüm ayarlarının kontrolüğ
+                                Tüm sitenin ayarlarının kontrolü
                             </p>
                             {{ Redirect::select('bilgi',true) }}
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-hover  table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Tanımlama</th>
-                                    <th>Anahtar</th>
-                                    <th>Değer</th>
-                                    <th>Açıklama</th>
+                            
+                               
+                            <ul class="nav nav-tabs" role="tablist">
+                            {[ $g=0; ]}
+                                @foreach($ayarArray as $key=>$value)
+                                    <li class="nav-item">
+                                        <a class="nav-link {{$g==0?'active':''}}" id="{{$key}}-tab" data-bs-toggle="tab" href="#{{$key}}" aria-controls="{{$key}}" role="tab" {{$g==0?'aria-selected="true"':'aria-selected="false"'}}>{{$key}}</a>
+                                    </li>
+                                {[ $g++; ]}
+                            @endforeach
+                             
+                            </ul>
+                           
+                            <div class="tab-content table-responsive-sm table-responsive-md table-responsive-xl">
+                                {[$a=0;]}
+                                @foreach($ayarArray as $key=>$value)
+                                <div class="tab-pane {{$a==0?'active':''}}" id="{{$key}}" aria-labelledby="{{$key}}-tab" role="tabpanel">
 
-                                </tr>
-                                </thead>
-                                <form action="{{URL::site('ayarlar/guncelle')}}" method="post" enctype="multipart/form-data">
-                                <tbody>
-                                @foreach($ayarlar as $ayar)
-                                <tr>
-                                    <td>{{$ayar->baslik}}<small></small>
-                                        <input type="hidden" name="anahtar[]" class="form-control" value="{{$ayar->anahtar}}">
-                                        <input type="hidden" name="tur[]" class="form-control" value="{{$ayar->tur}}"></td>
-                                    <td>{{$ayar->anahtar}}</td>
-                                    <td>
-                                        @if($ayar->tur=="file")
+                                    <table class="table table-hover  table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Tanımlama</th>
+                                                <th>Değer</th>
+                                                <th>Açıklama</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        <input type="file" name="deger[{{$ayar->anahtar}}]" class="form-control">{{$ayar->deger}}
+                                        @foreach($ayarArray[$key] as $ayar)
+                                            <tr>
+                                                <td>{{$ayar->baslik}}<small></small>
+                                                    <input type="hidden" name="anahtar[]" class="form-control" value="{{$ayar->anahtar}}">
+                                                    <input type="hidden" name="tur[]" class="form-control" value="{{$ayar->tur}}"></td>
+                                            
+                                                <td>
+                                                    @if($ayar->tur=="file")
+                                                    <table>
+                                                        <tr>
+                                                            <td><img src="{{URL::site()}}../Uploads/site-img/{{$ayar->deger}}" style="max-height:50px"></td>
+                                                            <td>
+                                                                <input type="file" name="{{$ayar->anahtar}}" class="form-control">
+                                                                <input type="hidden" name="deger[{{$ayar->anahtar}}]" class="form-control" value="{{$ayar->anahtar}}">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                
 
-                                        @elseif($ayar->tur=="enum")
-                                        <select name="deger[{{$ayar->anahtar}}]" class="form-select">
-                                            <option>--Seçiniz--</option>
-                                            @foreach(Json::decode($ayar->tum_degerler) as $deger)
-                                            <option value="{{$deger->value}}" {{$ayar->deger==$deger->value?"selected":""}}>{{$deger->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @elseif($ayar->tur=="select")
-                                        <select name="deger[{{$ayar->anahtar}}]"  class="form-select">
-                                            <option>--Seçiniz--</option>
-                                            @foreach(Json::decode($ayar->tum_degerler) as $deger)
-                                            <option value="{{$deger->value}}" {{$ayar->deger==$deger->value?"selected":""}}>{{$deger->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @elseif($ayar->tur=="sql")
+                                                    @elseif($ayar->tur=="enum")
+                                                    <select name="deger[{{$ayar->anahtar}}]" class="form-select">
+                                                        <option>--Seçiniz--</option>
+                                                        @foreach(Json::decode($ayar->tum_degerler) as $deger)
+                                                        <option value="{{$deger->value}}" {{$ayar->deger==$deger->value?"selected":""}}>{{$deger->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @elseif($ayar->tur=="select")
+                                                    <select name="deger[{{$ayar->anahtar}}]"  class="form-select">
+                                                        <option>--Seçiniz--</option>
+                                                        @foreach(Json::decode($ayar->tum_degerler) as $deger)
+                                                        <option value="{{$deger->value}}" {{$ayar->deger==$deger->value?"selected":""}}>{{$deger->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @elseif($ayar->tur=="sql")
 
-                                        <select name="deger[{{$ayar->anahtar}}]"  class="form-select">
-                                            <option>--Seçiniz--</option>
-                                            @foreach(AyarModel::sqlAyarGetir($ayar->tum_degerler) as $deger)
+                                                    <select name="deger[{{$ayar->anahtar}}]"  class="form-select">
+                                                        <option>--Seçiniz--</option>
+                                                        @foreach(AyarModel::sqlAyarGetir($ayar->tum_degerler) as $deger)
 
-                                            <option value="{{$deger->id}}" {{$ayar->deger==$deger->id?"selected":""}}>{{$deger->baslik}}</option>
+                                                        <option value="{{$deger->id}}" {{$ayar->deger==$deger->id?"selected":""}}>{{$deger->baslik}}</option>
 
-                                            @endforeach
+                                                        @endforeach
 
-                                        </select>
-                                        @else
-                                        <input type="text" name="deger[{{$ayar->anahtar}}]" class="form-control" value="{{$ayar->deger}}">
-                                        @endif
+                                                    </select>
+                                                    @elseif($ayar->tur=="textarea")
+                                                        <textarea name="deger[{{$ayar->anahtar}}]" class="form-control">{{$ayar->deger}}</textarea>
+                                                    @else
+                                                    <input type="text" name="deger[{{$ayar->anahtar}}]" class="form-control" value="{{$ayar->deger}}">
+                                                    @endif
 
 
-                                    </td>
-                                    <td>
+                                                </td>
+                                                <td>
 
-                                        {{$ayar->aciklama}}
+                                                    {{$ayar->aciklama}}
 
-                                    </td>
-                                </tr>
+                                                </td>
+                                            </tr>
+                                            @endforeach 
+                
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                {[ $a++; ]}
                                 @endforeach
-
-
-                                </tbody>
-                                    <tr>
-                                        <td colspan="4">
-                                            <button class="btn btn-gradient-primary" type="submit" style="width:100%">Kaydet</button>
-                                        </td>
-                                    </tr>
-                                </form>
-                            </table>
+                                                            
+                            </div>
+                            
                         </div>
-                        <div class="card-footer">
-                            <nav aria-label="Page navigation">
-
-                            </nav>
-                        </div>
+                        
+                        <div class="card-footer"><button type="submit" class="btn btn-info">Kaydet</button></div>
+                      
                     </div>
+                </form>
                 </div>
             </div>
             <!-- Hoverable rows end -->

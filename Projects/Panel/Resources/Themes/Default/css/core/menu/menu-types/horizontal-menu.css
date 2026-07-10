@@ -22,7 +22,8 @@
 
 .horizontal-menu .horizontal-menu-wrapper .header-navbar .navbar-container {
   padding: 0 1rem;
-  width: 100%; }
+  width: 100%; 
+  border-bottom: solid 1px #b0c8ff;}
 
 .horizontal-menu .horizontal-menu-wrapper .header-navbar .navbar-header {
   display: none; }
@@ -164,7 +165,11 @@
 .horizontal-menu .header-navbar.navbar-horizontal ul#main-menu-navigation > li > a {
   padding: 0.715rem 1.25rem;
   display: flex;
-  margin-right: 0.715rem; }
+  margin-right: 0.715rem; 
+
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 
 .horizontal-menu .header-navbar.navbar-horizontal ul#main-menu-navigation > li:hover > a {
   background: #f8f8f8;

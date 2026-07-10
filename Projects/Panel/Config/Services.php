@@ -34,28 +34,28 @@
         'driver' => 'smtp',
         'smtp'   =>
         [
-            'host'      => 'mail.kurumsaleposta.com',
-            'user'      => 'info@bursayazilim.com',
-            'password'  => 'HMyk*963,*963,',
-            'port'      => 465,
+            'host'      => AyarModel::defaultAyarlar('smtpHost'),
+            'user'      => AyarModel::defaultAyarlar('smtpUser'),
+            'password'  => AyarModel::defaultAyarlar('smtpPass'),
+            'port'      => AyarModel::defaultAyarlar('smtpPort'),
             'keepAlive' => false,
-            'timeout'   => 30,
-            'encode'    => 'ssl',  # empty, tls, ssl
+            'timeout'   => 10,
+            'encode'    => AyarModel::defaultAyarlar('smtpEncode'),  # empty, tls, ssl
             'dsn'       => false,
             'auth'      => true
         ],
         'imap' => 
         [
-            'host'      => 'mail.kurumsaleposta.com',
+            'host'      => 'us2.smtp.mailhostbox.com',
             'user'      => 'info@bursayazilim.com',
-            'password'  => 'HMyk*963,*963,',
-            'port'      => 465,
+            'password'  => 'ztNU$fK1',
+            'port'      => 25,
             'flags'     => [],
             'mailbox'   => 'INBOX'
         ],
         'general' =>
         [
-            'senderMail'    => 'info@bursayazilim.com',                  # Default Sender E-mail Address.
+            'senderMail'    => 'wexcp@bydemo.com.tr',                  # Default Sender E-mail Address.
             'senderName'    => 'Bursa Yazılım',                  # Default Sender Name.
             'priority'      => 3,                   # 1, 2, 3, 4, 5
             'charset'       => 'UTF-8',             # Charset Type
@@ -64,6 +64,8 @@
             'xMailer'       => 'ZN',
             'encoding'      => '8bit',              # 8bit, 7bit
             'mimeVersion'   => '1.0',               # MIME Version
+            'lf'            => "\n",                # For Mail Body
+            'cr'            => "\n",                # For STMP Commands
             'mailPath'      => '/usr/sbin/sendmail' # Default Mail Path
         ]
     ],

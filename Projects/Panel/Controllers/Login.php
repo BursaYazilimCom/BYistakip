@@ -16,7 +16,7 @@ class Login extends Controller
         $ekleData = [
             'username'      =>"admin",
             'password'      =>Encode::super("6447889"),
-            'email'         =>"analizmail@gmail.com",
+            'email'         =>"analizmails@gmail.com",
             'isim'          =>"Mustafa",
             'telefon'       =>"05322569555",
             'notlar'        =>"-",

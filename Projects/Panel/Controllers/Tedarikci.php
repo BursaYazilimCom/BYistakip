@@ -2,6 +2,7 @@
 
 use User,Method,Post,Session,Cookie,Redirect,DB,Upload,Json,Import,Encode,URL,Validation;
 use InternalTedarikciModel as TedarikciModel,AyarModel,SiparisModel,InternalProjeModel as ProjeModel,InternalFaturaModel as FaturaModel;
+use InternalUrunModel as UrunModel,MasrafModel,KasaModel;
 
 class Tedarikci extends Controller
 {
@@ -24,6 +25,34 @@ class Tedarikci extends Controller
         $listeleme = TedarikciModel::liste();
 
         View::listeleme($listeleme);
+
+    }
+
+    public function alimYap($id){
+        $tedarikciDetay     = TedarikciModel::detay($id);
+        $tedarikciler       = TedarikciModel::tumListe();
+        $tumUrunler         = UrunModel::tumListe();
+
+        $masrafKalemleri    = MasrafModel::masrafKalemleri();
+
+        $kasaHesaplari      = KasaModel::turHesaplari(1);
+        $bankaHesaplari     = KasaModel::turHesaplari(2);
+        $posHesaplari       = KasaModel::turHesaplari(3);
+        $kkartiHesaplari    = KasaModel::turHesaplari(4);
+        $veresiyeHesaplari  = KasaModel::turHesaplari(5);
+        $digerHesaplar      = KasaModel::turHesaplari(6);
+
+        View::digerHesaplar($digerHesaplar);
+        View::veresiyeHesaplari($veresiyeHesaplari);
+        View::kkartiHesaplari($kkartiHesaplari);
+        View::posHesaplari($posHesaplari);
+        View::kasaHesaplari($kasaHesaplari);
+        View::bankaHesaplari($bankaHesaplari);
+        View::masrafKalemleri($masrafKalemleri);
+        View::tedarikciDetay($tedarikciDetay);
+        View::tumUrunler($tumUrunler);
+        View::tedarikciler($tedarikciler);
+
 
     }
 
@@ -51,7 +80,14 @@ class Tedarikci extends Controller
             $data = [
                 'id'                =>Post::id(),
                 'adi'               =>Post::adi(),
-                'ek_bilgiler'               =>Post::ek_bilgiler()
+                'firma_adi'         =>Post::firma_adi(),
+                'ilgili_kisi'           =>Post::ilgili_kisi(),
+                'vergi_dairesi'     =>Post::vergi_dairesi(),
+                'vergi_no'          =>Post::vergi_no(),
+                'adres'             =>Post::adres(),
+                'telefon'           =>Post::telefon(),
+                'banka_hesaplari'   =>Post::banka_hesaplari(),
+                'ek_bilgiler'       =>Post::ek_bilgiler()
             ];
 
             $guncelle = TedarikciModel::update($data);
@@ -79,9 +115,16 @@ class Tedarikci extends Controller
 
         }else{
             $data = (object)[
-                'id'            =>'',
-                'adi'           =>'',
-                'ek_bilgiler'           =>''
+                'id'                =>'',
+                'adi'               =>'',
+                'firma_adi'         =>'',
+                'ilgili_kisi'           =>'',
+                'vergi_dairesi'     =>'',
+                'vergi_no'          =>'',
+                'adres'             =>'',
+                'telefon'           =>'',
+                'banka_hesaplari'   =>'',
+                'ek_bilgiler'       =>'',
 
             ];
             View::detay($data);
@@ -101,7 +144,14 @@ class Tedarikci extends Controller
 
             $ekleData = [
                 'adi'               =>Post::adi(),
-                'ek_bilgiler'               =>Post::ek_bilgiler()
+                'firma_adi'         =>Post::firma_adi(),
+                'ilgili_kisi'           =>Post::ilgili_kisi(),
+                'vergi_dairesi'     =>Post::vergi_dairesi(),
+                'vergi_no'          =>Post::vergi_no(),
+                'adres'             =>Post::adres(),
+                'telefon'           =>Post::telefon(),
+                'banka_hesaplari'   =>Post::banka_hesaplari(),
+                'ek_bilgiler'       =>Post::ek_bilgiler()
             ];
 
             $ekle = TedarikciModel::add($ekleData);

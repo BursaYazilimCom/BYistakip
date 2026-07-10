@@ -52,24 +52,26 @@ class Siparisler extends Controller
 
     }
 
-    public function urunler(){
+    public function urunler($sayfa=null){
 
 
         $user = User::data();
 
-        $siparisUrunleri     = SiparisModel::siparisUrunleriListe();
+        $siparisUrunleri     = SiparisModel::siparisUrunleriListe("",$sayfa);
 
         View::listele($siparisUrunleri);
 
     }
 
-    public function gruplar($id){
+    public function gruplar($id,$sayfa=0){
 
-        $grupDetay = UrunModel::urunGrupDetay($id);
+        $grupDetay = UrunModel::urunGrupDetay($id,$sayfa);
 
         $user = User::data();
 
-        $siparisUrunleri     = SiparisModel::siparisUrunleriListe($id);
+        $siparisUrunleri     = SiparisModel::siparisUrunleriListe($id,$sayfa);
+
+        Pagination::url('siparisler/gruplar/'.$id.'/'.$sayfa)->create();
 
         View::listele($siparisUrunleri);
         View::grupDetay($grupDetay);
@@ -122,6 +124,7 @@ class Siparisler extends Controller
         $musteriler = CariModel::liste();
         $odemeYontemleri = AyarModel::odemeYontemleri();
         $urunler = UrunModel::tumListe();
+        $urunGruplari = UrunModel::urunGrupListe();
         $tedarikciler   = TedarikciModel::tumListe();
 
 
@@ -132,6 +135,7 @@ class Siparisler extends Controller
         View::siparisDurumlari($siparisDurumlari);
         View::odemeYontemleri($odemeYontemleri);
         View::urunler($urunler);
+        View::urunGruplari($urunGruplari);
 
         //AyarModel::nelerOluyor($user->isim,'siparisler','Yeni sipariş oluşturuluyor');
 
@@ -1210,6 +1214,11 @@ class Siparisler extends Controller
 
                 }else{
                     $urunDetay = UrunModel::detay(Post::urun());
+                    if(Post::urun_adi()==""){
+                        $urunadi = $urunDetay->adi;
+                    }else{
+                        $urunadi = Post::urun_adi();
+                    }
 
                     if (empty(Post::fiyat()) and Post::fiyat()!="0") {
 
@@ -1245,13 +1254,13 @@ class Siparisler extends Controller
 
                     }
 
-                    $baslangicTarihi = Post::baslangic_tarihi()==""?date('d.m.Y'):Post::baslangic_tarihi();
+                    $baslangicTarihi = Post::baslangic_tarihi()==""?date('Y-m-d'):Post::baslangic_tarihi();
 
                     $ekleData = [
                         'serial'                    =>$serial,
                         'urun'                      =>Post::urun(),
                         'tedarikci'                 =>$tedarikci,
-                        'urun_adi'                  =>$urunDetay->adi,
+                        'urun_adi'                  =>$urunadi,
                         'odemePeriyodu'             =>Post::odeme_periyodu(),
                         'odemePeriyoduTanim'        =>AyarModel::odemePeriyodu(Post::odeme_periyodu()),
                         'adet'                      =>Post::adet(),
@@ -1271,7 +1280,7 @@ class Siparisler extends Controller
                         $data['redirect'] = '';
                         $data['addData'] = '<tr id="row-'.$serial.'">
                                                 <td>'.$serial.'</td>
-                                                <td>'.$urunDetay->adi.'</td>
+                                                <td>'.$urunadi.'</td>
                                                 <td>'.TedarikciModel::tedarikciAdi($tedarikci).'</td>
                                                 <td>'.AyarModel::odemePeriyodu(Post::odeme_periyodu()).'</td>
                                                 <td>'.Post::adet().'</td>

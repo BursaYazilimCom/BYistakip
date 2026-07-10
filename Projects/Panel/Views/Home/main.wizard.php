@@ -3,6 +3,26 @@
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
             <div class="content-header row">
+                <div class="row only-xl">
+                    <div class="com-md-12">
+                    
+                    <a  class="btn btn-warning mb-2"   data-bs-toggle="modal" data-bs-target="#openModal" data-action="masrafEkle">
+                                    <i data-feather="plus"></i>
+                                <span class="fw-bold">Gider Ekle</span>
+                    </a>
+                    <a  data-bs-toggle="modal" data-bs-target="#openModal" data-action="tahsilatEkle"  class="btn btn-success mb-2">
+                        <i data-feather="plus"></i>
+                        <span class="fw-bold">Tahsilat Ekle</span>
+                    </a>
+
+                    <a  class="btn btn-info mb-2" href="{{URL::site('siparisler/form')}}">
+                                    <i data-feather="plus" ></i>
+                                <span class="fw-bold">Sipariş Ekle</span>
+                    </a>
+
+                  
+                    </div>
+                </div>
             </div>
             <div class="content-body">
                 <!-- Dashboard Ecommerce Starts -->
@@ -19,7 +39,7 @@
                                 </style>
                               
                                         <div class="col-xl-4 col-md-4 col-sm-6">
-                                            <div class="card text-center">
+                                            <div class="card text-center brdt-success">
                                                 <div class="card-body">
                                                     <div class="avatar bg-light-success p-50 mb-1">
                                                         <div class="avatar-content">
@@ -32,7 +52,7 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4 col-sm-6">
-                                            <div class="card text-center">
+                                            <div class="card text-center brdt-danger">
                                                 <div class="card-body">
                                                     <div class="avatar bg-light-danger p-50 mb-1">
                                                         <div class="avatar-content">
@@ -45,7 +65,7 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-md-4 col-sm-6">
-                                            <div class="card text-center">
+                                            <div class="card text-center brdt-info">
                                                 <div class="card-body">
                                                     <div class="avatar bg-light-info p-50 mb-1">
                                                         <div class="avatar-content">
@@ -65,67 +85,62 @@
 
                         <!-- Statistics Card -->
                         <div class="col-xl-6 col-md-6 col-12">
-                            <div class="card card-statistics">
-                                <div class="card-header">
-                                    <h4 class="card-title">İstatistikler</h4>
-                                </div>
-                                <div class="card-body statistics-body">
-                                    <div class="row">
-                                        <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                                            <div class="d-flex flex-row">
-                                                <div class="avatar bg-light-primary me-2">
-                                                    <div class="avatar-content">
-                                                        <i data-feather="trending-up" class="avatar-icon"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="my-auto">
-                                                    <h4 class="fw-bolder mb-0">{{$siparisurunleri}} Adet</h4>
-                                                    <p class="card-text font-small-3 mb-0">Satış Yapılan Ürün</p>
+                            <div class="row">
+                                <div class="col-xl-3 col-md-3 col-sm-6">
+                                    <div class="card text-center brdt-primary">
+                                        <div class="card-body">
+                                            <div class="avatar bg-light-primary p-50 mb-1">
+                                                <div class="avatar-content">
+                                                <i data-feather="trending-up" class="avatar-icon"></i>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                                            <div class="d-flex flex-row">
-                                                <div class="avatar bg-light-info me-2">
-                                                    <div class="avatar-content">
-                                                        <i data-feather="user" class="avatar-icon"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="my-auto">
-                                                    <h4 class="fw-bolder mb-0">{{$musteriSayisi}} Adet</h4>
-                                                    <p class="card-text font-small-3 mb-0">Müşteri</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
-                                            <div class="d-flex flex-row">
-                                                <div class="avatar bg-light-danger me-2">
-                                                    <div class="avatar-content">
-                                                        <i data-feather="box" class="avatar-icon"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="my-auto">
-                                                    <h4 class="fw-bolder mb-0">{{$projeSayisi}} Adet</h4>
-                                                    <p class="card-text font-small-3 mb-0">Proje</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-sm-6 col-12">
-                                            <div class="d-flex flex-row">
-                                                <div class="avatar bg-light-success me-2">
-                                                    <div class="avatar-content">
-                                                        <i data-feather="dollar-sign" class="avatar-icon"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="my-auto">
-                                                    <h4 class="fw-bolder mb-0">{{$odenmeyenFaturaSayisi}} Adet</h4>
-                                                    <p class="card-text font-small-3 mb-0">Açık Fatura</p>
-                                                </div>
-                                            </div>
+                                            <h2 class="fw-bolder">{{$siparisurunleri}} Adet</h2>
+                                            <p class="card-text">Satılan Ürün</p>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xl-3 col-md-3 col-sm-6">
+                                    <div class="card text-center brdt-success">
+                                        <div class="card-body">
+                                            <div class="avatar bg-light-success p-50 mb-1">
+                                                <div class="avatar-content">
+                                                <i data-feather="user" class="avatar-icon"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder">{{$musteriSayisi}} Adet</h2>
+                                            <p class="card-text">Müşteri</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3 col-sm-6">
+                                    <div class="card text-center brdt-info">
+                                        <div class="card-body">
+                                            <div class="avatar bg-light-info p-50 mb-1">
+                                                <div class="avatar-content">
+                                                <i data-feather="box" class="avatar-icon"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder">{{$projeSayisi}} Adet</h2>
+                                            <p class="card-text">Proje</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-3 col-sm-6">
+                                    <div class="card text-center brdt-danger">
+                                        <div class="card-body">
+                                            <div class="avatar bg-light-danger p-50 mb-1">
+                                                <div class="avatar-content">
+                                                <i data-feather="dollar-sign" class="avatar-icon"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder">{{$odenmeyenFaturaSayisi}} Adet</h2>
+                                            <p class="card-text">Ödenmemiş Fatura</p>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+                           
                         </div>
                         <!--/ Statistics Card -->
                     </div>
@@ -133,9 +148,9 @@
                     <div class="row match-height">
                         <!-- Company Table Card -->
                         <div class="col-lg-6 col-12">
-                            <div class="card card-company-table">
+                            <div class="card card-company-table brdt-success">
                                 <div class="card-body p-0">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive-sm table-responsive-md table-responsive-l">
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -168,7 +183,7 @@
                                                         </div>
                                                     </td>
                                                     <td>{{$s->odeme_durumu=="1"?"<span class='text text-success'>Ödendi</span>":"<span class='text text-danger'>Ödeme Bekliyor</span>"}}</td>
-                                                    <td>{{number_format($s->genel_toplam_tutari,2)}} ₺</td>
+                                                    <td>{{number_format((float)$s->genel_toplam_tutari,2)}} ₺</td>
                                                     <td>{{ Date::convert($s->tarih, '{dayInMonth}.{monthInYear-}.{year}')}}</td>
                                                     <td>{{$s->durum=="1"?"<span class='text text-success'>Aktif</span>":"<span class='text text-danger'>Pasif</span>"}}</td>
 
@@ -190,7 +205,7 @@
 
                         <!-- Transaction Card -->
                         <div class="col-lg-3 col-md-6 col-12">
-                            <div class="card card-user-timeline">
+                            <div class="card card-user-timeline brdt-warning">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
                                         <i data-feather="list" class="user-timeline-title-icon"></i>
@@ -222,7 +237,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 col-12">
-                            <div class="card card-transaction">
+                            <div class="card card-transaction brdt-pink">
                                 <div class="card-header">
                                     <h4 class="card-title">Kasa Hesapları</h4>
                                 </div>
@@ -241,9 +256,9 @@
                                                 </div>
                                             </div>
                                             @if($kToplam[$kh->id]<0)
-                                            <div class="fw-bolder text-danger">{{number_format($kToplam[$kh->id],2)}} ₺</div>
+                                            <div class="fw-bolder text-danger">{{number_format((float)$kToplam[$kh->id],2)}} ₺</div>
                                             @else
-                                            <div class="fw-bolder text-success">{{number_format($kToplam[$kh->id],2)}} ₺</div>
+                                            <div class="fw-bolder text-success">{{number_format((float)$kToplam[$kh->id],2)}} ₺</div>
                                             @endif
                                         </div>  
                                     @endforeach
@@ -260,3 +275,15 @@
         </div>
     </div>
     <!-- END: Content-->
+    <div class="modal fade" id="openModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="fetched-data"></div>
+            </div>
+        </div>
+    </div>
+</div>

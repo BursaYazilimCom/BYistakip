@@ -116,5 +116,39 @@ class InternalFaturaModel extends Model
 
     }
 
+    static function cariFaturalari($uye,$odeme="",$sayfa=Null){
+
+        if($odeme==""){
+
+            $veri = DB::where('musteri',$uye)->orderby('id','DESC')->limit($sayfa,20)->faturalar();
+
+        }else{
+
+            $veri = DB::where('musteri',$uye)->where('odeme',$odeme)->orderby('id','DESC')->limit($sayfa,20)->faturalar();
+
+        }
+
+        $data = ["liste"=>$veri->result(),"sayfalama"=>$veri->pagination()];
+
+        return $data;
+
+    }
+
+    static function cariFaturaToplamlari($uye,$odeme=""){
+
+        if($odeme==""){
+
+            $veri = DB::select('SUM(genel_toplam) as toplam')->where('musteri',$uye)->faturalar()->row();
+
+        }else{
+
+            $veri = DB::select('SUM(genel_toplam) as toplam')->where('musteri',$uye)->where('odeme',$odeme)->faturalar()->row();
+
+        }
+
+        return $veri;
+
+    }
+
 
 }

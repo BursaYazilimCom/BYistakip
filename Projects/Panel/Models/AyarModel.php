@@ -3,19 +3,19 @@
 class InternalAyarModel extends Model
 {
 
-    function basarili($baslik,$aciklama,$url){
+    static function basarili($baslik,$aciklama,$url){
 
        return Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">'.$baslik.'</h4><div class="alert-body">'.$aciklama.'</div></div>'])->action($url);
     }
 
-    function basarisiz($baslik,$aciklama,$url){
+    static function basarisiz($baslik,$aciklama,$url){
 
        return  Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">'.$baslik.'</h4><div class="alert-body">'.$aciklama.'</div></div>'])->action($url);
 
     }
 
 
-    function bilgilendir($baslik,$aciklama,$url){
+    static function bilgilendir($baslik,$aciklama,$url){
 
         return  Redirect::insert(['bilgi'=>'<div class="alert alert-warning" role="alert"><h4 class="alert-heading">'.$baslik.'</h4><div class="alert-body">'.$aciklama.'</div></div>'])->action($url);
  
@@ -58,16 +58,57 @@ class InternalAyarModel extends Model
 
     static function defaultAyarListe(){
 
-        $liste = DB::where('duzenleme_izni','1')->orderby('sira','ASC')->limit(1000)->ayarlar()->result();
+        $liste = DB::where('duzenleme_izni','1')->orderby('sira','ASC')->ayarlar()->result();
         return $liste;
 
     }
+
+    public function haftaninGunleri($year, $week,$mount) {
+        $weekDaysArray = array();
+        $dto = new \DateTime();
+        $dto->setISODate($year, $week);
+        
+        for($i = 0; $i < 7; $i++) {
+
+            if($dto->format('D')!="Sat" and $dto->format('D')!="Sun" ){
+
+                array_push($weekDaysArray, $dto->format('Y-m-d'));
+         
+            }
+                //array_push($weekDaysArray, $dto->format('Y-m-d'));
+
+            $dto->modify("+1 days");
+
+            $haftaninAyniAydakiGunleri =[];
+
+            for($g=0;$g<count($weekDaysArray);$g++){
+
+                $gunStrTime = strtotime($weekDaysArray[$g]);
+
+                if(date("m",$gunStrTime)==$mount){
+                    array_push($haftaninAyniAydakiGunleri, $weekDaysArray[$g]);
+                }
+
+            }
+
+        }
+            //print_r($haftaninAyniAydakiGunleri);
+            //print_r($weekDaysArray);
+
+        return $haftaninAyniAydakiGunleri;
+            
+    }
+    
 
     static function sqlAyarGetir($sql){
 
         if($sql=="siparis_durumlari"){
 
             $veri = DB::select('id','adi as baslik',)->orderby('sira','ASC')->siparis_durumlari()->result();
+        }
+        if($sql=="kasa_hesaplari"){
+
+            $veri = DB::select('id','adi as baslik',)->orderby('adi','ASC')->kasa_hesaplari()->result();
         }
         return $veri;
     }
@@ -79,10 +120,26 @@ class InternalAyarModel extends Model
 
     }
 
+    public function grupTur($id){
+        //'diger','lisans','sertifika','indirilebilir','hosting','domain','fiziksel'
+        $turler = [
+            'diger' => 'Diğer',
+            'lisans' => 'Lisans',
+            'sertifika' => 'Sertifika',
+            'indirilebilir' => 'İndirilebilir',
+            'hosting' => 'Hosting',
+            'fiziksel' => 'Fiziksel Ürün',
+            'domain' => 'Domain'
+        ];
+
+        return $turler[$id];
+
+    }
+
     public function odemePeriyodu($id){
         $periyodlar = [
             '0' => 'Ücretsiz',
-            'T' => 'Tek Seferlik',
+            'T' => 'Bir Kez',
             'A' => 'Aylık',
             '3A' => '3 Aylık',
             '6A' => '6 Aylık',
@@ -591,6 +648,22 @@ class InternalAyarModel extends Model
 
         return DB::where('id',$id)->delete('odeme_yontemleri');
 
+    }
+
+    static function odemeDurumu($id)
+    {
+        $durumlar = [
+            '0'=>'Ödeme Bekleniyor',
+            '1'=>'Ödendi',
+            '2'=>'Kısmi Ödeme Alındı'
+        ];
+        $renk = [
+            '0'=>'danger',
+            '1'=>'success',
+            '2'=>'warning'
+        ];
+
+        return ['renk'=>$renk[$id],'durum'=>$durumlar[$id]];
     }
 
     /****************/

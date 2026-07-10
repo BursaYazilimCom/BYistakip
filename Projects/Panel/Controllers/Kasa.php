@@ -1,7 +1,7 @@
 <?php namespace Project\Controllers;
 
 use Method, Post,URL, Redirect,Date,Pagination,User,Email,DB,Json;
-use TedarikciModel, FaturaModel,AyarModel,MalzemeModel,KasaModel,SiparisModel,CariModel;
+use TedarikciModel, FaturaModel,AyarModel,MalzemeModel,KasaModel,SiparisModel,CariModel,InternalSmsModel as SmsModel;
 
 class Kasa extends Controller
 {
@@ -83,13 +83,14 @@ class Kasa extends Controller
 
     public function odemeEkle($yer,$id=""){
         $user = User::data();
-
+  
         $user           = User::data();
         $kasa_hesabi    = Post::kasa();
         $aciklama       = Post::aciklama();
         $tutar          = Post::tutar();
         $odeme_tarihi   = Post::odeme_tarihi();
         $bildirim       = Post::bildirim();
+        $uzat           = Post::uzat();
         $cari           = Post::cari();
 
         if ($yer=="siparis"){
@@ -133,6 +134,19 @@ class Kasa extends Controller
 
                 if($bildirim=="1"){
 
+                    //SMS GÖNDERİMİ
+                    if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+                        $smsData = [
+                            'mesaj'=>$siparisDetay->id.' numaralı sipariniz için '.number_format($tutar,2).' TL ödemeniz alınmış ve kayıtlarımıza işlenmiştir.Ödemeniz için teşekkür ederiz.',
+                            'numara'=>$cariDetay->gsm
+                        ];
+
+                        $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+                    }
+                    //SMS GÖNDERİMİ
+
                     $mailgonder = Email::subject('Ödeme Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
 
                         'konu' => 'Ödeme Bildirimi',
@@ -157,10 +171,6 @@ class Kasa extends Controller
                 /*BİLDİRİM*/
 
                 Redirect::insert(['bilgi'=>'<div class="alert alert-success" role="alert"><h4 class="alert-heading">Başarılı İşlem</h4><div class="alert-body">Ödeme Başarı İle Eklendi !.<br>'.$ekMailBilgi.'</div></div>'])->action('siparisler/duzenle/'.$id);
-
-
-
-
 
             }else{
                 Redirect::insert(['bilgi'=>'<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Başarısız İşlem</h4><div class="alert-body">İşlem sırasında hata oluştu !.</div></div>'])->action(URL::prev());
@@ -189,18 +199,60 @@ class Kasa extends Controller
                 'islem_yapan'   =>$user->id
             ];
 
+            $toplamAlinanOdeme = $faturaDetay->alinan_odeme+$tutar;
+
             $kasayaKaydet = KasaModel::deftereKaydet($defterData);
 
             $kasaHesapBilgi = KasaModel::hesapBilgi($kasa_hesabi);
 
             if ($kasayaKaydet) {
+
+                //Fatura ödendi yapılyıor
+                if(Post::odendi()=="1"){
+
+                    $faturaOdemeDurumDegistir = FaturaModel::odemeDurumDegistir($faturaDetay->id,"1");
+
+                }
+                
+                //Eğer süre uzatma seçildiyse ürünlerin süresini uzat
+                $gecmisNotu = "";
+                if ($uzat) {
+
+                    foreach ($faturaUrunleri as $fu) {
+                        $siparisUrunBilgi = SiparisModel::siparisUrunBilgi($fu->siparis_urun_id);
+                        $eklenecekGun = AyarModel::odemePeriyoduEklenecekGun($siparisUrunBilgi->odeme_periyodu);
+
+                        $baslangic_tarihi       = $siparisUrunBilgi->bitis_tarihi;
+                        $bitis_tarihi           = Date::calculate($baslangic_tarihi, $eklenecekGun.' day');
+
+                        $siparisUrunleriTarihGuncelle = SiparisModel::siparisUrunTarihGuncelle($siparisUrunBilgi->id,$baslangic_tarihi,$bitis_tarihi);
+
+                        //Fatura ödendi yapıldıktan sonra ilgili ürüne tedarikçiden işlem yapılması için uyarı giriliyor
+                        //
+                        if(Post::odendi()=="1"){
+
+                            SiparisModel::siparistekilUrunIslemGerekiyor($siparisUrunBilgi->id, '1', 'Ürünün Faturası ödendi olarak işaretlendi. Üründe yapılması gereken bir işlem varsa gerçekleştiriniz.');
+
+                        }
+
+                        if($siparisUrunleriTarihGuncelle){
+                            $uzatmaUyarisi = $siparisUrunBilgi->notu." ürünü ".$bitis_tarihi." tarihine kadar süresi uzatıldı !";
+                            $gecmisNotu =  "<br>".$siparisUrunBilgi->notu." ürünü ".$bitis_tarihi." tarihine kadar süresi uzatıldı !";
+                        }else{
+                            $uzatmaUyarisi = $siparisUrunBilgi->notu." ürünü uzatma işlemi yapılamadı !";
+                        }
+
+                    }
+                    
+                }
+
                 //Sipariş geçmişine yapılan ödemeyi ekle
 
                 //sipariş geçmişi ekleniyor
                 $sipariGecmisi = [
                     'cari' => $faturaDetay->musteri,
                     'siparis' => $faturaDetay->siparis_id,
-                    'aciklama' => $faturaDetay->id." Numaralı Fatura ödemesi ".$kasaHesapBilgi->adi." kasa hesabına kaydedildi.",
+                    'aciklama' => $faturaDetay->id." Numaralı Fatura ödemesi ".$kasaHesapBilgi->adi." kasa hesabına kaydedildi.".$gecmisNotu,
                     'guncelleyen' => $user->id
                 ];
 
@@ -224,25 +276,45 @@ class Kasa extends Controller
 
                 }
 
-                //Fatura ödendi yapılyıor
-                if(Post::siparisOdendi()=="1"){
+                //Eğer toplam odeme fatura tutarından büyük yada eşitle sipariş ödendi yaplıyor
+                if($faturaDetay->genel_toplam==$toplamAlinanOdeme or $faturaDetay->genel_toplam<$toplamAlinanOdeme){
+                    $siparisOdemeDurumDegistir = SiparisModel::odemeDurumDegistir($faturaDetay->siparis_id,"1");
+                }elseif($toplamAlinanOdeme<$faturaDetay->genel_toplam){
+                    //Eğer toplam odeme fatura tutarından küçükse sipariş kısmi ödendi yaplıyor
+                    $siparisOdemeDurumDegistir = SiparisModel::odemeDurumDegistir($faturaDetay->siparis_id,"2");
+
+                }else{
+
+                }
+
+                //Siparis ödendi yapılyıor
+                /*if(Post::siparisOdendi()=="1"){
 
                     $faturaOdemeDurumDegistir = SiparisModel::odemeDurumDegistir($faturaDetay->siparis_id,"1");
 
-                }
-                //Fatura ödendi yapılyıor
-                if(Post::odendi()=="1"){
+                }*/
 
-                    $faturaOdemeDurumDegistir = FaturaModel::odemeDurumDegistir($faturaDetay->id,"1");
-
-                    SiparisModel::siparisurunIslemGerekiyor($faturaDetay->siparis_id, '1', 'Ürünün Faturası ödendi olarak işaretlendi. Üründe yapılması gereken bir işlem varsa gerçekleştiriniz.');
-
-                }
 
                 /*BİLDİRİM*/
                 $ekMailBilgi = "";
 
                 if($bildirim=="1"){
+
+
+                    //SMS GÖNDERİMİ
+                    if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+                        $smsData = [
+                            'mesaj'=>$faturaDetay->id.' numaralı faturanız için '.$tutar.' TL Tutarında ödemeniz alınmış ve kayıtlarımıza işlenmiştir.Ödemeniz için teşekkür ederiz',
+                            'numara'=>$cariDetay->gsm
+                        ];
+
+                        $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+                    }
+                    //SMS GÖNDERİMİ
+
+
 
                     $mailgonder = Email::subject('Ödeme Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
 
@@ -308,6 +380,19 @@ class Kasa extends Controller
                 $kasaHesapTutarGuncelle = KasaModel::kasaHesabiTutarGuncelle($tutar+$kasaHesapBilgi->tutar,$kasa_hesabi);
 
                 if($bildirim=="1"){
+
+                    //SMS GÖNDERİMİ
+                    if(AyarModel::defaultAyarlar('smsGonderim')=="1"){
+
+                        $smsData = [
+                            'mesaj'=>'Sayın. '.$cariDetay->adi.' '.number_format($tutar,2).' TL ödemeniz alınmış ve kayıtlarımıza işlenmiştir.Ödemeniz için teşekkür ederiz.',
+                            'numara'=>$cariDetay->gsm
+                        ];
+
+                        $smsGonder = SmsModel::gonder(AyarModel::defaultAyarlar('smsEntegreFirma'),$smsData);
+
+                    }
+                    //SMS GÖNDERİMİ
 
                     $mailgonder = Email::subject('Tahsilat Bildirimi')->from(AyarModel::defaultAyarlar('iletisimEposta'))->to($cariDetay->email)->template('by', [
 

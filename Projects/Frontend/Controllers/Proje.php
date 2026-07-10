@@ -12,18 +12,34 @@ class Proje extends Controller
 
     }
 
+    public function liste()
+    {
+
+        $user = User::data();
+        $cariProjeleri = ProjeModel::CariProjeleri($user->id,0);
+        
+        View::cariProjeleri($cariProjeleri);
+        
+    }
+
     public function main($sef="")
     {
+        $user = User::data();
+
         $projeDetay = ProjeModel::detay($sef);
         if (empty($projeDetay->id)) {
             Redirect::action('s404');
             exit();
         }
 
-        if (Session::select('kullanici')!=$projeDetay->musteri.'-'.$projeDetay->id) {
-            Session::insert('proje',$sef);
-            Redirect::action('proje/login/'.$sef);
-            exit();
+        if($user->id!=$projeDetay->musteri){
+
+            if (Session::select('kullanici')!=$projeDetay->musteri.'-'.$projeDetay->id) {
+                Session::insert('proje',$sef);
+                Redirect::action('proje/login/'.$sef);
+                exit();
+            }
+
         }
 
 
@@ -54,10 +70,15 @@ class Proje extends Controller
 
         $calismalar = ProjeModel::yapilanlar($projeDetay->id);
 
-        if (Session::select('kullanici')!=$projeDetay->musteri.'-'.$projeDetay->id) {
-            Session::insert('proje',$sef);
-            Redirect::action('proje/login/'.$sef);
-            exit();
+        $user = User::data();
+
+        if($user->id!=$projeDetay->musteri){
+
+            if (Session::select('kullanici')!=$projeDetay->musteri.'-'.$projeDetay->id) {
+                Session::insert('proje',$sef);
+                Redirect::action('proje/login/'.$sef);
+                exit();
+            }
         }
 
         View::detay($projeDetay);

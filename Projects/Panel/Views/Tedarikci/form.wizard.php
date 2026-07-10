@@ -38,9 +38,9 @@
 
                             <!-- notification -->
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::site('tedarikci')}}">
+                                <a class="nav-link" href="{{URL::site('cari')}}">
                                     <i data-feather="bell" class="font-medium-3 me-50"></i>
-                                    <span class="fw-bold">Tüm Tedarikciler</span>
+                                    <span class="fw-bold">Tüm Cariler</span>
                                 </a>
                             </li>
 
@@ -51,20 +51,42 @@
                         <div class="row">
                             {{ Redirect::select('bilgi',true) }}
                             <div class="col-md-6 col-12">
-                                <div class="card">
+                                <div class="card brdt-success">
                                     <div class="card-header">
-                                        <h4 class="card-title">Tedarikçi Bilgileri</h4>
+                                        <h4 class="card-title">Firma Bilgileri</h4>
                                     </div>
                                     <div class="card-body">
 
                                         <div class="col-12">
                                             <div class="mb-1 row">
                                                 <div class="col-sm-3">
-                                                    <label class="col-form-label" for="adi">Firma Adı</label>
+                                                    <label class="col-form-label" for="adi">Görünecek İsim</label>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    @Form::vRequired()->id('adi')->placeholder('Firma Adı')->text('adi',$detay->adi,['class'=>'form-control'])
+                                                    @Form::vRequired()->id('adi')->placeholder('Sistemde Görüntülenecek Adı')->text('adi',$detay->adi,['class'=>'form-control'])
 
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="ilgili_kisi">Yetkili İsim</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @Form::id('ilgili_kisi')->placeholder('Yetkili İsim')->text('ilgili_kisi',$detay->ilgili_kisi,['class'=>'form-control'])
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="telefon">Telefon</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @Form::id('telefon')->placeholder('05xxxxxxx')->number('telefon',$detay->telefon,['class'=>'form-control'])
                                                 </div>
                                             </div>
                                         </div>
@@ -81,6 +103,82 @@
                                             </div>
                                         </div>
 
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12">
+                                <div class="card brdt-success">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Fatura Detayları</h4>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="firma_adi">Firma Fatura İsmi</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @Form::id('firma_adi')->placeholder('Firma Adı')->text('firma_adi',$detay->firma_adi,['class'=>'form-control'])
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="adres">Adresi</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @Form::id('adres')->placeholder('Adresi')->textarea('adres',$detay->adres,['class'=>'form-control'])
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-1">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-3">
+                                                        <label class="col-form-label" for="vergi_dairesi">Vergi Dairesi</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        @Form::id('vergi_dairesi')->placeholder('Vergi Dairesi')->text('vergi_dairesi',$detay->vergi_dairesi,['class'=>'form-control'])
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-1">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-3">
+                                                        <label class="col-form-label" for="gsm">Vergi Numarası</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        @Form::id('vergi_no')->placeholder('Vergi Numarası')->number('vergi_no',$detay->vergi_no,['class'=>'form-control'])
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-3">
+                                                    <label class="col-form-label" for="banka_hesaplari">Banka Hesapları</label>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @Form::id('banka_hesaplari')->placeholder('Banka Hesapları')->textarea('banka_hesaplari',$detay->banka_hesaplari,['class'=>'form-control'])
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <div class="card-body">
                                         <div class="row">
 
 
@@ -89,12 +187,10 @@
                                             </div>
 
                                         </div>
-
                                     </div>
+
                                 </div>
                             </div>
-
-
                         </div>
 
                         @Form::close()

@@ -13,13 +13,15 @@ class Home extends Controller
      */
     public function main(string ...$parameters)
     {
-        $kasaToplami = KasaModel::gelirGiderToplami();
+        $user = User::data();
+
+        $kasaToplami = KasaModel::gelirGiderToplami();-+
         $gelir = $kasaToplami->gelir;
         $gider = $kasaToplami->gider;
         $kasa = [
-            'gelir'     => number_format($gelir,2),
-            'gider'     => number_format($gider,2),
-            'kazanc'    => number_format($gelir - $gider,2)
+            'gelir'     => number_format((float)$gelir,2),
+            'gider'     => number_format((float)$gider,2),
+            'kazanc'    => number_format((float)$gelir - (float)$gider,2)
         ];
 
         $cariHesaplar = CariModel::liste();
@@ -37,7 +39,7 @@ class Home extends Controller
 
 
         $siparisler     = SiparisModel::liste();
-        $hatirlatmalar  = PlanlamaModel::hatirlatmalar(1);
+        $hatirlatmalar  = PlanlamaModel::hatirlatmalar($user->id,1);
 
         View::listele($siparisler);
         View::hatirlatmalar($hatirlatmalar);

@@ -48,7 +48,7 @@
                     <!-- notifications -->
                     @Form::csrf()->action('personel/yetkiDuzenle/'.$detay->id)->open('submitForm')
                     <input type="hidden" name="id" value="{{$detay->id}}">
-                    <div class="card">
+                    <div class="card brdt-primary">
                         {{ Redirect::select('bilgi',true) }}
                         <div class="card-header border-bottom">
                             <h4 class="card-title">Yetki Alanları</h4>
@@ -58,7 +58,7 @@
                                 Kullanıcıya izin vermek istediğiniz bölümleri işaretleyebilirsiniz.
                             </h5>
                         </div>
-                        <div class="table-responsive">
+                        <div class=" table-responsive-sm table-responsive-md table-responsive-xl">
                             <table class="table text-nowrap text-center border-bottom">
                                 <thead>
                                 <tr>

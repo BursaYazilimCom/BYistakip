@@ -17,6 +17,16 @@ class InternalTedarikciModel extends Model
         return $data->adi;
     }
 
+    static function tedarikciFirma($id='0')
+    {
+        if($id=='0'){
+            return 'Tedarikci Yok';
+        }
+        $data = DB::where('id',$id)->tedarikci()->row();
+
+        return $data->firma_adi;
+    }
+
     static function liste(){
         $veri= DB::limit(null,25)->tedarikci();
 
@@ -33,8 +43,15 @@ class InternalTedarikciModel extends Model
     static function add($data){
 
        $ekle = DB::insert('tedarikci',[
-            'adi'           =>$data['adi'],
-            'ek_bilgiler'           =>$data['ek_bilgiler']
+           'adi'               =>$data['adi'],
+           'firma_adi'         =>$data['firma_adi'],
+           'ilgili_kisi'       =>$data['ilgili_kisi'],
+           'vergi_dairesi'     =>$data['vergi_dairesi'],
+           'vergi_no'          =>$data['vergi_no'],
+           'adres'             =>$data['adres'],
+           'telefon'           =>$data['telefon'],
+           'banka_hesaplari'   =>$data['banka_hesaplari'],
+           'ek_bilgiler'       =>$data['ek_bilgiler']
         ]);
 
        //echo DB::stringQuery();
@@ -46,8 +63,15 @@ class InternalTedarikciModel extends Model
 
         $guncelle = DB::where('id',$data["id"])
             ->update('tedarikci',[
-                'adi'           =>$data['adi'],
-                'ek_bilgiler'           =>$data['ek_bilgiler']
+                'adi'               =>$data['adi'],
+                'firma_adi'         =>$data['firma_adi'],
+                'ilgili_kisi'       =>$data['ilgili_kisi'],
+                'vergi_dairesi'     =>$data['vergi_dairesi'],
+                'vergi_no'          =>$data['vergi_no'],
+                'adres'             =>$data['adres'],
+                'telefon'           =>$data['telefon'],
+                'banka_hesaplari'   =>$data['banka_hesaplari'],
+                'ek_bilgiler'       =>$data['ek_bilgiler']
             ]);
 
         return $guncelle;
