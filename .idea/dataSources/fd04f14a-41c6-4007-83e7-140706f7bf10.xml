@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="bursayazilim_client@bursayazilim.com">
-  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.51">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.53">
     <root id="1">
       <DefaultCasing>exact</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
@@ -932,7 +932,7 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
     </schema>
     <schema id="290" parent="1" name="bursayazilim_client">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-02-01.19:25:11</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-10-28.10:47:20</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="291" parent="1" name="bursayazilim_clientsr"/>
@@ -944,2140 +944,3172 @@ bursayazilim\\_client|schema||bursayazilim_clientsr||UPDATE|G</Grants>
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="294" parent="290" name="fatura_odeme_islemleri">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="295" parent="290" name="fatura_urunleri">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb3_general_ci</CollationName>
-    </table>
-    <table id="296" parent="290" name="faturalar">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb3_general_ci</CollationName>
-    </table>
-    <table id="297" parent="290" name="firmalar">
-      <Engine>MyISAM</Engine>
-      <CollationName>utf8mb3_general_ci</CollationName>
-    </table>
-    <table id="298" parent="290" name="hatirlatmalar">
+    <table id="294" parent="290" name="destek_departman">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="299" parent="290" name="ilceler">
-      <Engine>MyISAM</Engine>
-      <CollationName>utf8mb3_general_ci</CollationName>
+    <table id="295" parent="290" name="destek_mesajlari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="300" parent="290" name="iller">
-      <Engine>MyISAM</Engine>
-      <CollationName>utf8mb3_general_ci</CollationName>
+    <table id="296" parent="290" name="destek_talepleri">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="301" parent="290" name="kasa_defteri">
+    <table id="297" parent="290" name="etkinlik">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="298" parent="290" name="etkinlik_turleri">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="299" parent="290" name="fatura_odeme_islemleri">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="300" parent="290" name="fatura_urunleri">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="302" parent="290" name="kasa_hesaplari">
+    <table id="301" parent="290" name="faturalar">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="303" parent="290" name="masraf_kalemleri">
+    <table id="302" parent="290" name="firmalar">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="304" parent="290" name="masraflar">
+    <table id="303" parent="290" name="giris_kayitlari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="304" parent="290" name="gonderilen_bilgilendirmeler">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="305" parent="290" name="hatirlatmalar">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="306" parent="290" name="ilceler">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="305" parent="290" name="neler_oluyor">
+    <table id="307" parent="290" name="iller">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="306" parent="290" name="odeme_yontemleri">
+    <table id="308" parent="290" name="kasa_defteri">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb3_general_ci</CollationName>
+    </table>
+    <table id="309" parent="290" name="kasa_hesaplari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb3_general_ci</CollationName>
+    </table>
+    <table id="310" parent="290" name="masraf_kalemleri">
+      <Engine>MyISAM</Engine>
+      <CollationName>utf8mb3_general_ci</CollationName>
+    </table>
+    <table id="311" parent="290" name="masraflar">
+      <Engine>MyISAM</Engine>
+      <CollationName>utf8mb3_general_ci</CollationName>
+    </table>
+    <table id="312" parent="290" name="neler_oluyor">
+      <Engine>MyISAM</Engine>
+      <CollationName>utf8mb3_general_ci</CollationName>
+    </table>
+    <table id="313" parent="290" name="odeme_periyodlari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb3_general_ci</CollationName>
+    </table>
+    <table id="314" parent="290" name="odeme_yontemleri">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="307" parent="290" name="para_birimleri">
+    <table id="315" parent="290" name="para_birimleri">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="308" parent="290" name="personel">
+    <table id="316" parent="290" name="personel_mesai_takip">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb3_general_ci</CollationName>
+    </table>
+    <table id="317" parent="290" name="proje_calisanlari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="318" parent="290" name="proje_geri_bildirimleri">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="319" parent="290" name="proje_yapilanlar">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="320" parent="290" name="proje_yol_haritasi">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="321" parent="290" name="projeler">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="322" parent="290" name="reklam_anlasmalari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="323" parent="290" name="reklam_hesap_durumlari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="324" parent="290" name="reklam_hesaplari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="325" parent="290" name="reklam_odeme_araclari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="326" parent="290" name="reklam_platformlari">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="327" parent="290" name="sayfalar">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="309" parent="290" name="proje_calisanlari">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="310" parent="290" name="proje_geri_bildirimleri">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="311" parent="290" name="proje_yapilanlar">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="312" parent="290" name="proje_yol_haritasi">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="313" parent="290" name="projeler">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="314" parent="290" name="sayfalar">
+    <table id="328" parent="290" name="siparis_durumlari">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="315" parent="290" name="siparis_durumlari">
-      <Engine>MyISAM</Engine>
-      <CollationName>utf8mb3_general_ci</CollationName>
-    </table>
-    <table id="316" parent="290" name="siparis_gecmisi">
+    <table id="329" parent="290" name="siparis_gecmisi">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="317" parent="290" name="siparis_urunleri">
+    <table id="330" parent="290" name="siparis_urunleri">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="318" parent="290" name="siparisler">
+    <table id="331" parent="290" name="siparisler">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="319" parent="290" name="sistem_guncellemeleri">
+    <table id="332" parent="290" name="sistem_guncellemeleri">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="320" parent="290" name="sql_kayitlari">
+    <table id="333" parent="290" name="sql_kayitlari">
       <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+      <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="321" parent="290" name="tedarikci">
+    <table id="334" parent="290" name="tedarikci">
       <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+      <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="322" parent="290" name="urun_gruplari">
+    <table id="335" parent="290" name="teklif_urunleri">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb3_general_ci</CollationName>
+    </table>
+    <table id="336" parent="290" name="teklifler">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb3_general_ci</CollationName>
+    </table>
+    <table id="337" parent="290" name="urun_grup_ozellikleri">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="338" parent="290" name="urun_gruplari">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="323" parent="290" name="urunler">
+    <table id="339" parent="290" name="urun_ozellikleri">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="340" parent="290" name="urunler">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="324" parent="290" name="yetki_alanlari">
+    <table id="341" parent="290" name="yetki_alanlari">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="325" parent="290" name="yetkiler">
+    <table id="342" parent="290" name="yetkiler">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="326" parent="290" name="yonetim">
+    <table id="343" parent="290" name="yonetim">
       <Engine>MyISAM</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <column id="327" parent="292" name="id">
-      <AutoIncrement>87</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="344" parent="292" name="id">
+      <AutoIncrement>116</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="328" parent="292" name="sira">
-      <DasType>int|0s</DasType>
+    <column id="345" parent="292" name="sira">
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="329" parent="292" name="anahtar">
-      <DasType>varchar(50)|0s</DasType>
+    <column id="346" parent="292" name="grup">
       <Position>3</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="330" parent="292" name="deger">
-      <DasType>varchar(1500)|0s</DasType>
+    <column id="347" parent="292" name="anahtar">
       <Position>4</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="331" parent="292" name="baslik">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="348" parent="292" name="deger">
       <Position>5</Position>
+      <StoredType>varchar(1500)|0s</StoredType>
     </column>
-    <column id="332" parent="292" name="aciklama">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="349" parent="292" name="baslik">
       <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="333" parent="292" name="tur">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="350" parent="292" name="aciklama">
       <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="334" parent="292" name="tum_degerler">
-      <DasType>varchar(500)|0s</DasType>
+    <column id="351" parent="292" name="tur">
       <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="335" parent="292" name="duzenleme_izni">
-      <DasType>int|0s</DasType>
+    <column id="352" parent="292" name="tum_degerler">
       <Position>9</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
-    <index id="336" parent="292" name="PRIMARY">
+    <column id="353" parent="292" name="duzenleme_izni">
+      <Position>10</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="354" parent="292" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="337" parent="292" name="PRIMARY">
+    <key id="355" parent="292" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="338" parent="293" name="id">
-      <AutoIncrement>3463</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="356" parent="293" name="id">
+      <AutoIncrement>3468</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="339" parent="293" name="email">
-      <DasType>varchar(100)|0s</DasType>
+    <column id="357" parent="293" name="email">
       <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="340" parent="293" name="adi">
-      <DasType>varchar(100)|0s</DasType>
+    <column id="358" parent="293" name="pass">
       <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="341" parent="293" name="gsm">
-      <DasType>varchar(100)|0s</DasType>
+    <column id="359" parent="293" name="adi">
       <Position>4</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="342" parent="293" name="il">
-      <DasType>int|0s</DasType>
+    <column id="360" parent="293" name="gsm">
       <Position>5</Position>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="343" parent="293" name="ilce">
-      <DasType>int|0s</DasType>
+    <column id="361" parent="293" name="il">
       <Position>6</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="344" parent="293" name="tc">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="362" parent="293" name="ilce">
       <Position>7</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="345" parent="293" name="firma_adi">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="363" parent="293" name="tc">
       <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="346" parent="293" name="fatura_adresi">
-      <DasType>text|0s</DasType>
+    <column id="364" parent="293" name="firma_adi">
       <Position>9</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="347" parent="293" name="vergi_dairesi">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="365" parent="293" name="fatura_adresi">
       <Position>10</Position>
+      <StoredType>text|0s</StoredType>
     </column>
-    <column id="348" parent="293" name="vergi_no">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="366" parent="293" name="vergi_dairesi">
       <Position>11</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="349" parent="293" name="bakiye">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
+    <column id="367" parent="293" name="vergi_no">
       <Position>12</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="350" parent="293" name="durum">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
+    <column id="368" parent="293" name="bakiye">
+      <DefaultExpression>0.0000</DefaultExpression>
       <Position>13</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
-    <column id="351" parent="293" name="yonetim_notu">
-      <DasType>text|0s</DasType>
+    <column id="369" parent="293" name="durum">
+      <DefaultExpression>0</DefaultExpression>
       <Position>14</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="352" parent="293" name="kayit_tarihi">
-      <DasType>timestamp|0s</DasType>
+    <column id="370" parent="293" name="ban">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>15</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="371" parent="293" name="online">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>16</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="372" parent="293" name="aktivasyon">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>17</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="373" parent="293" name="gizlisoru">
+      <Position>18</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="374" parent="293" name="cevap">
+      <Position>19</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="375" parent="293" name="yonetim_notu">
+      <Position>20</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="376" parent="293" name="kayit_tarihi">
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>15</Position>
-    </column>
-    <index id="353" parent="293" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="354" parent="293" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="355" parent="294" name="id">
-      <AutoIncrement>21</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="356" parent="294" name="fatura_id">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="357" parent="294" name="tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>(0)</DefaultExpression>
-      <Position>3</Position>
-    </column>
-    <column id="358" parent="294" name="aciklama">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="359" parent="294" name="tarih">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>(now())</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <index id="360" parent="294" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="361" parent="294" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="362" parent="295" name="id">
-      <AutoIncrement>71</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="363" parent="295" name="fatura">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="364" parent="295" name="urun">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <Position>3</Position>
-    </column>
-    <column id="365" parent="295" name="siparis_urun_id">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <Position>4</Position>
-    </column>
-    <column id="366" parent="295" name="eklenecek_gun_sayisi">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <Position>5</Position>
-    </column>
-    <column id="367" parent="295" name="donem_baslangic_tarihi">
-      <DasType>date|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="368" parent="295" name="donem_bitis_tarihi">
-      <DasType>date|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <column id="369" parent="295" name="urun_adi">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>8</Position>
-    </column>
-    <column id="370" parent="295" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
-      <Position>9</Position>
-    </column>
-    <column id="371" parent="295" name="miktar">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>(0)</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>10</Position>
-    </column>
-    <column id="372" parent="295" name="fiyat">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>11</Position>
-    </column>
-    <column id="373" parent="295" name="kdv">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>20</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>12</Position>
-    </column>
-    <column id="374" parent="295" name="kdv_tutari">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>13</Position>
-    </column>
-    <column id="375" parent="295" name="tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>14</Position>
-    </column>
-    <index id="376" parent="295" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="377" parent="295" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="378" parent="296" name="id">
-      <AutoIncrement>70</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="379" parent="296" name="tur">
-      <Comment>1:alış,2:satış,3:iade</Comment>
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="380" parent="296" name="satis_turu">
-      <Comment>1:ilk satis,2:yenileme</Comment>
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="381" parent="296" name="belge_no">
-      <DasType>char(50)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="382" parent="296" name="irsaliye_no">
-      <DasType>char(50)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="383" parent="296" name="fatura_adi">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="384" parent="296" name="fatura_adresi">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <column id="385" parent="296" name="vergi_dairesi">
-      <DasType>char(50)|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <column id="386" parent="296" name="vergi_no">
-      <DasType>char(50)|0s</DasType>
-      <Position>9</Position>
-    </column>
-    <column id="387" parent="296" name="tedarikci">
-      <DasType>int|0s</DasType>
-      <Position>10</Position>
-    </column>
-    <column id="388" parent="296" name="musteri">
-      <DasType>int|0s</DasType>
-      <Position>11</Position>
-    </column>
-    <column id="389" parent="296" name="siparis_id">
-      <DasType>int|0s</DasType>
-      <Position>12</Position>
-    </column>
-    <column id="390" parent="296" name="toplam_tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>13</Position>
-    </column>
-    <column id="391" parent="296" name="kdv_toplami">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>14</Position>
-    </column>
-    <column id="392" parent="296" name="genel_toplam">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>15</Position>
-    </column>
-    <column id="393" parent="296" name="alinan_odeme">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <Position>16</Position>
-    </column>
-    <column id="394" parent="296" name="belge_tarihi">
-      <DasType>date|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>17</Position>
-    </column>
-    <column id="395" parent="296" name="vade_tarihi">
-      <DasType>date|0s</DasType>
-      <Position>18</Position>
-    </column>
-    <column id="396" parent="296" name="odeme_tarihi">
-      <DasType>datetime|0s</DasType>
-      <Position>19</Position>
-    </column>
-    <column id="397" parent="296" name="odeme_yontemi">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <Position>20</Position>
-    </column>
-    <column id="398" parent="296" name="resmi_fatura_dosyasi">
-      <DasType>varchar(100)|0s</DasType>
       <Position>21</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
-    <column id="399" parent="296" name="durum">
-      <Comment>0:iptal,1:resmileşmemiş,2:resmileşmiş</Comment>
-      <DasType>int|0s</DasType>
-      <DefaultExpression>2</DefaultExpression>
-      <Position>22</Position>
-    </column>
-    <column id="400" parent="296" name="odeme">
-      <Comment>0 : ödeme yapılmadı,  1 : ödeme yapıldı</Comment>
-      <DasType>int|0s</DasType>
-      <Position>23</Position>
-    </column>
-    <column id="401" parent="296" name="aciklama">
-      <DasType>text|0s</DasType>
-      <Position>24</Position>
-    </column>
-    <column id="402" parent="296" name="ekleme_tarihi">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>25</Position>
-    </column>
-    <index id="403" parent="296" name="PRIMARY">
+    <index id="377" parent="293" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="404" parent="296" name="PRIMARY">
+    <key id="378" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="405" parent="297" name="id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="406" parent="297" name="firma_adi">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="407" parent="297" name="firma_sektor">
-      <DasType>varchar(50)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="408" parent="297" name="faaliyet_alani">
-      <DasType>varchar(50)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="409" parent="297" name="firma_email">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="410" parent="297" name="firma_yetkili">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="411" parent="297" name="firma_yetkili_gsm">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <column id="412" parent="297" name="firma_vd">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <column id="413" parent="297" name="firma_vn">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>9</Position>
-    </column>
-    <column id="414" parent="297" name="firma_sgk_sicil">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>10</Position>
-    </column>
-    <column id="415" parent="297" name="firma_fatura_adresi">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>11</Position>
-    </column>
-    <column id="416" parent="297" name="il">
-      <DasType>int|0s</DasType>
-      <Position>12</Position>
-    </column>
-    <column id="417" parent="297" name="ilce">
-      <DasType>int|0s</DasType>
-      <Position>13</Position>
-    </column>
-    <column id="418" parent="297" name="firma_sube">
-      <DasType>int|0s</DasType>
-      <Position>14</Position>
-    </column>
-    <column id="419" parent="297" name="tehlike_sinifi">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>15</Position>
-    </column>
-    <column id="420" parent="297" name="uname">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>16</Position>
-    </column>
-    <column id="421" parent="297" name="upass">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>17</Position>
-    </column>
-    <column id="422" parent="297" name="durum">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <Position>18</Position>
-    </column>
-    <column id="423" parent="297" name="ekleme_tarihi">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>19</Position>
-    </column>
-    <column id="424" parent="297" name="duzenleme_tarihi">
-      <DasType>char(50)|0s</DasType>
-      <DefaultExpression>&apos;0000-00-00 00:00:00&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>20</Position>
-    </column>
-    <index id="425" parent="297" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="426" parent="297" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="427" parent="298" name="id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="428" parent="298" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="429" parent="298" name="periyod">
-      <Comment>0:tek sefer 1 yenilenen</Comment>
-      <DasType>int|0s</DasType>
-      <DefaultExpression>(0)</DefaultExpression>
-      <Position>3</Position>
-    </column>
-    <column id="430" parent="298" name="yil">
-      <DasType>char(50)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="431" parent="298" name="ay">
-      <DasType>char(50)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="432" parent="298" name="gun">
-      <DasType>char(50)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="433" parent="298" name="saat">
-      <DasType>time|0s</DasType>
-      <DefaultExpression>(0)</DefaultExpression>
-      <Position>7</Position>
-    </column>
-    <column id="434" parent="298" name="durum">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>(0)</DefaultExpression>
-      <Position>8</Position>
-    </column>
-    <column id="435" parent="298" name="kayit_tarihi">
-      <DasType>datetime|0s</DasType>
-      <DefaultExpression>(now())</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>9</Position>
-    </column>
-    <index id="436" parent="298" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="437" parent="298" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="438" parent="299" name="id">
-      <AutoIncrement>963</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="439" parent="299" name="il">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="440" parent="299" name="ilce">
-      <DasType>varchar(60)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="441" parent="299" name="oylesine">
-      <DasType>varchar(55)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <index id="442" parent="299" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="443" parent="299" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="444" parent="300" name="id">
-      <AutoIncrement>85</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="445" parent="300" name="plaka">
-      <DasType>tinyint|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="446" parent="300" name="il">
-      <DasType>varchar(100)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="447" parent="300" name="siralama">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="448" parent="300" name="kod">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <index id="449" parent="300" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="450" parent="300" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="451" parent="301" name="id">
-      <AutoIncrement>14</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="452" parent="301" name="kasa">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="453" parent="301" name="islem">
-      <Comment>o:odeme t:tahsilat</Comment>
-      <DasType>char(1)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="454" parent="301" name="hesap">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="455" parent="301" name="islem_turu">
-      <Comment>masraf,tedarikci,personel,cari,siparis,fatura</Comment>
-      <DasType>char(50)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="456" parent="301" name="islem_tur_id">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <Position>6</Position>
-    </column>
-    <column id="457" parent="301" name="aciklama">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>7</Position>
-    </column>
-    <column id="458" parent="301" name="gelir">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
-      <Position>8</Position>
-    </column>
-    <column id="459" parent="301" name="gider">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
-      <Position>9</Position>
-    </column>
-    <column id="460" parent="301" name="mevcut_kasa_toplami">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
-      <Position>10</Position>
-    </column>
-    <column id="461" parent="301" name="yil">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>11</Position>
-    </column>
-    <column id="462" parent="301" name="tarih">
-      <DasType>date|0s</DasType>
-      <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>12</Position>
-    </column>
-    <column id="463" parent="301" name="islem_yapan">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>13</Position>
-    </column>
-    <column id="464" parent="301" name="islem_tarihi">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>14</Position>
-    </column>
-    <index id="465" parent="301" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="466" parent="301" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="467" parent="302" name="id">
+    <column id="379" parent="294" name="id">
       <AutoIncrement>6</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="468" parent="302" name="adi">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="380" parent="294" name="adi">
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="469" parent="302" name="hesap_no">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="470" parent="302" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="471" parent="302" name="tur">
-      <Comment>1:kasa 2:banka hesabı 3: pos hesabı 4:kredi kartı 5 veresiye 6:Diger</Comment>
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="472" parent="302" name="durum">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <Position>6</Position>
-    </column>
-    <column id="473" parent="302" name="tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
-      <Position>7</Position>
-    </column>
-    <index id="474" parent="302" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="475" parent="302" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="476" parent="303" name="id">
-      <AutoIncrement>27</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="477" parent="303" name="ana_kalem">
-      <DasType>int|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <column id="478" parent="303" name="ust">
-      <DasType>int|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="479" parent="303" name="adi">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="480" parent="303" name="renk">
-      <DasType>char(50)|0s</DasType>
-      <DefaultExpression>&apos;success&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <index id="481" parent="303" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="482" parent="303" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="483" parent="304" name="id">
-      <AutoIncrement>27</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="484" parent="304" name="kalem">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="485" parent="304" name="kasa">
-      <DasType>int|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="486" parent="304" name="belge_no">
-      <DasType>char(50)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="487" parent="304" name="belge_dosya">
-      <DasType>char(200)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="488" parent="304" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="489" parent="304" name="odeme_durumu">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>7</Position>
-    </column>
-    <column id="490" parent="304" name="tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>8</Position>
-    </column>
-    <column id="491" parent="304" name="odeme_tarihi">
-      <DasType>date|0s</DasType>
-      <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>9</Position>
-    </column>
-    <column id="492" parent="304" name="islem_tarihi">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>10</Position>
-    </column>
-    <index id="493" parent="304" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="494" parent="304" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="495" parent="305" name="id">
-      <AutoIncrement>10</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="496" parent="305" name="olay">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="497" parent="305" name="tur">
-      <Comment>1:siparis,2:proje,3:fatura,4:siparis ürün</Comment>
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="498" parent="305" name="tur_id">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>(1)</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="499" parent="305" name="ne_zaman">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="500" parent="305" name="okundu">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>(0)</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-    </column>
-    <index id="501" parent="305" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="502" parent="305" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="503" parent="306" name="id">
-      <AutoIncrement>13</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="504" parent="306" name="baslik">
-      <DasType>varchar(255)|0s</DasType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="505" parent="306" name="kasa_hesabi">
-      <DasType>int|0s</DasType>
+    <column id="381" parent="294" name="yetkili_personel">
       <DefaultExpression>(0)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="506" parent="306" name="tur">
-      <Comment>1:havale Eft,2:sanal pos,3:diger</Comment>
-      <DasType>varchar(50)|0s</DasType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
+    <column id="382" parent="294" name="durum">
+      <DefaultExpression>0</DefaultExpression>
       <Position>4</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="507" parent="306" name="bilgiler">
-      <DasType>varchar(500)|0s</DasType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="508" parent="306" name="durum">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-    </column>
-    <index id="509" parent="306" name="PRIMARY">
+    <index id="383" parent="294" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="510" parent="306" name="PRIMARY">
+    <key id="384" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="511" parent="307" name="id">
-      <AutoIncrement>13</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="385" parent="295" name="id">
+      <AutoIncrement>20</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="512" parent="307" name="para">
-      <DasType>char(50)|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <column id="513" parent="307" name="kod">
-      <DasType>char(50)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="514" parent="307" name="sembol">
-      <DasType>char(50)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="515" parent="307" name="guncel_kur">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="516" parent="307" name="guncelleme">
-      <DasType>timestamp|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <index id="517" parent="307" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="518" parent="307" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="519" parent="308" name="id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="520" parent="308" name="adi">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="386" parent="295" name="talep_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="521" parent="308" name="telefon">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="387" parent="295" name="gonderen_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="522" parent="308" name="mail_adresi">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="388" parent="295" name="gonderen">
+      <Comment>1:musteri,2:yetkili</Comment>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="523" parent="308" name="sifre">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="389" parent="295" name="mesaj">
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>text|0s</StoredType>
     </column>
-    <column id="524" parent="308" name="adresi">
-      <DasType>text|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="390" parent="295" name="dosya_eki">
       <Position>6</Position>
+      <StoredType>text|0s</StoredType>
     </column>
-    <column id="525" parent="308" name="resim">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="391" parent="295" name="tarih">
+      <DefaultExpression>(now())</DefaultExpression>
       <Position>7</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="526" parent="308" name="imza">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="392" parent="295" name="okundu">
+      <DefaultExpression>0</DefaultExpression>
       <Position>8</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="527" parent="308" name="imza_yazi">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="393" parent="295" name="okunma_tarihi">
       <Position>9</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="528" parent="308" name="tc_kimlik">
-      <DasType>varchar(20)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>10</Position>
-    </column>
-    <column id="529" parent="308" name="yetkinlik">
-      <DasType>text|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>11</Position>
-    </column>
-    <column id="530" parent="308" name="meslek">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>12</Position>
-    </column>
-    <column id="531" parent="308" name="diploma_tarihi">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>13</Position>
-    </column>
-    <column id="532" parent="308" name="diploma_no">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>14</Position>
-    </column>
-    <column id="533" parent="308" name="belge_sinifi">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>15</Position>
-    </column>
-    <column id="534" parent="308" name="belge_tarihi">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>16</Position>
-    </column>
-    <column id="535" parent="308" name="belge_no">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>17</Position>
-    </column>
-    <column id="536" parent="308" name="mezuniyet">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>18</Position>
-    </column>
-    <column id="537" parent="308" name="egitimleri">
-      <DasType>text|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>19</Position>
-    </column>
-    <column id="538" parent="308" name="ise_baslangic">
-      <DasType>varchar(50)|0s</DasType>
-      <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>20</Position>
-    </column>
-    <column id="539" parent="308" name="isden_ayrilma">
-      <DasType>varchar(50)|0s</DasType>
-      <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>21</Position>
-    </column>
-    <column id="540" parent="308" name="sube">
-      <DasType>varchar(10)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>22</Position>
-    </column>
-    <column id="541" parent="308" name="panel_yetkisi">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>23</Position>
-    </column>
-    <column id="542" parent="308" name="rutbe">
-      <DasType>varchar(20)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>24</Position>
-    </column>
-    <column id="543" parent="308" name="durum">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>25</Position>
-    </column>
-    <column id="544" parent="308" name="sifre_degisim">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>26</Position>
-    </column>
-    <column id="545" parent="308" name="kayit_tarihi">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>27</Position>
-    </column>
-    <index id="546" parent="308" name="PRIMARY">
+    <index id="394" parent="295" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="547" parent="308" name="PRIMARY">
+    <key id="395" parent="295" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="548" parent="309" name="id">
+    <column id="396" parent="296" name="id">
       <AutoIncrement>4</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="549" parent="309" name="proje_id">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
+    <column id="397" parent="296" name="musteri">
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="550" parent="309" name="personel_id">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
+    <column id="398" parent="296" name="departman">
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="551" parent="309" name="gorevi">
-      <DasType>text|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="552" parent="309" name="tarih">
-      <DasType>datetime|0s</DasType>
-      <DefaultExpression>(now())</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <index id="553" parent="309" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="554" parent="309" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="555" parent="310" name="id">
-      <AutoIncrement>4</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="556" parent="310" name="proje_id">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="557" parent="310" name="detay">
-      <DasType>text|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="558" parent="310" name="cevap">
-      <DasType>text|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="559" parent="310" name="talep_ip">
-      <DasType>text|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="560" parent="310" name="talep_user_agent">
-      <DasType>varchar(500)|0s</DasType>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
-      <Position>6</Position>
-    </column>
-    <column id="561" parent="310" name="durum">
-      <Comment>0:işlem bekliyor,1:plana alındı,2:çözüldü</Comment>
-      <DasType>enum(&apos;2&apos;, &apos;1&apos;, &apos;0&apos;)|0e</DasType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-      <Position>7</Position>
-    </column>
-    <column id="562" parent="310" name="tarih">
-      <DasType>datetime|0s</DasType>
-      <DefaultExpression>(now())</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>8</Position>
-    </column>
-    <index id="563" parent="310" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="564" parent="310" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="565" parent="311" name="id">
-      <AutoIncrement>16</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="566" parent="311" name="proje_id">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="567" parent="311" name="tur">
-      <Comment>1 degisiklik, 2 hata çözümü, 3 yenilik</Comment>
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="568" parent="311" name="islem">
-      <DasType>varchar(500)|0s</DasType>
+    <column id="399" parent="296" name="konu">
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="569" parent="311" name="ekleyen">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>(0)</DefaultExpression>
+    <column id="400" parent="296" name="mesaj">
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="570" parent="311" name="tarih">
-      <DasType>date|0s</DasType>
-      <DefaultExpression>(now())</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-    </column>
-    <index id="571" parent="311" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="572" parent="311" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="573" parent="312" name="id">
-      <AutoIncrement>28</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="574" parent="312" name="proje_id">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="575" parent="312" name="baslik">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="576" parent="312" name="aciklama">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="577" parent="312" name="sira">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <Position>5</Position>
-    </column>
-    <column id="578" parent="312" name="durum">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-    </column>
-    <index id="579" parent="312" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="580" parent="312" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="581" parent="313" name="id">
-      <AutoIncrement>4</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="582" parent="313" name="musteri">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="583" parent="313" name="proje_adi">
-      <DasType>varchar(255)|0s</DasType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="584" parent="313" name="sef">
-      <DasType>varchar(255)|0s</DasType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="585" parent="313" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="586" parent="313" name="proje_baslangic_tarihi">
-      <DasType>date|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="587" parent="313" name="tahmini_bitis_tarihi">
-      <DasType>date|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <column id="588" parent="313" name="bitis_tarihi">
-      <DasType>varchar(50)|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <column id="589" parent="313" name="durum">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <Position>9</Position>
-    </column>
-    <column id="590" parent="313" name="sifre">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>10</Position>
-    </column>
-    <index id="591" parent="313" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="592" parent="313" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="593" parent="314" name="id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="594" parent="314" name="baslik">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="595" parent="314" name="sef">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="596" parent="314" name="icerik">
-      <DasType>text|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="597" parent="314" name="ekleyen">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="598" parent="314" name="durum">
-      <DasType>enum(&apos;1&apos;, &apos;0&apos;)|0e</DasType>
+    <column id="401" parent="296" name="durum">
+      <Comment>0:kapandı,1:yeni, 2:yanıtlandı,3:musteri_cevapladı</Comment>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <index id="599" parent="314" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="600" parent="314" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="601" parent="315" name="id">
-      <AutoIncrement>34</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="602" parent="315" name="adi">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="603" parent="315" name="uyari">
-      <DasType>char(50)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="604" parent="315" name="sira">
-      <DasType>int|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <index id="605" parent="315" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="606" parent="315" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="607" parent="316" name="id">
-      <AutoIncrement>36</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="608" parent="316" name="cari">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="609" parent="316" name="siparis">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="610" parent="316" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="611" parent="316" name="guncelleyen">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="612" parent="316" name="tarih">
-      <DasType>timestamp|0s</DasType>
+    <column id="402" parent="296" name="tarih">
       <DefaultExpression>(now())</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>6</Position>
+      <Position>7</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
-    <index id="613" parent="316" name="PRIMARY">
+    <column id="403" parent="296" name="guncelleme_tarihi">
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>8</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <index id="404" parent="296" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="614" parent="316" name="PRIMARY">
+    <key id="405" parent="296" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="615" parent="317" name="id">
-      <AutoIncrement>16</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="406" parent="297" name="id">
+      <AutoIncrement>14</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="616" parent="317" name="siparis">
-      <DasType>int|0s</DasType>
+    <column id="407" parent="297" name="baslik">
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="617" parent="317" name="urun">
-      <DasType>int|0s</DasType>
+    <column id="408" parent="297" name="tur">
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="618" parent="317" name="urun_adi">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="409" parent="297" name="baslangic_tarihi">
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>date|0s</StoredType>
     </column>
-    <column id="619" parent="317" name="tedarikci">
-      <DasType>int|0s</DasType>
+    <column id="410" parent="297" name="baslangic_saati">
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>time|0s</StoredType>
     </column>
-    <column id="620" parent="317" name="cari">
-      <DasType>int|0s</DasType>
+    <column id="411" parent="297" name="baslangic_tarih_saat">
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="621" parent="317" name="adet">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
-      <NotNull>1</NotNull>
+    <column id="412" parent="297" name="bitis_tarihi">
       <Position>7</Position>
+      <StoredType>date|0s</StoredType>
     </column>
-    <column id="622" parent="317" name="notu">
-      <DasType>varchar(500)|0s</DasType>
+    <column id="413" parent="297" name="bitis_saat">
       <Position>8</Position>
+      <StoredType>time|0s</StoredType>
     </column>
-    <column id="623" parent="317" name="odeme_periyodu">
-      <Comment>t:tek sefer,u:ucretsiz,a:aylık,3a:3aylik,6a:6 aylık,y:yillik</Comment>
-      <DasType>varchar(5)|0s</DasType>
+    <column id="414" parent="297" name="bitis_tarih_saat">
       <Position>9</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="624" parent="317" name="para_birimi">
-      <DasType>varchar(10)|0s</DasType>
+    <column id="415" parent="297" name="url">
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
       <Position>10</Position>
+      <StoredType>varchar(2000)|0s</StoredType>
     </column>
-    <column id="625" parent="317" name="gecerli_kur">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
+    <column id="416" parent="297" name="katilimcilar">
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
       <Position>11</Position>
+      <StoredType>varchar(2000)|0s</StoredType>
     </column>
-    <column id="626" parent="317" name="fiyat_sabitle">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
+    <column id="417" parent="297" name="konum">
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
       <Position>12</Position>
+      <StoredType>varchar(2000)|0s</StoredType>
     </column>
-    <column id="627" parent="317" name="birim_fiyat">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
-      <NotNull>1</NotNull>
+    <column id="418" parent="297" name="aciklama">
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
       <Position>13</Position>
+      <StoredType>varchar(2000)|0s</StoredType>
     </column>
-    <column id="628" parent="317" name="kdv">
-      <DasType>int|0s</DasType>
+    <column id="419" parent="297" name="mail_bilgilendirme">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>14</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="420" parent="297" name="sms_bilgilendirme">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>15</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="421" parent="297" name="durum">
+      <DefaultExpression>1</DefaultExpression>
+      <Position>16</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="422" parent="297" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="423" parent="297" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="424" parent="298" name="id">
+      <AutoIncrement>6</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="425" parent="298" name="tur">
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="426" parent="298" name="renk">
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <index id="427" parent="298" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="428" parent="298" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="429" parent="299" name="id">
+      <AutoIncrement>32</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="430" parent="299" name="fatura_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="431" parent="299" name="tutar">
+      <DefaultExpression>(0)</DefaultExpression>
+      <Position>3</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="432" parent="299" name="aciklama">
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="433" parent="299" name="tarih">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="434" parent="299" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="435" parent="299" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="436" parent="300" name="id">
+      <AutoIncrement>272</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="437" parent="300" name="fatura">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="438" parent="300" name="urun">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="439" parent="300" name="siparis_urun_id">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="440" parent="300" name="eklenecek_gun_sayisi">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="441" parent="300" name="donem_baslangic_tarihi">
+      <Position>6</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="442" parent="300" name="donem_bitis_tarihi">
+      <Position>7</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="443" parent="300" name="urun_adi">
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="444" parent="300" name="aciklama">
+      <Position>9</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="445" parent="300" name="miktar">
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="446" parent="300" name="fiyat">
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="447" parent="300" name="kdv">
       <DefaultExpression>20</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>14</Position>
+      <Position>12</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="629" parent="317" name="kdv_tutari">
-      <DasType>decimal(15,4 digit)|0s</DasType>
+    <column id="448" parent="300" name="kdv_tutari">
+      <NotNull>1</NotNull>
+      <Position>13</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="449" parent="300" name="tutar">
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <index id="450" parent="300" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="451" parent="300" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="452" parent="301" name="id">
+      <AutoIncrement>173</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="453" parent="301" name="tur">
+      <Comment>1:alış,2:satış,3:iade</Comment>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="454" parent="301" name="satis_turu">
+      <Comment>1:ilk satis,2:yenileme</Comment>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="455" parent="301" name="belge_no">
+      <Position>4</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="456" parent="301" name="irsaliye_no">
+      <Position>5</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="457" parent="301" name="fatura_adi">
+      <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="458" parent="301" name="fatura_adresi">
+      <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="459" parent="301" name="vergi_dairesi">
+      <Position>8</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="460" parent="301" name="vergi_no">
+      <Position>9</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="461" parent="301" name="tedarikci">
+      <Position>10</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="462" parent="301" name="musteri">
+      <Position>11</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="463" parent="301" name="siparis_id">
+      <Position>12</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="464" parent="301" name="indirim">
       <DefaultExpression>0.0000</DefaultExpression>
+      <Position>13</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="465" parent="301" name="toplam_tutar">
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="466" parent="301" name="kdv_toplami">
+      <DefaultExpression>(0)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>15</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
-    <column id="630" parent="317" name="toplam_fiyat">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
+    <column id="467" parent="301" name="genel_toplam">
       <NotNull>1</NotNull>
       <Position>16</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
-    <column id="631" parent="317" name="siparis_tarihi">
-      <DasType>date|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="468" parent="301" name="alinan_odeme">
       <Position>17</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
-    <column id="632" parent="317" name="baslangic_tarihi">
-      <DasType>date|0s</DasType>
+    <column id="469" parent="301" name="belge_tarihi">
       <NotNull>1</NotNull>
       <Position>18</Position>
+      <StoredType>date|0s</StoredType>
     </column>
-    <column id="633" parent="317" name="bitis_tarihi">
-      <DasType>date|0s</DasType>
+    <column id="470" parent="301" name="vade_tarihi">
+      <Position>19</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="471" parent="301" name="odeme_tarihi">
+      <Position>20</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="472" parent="301" name="odeme_yontemi">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>21</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="473" parent="301" name="resmi_fatura_dosyasi">
+      <Position>22</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="474" parent="301" name="durum">
+      <Comment>0:iptal,1:resmileşmemiş,2:resmileşmiş</Comment>
+      <DefaultExpression>2</DefaultExpression>
+      <Position>23</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="475" parent="301" name="odeme">
+      <Comment>0 : ödeme yapılmadı,  1 : ödeme yapıldı</Comment>
+      <Position>24</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="476" parent="301" name="aciklama">
+      <Position>25</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="477" parent="301" name="ekleme_tarihi">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>26</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="478" parent="301" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="479" parent="301" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="480" parent="302" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="481" parent="302" name="firma_adi">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="482" parent="302" name="firma_sektor">
+      <Position>3</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="483" parent="302" name="faaliyet_alani">
+      <Position>4</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="484" parent="302" name="firma_email">
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="485" parent="302" name="firma_yetkili">
+      <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="486" parent="302" name="firma_yetkili_gsm">
+      <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="487" parent="302" name="firma_vd">
+      <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="488" parent="302" name="firma_vn">
+      <Position>9</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="489" parent="302" name="firma_sgk_sicil">
+      <Position>10</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="490" parent="302" name="firma_fatura_adresi">
+      <Position>11</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="491" parent="302" name="il">
+      <Position>12</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="492" parent="302" name="ilce">
+      <Position>13</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="493" parent="302" name="firma_sube">
+      <Position>14</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="494" parent="302" name="tehlike_sinifi">
+      <Position>15</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="495" parent="302" name="uname">
+      <Position>16</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="496" parent="302" name="upass">
+      <Position>17</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="497" parent="302" name="durum">
+      <DefaultExpression>1</DefaultExpression>
+      <Position>18</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="498" parent="302" name="ekleme_tarihi">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>19</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
-    <column id="634" parent="317" name="islem_gerekiyor">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <Position>20</Position>
-    </column>
-    <column id="635" parent="317" name="yapilacak_islem">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>21</Position>
-    </column>
-    <column id="636" parent="317" name="durum">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
+    <column id="499" parent="302" name="duzenleme_tarihi">
+      <DefaultExpression>&apos;0000-00-00 00:00:00&apos;</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>22</Position>
+      <Position>20</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
-    <index id="637" parent="317" name="PRIMARY">
+    <index id="500" parent="302" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="638" parent="317" name="PRIMARY">
+    <key id="501" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="639" parent="318" name="id">
-      <AutoIncrement>13</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="502" parent="303" name="id">
+      <AutoIncrement>141</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="640" parent="318" name="belge_no">
-      <DasType>char(50)|0s</DasType>
+    <column id="503" parent="303" name="cari">
+      <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="641" parent="318" name="cari">
-      <DasType>int|0s</DasType>
+    <column id="504" parent="303" name="ip">
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>char(50)|0s</StoredType>
     </column>
-    <column id="642" parent="318" name="toplam_tutar">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
+    <column id="505" parent="303" name="tarih">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="643" parent="318" name="kdv_tutari">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
+    <index id="506" parent="303" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="507" parent="303" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="508" parent="304" name="id">
+      <AutoIncrement>13</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="509" parent="304" name="tur">
+      <Comment>0: mail, 1: sms, 2: tel araması</Comment>
+      <DefaultExpression>0</DefaultExpression>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="510" parent="304" name="cari">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="511" parent="304" name="ilgili_tur">
+      <Position>4</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="512" parent="304" name="gonderilen_adres">
       <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="644" parent="318" name="genel_toplam_tutari">
-      <DasType>decimal(15,4 digit)|0s</DasType>
-      <DefaultExpression>0.0000</DefaultExpression>
+    <column id="513" parent="304" name="gonderilen_icerik">
       <Position>6</Position>
+      <StoredType>text|0s</StoredType>
     </column>
-    <column id="645" parent="318" name="odeme_yontemi">
-      <DasType>int|0s</DasType>
+    <column id="514" parent="304" name="tarih">
+      <DefaultExpression>(now())</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <index id="515" parent="304" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="516" parent="304" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="517" parent="305" name="id">
+      <AutoIncrement>9</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="518" parent="305" name="personel">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="519" parent="305" name="aciklama">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="520" parent="305" name="periyod">
+      <Comment>0:tek sefer 1 yenilenen</Comment>
+      <DefaultExpression>(0)</DefaultExpression>
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="521" parent="305" name="yil">
+      <Position>5</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="522" parent="305" name="ay">
+      <Position>6</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="523" parent="305" name="gun">
+      <Position>7</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="524" parent="305" name="saat">
+      <DefaultExpression>(0)</DefaultExpression>
+      <Position>8</Position>
+      <StoredType>time|0s</StoredType>
+    </column>
+    <column id="525" parent="305" name="durum">
+      <Comment>0:pasif,1:aktif,2:bildirimGonderildi</Comment>
+      <DefaultExpression>0</DefaultExpression>
+      <Position>9</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="526" parent="305" name="kayit_tarihi">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <index id="527" parent="305" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="528" parent="305" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="529" parent="306" name="id">
+      <AutoIncrement>963</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="530" parent="306" name="il">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="531" parent="306" name="ilce">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(60)|0s</StoredType>
+    </column>
+    <column id="532" parent="306" name="oylesine">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(55)|0s</StoredType>
+    </column>
+    <index id="533" parent="306" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="534" parent="306" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="535" parent="307" name="id">
+      <AutoIncrement>85</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="536" parent="307" name="plaka">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>tinyint|0s</StoredType>
+    </column>
+    <column id="537" parent="307" name="il">
+      <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="538" parent="307" name="siralama">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="539" parent="307" name="kod">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="540" parent="307" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="541" parent="307" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="542" parent="308" name="id">
+      <AutoIncrement>65</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="543" parent="308" name="kasa">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="544" parent="308" name="islem">
+      <Comment>o:odeme t:tahsilat</Comment>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>char(1)|0s</StoredType>
+    </column>
+    <column id="545" parent="308" name="hesap">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="546" parent="308" name="islem_turu">
+      <Comment>masraf,tedarikci,personel,cari,siparis,fatura</Comment>
+      <Position>5</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="547" parent="308" name="islem_tur_id">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="548" parent="308" name="aciklama">
       <NotNull>1</NotNull>
       <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="646" parent="318" name="odeme_durumu">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
+    <column id="549" parent="308" name="gelir">
+      <DefaultExpression>0.0000</DefaultExpression>
       <Position>8</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
-    <column id="647" parent="318" name="alinan_odeme">
-      <DasType>decimal(15,4 digit)|0s</DasType>
+    <column id="550" parent="308" name="gider">
       <DefaultExpression>0.0000</DefaultExpression>
       <Position>9</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
-    <column id="648" parent="318" name="olusturan">
-      <DasType>int|0s</DasType>
+    <column id="551" parent="308" name="mevcut_kasa_toplami">
+      <DefaultExpression>0.0000</DefaultExpression>
       <Position>10</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
     </column>
-    <column id="649" parent="318" name="kayit_sekli">
-      <Comment>1:sipariş: 0: teklif</Comment>
-      <DasType>int|0s</DasType>
-      <DefaultExpression>1</DefaultExpression>
+    <column id="552" parent="308" name="yil">
+      <NotNull>1</NotNull>
       <Position>11</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="650" parent="318" name="fatura">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
+    <column id="553" parent="308" name="tarih">
+      <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
       <Position>12</Position>
+      <StoredType>date|0s</StoredType>
     </column>
-    <column id="651" parent="318" name="siparis_notu">
-      <DasType>varchar(1000)|0s</DasType>
+    <column id="554" parent="308" name="islem_yapan">
+      <NotNull>1</NotNull>
       <Position>13</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="652" parent="318" name="durum">
-      <Comment>0:pasif,1:aktif</Comment>
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
+    <column id="555" parent="308" name="islem_tarihi">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>14</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
-    <column id="653" parent="318" name="tarih">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>15</Position>
-    </column>
-    <index id="654" parent="318" name="PRIMARY">
+    <index id="556" parent="308" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="655" parent="318" name="PRIMARY">
+    <key id="557" parent="308" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="656" parent="319" name="id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="558" parent="309" name="id">
+      <AutoIncrement>6</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="657" parent="319" name="konu">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="559" parent="309" name="adi">
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="658" parent="319" name="aciklama">
-      <DasType>text|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="560" parent="309" name="hesap_no">
       <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="659" parent="319" name="tarih">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
+    <column id="561" parent="309" name="aciklama">
       <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
-    <index id="660" parent="319" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="661" parent="319" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="662" parent="320" name="id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="663" parent="320" name="sql">
-      <DasType>text|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <index id="664" parent="320" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="665" parent="320" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="666" parent="321" name="id">
-      <AutoIncrement>9</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="667" parent="321" name="adi">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="668" parent="321" name="ek_bilgiler">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <index id="669" parent="321" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="670" parent="321" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="671" parent="322" name="id">
-      <AutoIncrement>12</AutoIncrement>
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="672" parent="322" name="adi">
-      <DasType>varchar(200)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="673" parent="322" name="sira">
-      <DasType>int|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="674" parent="322" name="durum">
-      <DasType>int|0s</DasType>
+    <column id="562" parent="309" name="tur">
+      <Comment>1:kasa 2:banka hesabı 3: pos hesabı 4:kredi kartı 5 veresiye 6:Diger</Comment>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>4</Position>
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <index id="675" parent="322" name="PRIMARY">
+    <column id="563" parent="309" name="durum">
+      <DefaultExpression>1</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="564" parent="309" name="tutar">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <index id="565" parent="309" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="676" parent="322" name="PRIMARY">
+    <key id="566" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="677" parent="323" name="id">
-      <AutoIncrement>27</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="567" parent="310" name="id">
+      <AutoIncrement>30</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="678" parent="323" name="urun_kodu">
-      <DasType>varchar(50)|0s</DasType>
+    <column id="568" parent="310" name="ana_kalem">
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="569" parent="310" name="ust">
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="570" parent="310" name="adi">
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="571" parent="310" name="renk">
+      <DefaultExpression>&apos;success&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <index id="572" parent="310" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="573" parent="310" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="574" parent="311" name="id">
+      <AutoIncrement>47</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="575" parent="311" name="kalem">
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="679" parent="323" name="tedarikci">
-      <DasType>int|0s</DasType>
+    <column id="576" parent="311" name="kasa">
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="577" parent="311" name="belge_no">
+      <Position>4</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="578" parent="311" name="belge_dosya">
+      <Position>5</Position>
+      <StoredType>char(200)|0s</StoredType>
+    </column>
+    <column id="579" parent="311" name="aciklama">
+      <Position>6</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="580" parent="311" name="odeme_durumu">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="581" parent="311" name="tutar">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="582" parent="311" name="odeme_tarihi">
+      <DefaultExpression>&apos;0000-00-00&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="583" parent="311" name="islem_tarihi">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="584" parent="311" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="585" parent="311" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="586" parent="312" name="id">
+      <AutoIncrement>14</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="587" parent="312" name="olay">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="588" parent="312" name="tur">
+      <Comment>1:siparis,2:proje,3:fatura,4:siparis ürün</Comment>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="589" parent="312" name="tur_id">
+      <DefaultExpression>(1)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="590" parent="312" name="ne_zaman">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <column id="591" parent="312" name="okundu">
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="592" parent="312" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="593" parent="312" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="594" parent="313" name="id">
+      <AutoIncrement>8</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="595" parent="313" name="tanim">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>char(5)|0s</StoredType>
+    </column>
+    <column id="596" parent="313" name="periyod">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="597" parent="313" name="eklenecek_gun">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <index id="598" parent="313" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="599" parent="313" name="tanim">
+      <ColNames>tanim</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="600" parent="313" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="601" parent="313" name="tanim">
+      <UnderlyingIndexName>tanim</UnderlyingIndexName>
+    </key>
+    <column id="602" parent="314" name="id">
+      <AutoIncrement>14</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="603" parent="314" name="baslik">
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="604" parent="314" name="kasa_hesabi">
       <DefaultExpression>(0)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="680" parent="323" name="grup">
-      <DasType>int|0s</DasType>
+    <column id="605" parent="314" name="tur">
+      <Comment>1:havale Eft,2:sanal pos,3:diger</Comment>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="681" parent="323" name="adi">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="606" parent="314" name="bilgiler">
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
-    <column id="682" parent="323" name="fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="683" parent="323" name="aylik_fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <column id="684" parent="323" name="uc_aylik_fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <column id="685" parent="323" name="alti_aylik_fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
-      <Position>9</Position>
-    </column>
-    <column id="686" parent="323" name="yillik_fiyat">
-      <DasType>decimal(10,2 digit)|0s</DasType>
-      <Position>10</Position>
-    </column>
-    <column id="687" parent="323" name="fiyat_birim">
-      <DasType>varchar(10)|0s</DasType>
-      <DefaultExpression>&apos;TL&apos;</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>11</Position>
-    </column>
-    <column id="688" parent="323" name="kdv">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>18</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>12</Position>
-    </column>
-    <column id="689" parent="323" name="aciklama">
-      <DasType>text|0s</DasType>
-      <Position>13</Position>
-    </column>
-    <column id="690" parent="323" name="detay">
-      <DasType>text|0s</DasType>
-      <Position>14</Position>
-    </column>
-    <column id="691" parent="323" name="durum">
-      <DasType>int|0s</DasType>
+    <column id="607" parent="314" name="durum">
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>15</Position>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="692" parent="323" name="odeme_turu">
-      <Comment>U:ücretsiz, T:Tek seferlik, Y:Yenilenen</Comment>
-      <DasType>char(50)|0s</DasType>
-      <DefaultExpression>&apos;T&apos;</DefaultExpression>
+    <index id="608" parent="314" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="609" parent="314" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="610" parent="315" name="id">
+      <AutoIncrement>13</AutoIncrement>
       <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="611" parent="315" name="para">
+      <Position>2</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="612" parent="315" name="kod">
+      <Position>3</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="613" parent="315" name="sembol">
+      <Position>4</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="614" parent="315" name="guncel_kur">
+      <Position>5</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="615" parent="315" name="guncelleme">
+      <Position>6</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="616" parent="315" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="617" parent="315" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="618" parent="316" name="id">
+      <AutoIncrement>33</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="619" parent="316" name="personel">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="620" parent="316" name="yil">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>char(5)|0s</StoredType>
+    </column>
+    <column id="621" parent="316" name="ay">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>char(3)|0s</StoredType>
+    </column>
+    <column id="622" parent="316" name="hafta">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="623" parent="316" name="gun">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="624" parent="316" name="giris_tarihi">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="625" parent="316" name="giris_saati">
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>time|0s</StoredType>
+    </column>
+    <column id="626" parent="316" name="giris_tarih_saat">
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="627" parent="316" name="cikis_tarihi">
+      <Position>10</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="628" parent="316" name="cikis_saati">
+      <Position>11</Position>
+      <StoredType>time|0s</StoredType>
+    </column>
+    <column id="629" parent="316" name="cikis_tarih_saat">
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="630" parent="316" name="gunlukCalismaSuresi">
+      <NotNull>1</NotNull>
+      <Position>13</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="631" parent="316" name="gunlukToplamCalismaSuresi">
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="632" parent="316" name="fazla_mesai_dakikasi">
+      <Position>15</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="633" parent="316" name="fazla_mesai_sebebi">
       <Position>16</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="693" parent="323" name="stoklu_urun">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
+    <column id="634" parent="316" name="gunluk_not">
       <Position>17</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
-    <column id="694" parent="323" name="guncel_stok">
-      <DasType>int|0s</DasType>
-      <DefaultExpression>0</DefaultExpression>
+    <column id="635" parent="316" name="dakika_dusus_notlari">
       <Position>18</Position>
+      <StoredType>varchar(500)|0s</StoredType>
     </column>
-    <column id="695" parent="323" name="tarih">
-      <DasType>timestamp|0s</DasType>
+    <column id="636" parent="316" name="yemek_hakedis">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>19</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="637" parent="316" name="ise_gelis_yol_ucreti">
+      <DefaultExpression>1</DefaultExpression>
+      <Position>20</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="638" parent="316" name="isten_cikis_yol_ucreti">
+      <DefaultExpression>1</DefaultExpression>
+      <Position>21</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="639" parent="316" name="izin_durumu">
+      <Comment>0:çalışıyor,1;ücretsiz izin;2:ücretsli izin</Comment>
+      <DefaultExpression>0</DefaultExpression>
+      <Position>22</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="640" parent="316" name="kayit_turu">
+      <Comment>R Raporlu, HT Hafta Tatili, N normal çalışma, I Ücretli izinli, UI Ücretsiz izin, T Resmi Tatil&#xd;
+, SI Saatlik izinli, YI Yıllık izin</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>23</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="641" parent="316" name="gec_gelme_durumu">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>24</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="642" parent="316" name="kayit_yapan_personel">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>25</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="643" parent="316" name="kayit_tarihi">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>26</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <index id="644" parent="316" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="645" parent="316" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="646" parent="317" name="id">
+      <AutoIncrement>6</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="647" parent="317" name="proje_id">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="648" parent="317" name="personel_id">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="649" parent="317" name="gorevi">
+      <Position>4</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="650" parent="317" name="tarih">
       <DefaultExpression>(now())</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>19</Position>
+      <Position>5</Position>
+      <StoredType>datetime|0s</StoredType>
     </column>
-    <index id="696" parent="323" name="PRIMARY">
+    <index id="651" parent="317" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="697" parent="323" name="PRIMARY">
+    <key id="652" parent="317" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="698" parent="324" name="id">
-      <AutoIncrement>24</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="653" parent="318" name="id">
+      <AutoIncrement>7</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="699" parent="324" name="alan">
-      <DasType>varchar(100)|0s</DasType>
+    <column id="654" parent="318" name="proje_id">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="700" parent="324" name="baslik">
-      <DasType>varchar(100)|0s</DasType>
+    <column id="655" parent="318" name="detay">
+      <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>text|0s</StoredType>
     </column>
-    <column id="701" parent="324" name="aciklama">
-      <DasType>varchar(500)|0s</DasType>
+    <column id="656" parent="318" name="cevap">
       <Position>4</Position>
+      <StoredType>text|0s</StoredType>
     </column>
-    <index id="702" parent="324" name="PRIMARY">
+    <column id="657" parent="318" name="talep_ip">
+      <Position>5</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="658" parent="318" name="talep_user_agent">
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="659" parent="318" name="durum">
+      <Comment>0:işlem bekliyor,1:plana alındı,2:çözüldü</Comment>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>enum(&apos;2&apos;, &apos;1&apos;, &apos;0&apos;)|0e</StoredType>
+    </column>
+    <column id="660" parent="318" name="tarih">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <index id="661" parent="318" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="703" parent="324" name="PRIMARY">
+    <key id="662" parent="318" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="704" parent="325" name="id">
-      <AutoIncrement>1</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="663" parent="319" name="id">
+      <AutoIncrement>61</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="705" parent="325" name="personel_id">
-      <DasType>int|0s</DasType>
+    <column id="664" parent="319" name="proje_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="706" parent="325" name="belge_yetki_id">
-      <DasType>int|0s</DasType>
+    <column id="665" parent="319" name="tur">
+      <Comment>1 degisiklik, 2 hata çözümü, 3 yenilik</Comment>
+      <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="707" parent="325" name="verilis_tarihi">
-      <DasType>timestamp|0s</DasType>
+    <column id="666" parent="319" name="islem">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="667" parent="319" name="link">
+      <Position>5</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="668" parent="319" name="dosya">
+      <Position>6</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="669" parent="319" name="resim">
+      <Position>7</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="670" parent="319" name="ekleyen">
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="671" parent="319" name="tarih">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <index id="672" parent="319" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="673" parent="319" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="674" parent="320" name="id">
+      <AutoIncrement>63</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="675" parent="320" name="proje_id">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="676" parent="320" name="baslik">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="677" parent="320" name="aciklama">
+      <Position>4</Position>
+      <StoredType>varchar(900)|0s</StoredType>
+    </column>
+    <column id="678" parent="320" name="sira">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="679" parent="320" name="durum">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="680" parent="320" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="681" parent="320" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="682" parent="321" name="id">
+      <AutoIncrement>6</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="683" parent="321" name="musteri">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="684" parent="321" name="proje_adi">
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="685" parent="321" name="sef">
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="686" parent="321" name="aciklama">
+      <Position>5</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="687" parent="321" name="proje_baslangic_tarihi">
+      <Position>6</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="688" parent="321" name="tahmini_bitis_tarihi">
+      <Position>7</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="689" parent="321" name="bitis_tarihi">
+      <Position>8</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="690" parent="321" name="durum">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>9</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="691" parent="321" name="sifre">
+      <Position>10</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <index id="692" parent="321" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="693" parent="321" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="694" parent="322" name="id">
+      <AutoIncrement>3</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="695" parent="322" name="cari">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="696" parent="322" name="periyod">
+      <Comment>o:oran, t:tek sefer,u:ucretsiz,g:gunluk,h:haftalik,a:aylık,3a:3aylik,6a:6 aylık,y:yillik</Comment>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>char(5)|0s</StoredType>
+    </column>
+    <column id="697" parent="322" name="ucret">
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="698" parent="322" name="baslangic_tarihi">
+      <Position>5</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="699" parent="322" name="bitis_tarihi">
+      <Position>6</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="700" parent="322" name="detay">
+      <Position>7</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="701" parent="322" name="ekleme_tarihi">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <column id="702" parent="322" name="durum">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="703" parent="322" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="704" parent="322" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="705" parent="323" name="id">
+      <AutoIncrement>6</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="706" parent="323" name="adi">
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="707" parent="323" name="uyari">
+      <DefaultExpression>&apos;primary&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <index id="708" parent="323" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="709" parent="323" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="710" parent="324" name="id">
+      <AutoIncrement>3</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="711" parent="324" name="cari">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="712" parent="324" name="ads_id">
+      <Position>3</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="713" parent="324" name="mail_adresi">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="714" parent="324" name="mail_adresi2">
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="715" parent="324" name="sifre">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="716" parent="324" name="reklam_url">
+      <Position>7</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="717" parent="324" name="rvd">
+      <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="718" parent="324" name="dogrulama_tel">
+      <Position>9</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="719" parent="324" name="odeme_yontemi">
+      <Position>10</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="720" parent="324" name="odeme_araci">
+      <Position>11</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="721" parent="324" name="proxy">
+      <Position>12</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="722" parent="324" name="aciklama">
+      <Position>13</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="723" parent="324" name="ek_not">
+      <Position>14</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="724" parent="324" name="platform">
+      <NotNull>1</NotNull>
+      <Position>15</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="725" parent="324" name="acilis_tarihi">
+      <Position>16</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="726" parent="324" name="durum">
+      <Comment>0:Askıda, 1:aktif,</Comment>
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>17</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="727" parent="324" name="ekleme_tarihi">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>18</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="728" parent="324" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="729" parent="324" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="730" parent="325" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="731" parent="325" name="tur">
+      <DefaultExpression>&apos;KK&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>enum(&apos;KK&apos;, &apos;HN&apos;)|0e</StoredType>
+    </column>
+    <column id="732" parent="325" name="numara">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="733" parent="325" name="cvv">
+      <Position>4</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="734" parent="325" name="son_kullanim">
+      <Position>5</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="735" parent="325" name="sahibi">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="736" parent="325" name="durum">
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="737" parent="325" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="738" parent="325" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="739" parent="326" name="id">
+      <AutoIncrement>8</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="740" parent="326" name="adi">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="741" parent="326" name="url">
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="742" parent="326" name="sira">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="743" parent="326" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="744" parent="326" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="745" parent="327" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="746" parent="327" name="baslik">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="747" parent="327" name="sef">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="748" parent="327" name="icerik">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="749" parent="327" name="ekleyen">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="750" parent="327" name="durum">
+      <DefaultExpression>&apos;1&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>enum(&apos;1&apos;, &apos;0&apos;)|0e</StoredType>
+    </column>
+    <index id="751" parent="327" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="752" parent="327" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="753" parent="328" name="id">
+      <AutoIncrement>34</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="754" parent="328" name="adi">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="755" parent="328" name="uyari">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="756" parent="328" name="sira">
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="757" parent="328" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="758" parent="328" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="759" parent="329" name="id">
+      <AutoIncrement>129</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="760" parent="329" name="cari">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="761" parent="329" name="siparis">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="762" parent="329" name="aciklama">
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="763" parent="329" name="guncelleyen">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="764" parent="329" name="tarih">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="765" parent="329" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="766" parent="329" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="767" parent="330" name="id">
+      <AutoIncrement>66</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="768" parent="330" name="siparis">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="769" parent="330" name="urun">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="770" parent="330" name="urun_adi">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="771" parent="330" name="tedarikci">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="772" parent="330" name="cari">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="773" parent="330" name="adet">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="774" parent="330" name="notu">
+      <Position>8</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="775" parent="330" name="odeme_periyodu">
+      <Comment>t:tek sefer,u:ucretsiz,a:aylık,3a:3aylik,6a:6 aylık,y:yillik</Comment>
+      <Position>9</Position>
+      <StoredType>varchar(5)|0s</StoredType>
+    </column>
+    <column id="776" parent="330" name="para_birimi">
+      <Position>10</Position>
+      <StoredType>varchar(10)|0s</StoredType>
+    </column>
+    <column id="777" parent="330" name="gecerli_kur">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <Position>11</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="778" parent="330" name="fiyat_sabitle">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>12</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="779" parent="330" name="birim_fiyat">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>13</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="780" parent="330" name="kdv">
+      <DefaultExpression>20</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="781" parent="330" name="kdv_tutari">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>15</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="782" parent="330" name="toplam_fiyat">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="783" parent="330" name="siparis_tarihi">
+      <NotNull>1</NotNull>
+      <Position>17</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="784" parent="330" name="baslangic_tarihi">
+      <NotNull>1</NotNull>
+      <Position>18</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="785" parent="330" name="bitis_tarihi">
+      <NotNull>1</NotNull>
+      <Position>19</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="786" parent="330" name="islem_gerekiyor">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>20</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="787" parent="330" name="yapilacak_islem">
+      <Position>21</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="788" parent="330" name="durum">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>22</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="789" parent="330" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="790" parent="330" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="791" parent="331" name="id">
+      <AutoIncrement>37</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="792" parent="331" name="belge_no">
+      <Position>2</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="793" parent="331" name="cari">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="794" parent="331" name="toplam_tutar">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <Position>4</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="795" parent="331" name="kdv_tutari">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <Position>5</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="796" parent="331" name="genel_toplam_tutari">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="797" parent="331" name="odeme_yontemi">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="798" parent="331" name="odeme_durumu">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="799" parent="331" name="alinan_odeme">
+      <DefaultExpression>0.0000</DefaultExpression>
+      <Position>9</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="800" parent="331" name="olusturan">
+      <Position>10</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="801" parent="331" name="kayit_sekli">
+      <Comment>1:sipariş: 0: teklif</Comment>
+      <DefaultExpression>1</DefaultExpression>
+      <Position>11</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="802" parent="331" name="fatura">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>12</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="803" parent="331" name="siparis_notu">
+      <Position>13</Position>
+      <StoredType>varchar(1000)|0s</StoredType>
+    </column>
+    <column id="804" parent="331" name="durum">
+      <Comment>0:pasif,1:aktif</Comment>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>14</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="805" parent="331" name="tarih">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>15</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="806" parent="331" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="807" parent="331" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="808" parent="332" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="809" parent="332" name="konu">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="810" parent="332" name="aciklama">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="811" parent="332" name="tarih">
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>timestamp|0s</StoredType>
     </column>
-    <index id="708" parent="325" name="PRIMARY">
+    <index id="812" parent="332" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="709" parent="325" name="PRIMARY">
+    <key id="813" parent="332" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="710" parent="326" name="id">
-      <AutoIncrement>59</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <column id="814" parent="333" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
-    <column id="711" parent="326" name="username">
-      <DasType>varchar(50)|0s</DasType>
+    <column id="815" parent="333" name="sql">
+      <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>text|0s</StoredType>
     </column>
-    <column id="712" parent="326" name="password">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="713" parent="326" name="email">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <column id="714" parent="326" name="isim">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <column id="715" parent="326" name="resim">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="716" parent="326" name="telefon">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <column id="717" parent="326" name="notlar">
-      <DasType>text|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <column id="718" parent="326" name="unvan">
-      <DasType>varchar(100)|0s</DasType>
-      <Position>9</Position>
-    </column>
-    <column id="719" parent="326" name="ban">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>10</Position>
-    </column>
-    <column id="720" parent="326" name="aktiflik">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>11</Position>
-    </column>
-    <column id="721" parent="326" name="aktivasyon">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>12</Position>
-    </column>
-    <column id="722" parent="326" name="yetkiler">
-      <DasType>varchar(500)|0s</DasType>
-      <Position>13</Position>
-    </column>
-    <column id="723" parent="326" name="panel_rengi">
-      <DasType>char(50)|0s</DasType>
-      <Position>14</Position>
-    </column>
-    <column id="724" parent="326" name="ekleme_tarihi">
-      <DasType>timestamp|0s</DasType>
-      <Position>15</Position>
-    </column>
-    <index id="725" parent="326" name="PRIMARY">
+    <index id="816" parent="333" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="726" parent="326" name="PRIMARY">
+    <key id="817" parent="333" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="818" parent="334" name="id">
+      <AutoIncrement>14</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="819" parent="334" name="adi">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="820" parent="334" name="firma_adi">
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="821" parent="334" name="ilgili_kisi">
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="822" parent="334" name="vergi_dairesi">
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="823" parent="334" name="vergi_no">
+      <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="824" parent="334" name="adres">
+      <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="825" parent="334" name="telefon">
+      <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="826" parent="334" name="banka_hesaplari">
+      <Position>9</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="827" parent="334" name="ek_bilgiler">
+      <Position>10</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="828" parent="334" name="guncel_bakiye">
+      <DefaultExpression>(0)</DefaultExpression>
+      <Position>11</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <index id="829" parent="334" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="830" parent="334" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="831" parent="335" name="id">
+      <AutoIncrement>162</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="832" parent="335" name="teklif">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="833" parent="335" name="urun">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="834" parent="335" name="urun_adi">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="835" parent="335" name="aciklama">
+      <Position>5</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="836" parent="335" name="miktar">
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="837" parent="335" name="fiyat">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="838" parent="335" name="kdv">
+      <DefaultExpression>20</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="839" parent="335" name="kdv_tutari">
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <column id="840" parent="335" name="tutar">
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+      <StoredType>decimal(15,4 digit)|0s</StoredType>
+    </column>
+    <index id="841" parent="335" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="842" parent="335" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="843" parent="336" name="id">
+      <AutoIncrement>320</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="844" parent="336" name="belge_no">
+      <Position>2</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="845" parent="336" name="fatura_adi">
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="846" parent="336" name="fatura_adresi">
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="847" parent="336" name="musteri">
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="848" parent="336" name="odeme_yontemi">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="849" parent="336" name="durum">
+      <Comment>0:iptal,1:resmileşmemiş,2:resmileşmiş</Comment>
+      <DefaultExpression>2</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="850" parent="336" name="aciklama">
+      <Position>8</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="851" parent="336" name="gecerlilik_suresi_gun">
+      <DefaultExpression>1</DefaultExpression>
+      <Position>9</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="852" parent="336" name="ekleme_tarihi">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="853" parent="336" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="854" parent="336" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="855" parent="337" name="id">
+      <AutoIncrement>33</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="856" parent="337" name="grup">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="857" parent="337" name="sira">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="858" parent="337" name="tur">
+      <Comment>text,select,file,image,link</Comment>
+      <DefaultExpression>&apos;text&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(10)|0s</StoredType>
+    </column>
+    <column id="859" parent="337" name="baslik">
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="860" parent="337" name="gereklilik">
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="861" parent="337" name="yer">
+      <Comment>0:listeleme, 1:ürün detay , 2:her yer</Comment>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="862" parent="337" name="durum">
+      <Comment>0:herzaman görünür, 1:sipariş sonrası görünür</Comment>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="863" parent="337" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="864" parent="337" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="865" parent="338" name="id">
+      <AutoIncrement>17</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="866" parent="338" name="adi">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(200)|0s</StoredType>
+    </column>
+    <column id="867" parent="338" name="aciklama">
+      <Position>3</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="868" parent="338" name="sira">
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="869" parent="338" name="urun_gorunumu">
+      <DefaultExpression>&apos;list&apos;</DefaultExpression>
+      <Position>5</Position>
+      <StoredType>enum(&apos;list&apos;, &apos;block&apos;)|0e</StoredType>
+    </column>
+    <column id="870" parent="338" name="tur">
+      <DefaultExpression>&apos;diger&apos;</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>enum(&apos;diger&apos;, &apos;lisans&apos;, &apos;sertifika&apos;, &apos;indirilebilir&apos;, &apos;hosting&apos;, &apos;domain&apos;, &apos;fiziksel&apos;)|0e</StoredType>
+    </column>
+    <column id="871" parent="338" name="durum">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="872" parent="338" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="873" parent="338" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="874" parent="339" name="id">
+      <AutoIncrement>62</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="875" parent="339" name="urun">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="876" parent="339" name="ozellik">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="877" parent="339" name="deger">
+      <Position>4</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="878" parent="339" name="ekleme">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="879" parent="339" name="guncelleme">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>6</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <index id="880" parent="339" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="881" parent="339" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="882" parent="340" name="id">
+      <AutoIncrement>30</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="883" parent="340" name="urun_kodu">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="884" parent="340" name="tedarikci">
+      <DefaultExpression>(0)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="885" parent="340" name="grup">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="886" parent="340" name="adi">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="887" parent="340" name="resim">
+      <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="888" parent="340" name="fiyat">
+      <Position>7</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
+    </column>
+    <column id="889" parent="340" name="aylik_fiyat">
+      <Position>8</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
+    </column>
+    <column id="890" parent="340" name="uc_aylik_fiyat">
+      <Position>9</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
+    </column>
+    <column id="891" parent="340" name="alti_aylik_fiyat">
+      <Position>10</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
+    </column>
+    <column id="892" parent="340" name="yillik_fiyat">
+      <Position>11</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
+    </column>
+    <column id="893" parent="340" name="fiyat_birim">
+      <DefaultExpression>&apos;TL&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+      <StoredType>varchar(10)|0s</StoredType>
+    </column>
+    <column id="894" parent="340" name="kdv">
+      <DefaultExpression>18</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>13</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="895" parent="340" name="aciklama">
+      <Position>14</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="896" parent="340" name="detay">
+      <Position>15</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="897" parent="340" name="durum">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="898" parent="340" name="odeme_turu">
+      <Comment>U:ücretsiz, T:Tek seferlik, Y:Yenilenen</Comment>
+      <DefaultExpression>&apos;T&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>17</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="899" parent="340" name="stoklu_urun">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>18</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="900" parent="340" name="guncel_stok">
+      <DefaultExpression>0</DefaultExpression>
+      <Position>19</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="901" parent="340" name="tarih">
+      <DefaultExpression>(now())</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>20</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="902" parent="340" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="903" parent="340" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="904" parent="341" name="id">
+      <AutoIncrement>27</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="905" parent="341" name="alan">
+      <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="906" parent="341" name="baslik">
+      <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="907" parent="341" name="aciklama">
+      <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <index id="908" parent="341" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="909" parent="341" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="910" parent="342" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="911" parent="342" name="personel_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="912" parent="342" name="belge_yetki_id">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="913" parent="342" name="verilis_tarihi">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="914" parent="342" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="915" parent="342" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="916" parent="343" name="id">
+      <AutoIncrement>62</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="917" parent="343" name="username">
+      <Position>2</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="918" parent="343" name="password">
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="919" parent="343" name="email">
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="920" parent="343" name="isim">
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="921" parent="343" name="resim">
+      <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="922" parent="343" name="telefon">
+      <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="923" parent="343" name="notlar">
+      <Position>8</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="924" parent="343" name="unvan">
+      <Position>9</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="925" parent="343" name="ise_giris">
+      <DefaultExpression>(now())</DefaultExpression>
+      <Position>10</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="926" parent="343" name="maas">
+      <Position>11</Position>
+      <StoredType>float(15,2 digit)|0s</StoredType>
+    </column>
+    <column id="927" parent="343" name="ban">
+      <Position>12</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="928" parent="343" name="aktiflik">
+      <Position>13</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="929" parent="343" name="aktivasyon">
+      <Position>14</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="930" parent="343" name="yetkiler">
+      <Position>15</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="931" parent="343" name="panel_rengi">
+      <Position>16</Position>
+      <StoredType>char(50)|0s</StoredType>
+    </column>
+    <column id="932" parent="343" name="ekleme_tarihi">
+      <DefaultExpression>(now())</DefaultExpression>
+      <Position>17</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <index id="933" parent="343" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="934" parent="343" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

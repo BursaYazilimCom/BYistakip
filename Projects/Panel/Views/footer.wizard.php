@@ -139,7 +139,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#summernote').summernote({
-            placeholder: 'Müşterilerinize Göstereceğiniz Detayları Girin',
+            placeholder: 'Detayları Girin',
             tabsize: 2,
             height: 200
         });

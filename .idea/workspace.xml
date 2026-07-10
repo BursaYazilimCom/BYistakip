@@ -5,20 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10096791-bdef-4be5-b995-49f1760b021d" name="Changes" comment="Yenileme faturası oluşturma işlemleri yapılıyor">
-      <change beforePath="$PROJECT_DIR$/.idea/istakip.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/istakip.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/External/Libraries/Ks.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/anlasmaForm.wizard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/anlasmalar.wizard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/odemeAracForm.wizard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/odemeAraclari.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fd04f14a-41c6-4007-83e7-140706f7bf10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fd04f14a-41c6-4007-83e7-140706f7bf10.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Config/Project.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/CronJob.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Faturalar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Faturalar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Siparisler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Siparisler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/FaturaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/FaturaModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/SiparisModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/SiparisModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Cari/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Cari/main.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/main.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/olustur.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Faturalar/olustur.wizard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/main.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Siparisler/main.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Controllers/Reklam.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Controllers/Reklam.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Models/ReklamModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Models/ReklamModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/form.wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/grup.wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/grupForm.wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/gruplar.wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesapForm.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesapForm.wizard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesaplar.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/Reklam/hesaplar.wizard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/footer.wizard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projects/Panel/Views/header.wizard.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projects/Panel/Views/header.wizard.php" afterDir="false" />
     </list>
@@ -73,38 +76,38 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="D:\wamp\bin\php\php7.4.33\php.exe">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="D:\wamp\bin\php\php8.1.28\php.exe">
     <include_path>
-      <path value="$PROJECT_DIR$/Internal/package-composer/doctrine/instantiator" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/myclabs/deep-copy" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/composer" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phar-io/manifest" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/reflection-common" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phar-io/version" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-text-template" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/reflection-docblock" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/resource-operations" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/type-resolver" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/version" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phpspec/prophecy" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-code-coverage" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-file-iterator" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-timer" />
       <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-token-stream" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/composer" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/doctrine/instantiator" />
       <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/comparator" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/diff" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/code-unit-reverse-lookup" />
       <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/environment" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/exporter" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/global-state" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/object-enumerator" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/diff" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phar-io/version" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/phpdocumentor/type-resolver" />
       <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/recursion-context" />
       <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/type" />
-      <path value="$PROJECT_DIR$/Internal/package-composer/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/version" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/sebastian/exporter" />
       <path value="$PROJECT_DIR$/Internal/package-composer/webmozart/assert" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/Internal/package-composer/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/Projects/Devtools/vendor/composer" />
     </include_path>
   </component>
@@ -117,31 +120,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;0.3.3.9&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/wamp/www/organizeTermofom&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "0.6.0",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/wamp/www/istakip/Projects/Panel/Views/Reklam",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\wamp\www\istakip\Projects\Panel\Views\Reklam" />
       <recent name="D:\wamp\www\istakip\External\Libraries" />
       <recent name="D:\wamp\www\istakip\Projects\Frontend\Views\Proje" />
       <recent name="D:\wamp\www\istakip\Projects\Panel\Views\Projeler" />
@@ -157,6 +161,8 @@
     <attachedChunks>
       <set>
         <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14015.96" />
+        <option value="php-phpdocumentor_reflection_docblock-970fd879c5a4-65730a02" />
+        <option value="php-phpspec_prophecy-970fd879c5a4-037b449f" />
       </set>
     </attachedChunks>
   </component>
